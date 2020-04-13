@@ -1,0 +1,197 @@
+/***************************
+
+    grid 공통부분 
+
+*****************************/
+
+/* 
+    전체 틀 
+*/
+.ag-root{
+    border:0 none !important;
+}
+.ag-root-wrapper{
+    border:0 none !important;
+}
+.ag-body-viewport{
+    border-bottom:1px solid #ccc !important;
+}
+/* 
+    헤더 
+*/
+.ag-header{
+    background-color:#f5f3f3 !important;
+    border:0 none !important;
+}
+.ag-header-viewport{
+}
+/* 헤더 text 가운데 정렬 */
+.ag-header-cell-label{
+    justify-content: center !important;
+}
+/* 헤더컬럼 구분선 마지막 삭제*/
+.ag-header-cell:last-child::after,
+.ag-header-group-cell:last-child::after{
+    display:none !important;
+}
+
+
+/* 고정컬럼 헤더 */
+.ag-pinned-left-header{
+    
+}
+/* 컨테츠영역 틀 */
+.ag-center-cols-viewport{
+    border:1px solid #ccc !important;
+    border-top:0 none !important;
+    border-bottom:0 none !important;
+    
+}
+/* 고정컬럼 컨텐츠영역 틀 */
+.ag-pinned-left-cols-container{
+
+}
+/* row border */
+.ag-row{
+    border-bottom-style:dotted !important;
+}
+/* cell 영역 */
+.ag-cell{
+    border-right:1px dotted #dcdcdc !important;
+}
+.ag-cell:last-child{
+    border-right:0 none !important;
+}
+.ag-theme-balham .ag-ltr .ag-has-focus .ag-cell-focus:not(.ag-cell-range-selected), .ag-theme-balham .ag-ltr .ag-has-focus .ag-cell-focus.ag-cell-range-single-cell, .ag-theme-balham .ag-ltr .ag-cell-focus.ag-cell-range-single-cell.ag-cell-range-handle, .ag-theme-balham .ag-rtl .ag-has-focus .ag-cell-focus:not(.ag-cell-range-selected), .ag-theme-balham .ag-rtl .ag-has-focus .ag-cell-focus.ag-cell-range-single-cell, .ag-theme-balham .ag-rtl .ag-cell-focus.ag-cell-range-single-cell.ag-cell-range-handle{
+    border-right:1px solid #0091EA !important;
+}
+/* 체크박스 */
+.ag-icon-checkbox-unchecked,
+.ag-icon-checkbox-checked{
+    background-color:transparent !important;
+}
+.ag-header-cell .ag-icon-checkbox-unchecked,
+.ag-header-cell .ag-icon-checkbox-checked{
+    margin-left:-3.5px;
+    margin-top:-5px;
+}
+.ag-header-cell .ag-input-wrapper{
+    overflow: visible;
+}
+.ag-header .ag-icon-checkbox-indeterminate{
+    margin-left:-3.5px;
+    margin-top:-3px;
+    background-color:transparent !important;
+}
+.ag-header-cell .ag-icon-checkbox-indeterminate:before{
+    content:"Θ" !important;
+    font-size:20px !important;
+    font-weight:1 !important;
+}
+.ag-icon-checkbox-checked{
+    margin-bottom:-2px !important;
+}
+.ag-icon-checkbox-unchecked:before{
+    content:"○" !important;
+    font-size:16px !important;
+    background-color:transparent !important;
+}
+.ag-icon-checkbox-checked:before{
+    content:"◉" !important;
+    font-size:20px !important;
+    background-color:transparent !important;
+}
+.ag-selection-checkbox{
+    margin-bottom:8px;
+    margin-left:-5px;
+}
+/* 스크롤바 css */
+.ag-body-viewport::-webkit-scrollbar {
+    background: #e9e9e9 !important;
+    border-radius: 20px !important;
+    width:9px !important;
+}
+.ag-body-viewport::-webkit-scrollbar-thumb {
+    background: #a2a2a2 !important;
+    border-radius: 20px !important;
+}
+.ag-body-horizontal-scroll-viewport{
+    max-height:9px !important;
+    min-height:9px !important;
+}
+.ag-body-horizontal-scroll-viewport::-webkit-scrollbar {
+    background: #e9e9e9 !important;
+    border-radius: 20px !important;
+    height:9px !important;
+}
+.ag-body-horizontal-scroll-viewport::-webkit-scrollbar-thumb {
+    background: #a2a2a2 !important;
+    border-radius: 20px !important;
+}
+/* 근무표 전용 grid css */
+.work_table_result .ag-header{
+    background-color:transparent !important;
+    text-align: center !important;
+}
+.work_table_result .ag-header-container{
+    background-color:#f5f3f3 !important;
+    border-radius:30px !important;
+    border:0 none !important;
+}
+.work_table_result .ag-cell{
+    padding:0 !important;
+    overflow:visible;
+}
+.work_table_result .ag-cell:not(.ag-cell-last-left-pinned):not(:empty){
+    font-size:0px;
+    text-indent:-9999px;
+}
+.work_table_result .ag-cell:not(.ag-cell-last-left-pinned):not(:empty):before{
+    display:block;
+    content:"";
+    width:calc(100% + 2px);
+    height:20px;
+    margin-top:2px;
+    position: relative;
+    z-index:1;
+    opacity: 0.8;
+}
+.work_table_result .ag-center-cols-viewport{
+    border-left:0 none !important;
+}
+/* 고정컬럼 header 영역 */
+.work_table_result .ag-pinned-left-header{
+    border-right:0 none !important;
+    margin-right:15px !important;
+} 
+/* 고정컬럼 cell 영역 */
+.work_table_result .ag-pinned-left-cols-container{
+    margin-right:15px;
+}
+.work_table_result .ag-pinned-left-cols-container .ag-row{
+    border-bottom-style:solid !important;
+}
+.work_table_result .ag-pinned-left-cols-container .ag-cell{
+    border-right:0 none !important;
+    border-left:0 none !important;
+    border-bottom-style:solid !important;
+}
+.work_table_result .ag-pinned-left-header .ag-header-cell::after,
+.work_table_result .ag-pinned-left-header .ag-header-group-cell::after{
+    display:none !important;
+}
+/* 고정컬럼 스크롤 삭제 */
+.work_table_result .ag-horizontal-left-spacer{
+    overflow-x:auto !important;
+    border-right:0 none !important;
+}
+.work_table_result .ag-center-cols-viewport{
+    border-right:0 none !important;
+}
+div[col-id="useAnnual"],
+div[col-id="allUseAnnual"]{
+    color:#c83f3f;
+}
+div[col-id="remainAnnual"]{
+    color:#6472c8;
+}

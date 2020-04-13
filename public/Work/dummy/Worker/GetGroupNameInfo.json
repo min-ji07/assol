@@ -1,0 +1,20 @@
+{
+    "ErrorCode": 0,
+    "ProcessType": 0,
+    "Msg": "SUCCESS",
+    "Id": "",
+    "Data": [
+        {
+            "groupName": "A",
+            "groupColor": 1
+        },
+        {
+            "groupName": "B",
+            "groupColor": 2
+        },
+        {
+            "groupName": "C",
+            "groupColor": 5
+        }
+    ]
+}

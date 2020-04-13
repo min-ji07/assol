@@ -1,0 +1,513 @@
+{
+  "ErrorCode": 0,
+  "Msg": "SUCCESS",
+  "Id": "",
+  "Data": [
+    {
+      "Key": 2,
+      "Value": [
+        {
+          "day": 1,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": null,
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 2,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 3,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 4,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 5,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": null,
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 6,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 7,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 8,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": null,
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 9,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 10,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 11,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 12,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": null,
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 13,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 14,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 15,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": null,
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 16,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 17,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 18,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 19,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": null,
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 20,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 21,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 22,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": null,
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 23,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 24,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 25,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 26,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": null,
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 27,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 28,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 29,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": null,
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 30,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        },
+        {
+          "day": 31,
+          "userNo": 2,
+          "userName": "이석민",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1828"
+        }
+      ]
+    },
+    {
+      "Key": 1,
+      "Value": [
+        {
+          "day": 1,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 2,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 3,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 4,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 5,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 6,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 7,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 8,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 9,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 10,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 11,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 12,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 13,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 14,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 15,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 16,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 17,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 18,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 19,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 20,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 21,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 22,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 23,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 24,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 25,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 26,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 27,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 28,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 29,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": null,
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 30,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 1,
+          "employeeNumber": "1728"
+        },
+        {
+          "day": 31,
+          "userNo": 1,
+          "userName": "김성일",
+          "groupName": "A",
+          "groupColor": 2,
+          "employeeNumber": "1728"
+        }
+      ]
+    }
+  ]
+}

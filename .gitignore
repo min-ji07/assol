@@ -1,0 +1,8 @@
+/node_modules
+# production
+/dist
+
+.env
+package-lock.json
+
+src/Utils/api.js

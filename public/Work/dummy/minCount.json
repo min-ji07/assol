@@ -1,0 +1,16 @@
+[
+    {
+        "rowId":"1"
+        ,"groupName":"A조"
+        ,"workerCount":"1"
+        ,"essentialCount":"5"
+        
+    },
+    {
+        "rowId":"2"
+        ,"groupName":"B조"
+        ,"workerCount":"3"
+        ,"essentialCount":"14"
+        
+    }
+]

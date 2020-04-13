@@ -1,0 +1,110 @@
+@import url("../../common/default.css");
+@import url("/images");
+
+
+.salary .title h1 {padding-bottom: 25px;}
+.salary .salary_inner { /* 귀속연월부터 끝까지 감싸는 디브 */
+    position: relative;
+    width: 1689px; height: 627px; 
+}
+.salary .sal_date_left {
+    background: #799093; border-radius: 10px;
+    width: 363px; height: 38px; line-height:38px; float: left;  
+}
+.salary .sal_date_left input {
+    width: 90px; height: 20px; line-height: 20px;
+    color: white; font-size: 14px; font-weight: bold;
+    background: transparent; border: none; border-bottom: 1px solid white;
+    border-radius: 0px; text-indent: 0px;
+    margin-left: 5px;
+}
+.salary .sal_date_left select {
+    width: 90px; height: 20px; line-height: 20px;
+    color: white; font-size: 14px; font-weight: bold;
+    background: transparent; border: none; border-bottom: 1px solid white;
+    border-radius: 0px;
+}
+.salary .sal_date_left ul li { 
+    float: left; text-align: center; color: white; font-size: 15px; 
+    list-style-type: disc; margin-left: 35px;
+}
+.salary .white_board { 
+    position: absolute;
+    width: 1689px; height: 565px; top: 55px;    
+}
+.salary .left_div{
+    float: left;
+    width: 690px; height: 565px;
+    border-radius: 20px; 
+    background: white;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+.salary .right_div {
+    float: left;
+    width: 979px; height: 565px;
+    border-radius: 20px;
+    margin-left: 20px;
+    background: white;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+.salary .left_div_inner{
+    width: 662px; height: 565px;
+    margin: 0 auto;
+}
+.salary .right_div_inner {
+    width: 945px; height: 565px;
+    margin: 0 auto;
+} 
+.salary .left_div_inner .div_grid {
+    position: absolute;
+    margin: 0 auto;
+    margin-top: 52px;
+    width: 662px; height: 490px;
+    border: 1px solid #b2b2b2; 
+}
+.salary .right_div_inner .div_grid {
+    position: absolute;
+    margin-top: 52px;
+    width: 945px; height: 490px;
+    border: 1px solid #b2b2b2; 
+    text-align: center;
+}
+.salary .left_div_inner .div_top01 {
+    float: left; position: relative;
+    width: 690px; height: 51px; line-height: 56px;
+    border-radius: 10px 10px 0 0; 
+    color: #626262; font-size: 15px;
+}
+.salary .right_div_inner .div_top02 {
+    float: left;
+    width: 690px; height: 51px; line-height: 56px;
+    border-radius: 10px 10px 0 0; 
+    color: #626262; font-size: 15px;
+}
+.salary .left_div_inner .div_top01 .button_set {
+    position: absolute;
+    top: 0px; right: 28px;
+}
+.salary .left_div_inner .div_top01 .btn_gray {
+    width: 163px; height: 22px; line-height: 22px;
+}
+.salary .right_div_inner .div_top02 .button_set {
+    position: absolute;
+    top: 0px; right: 15px;
+}
+/* 출력 및 발송 버튼 */
+.salary .right_div_inner .div_top02 .btn_gray {
+    width: 180px; height: 22px; line-height: 22px;
+}
+.salary .right_div_inner .div_top02 .btn02 {
+    width: 110px;
+    margin-left: 10px;
+}
+/* 조회 */
+.salary .btn01 {
+    right: 14px;
+    background: white;
+    color: #626262;
+    margin-left: 90px;
+    margin-top: -1px;
+}

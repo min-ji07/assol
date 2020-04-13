@@ -1,0 +1,46 @@
+@import url("../../common/default.css");
+@import url("/images");
+
+.work_setting_01 .title h1 { font-size: 24px; color: #555555; padding-bottom: 12px;}
+.work_setting_01 .title p { font-size: 19px; color: #555555; padding-bottom: 27px;}
+.work_setting_01 .worktable { background: white; width: 1689px; height: 597px; top: 62px; border-radius: 20px; box-shadow: 0px 6px 5px #d8d8d8; }
+.work_setting_01 .workTeam_option { position: relative; width : 1600px; height: 597px; margin: 0 auto;} 
+.work_setting_01 .option_inner { position: absolute; width: 100%; text-align: center; top: 26px;}
+.work_setting_01 .option_inner h1 { font-size: 24px; color: #555555; }
+.work_setting_01 .option_inner p { font-size: 16px; color: #797979;}
+.work_setting_01 .team_option {float: left;}
+.work_setting_01 .team_option p { font-size: 18px; color: #797979; }
+.work_setting_01 .search1 { background-color: #aaaaaa; width: 189px; height: 27px; border-radius: 30px; color: white; font-size: 18px; cursor:pointer;}
+.work_setting_01 input[type="text"]{
+    width: 67px; height: 21px; margin-top: -3px; margin-left: 10px; 
+    border: 1px solid #aaaaaa; border-radius: 0px; text-indent: 13px;
+    font-size: 18px;
+}
+.work_setting_01 select {width: 41px; height: 21px; border: 1px solid #aaaaaa; border-radius: 0px; }
+.work_setting_01 .num01 {position: absolute; top: 56px;} 
+.work_setting_01 .year_inner { font-size: 18px; color: #797979; padding-bottom: 10px;} 
+.work_setting_01 .buttonset { float: left; margin-left: 10px; transform:translateY(15%); } 
+.work_setting_01 .buttonset button { background-color: #bdbdbd; width: 68px; height: 22px; border-radius: 50px; color: white; font-size: 16px; line-height: 50%; margin-right: 6px; cursor:pointer;} 
+.work_setting_01 .left {float: left;}
+.work_setting_01 .right { float: right; position: absolute; left: 1413px;}
+.work_setting_01 .right img {margin-left: 5px;}
+.work_setting_01 .table { position: absolute; top: 130px; width: 1600px; height: 404px;  text-align: center;}
+.work_setting_01 .backnext { position: absolute; float: right; top: 552px; right: 6px;}
+.work_setting_01 .back, .next { width: 118px; height: 27px; border-radius: 30px; font-size: 19.5px; color: white; } 
+.work_setting_01 .back, .next a { color: white; } 
+.work_setting_01 .back { background: #bfbfbf; margin-right: 12px; line-height: 50%; cursor:pointer;}
+.work_setting_01 .next { background: #87c395; line-height: 50%; cursor:pointer;} 
+.work_setting_01 .next { color: white;} 
+.work_setting_01 .modal { display: none; width: 506px ; height: 381px; margin: 0 auto; top: 391px; left: 707px; position: absolute; top: 390px; left: 707px; z-index: 30;}
+.work_setting_01 .modal_top { background: #7d7d7d; color: white; font-size: 18px; height: 45px; line-height: 45px; border-radius: 15px 15px 0 0;}
+.work_setting_01 .modal_top div:first-child{ float: left; position: absolute; left: 31px;}
+.work_setting_01 .modal_top div:last-child{ float: right; position: absolute; right: 30px ;}
+.work_setting_01 .modal_top a {color: white;}
+.work_setting_01 .close_modal {display: block; margin-top: 9px ; width: 28px; height: 28px; background-image: url('/images/esc.png');}
+.work_setting_01 .modal_bottom {width: 506px; height: 336px; background: white; margin: 0 auto; text-align: center; border-radius: 0 0 15px 15px; box-shadow: 0px 3px 13px #6f6f6f;}
+.work_setting_01 .modal_bottom img { position: relative; padding-top: 53px;}
+.work_setting_01 .modal_bottom p { padding-top: 53px;}
+.work_setting_01 .modal_bottom button { margin-top: 10px; background: #7d7d7d; width: 131px; height: 30px; line-height: 30px; color: white; border-radius: 15px;}
+.work_setting_01 .modal_layer {position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: -1;}
+
+

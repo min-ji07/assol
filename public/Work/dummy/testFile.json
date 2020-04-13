@@ -1,0 +1,38 @@
+
+{
+    "Data":[
+    {
+        "rowId": 1,
+        "processType":4,
+        "branchNo": "2",
+        "groupName": "A조", 
+        "workType":"1",
+        "regularEmployee":"1",
+        "workerCount":5,
+        "yearMonthDate" : "202010",
+        "workTime": "08:00~17:00",
+        "restTime":"12:00~13:00",
+        "subRestTime":"13:00~14:00",
+        "totalRestTime":"",
+        "currentTime": "",
+        "overTime": "30",
+        "recommTime":"8시간",
+        "passYn":"X"
+    },{
+        "rowId": 1,
+        "branchNo": 1,
+        "groupName": "A",
+        "groupColor": 1,
+        "workType": 3,
+        "workerCount": 5,
+        "regularEmployee": 1,
+        "yearMonthDate": "202004",
+        "workDate": null,
+        "workTime": "09:00~18:00",
+        "restTime": "13:00~14:00",
+        "subRestTime": "15:00~16:00",
+        "currentTime": 540,
+        "overTime": 60
+    }
+]
+}

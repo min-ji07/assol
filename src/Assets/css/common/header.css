@@ -1,0 +1,73 @@
+@import url("../common/default.css");
+@import url("/images");
+body {padding: 0px; margin: 0 auto; font-family: 'Noto Sans KR'; background-color: #eeeeee; position: relative;}
+header{font-family: 'Nanum Gothic'; font-weight: 500;}
+/* 헤더위치 */
+#headertop_inner, .menu_inner, #scheduleOption{ width:1686px; margin:0 auto; }
+#headertop_inner { position: relative; }
+.headertop { background: #3d5f63; height: 117px; font-weight: 600; text-align: center; vertical-align: middle;}
+/*사용자 아이콘*/
+.headertop h1 { position: absolute; left: 50%; transform:translateX(-50%)}
+.headertop h1 img { width: 120px; height: auto;}
+/* 서브메뉴숨기기 */
+.menu {float:left; line-height: 50%; transform:translateY(-7%); padding: 28px 38px; font-size: 20px; color: white ; font-weight: normal;} 
+a[class*="answer"] { padding: 28px 35px; font-size: 22px; color: white ; font-weight: normal; }
+/* 검색창 div */
+.searchdiv { 
+    position: absolute; 
+    float: left; 
+    width: 371px; height: 51px;
+    top: 35px;
+    border-radius: 58px; 
+    font-size: 18px; color: black; 
+    background-color: white;
+    text-align: left;
+}
+.searchdiv img { width: 18px; height: 20px;}
+.searchimg { 
+    position: absolute;  top: 13px;
+    background: url('/images/search.png'); background-repeat: no-repeat;
+    width: 18px; height: 20px;
+    color: transparent;
+}
+.searchdiv:focus { border-style: none;}
+/* 검색창 */ 
+input, button { border-style: none; }
+input.search { background-color: transparent; border: none; 
+    width: 300px; height: 50px; font-size: 17px; 
+    margin-left: 21px; line-height: 50%; border-bottom: 1 solid #41505c; margin-left: 21px;;
+}
+input::placeholder { font-size: 17px; color: #b2b7bb;}
+.search::after { content: ""; position: absolute; width: 272px; height: 1px; color: white;} 
+.search:focus {outline: none;}
+.userinfo { 
+    float: right; position: relative; 
+    color: #b2b7bb; font-size: 20px; font-weight: normal; text-align: center;
+    top : 30px;  
+}
+.userinfo ul li {float: left; font-size: 18px; padding: 0 20px;}
+.userinfo ul li a {color: #fffffd; }
+.name { float: left;} 
+.photo { float: right; border-radius: 50px; box-shadow: 3px 1px 5px 0px #324d50;}
+.menu_inner { position: relative; height: 76px;}
+.menu_inner > a { padding-left: 0px;} 
+.menu_inner > ul > li {float: left; line-height: 70px; position:relative;} 
+/* 헤더 메뉴 */
+.headermenu { position: relative; background-color: #647f82; 
+    height: 76px; vertical-align: middle;  }
+/*서브메뉴*/
+.gnb li > ul { left: 0px; width: 100%; text-align: center;} 
+/* 서브메뉴 뒤에 메뉴랑 같이 나올 div */
+.sub_bg { position: absolute; background-color: #7e9598; opacity: 0.9; 
+    top: 76px; width: 1920px; height: 393px; left: -117px; box-shadow: 0px 2px 20px #566671; 
+    z-index: 20; display: none;}
+.submenu {
+    display:none;
+    position:absolute;
+    top : 76px; 
+    width: 1920px; height: 393px;
+    color: white;
+    z-index: 25;
+}
+.submenu li a { display: block; color: white; height: 43px; font-size: 16px;} 
+.submenu :nth-child(1){ padding-top: 5px;}

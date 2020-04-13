@@ -1,0 +1,35 @@
+@import url("../../common/default.css");
+@import url("/images");
+
+.work_setting_00 .title h1 { font-size: 24px; color: #555555; padding-bottom: 12px;}
+.work_setting_00 .title p { font-size: 19px; color: #555555; padding-bottom: 27px;}
+.work_setting_00 .schedule_option::before { position: absolute; content: ""; display: block; background: gray; border-radius: 50px; opacity: 0.1;
+     width: 12px; height: 475px; left: 524px; top: -28px; cursor: auto;}
+/*근무표 보기 / 설정 위치*/
+.work_setting_00 .schedule_img { position: absolute; left: 433px; top: 374px;}
+/* 근무표 보기 */
+.work_setting_00 .scheduleView { width: 480px; height: 422px; box-shadow: 0px 6px 5px #d8d8d8; border-radius: 30px; cursor: pointer;}
+.work_setting_00 .scheduleView:focus, .schedule_option:focus{ outline: none;}
+/* 근무표 설정 */
+.work_setting_00 .schedule_option { width: 480px; height: 422px; margin-left: 97px; box-shadow: 0px 6px 5px #d8d8d8;  border-radius: 30px; cursor: pointer;}
+.work_setting_00 .close_modal button { background: transparent;}
+.work_setting_00 .close_modal button img { margin-top: -8px; cursor: pointer;} 
+
+/* 팝업 */
+.work_setting_00 .modal { display: none; width: 506px ; height: 381px; margin: 0 auto; position: absolute; top: 390px; left: 707px; z-index: 30;}
+.work_setting_00 .modal_top { background: #7d7d7d; color: white; font-size: 18px; height: 45px; line-height: 45px; border-radius: 15px 15px 0 0;}
+.work_setting_00 .modal_top div:first-child{ float: left; position: absolute; left: 31px;}
+.work_setting_00 .modal_top div:last-child{ float: right; position: absolute; right: 30px ;}
+.work_setting_00 .modal_top button { width: 19px; height: 19px; line-height: 19px;}
+.work_setting_00 .modal_bottom {width: 506px; height: 336px; background: white; margin: 0 auto; text-align: center; border-radius: 0 0 15px 15px; box-shadow: 0px 3px 13px #6f6f6f;}
+.work_setting_00 .modal_bottom img { position: relative; padding-top: 53px;}                    
+.work_setting_00 .modal_bottom p { padding-top: 53px;}
+.work_setting_00 .modal_bottom button { margin-top: 10px; background: #7d7d7d; width: 131px; height: 30px; line-height: 30px; color: white; border-radius: 15px; cursor: pointer;}
+.work_setting_00 .modal_layer {position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: -1;}
+
+
+
+
+
+
+

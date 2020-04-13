@@ -1,0 +1,20 @@
+{
+    "ErrorCode": 0,
+    "Msg": "SUCCESS",
+    "Id": "",
+    "Data": [
+        {
+            "userNo": 1,
+            "branchNo": 1,
+            "userName": "justin",
+            "yearsMonthDate": null,
+            "employeeNumber": "4488",
+            "position": "개발자",
+            "startDate": "2020-10-10",
+            "endDate": "2020-10-12",
+            "annalType": 1,
+            "useAnnal": 0,
+            "reason": null
+        }
+    ]
+}

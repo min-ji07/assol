@@ -1,0 +1,35 @@
+{
+    "ErrorCode": 0,
+    "ProcessType": 4,
+    "Msg": "SUCCESS",
+    "Id": "",
+    "Data": [
+        {
+            "userNo": 1,
+            "userName": "김성일",
+            "position": "개발자",
+            "joinDate": "2020-05-11",
+            "yearsAnnual": 0,
+            "useAnnual": 3,
+            "remainAnnual": -4
+        },
+        {
+            "userNo": 2,
+            "userName": "이석민",
+            "position": "개발자",
+            "joinDate": "2020-05-11",
+            "yearsAnnual": 0,
+            "useAnnual": 3,
+            "remainAnnual": 2
+        },
+        {
+            "userNo": 3,
+            "userName": "이남흔",
+            "position": "개발자",
+            "joinDate": "2020-05-11",
+            "yearsAnnual": 0,
+            "useAnnual": 1,
+            "remainAnnual": 9
+        }
+    ]
+}

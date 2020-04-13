@@ -1,0 +1,70 @@
+@import url("../../common/default.css");
+@import url("/images");
+
+.work_setting_02 .title h1 { font-size: 24px; color: #555555; padding-bottom: 12px;}
+.work_setting_02 .title p { font-size: 19px; color: #555555; padding-bottom: 27px;}
+.work_setting_02 .emTable { background: white; width: 1689px; height: 597px; top: 62px; border-radius: 20px; box-shadow: 0px 6px 5px #d8d8d8;}
+.work_setting_02 .option {float: left; width: 150px; height: 20px ;} 
+.work_setting_02 .option p {
+    width: 193px; font-size: 19px; color: #797979; 
+    margin-left: 39px; margin-top: 31px;
+}
+.work_setting_02 .leftDiv { float: left; width: 1114px; height: 595px;}
+.work_setting_02 .backnext { position: absolute; bottom: 17px; right: 48px; float: right;}
+.work_setting_02 .back, .next {  width: 118px; height: 27px; border-radius: 30px; font-size: 19.5px; color: white; cursor:pointer;} 
+.work_setting_02 .back { background: #bfbfbf; margin-right: 12px; line-height: 50%;}
+.work_setting_02 .next { background: #87c395; line-height: 50%;} 
+.work_setting_02 .buttonset { float: left; line-height: 50%;  margin-top: 34px; margin-left: 50px;}
+.work_setting_02 .buttonset button { background-color: #bdbdbd; width: 68px; height: 22px; border-radius: 50px; color: white; font-size: 16px; line-height: 50%; margin-right: 6px; cursor:pointer;}
+.work_setting_02 .right_border { position: relative; float: left; width: 1043px; height: 494px; left: 35px; top:19px;}
+.work_setting_02 .rightDiv { float: right; margin: 0 auto; width: 574px; height: 595px; position: relative; }
+.work_setting_02 .rightDiv p { position: absolute; font-size: 19px; color: #797979; top: 31px; } 
+.work_setting_02 .left_border {text-align: center; }
+.work_setting_02 .table { position : absolute; width: 1043px; height: 494px; }
+.work_setting_02 .table2 { 
+    position: absolute; overflow: scroll; overflow-x: hidden; text-align: center; 
+    width: 537px; height: 419px; top: 118px;
+    border: 1px solid #d3d3d3; border-top: none; border-right: none;
+}
+.work_setting_02 .table2::-webkit-scrollbar {background: #e9e9e9; width: 9px; height: 363px; border-radius: 50px;}
+.work_setting_02 .table2::-webkit-scrollbar-thumb {background: #a2a2a2; width: 9px; height: 63px; border-radius: 50px;}
+.work_setting_02 .table2::-webkit-scrollbar-track {background: #e9e9e9; width: 9px; height: 300px;}
+.work_setting_02 .num { width: 501px; height: 74px; border-radius: 15px; color: white; font-size: 23px; margin: 7px 0 10px 18px; display: flex;}
+.work_setting_02 .num.A { margin-top: 15px;}
+.work_setting_02 .num0 { 
+    position: absolute; z-index: 10;
+    background-color: #f5f3f4; color: #535353; border-radius: 15px;
+    top: 75px; width: 538px; height: 30px; font-size: 15px; display: flex;
+}
+.work_setting_02 .num0 div {flex:1; width: 501px; height: 30px; line-height: 30px; text-align: center;}
+.work_setting_02 .num div {flex: 1; padding: 24px 49px; transform:translateY(-5%)}
+.work_setting_02 .num div::after { content: ""; position: absolute; width: 3px; height: 53px; background:rgb(255, 255, 255, 0.39); left: 166px; transform:translateY(-20%)}
+.work_setting_02 .num:last-child(div) {content: none;}
+.work_setting_02 .row1 {background-color: #da9898;}
+.work_setting_02 .row2 {background-color: #98daa5;}
+.work_setting_02 .row3 {background-color: #a5cfdd;}
+.work_setting_02 .row4 {background-color: #a5addd;}
+.work_setting_02 .row5 {background-color: #d0a5dd;}
+.work_setting_02 .row6 {background-color: #7c7878;} 
+.work_setting_02 .row7 {background-color: #4d4d4d;}
+.work_setting_02 .row8 {background-color: #dad1d1;}
+/* 팝업 */
+.work_setting_02 .modal01 { display: none; width: 721px; height: 356px; top: 306px; left: 593px; position: absolute; z-index: 30;}
+.work_setting_02 .modal02 { display: none; width: 721px; height: 654px; top: 206px; left: 593px; position: absolute; z-index: 30;}
+.work_setting_02 .modal_top { background: #7d7d7d; color: white; font-size: 18px; height: 52px; line-height: 52px; border-radius: 15px 15px 0 0;}
+.work_setting_02 .modal_top div:first-child{ float: left; position: absolute; left: 19px;}
+.work_setting_02 .modal_top div:last-child{ float: right; position: absolute; right: 19px;}
+.work_setting_02 .close_modal {display: block; top: 13px ; width: 28px; height: 28px; background-image: url('/images/esc.png');}
+.work_setting_02 .modal_bottom { position: relative; width: 721px; height: 602px; background: white; margin: 0 auto; text-align: center; border-radius: 0 0 15px 15px; box-shadow: 0px 3px 13px #6f6f6f;}
+.work_setting_02 .modal_bottom.minimodal { position: relative; width: 721px; height: 331px; background: white; margin: 0 auto; text-align: center; border-radius: 0 0 15px 15px; box-shadow: 0px 3px 13px #6f6f6f;}
+.work_setting_02 .modal_bottom > div { position: absolute; top: 27px; left: 28px; width: 664px; height: 254px; border: 1px solid #d3d3d3; }
+.work_setting_02 .modal_bottom .bottom { position: absolute; top: 293px; left: 28px; width: 664px; height: 254px; border: 1px solid #d3d3d3;}
+.work_setting_02 .modal_layer {position: fixed; top: 0px; left: 0px; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: -1;}
+.work_setting_02 .complete { position: absolute; top: 613px; right: 27px; color: #f7faf8; font-size: 16px;
+    width: 110px; height: 29px; background: #70ae83; border-radius: 15px;}
+.work_setting_02 .minicomplete{ position: absolute; top: 343px; right: 27px; color: #f7faf8; font-size: 16px;
+    width: 110px; height: 29px; background: #70ae83; border-radius: 15px;}
+.work_setting_02 input[type="text"] {
+    width : 67px; height: 21px; border: 1px solid #aaaaaa; border-radius: 0px;
+    font-size: 16px; text-indent: 4px; margin-left: 10px;  margin-top: -4px;
+}

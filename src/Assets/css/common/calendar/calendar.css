@@ -1,0 +1,65 @@
+/* calendar */
+.work_table_result .datepicker{
+	width:100% !important;
+	height:100% !important;
+	box-sizing:border-box  !important;
+}
+.work_table_result .datepicker--nav{
+	display:none  !important;
+}
+.work_table_result .datepicker--days-names{
+	display:none  !important;
+}
+.work_table_result .datepicker-here,
+.work_table_result .datepicker--content,
+.work_table_result .datepicker--body,
+.work_table_result .datepicker--cells,
+.work_table_result .datepicker-inline,
+.work_table_result .datepicker{
+	height:100% !important;
+	box-sizing:border-box;
+}
+.work_table_result .datepicker--cell{
+	height:75.8px !important;
+	border-radius:0px !important;
+}
+.work_table_result .datepicker--cell-day{
+	font-weight:bold;
+}
+/* 오늘 날짜 색상 */
+/* 포커스, 선택시 색상*/
+.work_table_result .datepicker--cell.-current-{
+    background-color:#5d8d9c  !important;
+    color:white !important;	
+}
+.work_table_result .datepicker--cell.-selected-.-focus-,
+.work_table_result .datepicker--cell.-selected-,
+.work_table_result .datepicker--cell.-selected-.-current-{
+	border:4px solid #5d8d9c !important;
+	background-color:transparent;
+	color:#4a4a4a;
+}
+/* 주말 색상 */
+.work_table_result .datepicker--cell-day:nth-child(7n-1):not(.-other-month-){
+    color:#3f56b6;
+}
+.work_table_result .datepicker--cell-day:nth-child(7n):not(.-other-month-){
+    color:#d24d4e;
+}
+/*
+	일자
+*/
+.work_table_result .datepicker--cell:not(.-other-month-) .calendar_day{
+	display:block;
+	width:8px;
+	height:8px;
+	background-color:rgb(255,122,107);
+	border-radius: 50%;
+	position:absolute;
+	bottom:10px;
+}
+.work_table_result .datepicker--cell.-selected-.-focus-:not(.-other-month-) .calendar_day,
+.work_table_result .datepicker--cell.-selected-:not(.-other-month-) .calendar_day,
+.work_table_result .datepicker--cell.-selected-.-current-:not(.-other-month-) .calendar_day{
+	bottom:6px;
+}

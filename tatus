@@ -1,0 +1,37 @@
+[1mdiff --git a/src/Router/Work/WorkTableResult/WorkRestDayMgt/WorkRestDayMgtContainer.js b/src/Router/Work/WorkTableResult/WorkRestDayMgt/WorkRestDayMgtContainer.js[m
+[1mindex 16c469c..fe41a36 100644[m
+[1m--- a/src/Router/Work/WorkTableResult/WorkRestDayMgt/WorkRestDayMgtContainer.js[m
+[1m+++ b/src/Router/Work/WorkTableResult/WorkRestDayMgt/WorkRestDayMgtContainer.js[m
+[36m@@ -63,7 +63,7 @@[m [mconst WorkRestDayMgtContainer = () => {[m
+             "yearsMonthDate" :"202004",[m
+             "searchDate" :"2020-04-01"[m
+         }[m
+[31m-        //WorkRestDayCalendar(params);[m
+[32m+[m[32m       // WorkRestDayCalendar(params);[m
+      }[m
+ [m
+ [m
+[36m@@ -79,11 +79,14 @@[m [mconst WorkRestDayMgtContainer = () => {[m
+                ,{ headerName: "연간연차수", field: "yearsAnnual"}[m
+                ,{ headerName: "사용일수", field: "useAnnual"[m
+                     ,cellRenderer:function(params){[m
+[32m+[m[32m                        //validation[m[41m [m
+[32m+[m[32m                        if(!params || !params.value) return '';[m
+                         return `<span class='txt_red'>${params.value}</span>`[m
+                     } [m
+                 } [m
+                ,{ headerName: "잔여일수", field: "remainAnnual"[m
+                     ,cellRenderer:function(params){[m
+[32m+[m[32m                        if(!params || !params.value) return '';[m
+                         return `<span class='txt_blue'>${params.value}</span>`[m
+                     }[m
+                 }[m
+[36m@@ -92,7 +95,7 @@[m [mconst WorkRestDayMgtContainer = () => {[m
+            //기본컬럼 정의[m
+            const defaultColDef ={[m
+                width: 100[m
+[31m-               ,editable : true[m
+[32m+[m[32m               ,editable : false[m[41m [m
+                ,cellStyle: {textAlign: 'center'}[m
+                ,resizable : true[m
+            } [m

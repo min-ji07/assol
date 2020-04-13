@@ -1,0 +1,38 @@
+@import url("../../common/default.css");
+@import url("/images");
+
+.employment_support .title p { padding-bottom: 92px;} /* 원천세신고서 위치랑 맞춤 , 다르게 하려면 67px */
+
+/* 메인 메뉴 공통 버튼 */
+.menu_main_button_div{
+    margin: 0 auto;
+    width: 685px; height: 460px;
+}
+/* 버튼 */
+.menu_main_button {
+    float: left; margin-left: 79px;
+    width: 293px; height: 419px;
+    border-radius: 10px;
+    transition: all 1s;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+.mg_le_0 { margin-left: 0px;}
+/* 마우스 hover 시 */
+.menu_main_button:hover {
+    transform: translateY(-35px);
+}
+.width_685 { width: 685px;}
+/* 원천세 hover 시 변경 이미지 */
+/* 이미지 변경 될 것임*/
+.num00 {
+    background: url("/images/employment_support_00_01.png") no-repeat;
+}
+.num00:hover { 
+    background: url("/images/employment_support_00_01.png") no-repeat;
+}
+.num01 {
+    background: url("/images/employment_support_01_01.png") no-repeat;
+}
+.num01:hover {
+    background: url("/images/employment_support_01_01.png") no-repeat;
+}

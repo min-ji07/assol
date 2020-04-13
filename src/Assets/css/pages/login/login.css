@@ -1,0 +1,322 @@
+@import url("/images");
+html,
+body{
+    height:100%;
+}
+.login .userContent button{
+    color: #98a2a3;
+    width: 112px;
+    height: 30px;
+    left: 933px;
+}
+.login .btn_login{
+    border-style: none;
+    background: transparent;
+    text-align: center;
+    height: 30px;
+    cursor:pointer; 
+    color: white;
+    width: 310px;
+    height: 44px;
+    font-size:16px;
+}
+.login .submit01{
+    font-family: 'Nanum Gothic', sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+}
+.login  button:focus{
+    outline: none;
+}
+.login .login_input{
+    border-style: none;
+    background-color: #4b5c5f;
+    text-align: center;
+    font-size: 22px;
+    color: white;
+    margin: 0 auto;
+    width: 310px; height: 44px;
+    border-radius: 50px;
+    /* background:linear-gradient(to bottom, #42505D 0%,  #404E5B 50%, #3C4A55 100%); */
+    box-shadow: 3px 2px 4px #202d2f;
+    text-indent:0px;
+}
+.login .login_input:focus{
+    outline: none;
+}
+.login .login_input::placeholder{
+    color:rgba(220, 220, 220, 0.774);
+}
+.login #div01{
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: 33%;
+}
+.login #div02{
+    position: absolute;
+    top: 0;
+    left: 33%;
+    width: 34%;
+    text-align: center;
+}
+.login #div03{
+    position: absolute;
+    top: 0;
+    left: 67%;
+    width: 33%;
+}
+.login #ACE{
+    display: none;
+}
+.login .userContent button{
+    background:url("/images/bg_login_line.png") no-repeat right center;
+}
+.login .userContent button:last-child{
+    background:none;
+}
+
+.login .btn_login{
+    margin-top: 23px;
+    border-radius: 50px;
+    background:url('/images/icon_login.png') no-repeat 22% center;
+    background-color:#77b1b7;
+}
+
+.login .mb1{
+    width:980px;
+    left:470px;
+    top:10px;
+}
+.login .mb2{
+    width:980px;
+    left:470px;
+    top:41px;
+}
+
+.login .mb1 label{
+    font-weight:normal;
+}
+.login .modal_box .title_label{
+    display:block;
+    text-align: left;
+    font-size:16px;
+    margin-bottom:15px;
+    color:#444;
+}
+.login .modal_box .title_label:before{
+    display:inline-block;
+    content: "";
+    width:10px;
+    height:10px;
+    background-color:#77b1b7;
+    margin-bottom: 1px;
+    margin-right: 7px;
+}
+.login .mb1 .radio_box{
+    text-align:right;
+    margin-bottom:15px;
+}
+.login .mb1 .radio_box label{
+    font-size:14px;
+    margin-right:15px;
+}
+.login .mb1 textarea{
+    width:100%;
+    height:140px;
+    margin-bottom:8px;
+    display:block;
+    background-color: white;
+    border:1px solid #b5b5b5;
+    resize: none;
+    padding:10px;
+    text-indent: 0px;
+    font-size:14px;
+}
+.login .mb1 p{
+    text-align:right;
+}
+.login .mb1 p label,
+.login .mb1 p input{
+    vertical-align: middle;
+}
+.login .mb1 p.agreement_all{
+    width:100%;
+    height:50px;
+    padding-top:5px;
+    font-size:18px;
+    background-color:#dae9eb;
+    border:4px solid #b5d5d8;
+    margin:0 auto !important;
+    text-align:center !important;
+    box-sizing: border-box;
+    color:#444;
+}
+.login .mb1 p.agreement_all .txt_point{
+    font-weight:bold;
+    background:url("/images/login_agree_bg.png") no-repeat left 85%;
+    padding:0 2px;
+}
+.login .modal_box .btn_box{
+    text-align:right;
+    margin-bottom:0px;
+}
+.login .modal_box .btn_box button{
+    padding:5px 25px;
+    border-radius: 15px;
+    background-color:#77b1b7;
+    color:white;
+    margin-top:15px;
+}
+.login .mb2 p{
+    text-align:left;
+    margin-bottom:20px;
+}
+.login .mb2 p > span:first-child,
+.login .mb2 p > label:first-child{
+    width:95px;
+    display:inline-block;
+    color:#5a5a5a;
+    font-size:14px;
+    font-weight: normal;
+    margin-left:12px;
+}
+.login .mb2 p label{
+    color:#5a5a5a;
+    font-size:14px;
+    font-weight: normal;
+}
+.login .mb2 p input{
+    width:auto;
+    box-sizing:border-box;
+    border:0 none;
+    border-bottom:1px solid #bfbfbf;
+    border-radius: 0px;
+    text-indent:0px;
+}
+.login .mb2 p input:not([type="radio"]){
+    width:167px; 
+    /* text-align:center; */
+    text-indent: 2px;
+}
+.login .mb2 p input[type="radio"] ~ label{
+    margin-right:15px;
+}
+.login .mb2 .btn_addr{
+    padding: 0px 16px;
+    border-radius: 15px;
+    background-color: #bfbfbf;
+    color: white;
+    margin: 0 5px;
+    font-size: 16px;
+}
+.login .mb2 .required{
+    position: relative;
+}
+.login .mb2 .required:before{
+    content:"*";
+    display:inline-block;
+    color:#d1263e;
+    position:absolute;
+    font-size:16px;
+    left: -6px;
+    top: -7px;
+}
+
+
+/* ///////////////////////////////기관 종류 선택/////////////////////////*/
+.login .mb3 {
+    position: absolute;
+    width:1396px; height: 460px;
+    left: 275px; top:175px;
+}
+.login .modal_top_select {
+    background: transparent;
+    text-align: center;
+    color: white;
+    margin-top: 20px;
+}
+/* 밑줄 */
+.login .modal_top_select strong::before{
+    display: block;
+    position: absolute;
+    content: "";
+    left: 612px; top: -14px;
+    width: 119px; height: 9px;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+}
+.login .pw_con::after {
+    display: block;
+    content:"*영어소문자, 대문자, 숫자를 활용하여 입력해주세요.";
+    color: #F38D8D;
+    margin-left: 17px;
+}
+/* 버튼 */
+.modal_top_select .choose {
+    float: left;
+    width: 311px; height: 460px; margin-left: 50px;
+    transition: all 1s;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+/* 공인인증서 버튼 */
+.modal_bottom .certificate {
+    width: 195px; height: 161px;
+    background: url('/images/certificate.png')no-repeat;
+    border-radius: 5px;
+}
+/* 다음으로 */
+.login .modal_box .btn_box_mb3 button{
+    width: 131px; height: 26px;
+    border-radius: 15px;
+    background-color:#87c395;
+    color:white; font-size: 18px;
+    margin-top:50px;
+}
+/* 3번째 다음*/
+.login .modal_box .btn_box_join button{
+    padding:5px 25px;
+    border-radius: 15px;
+    background-color:#77b1b7;
+    color:white;
+    font-size: 18px; 
+    float: right;
+    margin-right: 16px;
+    margin-top: -37px;
+}
+.modal_top_select .mg_le_0 { margin-left: 0px;}
+/* hover 시 변경 이미지 */
+.choose:hover {
+    transform: translateY(-35px);
+}
+.modal_box .modal_bg_mb3 {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background:url('/images/loginmain.png') no-repeat;
+    background-color: rgba(0, 0, 0, 0.3); /* 투명색 어케함 */
+    z-index: -1;
+}
+.login .num00 {
+    background: url("/images/wndirks.png") no-repeat;
+    border-radius: 35px;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+.login .num01 {
+    background: url("/images/shdlsdydid.png") no-repeat;
+    border-radius: 35px;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+.login .num02 {
+    background: url("/images/shdlsdydidrhdehd.png") no-repeat;
+    border-radius: 35px;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+.login .num03 {
+    background: url("/images/rkwjdqkdans.png") no-repeat;
+    border-radius: 35px;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}

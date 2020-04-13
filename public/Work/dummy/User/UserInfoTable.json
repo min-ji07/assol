@@ -1,0 +1,43 @@
+{
+    "Data":
+        [
+            {
+            "id" : "justi1237",
+            "userName" : "김성일",
+            "workPosition" : "roqkfwk", 
+            "workLevel" : "123123", 
+            "email" : "김성일@ha.com", 
+            "personalNumber" : "941004-1234567", 
+            "birth" : "김성일", 
+            "joinDate" : "2020-04-01", 
+            "imagePath" : "1628.jpg", 
+            "regularEmployee" : 1, 
+            "tellno" : "02-1234-5678", 
+            "mobile" : "010-3920-1628", 
+            "postNo" : "02643", 
+            "address" : "서울 동대문구 청계천로461 청계한양아이클래스 1901호",
+            "branchNo" : "1", 
+        
+            "accountHolder":"김먼지", 
+            "bankName":"하나은행",
+            "accountNumber":"10912487251518",
+            "payOfYear":0, 
+            "healthInsurance":0, 
+            "nationalInsurance":0, 
+            "careInsurance":0, 
+            "employeeInsurance":0, 
+            "socialInsurance":false, 
+            "unionJoinValue":false, 
+            "spouseDeduction":false 
+            ,"womenDeduction":false
+            ,"underTwenty":false
+            ,"overSixty":false
+            ,"disiblePerson":false
+            ,"recipient":false
+            ,"childDeduction":false
+        }
+    ]
+
+}
+
+

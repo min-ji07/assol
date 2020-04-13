@@ -1,0 +1,138 @@
+{
+    "ErrorCode": 0,
+    "ProcessType": 4,
+    "Msg": "SUCCESS",
+    "Id": "",
+    "Data": [
+        {
+            "Key": 1,
+            "Value": [
+                {
+                    "userNo": 1,
+                    "rowId": 1,
+                    "replaceUserNo": 6,
+                    "yearsMonthDate": "202010",
+                    "replaceEmployeeNumber": "2228",
+                    "replaceWorkDate": "20201005",
+                    "replaceUserName": "김민지",
+                    "replacePosition": "사회복지사",
+                    "replaceWorkDay": 1,
+                    "refRowId": 1
+                },
+                {
+                    "userNo": 0,
+                    "rowId": 0,
+                    "replaceUserNo": 0,
+                    "yearsMonthDate": null,
+                    "replaceEmployeeNumber": null,
+                    "replaceWorkDate": null,
+                    "replaceUserName": null,
+                    "replacePosition": null,
+                    "replaceWorkDay": 0,
+                    "refRowId": 0
+                },
+                {
+                    "userNo": 0,
+                    "rowId": 0,
+                    "replaceUserNo": 0,
+                    "yearsMonthDate": null,
+                    "replaceEmployeeNumber": null,
+                    "replaceWorkDate": null,
+                    "replaceUserName": null,
+                    "replacePosition": null,
+                    "replaceWorkDay": 0,
+                    "refRowId": 0
+                },
+                {
+                    "userNo": 0,
+                    "rowId": 0,
+                    "replaceUserNo": 0,
+                    "yearsMonthDate": null,
+                    "replaceEmployeeNumber": null,
+                    "replaceWorkDate": null,
+                    "replaceUserName": null,
+                    "replacePosition": null,
+                    "replaceWorkDay": 0,
+                    "refRowId": 0
+                },
+                {
+                    "userNo": 0,
+                    "rowId": 0,
+                    "replaceUserNo": 0,
+                    "yearsMonthDate": null,
+                    "replaceEmployeeNumber": null,
+                    "replaceWorkDate": null,
+                    "replaceUserName": null,
+                    "replacePosition": null,
+                    "replaceWorkDay": 0,
+                    "refRowId": 0
+                }
+            ]
+        },
+        {
+            "Key": 4,
+            "Value": [
+                {
+                    "userNo": 1,
+                    "rowId": 2,
+                    "replaceUserNo": 8,
+                    "yearsMonthDate": "202010",
+                    "replaceEmployeeNumber": "2428",
+                    "replaceWorkDate": "20201001",
+                    "replaceUserName": "서영",
+                    "replacePosition": "회계담당자",
+                    "replaceWorkDay": 4,
+                    "refRowId": 1
+                },
+                {
+                    "userNo": 0,
+                    "rowId": 0,
+                    "replaceUserNo": 0,
+                    "yearsMonthDate": null,
+                    "replaceEmployeeNumber": null,
+                    "replaceWorkDate": null,
+                    "replaceUserName": null,
+                    "replacePosition": null,
+                    "replaceWorkDay": 0,
+                    "refRowId": 0
+                },
+                {
+                    "userNo": 0,
+                    "rowId": 0,
+                    "replaceUserNo": 0,
+                    "yearsMonthDate": null,
+                    "replaceEmployeeNumber": null,
+                    "replaceWorkDate": null,
+                    "replaceUserName": null,
+                    "replacePosition": null,
+                    "replaceWorkDay": 0,
+                    "refRowId": 0
+                },
+                {
+                    "userNo": 0,
+                    "rowId": 0,
+                    "replaceUserNo": 0,
+                    "yearsMonthDate": null,
+                    "replaceEmployeeNumber": null,
+                    "replaceWorkDate": null,
+                    "replaceUserName": null,
+                    "replacePosition": null,
+                    "replaceWorkDay": 0,
+                    "refRowId": 0
+                },
+                {
+                    "userNo": 0,
+                    "rowId": 0,
+                    "replaceUserNo": 0,
+                    "yearsMonthDate": null,
+                    "replaceEmployeeNumber": null,
+                    "replaceWorkDate": null,
+                    "replaceUserName": null,
+                    "replacePosition": null,
+                    "replaceWorkDay": 0,
+                    "refRowId": 0
+                }
+            ]
+        }
+    ]
+}

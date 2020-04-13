@@ -1,0 +1,119 @@
+@import url("../../common/default.css");
+@import url("/images");
+
+
+.user_management .title p { padding-bottom: 20px;}
+.user_management { 
+    position: relative;
+    width: 1689px; height: 602px; 
+}
+
+.user_management .div_top{
+    width: 1689px; height: 58px; line-height: 58px;
+    text-indent: 10px;
+    background-color: #d1d1d1;
+    border-radius: 20px 20px 0 0;
+}
+.user_management .user_plus {
+    float: right;
+    position: absolute; text-align: left;
+    width: 95px; top: 16px; right: 23px; color: white;
+    background: url('/images/icon_plus.png') no-repeat transparent 66px center; 
+    font-size: 17px;
+}
+
+.user_management .div_bottom{
+    position: relative;
+    width: 1689px; height: 440px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0px 6px 5px #d8d8d8; 
+}
+.user_management .bottom_inner {
+    position: relative;
+    width: 1626px; height: 338px; 
+    margin: 0 auto;
+    /* border: 1px solid black; */
+    top: 30px;
+    border-bottom: 1px solid black;
+}
+.user_management .status_div {
+    float: left;
+    width: 209px; height: 90px;
+    border-radius: 20px;
+    text-align: center;
+
+}
+.user_management .status_green {
+    float: left;
+    width: 1006px; height: 90px;
+    background-color: #85bd9a;
+    border-radius: 20px;
+}
+.user_management .status_green div{
+    float: left;
+}
+.user_management .status_green_inner div {
+    float:none;
+    width: 105px; text-align: center;
+    margin: 0 31px;
+}
+.user_management .status .le_mg18 {margin-left: 18px;}
+
+.user_management .status_table {
+    position: absolute;
+    top: 205px;
+}
+
+.user_management .div_top select {
+    background: transparent;
+    width: 90px; 
+    border: none; border-radius: 0px;
+    font-size: 17px; text-indent: 23px; 
+    border-bottom: 2px solid white;
+    margin-left: 18px;
+}
+.status_table .div_top .user_search {
+    background: url('/images/search1.png') no-repeat transparent 227px 4px;
+    display: inline-block; margin-top: 1px; text-indent: 0px;
+    width: 250px; border-radius: 0px; margin-left: 14px;
+    border: none; text-indent: 5px;
+    border-bottom: 2px solid white;  
+}
+.user_search::placeholder { color: white;}
+
+.user_management .font {
+    box-sizing: border-box;
+    color: white; font-size: 17px; padding: 3px;
+    width: 105px; margin: 0 auto;
+    border-bottom: 1px dotted white;
+}
+.user_management .number {
+    color: white; font-size: 40px; font-weight: bold;
+}
+.user_management .paging {
+    position: absolute;
+    margin: 0 auto;
+    left: 49%;
+    top: 90%;
+}
+.user_management .paging ul li{
+    float: left;
+    width: 20px; height: 20px;
+}
+.div_bottom .paging .user_back {
+    background: url("/images/employment_support_02_paging.png") no-repeat;
+}
+.div_bottom .paging .user_next {
+    background: url("/images/employment_support_01_paging.png") no-repeat;
+}
+
+
+
+
+.user_management .bg_red { background-color: #db9b9b;}
+.user_management .bg_green { background-color: #85bd9a;}
+.user_management .bg_gray { background-color: #bababa;}
+.user_management .bg_navy { background-color: #738da0;}
+

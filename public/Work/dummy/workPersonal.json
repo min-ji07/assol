@@ -1,0 +1,166 @@
+
+{
+"ErrorCode": 0,
+"Msg": "SUCCESS",
+"Id": "",
+"Data":
+[
+    {
+        
+            "branchNo": 0,
+            "groupName": "A조",
+            "yearsMonthDate": null,
+            "rowId": 1,
+            "userNo": 1,
+            "userName": "justin",
+            "employeeNumber": "1628",
+            "position": "개발자",
+            "firstRestDay": 0,
+            "twoRestDay": 0,
+            "replaceWorkerInfos": [
+            {
+                "userNo": 1,
+                "rowId": 1,
+                "replaceUserNo": 2,
+                "replaceEmployeeNumber": "1578",
+                "replaceWorkDate": "20201010",
+                "replaceUserName": "chris",
+                "replacePosition": "개발자",
+                "replaceWorkDay": 0,
+                "refRowId": 1
+            },
+            {
+                "userNo": 1,
+                "rowId": 2,
+                "replaceUserNo": 3,
+                "replaceEmployeeNumber": "1987",
+                "replaceWorkDate": "20201010",
+                "replaceUserName": "chris",
+                "replacePosition": "개발자",
+                "replaceWorkDay": 0,
+                "refRowId": 1
+            },
+            {
+                "userNo": 1,
+                "rowId": 3,
+                "replaceUserNo": 2,
+                "replaceEmployeeNumber": "1578",
+                "replaceWorkDate": "20201010",
+                "replaceUserName": "chris",
+                "replacePosition": "개발자",
+                "replaceWorkDay": 0,
+                "refRowId": 1
+            },
+            {
+                "userNo": 1,
+                "rowId": 4,
+                "replaceUserNo": 3,
+                "replaceEmployeeNumber": "1987",
+                "replaceWorkDate": "20201010",
+                "replaceUserName": "chris",
+                "replacePosition": "개발자",
+                "replaceWorkDay": 0,
+                "refRowId": 1
+            },
+            {
+                "userNo": 1,
+                "rowId": 5,
+                "replaceUserNo": 2,
+                "replaceEmployeeNumber": "1578",
+                "replaceWorkDate": "20201010",
+                "replaceUserName": "chris",
+                "replacePosition": "개발자",
+                "replaceWorkDay": 0,
+                "refRowId": 1
+            },
+            {
+                "userNo": 1,
+                "rowId": 6,
+                "replaceUserNo": 3,
+                "replaceEmployeeNumber": "1987",
+                "replaceWorkDate": "20201010",
+                "replaceUserName": "chris",
+                "replacePosition": "개발자",
+                "replaceWorkDay": 0,
+                "refRowId": 1
+            },
+            {
+                "userNo": 1,
+                "rowId": 7,
+                "replaceUserNo": 2,
+                "replaceEmployeeNumber": "1578",
+                "replaceWorkDate": "20201010",
+                "replaceUserName": "chris",
+                "replacePosition": "개발자",
+                "replaceWorkDay": 0,
+                "refRowId": 1
+            },
+            {
+                "userNo": 1,
+                "rowId": 8,
+                "replaceUserNo": 3,
+                "replaceEmployeeNumber": "1987",
+                "replaceWorkDate": "20201010",
+                "replaceUserName": "chris",
+                "replacePosition": "개발자",
+                "replaceWorkDay": 0,
+                "refRowId": 1
+            }
+        ]
+    },
+    {
+            "branchNo": 0,
+            "groupName": "B조",
+            "yearsMonthDate": null,
+            "rowId": 2,
+            "userNo": 2,
+            "userName": "chrisl",
+            "employeeNumber": "1578",
+            "position": "개발자",
+            "firstRestDay": 0,
+            "twoRestDay": 0,
+            "replaceWorkerInfos": []
+    },
+    {
+            "branchNo": 0,
+            "groupName": "",
+            "yearsMonthDate": null,
+            "rowId": 3,
+            "userNo": 3,
+            "userName": "namhem",
+            "employeeNumber": "1987",
+            "position": "개발자",
+            "firstRestDay": 0,
+            "twoRestDay": 0,
+            "replaceWorkerInfos": []
+    },
+    {
+        
+            "branchNo": 0,
+            "groupName": "A조",
+            "yearsMonthDate": null,
+            "rowId": 4,
+            "userNo": 4,
+            "userName": "slkjdf",
+            "employeeNumber": "8888",
+            "position": "개발자",
+            "firstRestDay": 0,
+            "twoRestDay": 0
+            ,"replaceWorkerInfos": []
+    },
+    {
+        
+            "branchNo": 0,
+            "groupName": "A조",
+            "yearsMonthDate": null,
+            "rowId": 5,
+            "userNo": 5,
+            "userName": "qpwoejr",
+            "employeeNumber": "9919",
+            "position": "개발자",
+            "firstRestDay": 0,
+            "twoRestDay": 0,
+            "replaceWorkerInfos": []
+    }
+]
+}

@@ -1,0 +1,40 @@
+@import url("../../common/default.css");
+@import url("/images");
+
+
+.contract_00 .title p { padding-bottom: 70px;}
+
+/* 메인 메뉴 공통 버튼(카드) */
+.contract_00 .menu_main_button_div{
+    margin: 0 auto;
+    width: 1311px; height: 460px;
+} 
+.contract_00 .menu_main_button {
+    float: left; margin-left: 33px;
+    width: 303px; height: 460px;
+    border-radius: 10px;
+    transition: all 1s;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+.contract_00 .mg_le_0 { margin-left: 0px;}
+/* 마우스 hover 시 */
+.contract_00 .menu_main_button:hover {
+    transform: translateY(-35px);
+}
+
+/* 원천세 hover 시 변경 이미지 */
+.contract_00 .num00 {
+    background: url("/images/contract_00_00.png") no-repeat;
+}
+.contract_00 .num01 {
+    background: url("/images/contract_01_00.png") no-repeat;
+}
+.contract_00 .num02 {
+    background: url("/images/contract_02_00.png") no-repeat;
+}
+.contract_00 .num03 {
+    background: url("/images/contract_03_00.png") no-repeat;
+}
+
+
+

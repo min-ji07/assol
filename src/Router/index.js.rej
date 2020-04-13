@@ -1,0 +1,9 @@
+diff a/src/Router/index.js b/src/Router/index.js	(rejected hunks)
+@@ -36,6 +36,7 @@
+             <Route path="/work/workTableByGroup" component={WorkTableByGroup} />
+             <Route path="/work/workTableByPersonal/:yearMonth" component={WorkTableByPersonal} />
+             <Route path="/work/workTableByRestDay" component={WorkTableByRestDay} />
++            <Route path="/work/workTableByRestDayView" component={WorkTableByRestDayView} />
+             <Route path="/work/WorkTableResult" component={WorkTableResult} />
+             <Route path="/employment/employmentMain" component={EmploymentMain} />
+             <Route path="/testwithholding/testwithholdingTax" component={TestWithholdingTax} />

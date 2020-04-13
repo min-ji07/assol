@@ -1,0 +1,28 @@
+{
+    "ErrorCode": 0,
+    "Msg": "SUCCESS",
+    "Id": "",
+    "Data": [
+        {
+            "groupName": "A조",
+            "workType": 3,
+            "requireCount": 5,
+            "setWorkerCount": 4,
+            "groupColor": 1
+        },
+        {
+            "groupName": "B조",
+            "workType": 2,
+            "requireCount": 3,
+            "setWorkerCount": 2,
+            "groupColor": 2
+        },
+        {
+            "groupName": "C조",
+            "workType": 1,
+            "requireCount": 2,
+            "setWorkerCount": 0,
+            "groupColor": 3
+        }
+    ]
+}

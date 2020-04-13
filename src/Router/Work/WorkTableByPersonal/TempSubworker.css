@@ -1,0 +1,13 @@
+.show-cell {
+    background: rgb(228, 146, 52);
+    border-left: 1px solid lightgrey !important;
+    border-right: 1px solid lightgrey !important;
+    border-bottom: 1px solid lightgrey !important;
+    z-index:2 !important;
+}
+.show-name {
+    font-weight: bold;
+}
+.show-presenter {
+    font-style: italic;
+}

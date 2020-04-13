@@ -1,0 +1,128 @@
+
+{
+    "ErrorCode": 0,
+    "Msg": "SUCCESS",
+    "Id": "",
+    "Data": [
+        {
+            "Key": 1,
+            "Value": [
+                {
+                    "rowId": 5,
+                    "userNo": 0,
+                    "replaceUserNo": 6,
+                    "replaceEmployeeNumber": "8888",
+                    "replaceWorkDate": "20201031",
+                    "replaceUserName": "테스트",
+                    "replacePosition": "테스터",
+                    "replaceWorkDay": 0
+                },
+                {
+                    "rowId": 7,
+                    "userNo": 0,
+                    "replaceUserNo": 2,
+                    "replaceEmployeeNumber": "1578",
+                    "replaceWorkDate": "20201010",
+                    "replaceUserName": "chrisl",
+                    "replacePosition": "개발자",
+                    "replaceWorkDay": 0
+                },
+                {
+                    "rowId": 4,
+                    "userNo": 0,
+                    "replaceUserNo": 3,
+                    "replaceEmployeeNumber": "1987",
+                    "replaceWorkDate": "20201010",
+                    "replaceUserName": "namhem",
+                    "replacePosition": "개발자",
+                    "replaceWorkDay": 0
+                },
+                {
+                    "rowId": 6,
+                    "userNo": 0,
+                    "replaceUserNo": 3,
+                    "replaceEmployeeNumber": "1987",
+                    "replaceWorkDate": "20201010",
+                    "replaceUserName": "namhem",
+                    "replacePosition": "개발자",
+                    "replaceWorkDay": 0
+                },
+                {
+                    "rowId": 8,
+                    "userNo": 0,
+                    "replaceUserNo": 3,
+                    "replaceEmployeeNumber": "1987",
+                    "replaceWorkDate": "20201010",
+                    "replaceUserName": "namhem",
+                    "replacePosition": "개발자",
+                    "replaceWorkDay": 0
+                }
+            ]
+        },
+        {
+            "Key": 4,
+            "Value": [
+                {
+                    "rowId": 5,
+                    "userNo": 0,
+                    "replaceUserNo": 2,
+                    "replaceEmployeeNumber": "1578",
+                    "replaceWorkDate": "20201010",
+                    "replaceUserName": "chrisl",
+                    "replacePosition": "개발자",
+                    "replaceWorkDay": 0
+                },
+                {
+                    "rowId": 7,
+                    "userNo": 0,
+                    "replaceUserNo": 2,
+                    "replaceEmployeeNumber": "1578",
+                    "replaceWorkDate": "20201010",
+                    "replaceUserName": "chrisl",
+                    "replacePosition": "개발자",
+                    "replaceWorkDay": 0
+                },
+                {
+                    "rowId": 4,
+                    "userNo": 0,
+                    "replaceUserNo": 3,
+                    "replaceEmployeeNumber": "1987",
+                    "replaceWorkDate": "20201010",
+                    "replaceUserName": "namhem",
+                    "replacePosition": "개발자",
+                    "replaceWorkDay": 0
+                },
+                {
+                    "rowId": 6,
+                    "userNo": 0,
+                    "replaceUserNo": 3,
+                    "replaceEmployeeNumber": "1987",
+                    "replaceWorkDate": "20201010",
+                    "replaceUserName": "namhem",
+                    "replacePosition": "개발자",
+                    "replaceWorkDay": 0
+                },
+                {
+                    "rowId": 8,
+                    "userNo": 0,
+                    "replaceUserNo": 3,
+                    "replaceEmployeeNumber": "1987",
+                    "replaceWorkDate": "20201010",
+                    "replaceUserName": "namhem",
+                    "replacePosition": "개발자",
+                    "replaceWorkDay": 0
+                },
+                {
+                    "rowId": 0,
+                    "userNo": 0,
+                    "replaceUserNo": 4,
+                    "replaceEmployeeNumber": "8888",
+                    "replaceWorkDate": null,
+                    "replaceUserName": "slkjdf",
+                    "replacePosition": "노노노",
+                    "replaceWorkDay": 0
+                }
+            ]
+        }
+    ]
+}

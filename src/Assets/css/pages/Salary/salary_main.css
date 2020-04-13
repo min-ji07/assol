@@ -1,0 +1,177 @@
+@import url("../../common/default.css");
+@import url("/images");
+
+.salary_main .title h1 { padding-bottom: 25px;}
+.salary_main .salary_main_inner { /* 귀속연월부터 끝까지 감싸는 디브 */
+    position: relative;
+    width: 1689px; height: 627px; 
+}
+
+.salary_main .sal_date_left {
+    background: #799093; border-radius: 10px;
+    width: 466px; height: 38px; line-height:38px; float: left;  
+}
+.salary_main .sal_date_left input {
+    width: 90px; height: 20px; line-height: 20px;
+    color: white; font-size: 14px; font-weight: bold;
+    background: transparent; border: none; border-bottom: 1px solid white;
+    border-radius: 0px; text-indent: 0px;
+    margin-left: 5px;
+}
+.salary_main .sal_date_left select {
+    width: 90px; height: 20px; line-height: 20px;
+    color: white; font-size: 14px; font-weight: bold;
+    background: transparent; border: none; border-bottom: 1px solid white;
+    border-radius: 0px;
+}
+.salary_main .sal_date_left ul li { 
+    float: left; text-align: center; color: white; font-size: 15px; 
+    list-style-type: disc; margin-left: 35px;
+}
+.salary_main .salary_button {
+    width: 180px; height: 38px; line-height: 38px; border-radius: 10px;
+    margin-left: 6px;
+}
+.salary_main .folder {
+    background: url('/images/salary_folder.png')no-repeat 30px center #bdbdbd;
+    text-indent: 17px;
+}
+.salary_main .card {
+    background: url('/images/salary_card.png') no-repeat 21px center #bdbdbd;
+    text-indent: 20px;
+}
+.salary_main .excel {
+    background: url('/images/salary_excel.png') no-repeat 27px center #bdbdbd;
+    text-indent: 24px;
+}
+.salary_main .send {
+    background: url('/images/salary_send.png') no-repeat 19px center #bdbdbd;
+    text-indent: 17px;
+}
+.salary_main .save {
+    background: url('/images/salary_save.png') no-repeat 56px center #bdbdbd;
+    text-indent: 10px;
+}
+.salary_main .white_board { 
+    position: absolute;
+    width: 1689px; height: 573px; top: 55px;    
+}
+.salary_main .left_div{
+    float: left;
+    width: 1466px; height: 573px;
+    border-radius: 20px; 
+}
+.salary_main .left_div_inner{
+    float: left;
+    width: 308px; height: 573px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+.salary_main .left_div_inner_inner {
+    margin: 25px auto;
+    width: 265px; height: 523px;
+}
+.salary_main .left_div_inner .div_top01 {
+    float: left;
+    width: 265px; height: 31px; line-height: 31px;
+    border-radius: 10px 10px 0 0; text-indent: 10px;
+    background: #b2b2b2; color: white; font-size: 15px;
+    border: 1px solid #b2b2b2;
+}
+/* 사원전체명부 */
+.salary_main .left_div_inner .div_bottom {
+    position: absolute;
+    margin-top: 32px;
+    width: 265px; height: 484px; line-height: 20px; text-align: center;
+    border: 1px solid #b2b2b2; 
+}
+.salary_main .left_inner_right{
+    float: right;
+    width: 1126px; height: 525px;
+}
+.salary_main .left_div_inner .left_inner_right .div_top {
+    width: 1121px; height: 31px; line-height: 31px;
+    border-radius: 10px 10px 0 0; text-indent: 10px;
+    background: #b2b2b2; color: white; font-size: 15px;
+    border: 1px solid #b2b2b2;
+}
+.salary_main .left_div_inner .left_inner_right .div_bottom {
+    width: 1121px; height: 494px; line-height: 20px; text-align: center;
+    border: 1px solid #b2b2b2;
+    border-bottom: none;
+}
+/* 지급항목상세*/
+.salary_main .right_div_inner {
+    float: left;
+    width: 1140px; height: 573px;
+    background: white;
+    border-radius: 20px;
+    margin-left: 18px;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+.salary_main .right_div_inner_inner {
+    margin: 25px auto;
+    width: 1087px; height: 523px;
+}
+.salary_main .right_div_inner .div_bottom{
+    position: absolute;
+    margin-top: 32px;
+    width: 1087px; height: 484px;
+    border: 1px solid #b2b2b2; 
+    text-align: center;
+}
+.salary_main .right_div_inner .div_top02 {
+    float: left;
+    width: 1087px; height: 31px; line-height: 31px;
+    border-radius: 10px 10px 0 0; text-indent: 10px;
+    background: #b2b2b2; color: white; font-size: 15px;
+    border: 1px solid #b2b2b2;
+}
+.salary_main .right_div_inner .div_top02 .plus {
+    background: url('/images/salary_main_puls.png') no-repeat;
+    color: transparent;
+}
+.salary_main .right_div_inner .div_top02 .delete {
+    width: 60px; height: 22px; line-height: 22px;
+    background: url('/images/salary_trash.png') no-repeat;
+    color: white;
+    float: right;
+    margin-right: 5px;
+    margin-top: 5px;
+}
+
+/* 인건비 총액 부분 */
+.salary_main .right_div{
+    float: right;
+    width: 223px; height: 573px;
+}
+.salary_main .right_inner_left {
+    float: right;
+}
+.salary_main .right_div .right_inner_left .div_top {
+    width: 210px; height: 28px; line-height: 28px;
+    border-radius: 10px 10px 0 0; text-indent: 10px;
+    background: #87e0ca; color: white; font-size: 15px;
+}
+.salary_main .right_div .right_inner_left .div_bottom {
+    width: 178px; height: 20px; line-height: 20px; text-align: center;
+    padding: 16px 16px;
+    border-radius: 0 0 10px 10px;
+    background: white; font-size: 21px; font-weight: bold;
+    margin-bottom: 13px; color: #87e0ca;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+
+.salary_main .right_div .right_inner_left .div_bottom02 {
+    width: 178px; height: 140px; line-height: 140px; text-align: center;
+    padding: 16px 16px;
+    border-radius: 0 0 10px 10px;
+    background: white; color: #2fa5f3;
+    box-shadow: 0px 6px 5px #d8d8d8;
+}
+/* 오른쪽 색상 */
+.salary_main .right_div .right_inner_left .bg_pink02 { background : #f79c9c; }
+.salary_main .right_div .right_inner_left .txt_pink01 { color : #f79c9c;}
+.salary_main .right_div .right_inner_left .bg_blue02 { background : #62c7cf; }
+.salary_main .right_div .right_inner_left .txt_blue01 { color : #62c7cf;}

@@ -1,0 +1,42 @@
+@import url("../../common/default.css");
+@import url("/images");
+
+.grid_table {
+    position: relative;
+    width: 1000px;
+    height: 500px;
+    margin: 0 auto;
+    color: black;
+}
+.grid_table input[type="number"] { 
+    background-color: transparent;
+    border: none;
+}
+table, th, td {
+    border: 1px solid black;
+}
+
+th, td {
+    width: 180px;
+    height: 32px;
+}
+.earnings th {
+    background-color: wheat;
+}
+.earnings thead th{
+    background-color:rgb(230, 135, 118);
+}
+.Refunds th {
+    background-color: rgb(167, 236, 236);
+}
+.bg_gray {
+    background-color: gray;
+}
+.grid_inner {
+    position: absolute;
+    width: 665px;
+    height: 811px;
+    border: 1px solid black;
+    top: 130px;;
+    left: 334px;
+}

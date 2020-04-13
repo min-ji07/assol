@@ -1,0 +1,38 @@
+
+{
+    "ErrorCode": 0,
+    "Msg": "SUCCESS",
+    "Id": "",
+    "Data": [
+        {
+            "userNo": 1,
+            "userName": "이석민",
+            "employeeNumber": "1628",
+            "workPosition": "개발자"
+        },
+        {
+            "userNo": 2,
+            "userName": "이남흔",
+            "employeeNumber": "1578",
+            "workPosition": "개발자"
+        },
+        {
+            "userNo": 3,
+            "userName": "김민지",
+            "employeeNumber": "1987",
+            "workPosition": "퍼블리셔"
+        },
+        {
+            "userNo": 4,
+            "userName": "스티븐",
+            "employeeNumber": "8888",
+            "workPosition": "개발자"
+        },
+        {
+            "userNo": 5,
+            "userName": "박이삭",
+            "employeeNumber": "9919",
+            "workPosition": "웹디"
+        }
+    ]
+}
