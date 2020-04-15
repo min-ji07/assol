@@ -301,7 +301,10 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                         {/* 급여상세 */}
                         <div id="userInfoRight2" class="input_content tab_004">
                             <ul>
-                                <li>총 연간 소득금액 :
+                                <li style={{listStyle:"disc", height:"21px", lineHeight:"21px"}}>
+                                    <strong>급여항목</strong>
+                                </li>
+                                <li style={{listStyle:"none"}}>총 연간 소득금액 :
                                 <input type="text" name="totalPayOfYear" id="totalPayOfYear" placeholder="10,000,000" defaultValue="10,000,000"/> 원
                                     {/* <select name="totalPayOfYear" id="totalPayOfYear">
                                         <option value="0">60시간</option>
@@ -325,7 +328,9 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     </select>
                                     <input type="text" name="otherExtraPay" id="otherExtraPay" placeholder="10,000,000" defaultValue="1,000,000"/>원
                                 </li>
-                                <li>관리사항</li>
+                                <li>
+                                    <strong>관리사항</strong>
+                                </li>
                                 <li style={{listStyle:"none", float:"left", display:"inline-block"}}>예금주 : <input type="text" name="accountHolder" id="accountHolder" placeholder="박이삭" defaultValue="박이삭"/></li>
                                 <li style={{listStyle:"none", display:"inline-block"}}>
                                     급여이체 은행 :
@@ -381,7 +386,10 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     </select>
                                 </li>
                                 <li style={{listStyle:"none", display:"inline-block"}}>계좌번호 :<input type="text" id="accountNo" name="accountNo" placeholder="110-491-546205" defaultValue="110-491-546205" style={{width:"178px"}}/></li>
-                                <li>사업자등록번호<span style={{color:"#f38d8d", fontSize:"13px"}}> *소유자일 경우</span></li>
+                                <li>
+                                    <strong>사업자등록번호</strong>
+                                    <span style={{color:"#f38d8d", fontSize:"13px"}}> *소유자일 경우</span>
+                                </li>
                                 <li style={{listStyle:"none"}}>
                                     사업자등록번호 : <input type="text" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
                                     <input type="text" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-

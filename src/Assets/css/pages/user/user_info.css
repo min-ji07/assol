@@ -112,7 +112,7 @@ input:-webkit-autofill:active {
     margin: 0 auto;
     line-height: 40px;
 }
-/* 사업근로자 이메일 주민번호 ~ li*/
+/* 사업근로자 주민번호 ~ li*/
 .user_input .tab_02 .right_div_inner ul li,
 .user_input .tab_03 .right_div_inner ul li
 {
@@ -133,8 +133,10 @@ input:-webkit-autofill:active {
     margin-top: 9px;
     font-size: 15px;
 }
-/* 사업소득자 input */
-.user_input .tab_02 .right_div_inner ul li input {
+/* 사업소득자, 일용근로자 input */
+.user_input .tab_02 .right_div_inner ul li input,
+.user_input .tab_03 .right_div_inner ul li input
+ {
     margin-top: 19px;
     width: 230px
 }
@@ -172,8 +174,8 @@ textarea::placeholder {
     text-indent: 26px;
 }
 .user_input .right_div_inner .postal_code {
-    width: 76px; height: 18px; line-height: 18px;
-    font-size: 12px;
+    width: 90px; height: 19px; line-height: 18px;
+    font-size: 15px;
     position: absolute;
     left: 556px;
     top: 391px;
@@ -200,7 +202,7 @@ textarea::placeholder {
 } 
 .user_input .div_bottom.right{
     position: relative;
-    width: 997px; height: 547px;
+    width: 997px; height: 548px;
     font-size: 16px; color: #626262;
     margin-top: -46px;
 } 
@@ -220,9 +222,11 @@ textarea::placeholder {
 /* 오른쪽 전체 div */
 .div_bottom .sal_inner {
     position: absolute;
-    width: 918px; height: 486px;
-    margin: 41px 40px;
+    width: 874px; height: 456px;
+    margin: 31px 47px;
     /* overflow-y: scroll; */
+    /* border: 1px solid black; */
+    border-bottom: 3px solid #979797;
 }
 .right_div .input_content {
     height: 90px;
@@ -280,10 +284,11 @@ textarea::placeholder {
 .user_input .right input[type="tel"],
 .user_input .right input[type="address"]{
     border: 1px solid #8a8a8a; text-align: center;
-    width: 100px; height: 23px;
+    width: 100px; height: 24px;
     margin: 0 0px;
     font-size: 17px;
     color: #707070; 
+    margin-left: 5px;
 /* input box margin */
 }
 .user_input .right select {
@@ -293,7 +298,7 @@ textarea::placeholder {
     font-size: 17px;
     color: #707070;
     text-indent: 13px;
-
+    margin-left: 5px;
 }
 
 /* input file 대신 label*/
@@ -317,7 +322,7 @@ textarea::placeholder {
 /*버튼색*/
 .user_input .next_position {
     position: absolute;
-    top: 578px;
+    top: 554px;
     right: 130px;
     background: #c8c8c8;
 }
@@ -402,16 +407,11 @@ textarea::placeholder {
 .user_input .ul_li_left ul li {
     display: inline-block;
     text-align: center;
-    margin-left: 13px;
+    margin-left: 18px;
 }
 .user_input .ul_li_left ul li input {
     text-align: center;
     
-}
-/* 해제 */
-.user_input .user_input_inner .sal_inner .clear {
-    clear: both;
-    height: 135px;
 }
 
 .user_input .user_input_inner .ul_li_left .small_bs  {
@@ -493,8 +493,16 @@ textarea::placeholder {
 .user_input .tab_008 .tab_02_grid {
     width: 870px; height: 150px;
 }
+/* 급여항목 div */
 .user_input .user_input_inner .salary {
-    width: 918px; height: 165px;
+    height: 119px;
+    border-bottom: 1px solid #dedede;
+}
+/* 성과급, 상여급 div */
+.user_input .user_input_inner .sal_inner .clear {
+    /* clear: both; */
+    height: 111px;
+    border-bottom: 1px solid #dedede;
 }
 
 /* 스크롤 */

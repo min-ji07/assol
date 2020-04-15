@@ -328,14 +328,21 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         {/* 급여상세 */}
                         <div id="userInfoRight" class="input_content tab_001">
                             <ul>
-                            <li style={{listStyle:"disc"}}><strong>급여 항목</strong><button type="button" class="btn_gray wi64he19" id="addSalary" onClick={addSalary}>추가</button></li>
-                                <li class="salary" style={{overflowY: "scroll"}}>
-                                    <ul>
-                                        <li class="li_left">월급 :<input type="text" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/></li>
-                                        <li class="li_right">연봉 :<input type="text" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1000000" 
-                                        style={{fontSize: "25px", border:"none", width: "100px", height:"30px"}} readOnly/></li>
+                                <li style={{listStyle:"disc", height:"21px", lineHeight:"21px"}}>
+                                    <strong>급여항목</strong>
+                                    <button type="button" class="btn_gray wi64he19" id="addSalary" onClick={addSalary}>추가</button>
+                                </li>
+                                <li class="salary" style={{overflowY: "scroll", marginTop:"10px"}}>
+                                    <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"51px"}}>
+                                        <li class="li_left">
+                                            월급 :<input type="text" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/>
+                                        </li>
+                                        <li class="li_right">
+                                            연봉 :<input type="text" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
+                                            style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>원
+                                        </li>
                                     </ul>    
-                                    <ul style={{border:"1px solid black", height:"0px", top:"78px"}}>
+                                    <ul style={{height:"0px", top:"78px"}}>
                                         <li class="li_left">기본급 :<input type="text" name="baseSalary" id="baseSalary" class="address" placeholder="1,700,000" defaultValue="1000000"/></li>
                                         <li class="li_left">식대 :<input type="text" name="foodSalary" id="foodSalary" class="address" placeholder="1,700,000" defaultValue="1000000"/></li>
                                         <li class="li_left">차량유지비 :<input type="text" name="carSalary" id="carSalary" class="address" placeholder="1,700,000" defaultValue="1000000"/></li>
@@ -344,7 +351,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     </ul>
                                 </li>
                                 <li class="clear">
-                                    <strong>성과급, 상여급</strong>
+                                    <strong style={{display:"block", marginTop:"20px"}}>성과급, 상여급</strong>
                                     <ul>
                                         <li class="in_block">
                                             성과금 :<input type="text" name="insentive" id="insentive" placeholder="1,700,000" defaultValue="1000000"/>
@@ -366,13 +373,15 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="ul_li_left">
-                                    <strong>관리사항</strong>
+                                <li class="ul_li_left" style={{height:"132px", borderBottom:"1px solid #dedede"}}>
+                                    <strong style={{display:"block", margknTop:"8px"}}>관리사항</strong>
                                     <ul>
-                                        <li>예금주 :<input type="text" id="accountHolder" name="accountHolder" placeholder="박이삭" defaultValue="김경주"/></li>
+                                        <li style={{marginLeft:"0px"}}>
+                                            예금주 :<input type="text" id="accountHolder" name="accountHolder" placeholder="박이삭" defaultValue="김경주"/>
+                                        </li>
                                         <li>
                                             급여이체은행 :
-                                            <select style={{ marginLeft: "10px", textIndent :"11px"}} id="bankName">
+                                            <select style={{textIndent :"0px", width:"136px"}} id="bankName">
                                                 <option value='SC제일은행'>SC제일은행</option>
                                                 <option value='경남은행'>경남은행</option>
                                                 <option value='광주은행'>광주은행</option>
@@ -425,7 +434,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </li>
                                         <li>계좌번호 :<input type="text" id="accountNo" placeholder="1000-100-1000000" style={{width:"178px"}} defaultValue="110-222-2222"/></li>
                                         <br />
-                                        <li>
+                                        <li style={{marginLeft:"0px"}}>
                                             중소기업취업감면 여부 :
                                             <select id="jobReductActive" class="small_bs" style={{width: "43px", marginLeft: "10px"}}>
                                                 <option value="0" defaultChecked>부</option>
@@ -436,7 +445,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         <li>감면율 :
                                             {/* <input type="text" id="reductPer" placeholder="90"  style={{width: "43px"}} defaultValue="80"/>% */}
                                             &nbsp;
-                                            <select id="reductPer" style={{width: "50px",textIndent:"5px"}}>
+                                            <select id="reductPer" style={{width: "58px",textIndent:"5px"}}>
                                                 <option value="0">0</option>
                                                 <option value="10">10</option>
                                                 <option value="20">20</option>

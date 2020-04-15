@@ -223,11 +223,11 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
                                 </span>
                             </li>
-                            <li>최초등록일 : <input type="text" id="currentWorkDate" name="currentWorkDate" defaultValue="2020-05-06"/></li>
+                            <li>최초등록일 : <input type="text" id="currentWorkDate" name="currentWorkDate" defaultValue="2020-05-06" style={{width:"216px"}}/></li>
                             <li>전화번호 :<input type="tel" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="02-4555-6666"/></li>
                             <li>휴대폰 :<input type="tel" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-6666-7777"/></li>
                             <li>
-                                주소 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="131-222" style={{width:"152px"}}/>
+                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="131-222" style={{width:"152px"}}/>
                                 <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
                             </li>
                             <li>
@@ -259,7 +259,9 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         {/* 급여상세 */}
                         <div id="userInfoRight3" class="input_content tab_006">
                             <ul>
-                                <li>급여 항목</li>
+                                <li style={{listStyle:"disc", height:"21px", lineHeight:"21px"}}>
+                                    <strong>급여항목</strong>
+                                </li>
                                 <li>소정근로시간 :<input type="text" name="workTime" id="workTime" defaultValue="30"/></li>
                                 <li>시급 : <input type="text" name="payOfHour" id="payOfHour" defaultValue="1,000,000" onKeyUp={(e)=>commaInput(e)}/>원</li>
                                 <li>총예상월수령금액 : (값 불러오기) </li>
