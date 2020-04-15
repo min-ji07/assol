@@ -325,7 +325,7 @@ const DailyIncomeContainer = () => {
                 }
             ]
 
-            setRowData1(rowData1);
+            setRowData(rowData);
             setRowData2(rowData2);
             setRowData3(rowData3);
             setRowData4(rowData4);
