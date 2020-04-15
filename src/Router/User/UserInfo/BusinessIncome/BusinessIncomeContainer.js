@@ -59,11 +59,11 @@ const BusinessIncomeContainer = () => {
             { headerName: "userId", field: "id", hide :true}
             ,{ headerName: "processType", field: "processType", hide:true}
             ,{ headerName: "branchNo", field: "branchNo", hide:true }
-            ,{ headerName: '교육과정', field: "curriculum",  width:200}
-            ,{ headerName: "시간", field: "classTime", width:80,}
-            ,{ headerName: '강사', field: "teacher",  width:90}
-            ,{ headerName: '교육상태', field: "isStatus",  width:90 }
-            ,{ headerName: '교육기간', field: "curriculumDate",  width:200}
+            ,{ headerName: '교육과정', field: "curriculum",  width:230}
+            ,{ headerName: "시간", field: "classTime", width:120,}
+            ,{ headerName: '강사', field: "teacher",  width:120}
+            ,{ headerName: '교육상태', field: "isStatus",  width:120 }
+            ,{ headerName: '교육기간', field: "curriculumDate",  width:278}
         ]
 
         //컴포넌트 세팅 
@@ -77,20 +77,20 @@ const BusinessIncomeContainer = () => {
             { headerName: "userId", field: "id", hide :true}
             ,{ headerName: "processType", field: "processType", hide:true}
             ,{ headerName: "branchNo", field: "branchNo", hide:true }
-            ,{ headerName: '병역구분', field: "militaryContent",  width:90,
+            ,{ headerName: '병역구분', field: "militaryContent",  width:150,
                 cellEditor : "select", 
                 cellEditorParams: { values : gridCommon.extractValues(mContentMappings)},
                 refData: mContentMappings
             }
-            ,{ headerName: "군별", field: "militaryType", width:80,
+            ,{ headerName: "군별", field: "militaryType", width:100,
                 cellEditor : "select", 
                 cellEditorParams: { values : gridCommon.extractValues(mTypeMappings)},
                 refData: mTypeMappings
             }
             ,{ headerName: '복무기간', field: "militaryDate",  width:200}
-            ,{ headerName: '최종계급', field: "finalLevel",  width:90 }
-            ,{ headerName: '병과', field: "miltaryClass",  width:90}
-            ,{ headerName: '미필사유', field: "unmiltaryReason",  width:90}
+            ,{ headerName: '최종계급', field: "finalLevel",  width:100 }
+            ,{ headerName: '병과', field: "miltaryClass",  width:100}
+            ,{ headerName: '미필사유', field: "unmiltaryReason",  width:218}
         ]
 
         //컴포넌트 세팅 

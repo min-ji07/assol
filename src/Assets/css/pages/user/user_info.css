@@ -246,9 +246,13 @@ textarea::placeholder {
 }
 
 /* 학력/교육탭 감싸는 div */
-.right_div .input_content.tab_003 {
-    width: 900px; height: 300px;
+.right_div .input_content.tab_003,
+.right_div .input_content.tab_005,
+.right_div .input_content.tab_008
+ {
+    width: 900px; height: 456px;
     margin: 0 auto;
+    overflow-y: scroll;
 }
 .right_div .input_content .wi64he19 {
     width: 64px; height: 19px; line-height: 19px; margin-left: 9px; margin-top: -3px;
@@ -275,6 +279,7 @@ textarea::placeholder {
 .user_input .input_content table tr,
 .user_input .input_content table td {
     border: 1px solid #d7d5d6;
+    text-align: center;
 }
 
 
@@ -389,9 +394,10 @@ textarea::placeholder {
 .user_input input[id="tab_008"]:checked ~ .div_bottom .tab_008{
     display: block;
 }
-.user_input .white_board .div_bottom.tab_02 button {
+/* 추가 삭제 position*/
+/* .user_input .white_board .div_bottom.tab_02 button {
     position: absolute;
-}
+} */
 /* 정렬 */
 .user_input .user_input_inner .sal_inner .li_left {
     float: left;
@@ -441,25 +447,18 @@ textarea::placeholder {
 /* 코드정리가 필요한듯 ㅠ*/
 /* 일반근로자 급여 상세 */
 /* 일반근로자 4대보험 */
-.user_input .tab_002 .tab_01_grid {
-    width: 870px;
-    height: 225px;
-    margin-left: 9px;
-}
-/* 일반근로자 부양가족 */
-.user_input .tab_002 .tab_02_grid {
-    width: 870px;
-    height: 185px;
-    margin-top: -1px;
-    margin-left: 2px;
-}
+
+
 /* 4대보험 부양가족 input */
-.user_input .tab_002 input[type="text"]{
+.user_input .tab_002 input[type="text"],
+.user_input .tab_007 input[type="text"]
+{
     width: 200px;
-    height: 35px; margin: 0;
+    height: 36px; margin: 0;
     font-size: 16px;
     border: none;
 }
+
 
 
 /* 일반근로자 학력 */
@@ -472,45 +471,50 @@ textarea::placeholder {
     width: 870px; height: 195px;
     margin-top: -38px;
 }
-
-/* 사업소득자 급여 상세 */
-.user_input .tab_004 {
-
-}
-/* 사업소득자 학력 */
+/* 사업소득자 학력*/
 .user_input .tab_005 .tab_01_grid {
-    width: 870px; height: 270px;
-    margin-top: -44px;
+    width: 870px; height: 185px;
+    margin-top: -35px;
 }
 /* 사업소득자 교육 */
 .user_input .tab_005 .tab_02_grid {
-    width: 870px; height: 150px;
-}
-/* 일용직근로자 급여 상세 */
-.user_input .tab_006 {
-
+    width: 870px; height: 195px;
+    margin-top: -38px;
 }
 /* 일용직근로자 4대보험 */
-.user_input .tab_007 .tab_01_grid {
-    width: 756px;
-    height: 180px;
-    margin-top: -44px;
+.user_input .tab_002 .tab_01_grid,
+.user_input .tab_007 .tab_01_grid
+ {
+    width: 870px;
+    height: 225px;
+    margin-left: 1px;
 }
-/* 일용직근로자 부양가족 */
-.user_input .tab_007 .tab_02_grid {
-    width: 756px;
-    height: 188px;
-    margin-top: 0px;
+/* 부양가족 */
+.user_input .tab_002 .tab_02_grid,
+.user_input .tab_007 .tab_02_grid
+ {
+    width: 870px;
+    height: 146px;
+    margin-top: -1px;
+    margin-left: -6px;
 }
 /* 일용직근로자 학력 */
 .user_input .tab_008 .tab_01_grid {
-    width: 870px; height: 270px;
-    margin-top: -44px;
+    width: 870px; height: 185px;
+    margin-top: -35px;
 }
 /* 일용직근로자 교육 */
 .user_input .tab_008 .tab_02_grid {
-    width: 870px; height: 150px;
+    width: 870px; height: 195px;
+    margin-top: -38px;
 }
+
+
+
+
+
+
+
 /* 급여항목 div */
 .user_input .user_input_inner .salary {
     height: 119px;
@@ -527,6 +531,19 @@ textarea::placeholder {
 .user_input .user_input_inner .salary::-webkit-scrollbar {background: #e9e9e9; width: 9px; height: 363px; border-radius: 50px;}
 .user_input .user_input_inner .salary::-webkit-scrollbar-thumb {background: #a2a2a2; width: 9px; height: 63px; border-radius: 50px;}
 .user_input .user_input_inner .salary::-webkit-scrollbar-track {background: #e9e9e9; width: 9px; height: 300px;}
+
+.user_input .right_div .input_content.tab_003::-webkit-scrollbar,
+.user_input .right_div .input_content.tab_005::-webkit-scrollbar,
+.user_input .right_div .input_content.tab_008::-webkit-scrollbar
+{ background: #e9e9e9; width: 9px; height: 363px; border-radius: 50px;}
+.user_input .right_div .input_content.tab_003::-webkit-scrollbar-thumb,
+.user_input .right_div .input_content.tab_005::-webkit-scrollbar-thumb,
+.user_input .right_div .input_content.tab_008::-webkit-scrollbar-thumb
+{ background: #a2a2a2; width: 9px; height: 63px; border-radius: 50px;}
+.user_input .right_div .input_content.tab_003::-webkit-scrollbar-track, 
+.user_input .right_div .input_content.tab_005::-webkit-scrollbar-track,
+.user_input .right_div .input_content.tab_008::-webkit-scrollbar-track
+{ background: #e9e9e9; width: 9px; height: 300px;}
 
 /* 우편번호 */
 .post_wrapper{
