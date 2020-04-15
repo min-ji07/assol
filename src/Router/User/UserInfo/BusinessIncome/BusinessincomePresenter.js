@@ -301,99 +301,111 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                         {/* 급여상세 */}
                         <div id="userInfoRight2" class="input_content tab_004">
                             <ul>
-                                <li style={{listStyle:"disc", height:"21px", lineHeight:"21px"}}>
+                                <li class="salary" style={{marginTop:"10px", height:"140px"}}>
                                     <strong>급여항목</strong>
+                                    <ul>
+                                        <li style={{listStyle:"none"}}>총 연간 소득금액 :
+                                        <input type="text" name="totalPayOfYear" id="totalPayOfYear" placeholder="10,000,000" defaultValue="10,000,000"/> 원
+                                        {/* <select name="totalPayOfYear" id="totalPayOfYear">
+                                            <option value="0">60시간</option>
+                                        </select> */}
+                                        </li>
+                                        <li style={{listStyle:"none", float:"left", display:"inline-block"}}>
+                                            <select name="payQuarterType" id="payQuarterType" style={{width: "74px", textAling: "center"}}>
+                                                <option value="0">월간</option>
+                                                <option value="1">분기</option>
+                                                <option value="2">반기</option>
+                                                <option value="2">년간</option>
+                                            </select>
+                                            <input type="text" name="payQuarter" id="payQuarter" placeholder="10,000,000" defaultValue="1,000,000"/> 원
+                                        </li>
+                                        <li style={{listStyle:"none", marginLeft:"25px"}}>기타부대수당 : 
+                                            <select name="otherExtraPayType" id="otherExtraPayType" style={{marginLeft:"10px", width: "74px", textAling: "center"}}>
+                                                <option value="0">월간</option>
+                                                <option value="1">분기</option>
+                                                <option value="2">반기</option>
+                                                <option value="2">년간</option>
+                                            </select>
+                                            <input type="text" name="otherExtraPay" id="otherExtraPay" placeholder="10,000,000" defaultValue="1,000,000"/>원
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li style={{listStyle:"none"}}>총 연간 소득금액 :
-                                <input type="text" name="totalPayOfYear" id="totalPayOfYear" placeholder="10,000,000" defaultValue="10,000,000"/> 원
-                                    {/* <select name="totalPayOfYear" id="totalPayOfYear">
-                                        <option value="0">60시간</option>
-                                    </select> */}
+                                
+                                <li class="clear">
+                                    <strong style={{display:"block", marginTop:"20px"}}>관리사항</strong>
+                                    <ul>
+                                        <li style={{listStyle:"none", float:"left", display:"inline-block"}}>
+                                            예금주 : <input type="text" name="accountHolder" id="accountHolder" placeholder="박이삭" defaultValue="박이삭"/>
+                                        </li>
+                                        <li style={{listStyle:"none", display:"inline-block"}}>
+                                            급여이체 은행 :
+                                            <select id="bankName" name="bankName" style={{textIndent :"0px", width:"136px"}} >
+                                                <option value='SC제일은행'>SC제일은행</option>
+                                                <option value='경남은행'>경남은행</option>
+                                                <option value='광주은행'>광주은행</option>
+                                                <option value='국민은행'>국민은행</option>
+                                                <option value='굿모닝신한증권'>굿모닝신한증권</option>
+                                                <option value='기업은행'>기업은행</option>
+                                                <option value='농협중앙회'>농협중앙회</option>
+                                                <option value='농협회원조합'>농협회원조합</option>
+                                                <option value='대구은행'>대구은행</option>
+                                                <option value='대신증권'>대신증권</option>
+                                                <option value='대우증권'>대우증권</option>
+                                                <option value='동부증권'>동부증권</option>
+                                                <option value='동양종합금융증권'>동양종합금융증권</option>
+                                                <option value='메리츠증권'>메리츠증권</option>
+                                                <option value='미래에셋증권'>미래에셋증권</option>
+                                                <option value='뱅크오브아메리카(BOA)'>뱅크오브아메리카(BOA)</option>
+                                                <option value='부국증권'>부국증권</option>
+                                                <option value='부산은행'>부산은행</option>
+                                                <option value='산림조합중앙회'>산림조합중앙회</option>
+                                                <option value='산업은행'>산업은행</option>
+                                                <option value='삼성증권'>삼성증권</option>
+                                                <option value='상호신용금고'>상호신용금고</option>
+                                                <option value='새마을금고'>새마을금고</option>
+                                                <option value='수출입은행'>수출입은행</option>
+                                                <option value='수협중앙회'>수협중앙회</option>
+                                                <option value='신영증권'>신영증권</option>
+                                                <option value='신한은행'>신한은행</option>
+                                                <option value='신협중앙회'>신협중앙회</option>
+                                                <option value='에스케이증권'>에스케이증권</option>
+                                                <option value='에이치엠씨투자증권'>에이치엠씨투자증권</option>
+                                                <option value='엔에이치투자증권'>엔에이치투자증권</option>
+                                                <option value='엘아이지투자증권'>엘아이지투자증권</option>
+                                                <option value='외환은행'>외환은행</option>
+                                                <option value='우리은행'>우리은행</option>
+                                                <option value='우리투자증권'>우리투자증권</option>
+                                                <option value='우체국'>우체국</option>
+                                                <option value='유진투자증권'>유진투자증권</option>
+                                                <option value='전북은행'>전북은행</option>
+                                                <option value='제주은행'>제주은행</option>
+                                                <option value='키움증권'>키움증권</option>
+                                                <option value='하나대투증권'>하나대투증권</option>
+                                                <option value='하나은행'>하나은행</option>
+                                                <option value='하이투자증권'>하이투자증권</option>
+                                                <option value='한국씨티은행'>한국씨티은행</option>
+                                                <option value='한국투자증권'>한국투자증권</option>
+                                                <option value='한화증권'>한화증권</option>
+                                                <option value='현대증권'>현대증권</option>
+                                                <option value='홍콩상하이은행'>홍콩상하이은행</option>
+                                            </select>
+                                        </li>
+                                        <li style={{listStyle:"none", display:"inline-block"}}>
+                                            계좌번호 :<input type="text" id="accountNo" name="accountNo" placeholder="110-491-546205" defaultValue="110-491-546205" style={{width:"178px"}}/>
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li style={{listStyle:"none", float:"left", display:"inline-block"}}>
-                                    <select name="payQuarterType" id="payQuarterType" style={{width: "74px", textAling: "center"}}>
-                                        <option value="0">월간</option>
-                                        <option value="1">분기</option>
-                                        <option value="2">반기</option>
-                                        <option value="2">년간</option>
-                                    </select>
-                                    <input type="text" name="payQuarter" id="payQuarter" placeholder="10,000,000" defaultValue="1,000,000"/> 원
-                                </li>
-                                <li style={{listStyle:"none", marginLeft:"25px"}}>기타부대수당 : 
-                                    <select name="otherExtraPayType" id="otherExtraPayType" style={{marginLeft:"10px", width: "74px", textAling: "center"}}>
-                                        <option value="0">월간</option>
-                                        <option value="1">분기</option>
-                                        <option value="2">반기</option>
-                                        <option value="2">년간</option>
-                                    </select>
-                                    <input type="text" name="otherExtraPay" id="otherExtraPay" placeholder="10,000,000" defaultValue="1,000,000"/>원
-                                </li>
-                                <li>
-                                    <strong>관리사항</strong>
-                                </li>
-                                <li style={{listStyle:"none", float:"left", display:"inline-block"}}>예금주 : <input type="text" name="accountHolder" id="accountHolder" placeholder="박이삭" defaultValue="박이삭"/></li>
-                                <li style={{listStyle:"none", display:"inline-block"}}>
-                                    급여이체 은행 :
-                                    <select id="bankName" name="bankName" style={{ marginLeft: "10px", textIndent :"11px"}}>
-                                        <option value='SC제일은행'>SC제일은행</option>
-                                        <option value='경남은행'>경남은행</option>
-                                        <option value='광주은행'>광주은행</option>
-                                        <option value='국민은행'>국민은행</option>
-                                        <option value='굿모닝신한증권'>굿모닝신한증권</option>
-                                        <option value='기업은행'>기업은행</option>
-                                        <option value='농협중앙회'>농협중앙회</option>
-                                        <option value='농협회원조합'>농협회원조합</option>
-                                        <option value='대구은행'>대구은행</option>
-                                        <option value='대신증권'>대신증권</option>
-                                        <option value='대우증권'>대우증권</option>
-                                        <option value='동부증권'>동부증권</option>
-                                        <option value='동양종합금융증권'>동양종합금융증권</option>
-                                        <option value='메리츠증권'>메리츠증권</option>
-                                        <option value='미래에셋증권'>미래에셋증권</option>
-                                        <option value='뱅크오브아메리카(BOA)'>뱅크오브아메리카(BOA)</option>
-                                        <option value='부국증권'>부국증권</option>
-                                        <option value='부산은행'>부산은행</option>
-                                        <option value='산림조합중앙회'>산림조합중앙회</option>
-                                        <option value='산업은행'>산업은행</option>
-                                        <option value='삼성증권'>삼성증권</option>
-                                        <option value='상호신용금고'>상호신용금고</option>
-                                        <option value='새마을금고'>새마을금고</option>
-                                        <option value='수출입은행'>수출입은행</option>
-                                        <option value='수협중앙회'>수협중앙회</option>
-                                        <option value='신영증권'>신영증권</option>
-                                        <option value='신한은행'>신한은행</option>
-                                        <option value='신협중앙회'>신협중앙회</option>
-                                        <option value='에스케이증권'>에스케이증권</option>
-                                        <option value='에이치엠씨투자증권'>에이치엠씨투자증권</option>
-                                        <option value='엔에이치투자증권'>엔에이치투자증권</option>
-                                        <option value='엘아이지투자증권'>엘아이지투자증권</option>
-                                        <option value='외환은행'>외환은행</option>
-                                        <option value='우리은행'>우리은행</option>
-                                        <option value='우리투자증권'>우리투자증권</option>
-                                        <option value='우체국'>우체국</option>
-                                        <option value='유진투자증권'>유진투자증권</option>
-                                        <option value='전북은행'>전북은행</option>
-                                        <option value='제주은행'>제주은행</option>
-                                        <option value='키움증권'>키움증권</option>
-                                        <option value='하나대투증권'>하나대투증권</option>
-                                        <option value='하나은행'>하나은행</option>
-                                        <option value='하이투자증권'>하이투자증권</option>
-                                        <option value='한국씨티은행'>한국씨티은행</option>
-                                        <option value='한국투자증권'>한국투자증권</option>
-                                        <option value='한화증권'>한화증권</option>
-                                        <option value='현대증권'>현대증권</option>
-                                        <option value='홍콩상하이은행'>홍콩상하이은행</option>
-                                    </select>
-                                </li>
-                                <li style={{listStyle:"none", display:"inline-block"}}>계좌번호 :<input type="text" id="accountNo" name="accountNo" placeholder="110-491-546205" defaultValue="110-491-546205" style={{width:"178px"}}/></li>
-                                <li>
+                                
+                                <li class="ul_li_left" style={{height:"132px", borderBottom:"1px solid #dedede"}}>
                                     <strong>사업자등록번호</strong>
                                     <span style={{color:"#f38d8d", fontSize:"13px"}}> *소유자일 경우</span>
-                                </li>
-                                <li style={{listStyle:"none"}}>
-                                    사업자등록번호 : <input type="text" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                    <input type="text" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                    <input type="text" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"35px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
+                                    <ul>
+                                        <li style={{listStyle:"none"}}>
+                                            사업자등록번호 : <input type="text" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input type="text" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input type="text" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"35px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>

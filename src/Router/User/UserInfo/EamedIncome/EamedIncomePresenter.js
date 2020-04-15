@@ -246,7 +246,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     </div>
                     <div class="right_div_inner">
                         <ul>
-                            <li>주민번호 :<input type="text" name="personalNumber" id="personalNumber" placeholder="123456-1234567" defaultValue="950527-00101001"/></li>
+                            <li>주민번호 :<input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567" defaultValue="950527-00101001"/></li>
                             <li style={{display:"inline-block" , width:"300px", marginLeft:"5px" }}>  
                                 국적 :
                                     <select name="national" id="national" onChange={nationalChange}>
@@ -258,8 +258,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
                                 </span>
                             </li>
-                            <li>입사일 :<input type="text" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
-                            <li>그룹입사일 :<input type="text" name="groupJoinDate" id="groupJoinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
+                            <li>입사일 :<input type="text" class="date_input" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
+                            <li>그룹입사일 :<input type="text" class="date_input" name="groupJoinDate" id="groupJoinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
                             <li style={{display:"inline-block" , width:"119px", marginLeft:"5px"}}>  
                             수습적용 :
                                 <select name="isProbation" id="isProbation" style={{width:"38px"}}>
@@ -268,7 +268,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 </select>
                             </li>
                             <li style={{display:"inline-block" , width:"178px"}}>
-                                수습만료일 :<input type="text" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
+                                수습만료일 :<input type="text" class="date_input" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
                             </li>
                             <li style={{display:"inline-block" , width:"155px", marginLeft:"5px" }}>고용형태 : 
                                 <select name="regularEmployee" id="regularEmployee" style={{marginLeft:"5px"}}>
@@ -287,11 +287,11 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <option value="1">여</option>                                                
                                 </select>
                             </li>
-                            <li>계약기간 :<input type="text" name="contractPeriod" id="contractPeriod" placeholder="2020-01-01 ~ 2021-01-01" defaultValue="2020-01-01~2020-01-16"/></li>
+                            <li>계약기간 :<input type="text" class="dateto_input" name="contractPeriod" id="contractPeriod" placeholder="2020-01-01 ~ 2021-01-01" defaultValue="2020-01-01~2020-01-16"/></li>
                             {/* 숫자제한 , 3자리 4자리 4자리 -추가*/}
-                            <li>전화번호 :<input type="tel" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="010-4412-8516"/></li>
+                            <li>전화번호 :<input type="tel" class="phone_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="010-4412-8516"/></li>
                             {/* 숫자제한 , 3자리 4자리 4자리 -추가*/}
-                            <li>휴대폰 :<input type="tel" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-4412-8516"/></li>
+                            <li>휴대폰 :<input type="tel" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-4412-8516"/></li>
                             <li>
                                 우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="서울시" style={{width:"152px"}}/>
                                 <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
@@ -335,26 +335,26 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <li class="salary" style={{overflowY: "scroll", marginTop:"10px"}}>
                                     <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"51px"}}>
                                         <li class="li_left">
-                                            월급 :<input type="text" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/>
+                                            월급 :<input type="text" class="money_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/>
                                         </li>
                                         <li class="li_right">
-                                            연봉 :<input type="text" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
+                                            연봉 :<input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
                                             style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>원
                                         </li>
                                     </ul>    
                                     <ul style={{height:"0px", top:"78px"}}>
-                                        <li class="li_left">기본급 :<input type="text" name="baseSalary" id="baseSalary" class="address" placeholder="1,700,000" defaultValue="1000000"/></li>
-                                        <li class="li_left">식대 :<input type="text" name="foodSalary" id="foodSalary" class="address" placeholder="1,700,000" defaultValue="1000000"/></li>
-                                        <li class="li_left">차량유지비 :<input type="text" name="carSalary" id="carSalary" class="address" placeholder="1,700,000" defaultValue="1000000"/></li>
-                                        <li class="li_left">복리후생 :<input type="text" name="welfareSalary" id="welfareSalary" class="address" placeholder="1,700,000" defaultValue="1000000"/></li>
-                                        <li class="li_left">직책수당 :<input type="text" name="positionSalary" id="positionSalary" class="address" placeholder="1,700,000" defaultValue="1000000"/></li>     
+                                        <li class="li_left">기본급 :<input type="text" name="baseSalary" id="baseSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/></li>
+                                        <li class="li_left">식대 :<input type="text" name="foodSalary" id="foodSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/></li>
+                                        <li class="li_left">차량유지비 :<input type="text" name="carSalary" id="carSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/></li>
+                                        <li class="li_left">복리후생 :<input type="text" name="welfareSalary" id="welfareSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/></li>
+                                        <li class="li_left">직책수당 :<input type="text" name="positionSalary" id="positionSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/></li>     
                                     </ul>
                                 </li>
                                 <li class="clear">
                                     <strong style={{display:"block", marginTop:"20px"}}>성과급, 상여급</strong>
                                     <ul>
                                         <li class="in_block">
-                                            성과금 :<input type="text" name="insentive" id="insentive" placeholder="1,700,000" defaultValue="1000000"/>
+                                            성과금 :<input type="text" class="money_input" name="insentive" id="insentive" placeholder="1,700,000" defaultValue="1000000"/>
                                             <select id="insentiveType" style={{width: "74px", textAling: "center"}}>
                                                 <option value="0">월간</option>
                                                 <option value="1">분기</option>
@@ -363,7 +363,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                             </select>
                                         </li>
                                         <li class="in_block" style={{marginLeft: "15px"}}>
-                                            상여금 :<input type="text" name="bonus" id="bonus" placeholder="1,700,000" defaultValue="1000000"/>
+                                            상여금 :<input type="text" class="money_input" name="bonus" id="bonus" placeholder="1,700,000" defaultValue="1000000"/>
                                             <select id="bonusType" style={{width: "74px"}}>
                                                 <option value="0">월간</option>
                                                 <option value="1">분기</option>
@@ -441,7 +441,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                 <option value="1">여</option>
                                             </select>
                                         </li>
-                                        <li>기간 :<input type="text" id="reductDate" placeholder="2020.01-01~2025.01.01" style={{width: "213px"}}  defaultValue="2020-01-01~2020-05-05"/></li>
+                                        <li>기간 :<input type="text" class="dateto_input" id="reductDate" placeholder="2020.01-01~2025.01.01" style={{width: "213px"}}  defaultValue="2020-01-01~2020-05-05"/></li>
                                         <li>감면율 :
                                             {/* <input type="text" id="reductPer" placeholder="90"  style={{width: "43px"}} defaultValue="80"/>% */}
                                             &nbsp;
@@ -488,49 +488,49 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                     <tr>
                                                         <th>국민연금</th>
                                                         <td>
-                                                            <input type="text" id="fourIns0" defaultValue="국민1"/>
+                                                            <input type="text" class="money_input" id="fourIns0" defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="getOfIns0"  defaultValue="국민2"/>
+                                                            <input type="text" class="money_input" id="getOfIns0"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="lostOfIns0" defaultValue="국민3"/>
+                                                            <input type="text" class="money_input" id="lostOfIns0" defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>건강보험</th>
                                                         <td>
-                                                            <input type="text" id="fourIns1"  defaultValue="건강1"/>
+                                                            <input type="text" class="money_input" id="fourIns1"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="getOfIns1"  defaultValue="건강2"/>
+                                                            <input type="text" class="money_input" id="getOfIns1"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="lostOfIns1"  defaultValue="건강3"/>
+                                                            <input type="text" class="money_input" id="lostOfIns1"  defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>고용보험</th>
                                                         <td>
-                                                            <input type="text" id="fourIns2"   defaultValue="고용1"/>
+                                                            <input type="text" class="money_input" id="fourIns2"   defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="getOfIns2" defaultValue="고용2"/>
+                                                            <input type="text" class="money_input" id="getOfIns2" defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="lostOfIns2" defaultValue="고용3"/>
+                                                            <input type="text" class="money_input" id="lostOfIns2" defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>산재보험</th>
                                                         <td>
-                                                            <input type="text" id="fourIns3" defaultValue="산재1"/>
+                                                            <input type="text" class="money_input" id="fourIns3" defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="getOfIns3"  defaultValue="산재2"/>
+                                                            <input type="text" class="money_input" id="getOfIns3"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="lostOfIns3"  defaultValue="산재3"/>
+                                                            <input type="text" class="money_input" id="lostOfIns3"  defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                 </tbody>
