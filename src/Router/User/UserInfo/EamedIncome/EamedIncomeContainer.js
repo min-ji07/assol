@@ -7,7 +7,7 @@ import picker from '../../../../Utils/datepicker';
 
 const EamedIncomeContainer = () => {
 
-     //기본컬럼 정의
+    //기본컬럼 정의
     const defaultColDef ={
         width: 100
         ,editable : true
@@ -18,11 +18,15 @@ const EamedIncomeContainer = () => {
     const [rowData, setRowData] = useState([]);
     const [rowData2, setRowData2] = useState([]);
     const [rowData3, setRowData3] = useState([]);
+    const [rowData4, setRowData4] = useState([]);
+    const [rowData5, setRowData5] = useState([]);
 
     //그리드 정의
     const [euduDefs, setEduDefs] = useState({});
     const [carrerDefs, setCarrerDefs] = useState({});
     const [dependDefs, setDependDefs] = useState({});
+    const [militaryDefs, setMilitaryDefs] = useState({});
+    const [curriculumDefs, setCurriculumDefs] = useState({});
     
 
     
@@ -77,6 +81,76 @@ const EamedIncomeContainer = () => {
         ,"3" : "대학교"
     }
 
+    const mContentMappings = {
+        "0" : "만기제대",
+        "1" : "의가사제대",
+        "2" : "의병제대",
+        "3" : "소집해제",
+        "4" : "불명예제대",
+        "5" : "상이제대",
+        "6" : "면제",
+        "7" : "기타"
+    }
+
+    const mTypeMappings = {
+        "0" : "육군",
+        "1" : "해군",
+        "2" : "공군",
+        "3" : "해병",
+        "4" : "의경",
+        "5" : "전경",
+        "6" : "공익",
+        "7" : "기타"
+    }
+
+
+
+    // 교육
+    const gridCurriculumSeitting = () =>{
+        const columnDefs= [  
+            { headerName: "userId", field: "id", hide :true}
+            ,{ headerName: "processType", field: "processType", hide:true}
+            ,{ headerName: "branchNo", field: "branchNo", hide:true }
+            ,{ headerName: '교육과정', field: "curriculum",  width:200}
+            ,{ headerName: "시간", field: "classTime", width:80,}
+            ,{ headerName: '강사', field: "teacher",  width:90}
+            ,{ headerName: '교육상태', field: "isStatus",  width:90 }
+            ,{ headerName: '교육기간', field: "curriculumDate",  width:200}
+        ]
+
+        //컴포넌트 세팅 
+        const components = {  };
+        return {columnDefs, defaultColDef, components};
+    }
+
+    // 병역
+    const gridMilitarySeitting = () =>{
+        const columnDefs= [  
+            { headerName: "userId", field: "id", hide :true}
+            ,{ headerName: "processType", field: "processType", hide:true}
+            ,{ headerName: "branchNo", field: "branchNo", hide:true }
+            ,{ headerName: '병역구분', field: "militaryContent",  width:90,
+                cellEditor : "select", 
+                cellEditorParams: { values : gridCommon.extractValues(mContentMappings)},
+                refData: mContentMappings
+            }
+            ,{ headerName: "군별", field: "militaryType", width:80,
+                cellEditor : "select", 
+                cellEditorParams: { values : gridCommon.extractValues(mTypeMappings)},
+                refData: mTypeMappings
+            }
+            ,{ headerName: '복무기간', field: "militaryDate",  width:200}
+            ,{ headerName: '최종계급', field: "finalLevel",  width:90 }
+            ,{ headerName: '병과', field: "miltaryClass",  width:90}
+            ,{ headerName: '미필사유', field: "unmiltaryReason",  width:90}
+        ]
+
+        //컴포넌트 세팅 
+        const components = {  };
+        return {columnDefs, defaultColDef, components};
+    }
+
+    // 부양가족
     const gridDependSeitting = () =>{
         const columnDefs= [  
             { headerName: "userId", field: "id", hide :true}
@@ -141,7 +215,7 @@ const EamedIncomeContainer = () => {
                 ,{ headerName: "branchNo", field: "branchNo", hide:true }
                 ,{ headerName: "회사명", field: "exCompanyName", width: 130}
                 ,{headerName: "입사일자",field:"exEnterDate", width:130}
-                ,{headerName: "퇴사일자", field: "exLeaveDate ", width:130}
+                ,{headerName: "퇴사일자", field: "exLeaveDate", width:130}
                 ,{headerName: "근무기간", field: "exWorkPeriod", width:100}
                 ,{ headerName: "최종직위", field: "exLastWorkLevel", width:100}
                 ,{ headerName: "담당직무", field: "exPosition", width:130}
@@ -152,14 +226,14 @@ const EamedIncomeContainer = () => {
            return {columnDefs, defaultColDef, components};
     }
 
-    const [testDefs, setTestDefs] = useState({}); //그리드 정의
-
     useEffect(()=>{
         async function init() {
          try {
             setDependDefs(gridDependSeitting());
             setEduDefs(gridEducationSetting());
             setCarrerDefs(gridAllCarrerSetting());
+            setMilitaryDefs(gridMilitarySeitting());
+            setCurriculumDefs(gridCurriculumSeitting());
 
             let rowData = [
                 {
@@ -194,8 +268,6 @@ const EamedIncomeContainer = () => {
                     "sfTrustRelation": 0
                 }
             ];
-            setRowData(rowData);
-
             let rowData2 = [
                 {
                     "eGrade":0,
@@ -214,7 +286,7 @@ const EamedIncomeContainer = () => {
                     "complete":"담배1급"
                 },
             ];
-            setRowData2(rowData2);
+            
 
             let rowData3 = [
                 {
@@ -235,7 +307,33 @@ const EamedIncomeContainer = () => {
                     "exLeaveReason":"오류가 너무 많이나서..."
                 },
             ];
+
+            let rowData4 = [
+                {
+                    "militaryContent": 1,
+                    "militaryType": 3,
+                    "militaryDate": "2020-04-05~2020-05-05",
+                    "finalLevel": "병장",
+                    "miltaryClass": "포병",
+                    "unmiltaryReason": ""
+                }
+            ]
+
+            let rowData5 = [
+                {
+                    "curriculum": "리액트 개발",
+                    "classTime": 100,
+                    "teacher": "김민지",
+                    "isStatus": "수료",
+                    "curriculumDate": "2020-05-05~2020-07-06",
+                }
+            ]
+
+            setRowData(rowData);
+            setRowData2(rowData2);
             setRowData3(rowData3);
+            setRowData4(rowData4);
+            setRowData5(rowData5);
 
          }catch{
  
@@ -243,10 +341,10 @@ const EamedIncomeContainer = () => {
         };
         init();
      },[]); //init
-    
+
 
     return(
-        <EamedIncomePresenter rowData={rowData} euduDefs ={euduDefs} carrerDefs= {carrerDefs} dependDefs={dependDefs} rowData2={rowData2} rowData3={rowData3}/>
+        <EamedIncomePresenter rowData={rowData} euduDefs ={euduDefs} carrerDefs= {carrerDefs} dependDefs={dependDefs} militaryDefs={militaryDefs} curriculumDefs={curriculumDefs} rowData2={rowData2} rowData3={rowData3} rowData4={rowData4} rowData5={rowData5}/>
     )
 }
 export default EamedIncomeContainer;

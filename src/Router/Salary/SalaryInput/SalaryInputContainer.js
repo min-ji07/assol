@@ -100,12 +100,6 @@ function SalaryInputContainer() {
                         return utils.comma(params.value);
                     }    
                 }
-
-
-
-
-               
-            //    ,{ headerName: "추가항목", field: "otherContent", width:120}
            ]
    
           

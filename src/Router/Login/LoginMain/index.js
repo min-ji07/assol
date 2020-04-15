@@ -33,8 +33,8 @@ const openJoinForm = () =>{
     $(".modal_box.mb1").hide();
     $(".modal_box.mb3").show();
 }
+// 동의 - 다음으로
 const openJoinForm2 = () =>{
-    console.log("요기");
     $(".modal_box.mb3").hide();
     $(".modal_box.mb2").show();
 }

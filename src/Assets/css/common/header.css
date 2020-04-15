@@ -1,5 +1,6 @@
 @import url("../common/default.css");
 @import url("/images");
+
 body {padding: 0px; margin: 0 auto; font-family: 'Noto Sans KR'; background-color: #eeeeee; position: relative;}
 header{font-family: 'Nanum Gothic'; font-weight: 500;}
 /* 헤더위치 */
@@ -29,13 +30,17 @@ a[class*="answer"] { padding: 28px 35px; font-size: 22px; color: white ; font-we
     background: url('/images/search.png'); background-repeat: no-repeat;
     width: 18px; height: 20px;
     color: transparent;
+    right:30px;
 }
 .searchdiv:focus { border-style: none;}
 /* 검색창 */ 
 input, button { border-style: none; }
 input.search { background-color: transparent; border: none; 
-    width: 300px; height: 50px; font-size: 17px; 
-    margin-left: 21px; line-height: 50%; border-bottom: 1 solid #41505c; margin-left: 21px;;
+    width: 320px; height: 40px; font-size: 17px; 
+    margin-left: 21px; line-height: 50%; border-bottom: 1 solid #41505c; margin-left: 21px;
+    border-bottom: 1px solid #41505c;
+    border-radius: 0px;
+    text-indent: 5px;
 }
 input::placeholder { font-size: 17px; color: #b2b7bb;}
 .search::after { content: ""; position: absolute; width: 272px; height: 1px; color: white;} 

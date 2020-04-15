@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import '../../../Assets/css/pages/Salary/salary.css';
 import useHook from'../../../GlobalState/Hooks/useHook';
+import DataGrid from "../../../Components/DataGrid"
+// import gridCommon from '../../../Utils/grid';
 import $ from 'jquery';
 
-const SalaryPresenter=({rowData,  gridDefs, nextPage }) => { 
+const SalaryPresenter=({rowData,  gridDefs }) => { 
 
     
 
@@ -22,7 +24,15 @@ const SalaryPresenter=({rowData,  gridDefs, nextPage }) => {
                 <div class="salary_inner">
                     <div class="sal_date_left">
                         <ul>
-                            <li>귀속연월 <input type="text" /></li>
+                            <li>귀속연월 <input type="text" 
+                                readOnly
+                                id="month-picker"
+                                className="datepicker-here"
+                                data-language='lang'
+                                data-min-view="month"
+                                data-view="month"
+                                data-date-format="yyyy-mm"/>
+                            </li>
                             <button class="btn_gray btn01">조회</button> 
                         </ul>
                     </div>
@@ -35,7 +45,9 @@ const SalaryPresenter=({rowData,  gridDefs, nextPage }) => {
                                     </div>
                                 </div>
 
-                                <div class="div_grid">그리드</div>
+                                <div class="div_grid">
+                                    <DataGrid rowData={rowData} gridDefs={gridDefs}/>
+                                </div>
                             </div>
                         </div>
                         <div class="right_div">
@@ -47,7 +59,9 @@ const SalaryPresenter=({rowData,  gridDefs, nextPage }) => {
                                     </div>
                                 </div>
 
-                                <div class="div_grid">그리드</div>
+                                <div class="div_grid">
+                                    그리드
+                                </div>
                             </div>
                         </div>
                     </div>

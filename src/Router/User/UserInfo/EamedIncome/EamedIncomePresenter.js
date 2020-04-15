@@ -3,10 +3,11 @@ import DataGrid from "../../../../Components/DataGrid";
 import { callApi } from '../../../../Utils/api';
 import $ from 'jquery';
 import gridCommon from '../../../../Utils/grid';
+import utils from '../../../../Utils/utils';
 
-const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowData2, rowData3}) => {
+const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, militaryDefs, curriculumDefs, rowData2, rowData3, rowData4, rowData5}) => {
 
-
+    
 
     let params = {};
 
@@ -19,18 +20,40 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
         const inputListTab2 = $("#insurnaceTable input");
         
         let tempParams = {};
+        let key;
+        let value;
         for(i; i<inputListLeft.length; i++){
-            tempParams[inputListLeft[i].id] = inputListLeft[i].value; 
+            key = inputListLeft[i].id;
+            value = inputListLeft[i].value;
+            if(key.indexOf("userImage") != -1){
+                key = "imagePath";   
+            }
+            tempParams[key] = value;
         }
         params["userInfo"] = tempParams;
         params.userInfo.userType = 0; // 일반소득자
         params.userInfo.branchNo = 30; // 임시 나중에 수정해야함
 
         i=0;
-        tempParams = {};
+        tempParams = {
+            "otherContent" : ''
+        };
         for(i; i<inputListTab1.length; i++){
-            tempParams[inputListTab1[i].id] = inputListTab1[i].value; 
+            var checkId = inputListTab1[i].id;
+            // 급여항목 추가리스트
+            if(checkId.indexOf("addSalary") != -1){
+                if(checkId == "addSalaryTitle"){
+                    tempParams.otherContent += '"'+inputListTab1[i].value+'":';
+                } else if(checkId == "addSalaryPay"){
+                    tempParams.otherContent += '"'+inputListTab1[i].value+'"'+",";
+                }
+            } else {
+                tempParams[inputListTab1[i].id] = inputListTab1[i].value;
+            }
         }
+
+        console.log(tempParams.otherContent);
+        tempParams.otherContent = JSON.parse("{"+tempParams.otherContent.slice(0,-1)+"}");
 
         params["detailData"] = tempParams;
 
@@ -51,13 +74,30 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
             "exModels" : getCarrerRow()
         };
         
+        let militaryRow = getMilitaryRow();
+        let curriculumRow = getCurriculumRow();
+        
+        i=0;
+        for(i; i<militaryRow.length; i++){
+            params["exData"]["exModels"].push(militaryRow[i]);
+        }
+        i=0;
+        for(i; i<curriculumRow.length; i++){
+            params["exData"]["exModels"].push(curriculumRow[i]);
+        }
+
         async function saveInit() {
             try {
                 console.log(JSON.stringify(params));
                 console.log(params);
-                await callApi.saveUserInfo(params).then(res=> {
-                    console.log(res);
-                   console.log("완료");
+                await callApi.UserRegistration(params).then(res=> {
+                    if(res.data.ErrorCode == 1){
+                        alert(res.data.Msg);
+                        console.log(res.data);
+                    } else {
+                        alert("저장이 완료되었습니다.");
+                        location.reload();
+                    }
                 });
 
             }catch(e){
@@ -66,29 +106,26 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
         };
         saveInit();
     }
-    
 
+    // 팝업 띄우기, 닫기
+    const openJoinPop = () => {
+        $(".modal_box").show();
+    };
+    const closePopup = () => {
+        $(".modal_box").hide();
+        return false;
+    }
 
-
-
-    /*
-        addRow 
-    */
-
-    const addDependRow = () => {
-        var gridApi = $("#dependGrid").find(".ag-root")[0]["__agComponent"].gridApi;
+    /* row click event */
+    const addRow = (e) => {
+        var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
         gridCommon.setGridApi(gridApi);
         gridCommon.onAddRow();
     }
-    const addEduRow = () => {
-        var gridApi = $("#eduGrid").find(".ag-root")[0]["__agComponent"].gridApi;
+    const removeRow = (e) => {
+        var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
         gridCommon.setGridApi(gridApi);
-        gridCommon.onAddRow();
-    }
-    const addCarrerRow = () => {
-        var gridApi = $("#carrerGrid").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        gridCommon.onAddRow();
+        gridCommon.onRemoveRow();
     }
 
     const getDependRow = () => {
@@ -106,6 +143,18 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
         gridCommon.setGridApi(gridApi);
         return gridCommon.getRowData();
     }
+    const getMilitaryRow = () => {
+        var gridApi = $("#militaryGrid").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        return gridCommon.getRowData();
+    }
+    const getCurriculumRow = () => {
+        var gridApi = $("#curriculumGrid").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        return gridCommon.getRowData();
+    }
+    
+
     const imgUpload = (e) => {
         const fileInput = e.target;
         if (fileInput.files && fileInput.files[0]) {
@@ -118,7 +167,40 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
         $("#userImgText").hide();
     }
 
-    // insDefs,
+    const userImgDelete = (e) => {
+        $("#userImgView").attr("src","/images/user02.png");
+        $("#userImage").val("");
+        $("#userImgText").show();
+    }
+
+    const nationalChange = (e) => {
+        if(e.target.value == "내국인"){
+            $(e.target).parent().next().hide();
+        } else {
+            $(e.target).parent().next().show();
+        }
+    }
+
+    const openPostPop = (e) => {
+        $("#daumPostPop").show();
+    }
+
+    const addSalary = (e) => {
+        const salaryUl = $("#userInfoRight li.salary > ul:nth-child(2)");
+        const li = $("<li class='li_left' style='width:227px;'>");
+        const btn = $('<button type="button" style="color:#7d7d7d; background-color:transparent;">X</button>').on("click",function(e){
+            $(e.target).parent().remove();  // 삭제이벤트
+        });
+        li.append('<input style="width:65px;" type="text" id="addSalaryTitle" class="address" placeholder="추가수당"/>');
+        li.append(' : <input type="text" id="addSalaryPay" class="address" placeholder="1,700,000" style="margin-right:5px;"/>');
+        li.append(btn);
+        salaryUl.append(li);
+    }
+    
+    useEffect(()=>{
+
+    },[]); //init
+
     return (
     <div class="div_bottom tab_01">
         <form>
@@ -127,17 +209,30 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
                 <div id="userInfoLeft" class="test">
                     <div class="left_div_inner">
                     <div class="imgload"><img id="userImgView" src='/images/user02.png' alt="유저사진" style={{width:"140px",height:"140px",borderRadius:"50%"}}/></div>
-                        {/* <span id="userImgText">사원 사진을 등록해주세요.</span><br /> */}
+                        <br/><span id="userImgText">사원 사진을 등록해주세요.</span><br />
                         <div style={{marginTop:"10px"}}>
-                            <label for="userImage" class="userImg">등록</label><input type="file" id="userImage" onChange={imgUpload}/>
-                            <label for="imgDelete">삭제</label><button type="button" id="imgDelete" />
+                            <label for="userImage" class="userImg">수정</label><input type="file" id="userImage" onChange={imgUpload}/>
+                            <label for="imgDelete">삭제</label><button type="button" id="imgDelete" onClick={userImgDelete}/>
                         </div>
                         <ul>
                         <li>성명 :<input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="테스트"/></li>
                         {/* <li>아이디 :<input type="text" name="id" id="joinId" placeholder="아이디를 입력해주세요."/></li> */}
-                        <li>직무 : <input type="text" name="position" id="position" placeholder="사회복지사" defaultValue="테스트"/></li>
+                        <li>직무 : 
+                            {/* <input type="text" name="position" id="position" placeholder="사회복지사" defaultValue="테스트"/> */}
+                            <select name="position" id="position" style={{width:"182px"}}>
+                                <option value="0">사회복지사</option>
+                                <option value="1">요양보호사</option>
+                                <option value="2">사무원</option>
+                                <option value="3">시설장</option>
+                                <option value="4">조리원</option>
+                                <option value="5">운전사</option>
+                                <option value="6">물리치료사</option>
+                                <option value="7">촉탁의</option>
+                                <option value="8">대표</option>
+                            </select>
+                        </li>
                         <li>직위 : 
-                            <select name="workLevel" id="workLevel">
+                            <select name="workLevel" id="workLevel" style={{borderRadius:"0px", marginLeft:"20px", width:"172px", marginTop:"-4px"}}>
                                 <option value="0">부장</option>
                                 <option value="1">과장</option>
                                 <option value="2">대리</option>
@@ -150,32 +245,31 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
                     <div class="right_div_inner">
                         <ul>
                             <li>주민번호 :<input type="text" name="personalNumber" id="personalNumber" placeholder="123456-1234567" defaultValue="950527-00101001"/></li>
-                            <li>  
+                            <li style={{display:"inline-block" , width:"130px", marginLeft:"5px" }}>  
                             국적 :
-                                <select name="national" id="national">
+                                <select name="national" id="national" onChange={nationalChange}>
                                     <option value="내국인" selected>내국인</option>
                                     <option value="외국인">외국인</option>                                                
                                 </select>
                             </li>
-                            <li> 
+                            <li style={{display:"inline-block" , width:"170px"}}> 
                             비자타입 :
-                                <select name="visaType" id="visaType">
-                                    <option value="내국인" selected>내국인</option>
-                                    <option value="외국인">외국인</option>                                                
-                                </select>
+                                <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
                             </li>
                             <li>입사일 :<input type="text" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
                             <li>그룹입사일 :<input type="text" name="groupJoinDate" id="groupJoinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
-                            <li>  
+                            <li style={{display:"inline-block" , width:"119px", marginLeft:"5px"}}>  
                             수습적용 :
-                                <select name="isProbation" id="isProbation">
+                                <select name="isProbation" id="isProbation" style={{width:"38px"}}>
                                     <option value="0" selected>부</option>
                                     <option value="1">여</option>                                                
                                 </select>
                             </li>
-                            <li>수습만료일 :<input type="text" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05"/></li>
-                            <li>고용형태 : 
-                                <select name="regularEmployee" id="regularEmployee">
+                            <li style={{display:"inline-block" , width:"178px"}}>
+                                수습만료일 :<input type="text" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
+                            </li>
+                            <li style={{display:"inline-block" , width:"155px", marginLeft:"5px" }}>고용형태 : 
+                                <select name="regularEmployee" id="regularEmployee" style={{marginLeft:"5px"}}>
                                     <option value="0">정규직</option>
                                     <option value="1" selected>계약직</option>
                                     <option value="2">임시직</option>
@@ -184,17 +278,24 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
                                     <option value="5">일용직</option>                                                
                                 </select>
                             </li>
+                            <li style={{display:"inline-block" , width:"140px"}}>  
+                            재직여부 :
+                                <select name="isActive" id="isActive" style={{width:"50px"}}>
+                                    <option value="0" selected>부</option>
+                                    <option value="1">여</option>                                                
+                                </select>
+                            </li>
                             <li>계약기간 :<input type="text" name="contractPeriod" id="contractPeriod" placeholder="2020-01-01 ~ 2021-01-01" defaultValue="2020-01-01~2020-01-16"/></li>
                             {/* 숫자제한 , 3자리 4자리 4자리 -추가*/}
                             <li>전화번호 :<input type="tel" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="010-4412-8516"/></li>
                             {/* 숫자제한 , 3자리 4자리 4자리 -추가*/}
                             <li>휴대폰 :<input type="tel" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-4412-8516"/></li>
                             <li>
-                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="서울시"/>
-                                <button type="button" class="btn_gray postal_code" defaultValue="131-212">우편번호</button>
+                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="서울시" style={{width:"152px"}}/>
+                                <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
                             </li>
                             <li>
-                                <input type="text" name="address" id="address" placeholder="주소"  defaultValue="중랑구 답십리로"/>
+                                <input type="text" name="address" id="address" placeholder="주소"  defaultValue="중랑구 답십리로" style={{width:"300px"}}/>
                             </li>
                             <li>
                                 <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  defaultValue="77길45"></textarea>
@@ -208,14 +309,15 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
 
                 {/* <div class="div_top wid843"> */}
                     <input type="radio" id="tab_001" name="tab02" defaultChecked/>
-                    <label for="tab_001">상세설정</label>
+                    <label for="tab_001">급여상세</label>
                     <input type="radio" id="tab_002" name="tab02" />
                     <label for="tab_002">4대보험/부양가족</label>
                     <input type="radio" id="tab_003" name="tab02" />
                     <label for="tab_003">학력/교육</label>
                     
-                    <input type="file" id="upload"/>
-                    <label for="upload" class="upload">통장사본 및 신분증사본 업로드</label>
+                    {/* <input type="file" id="upload"/>
+                    <label for="upload" class="upload">통장사본 및 신분증사본 업로드</label> */}
+                    <button type="button" class="upload" onClick={()=>openJoinPop()}>통장사본 및 신분증사본 업로드</button>
                 {/* </div> */}
 
                 <div class="div_bottom right"> 
@@ -224,13 +326,14 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
                         {/* 급여상세 */}
                         <div id="userInfoRight" class="input_content tab_001">
                             <ul>
+                            <li style={{listStyle:"disc"}}><strong>급여 항목</strong><button type="button" class="btn_gray wi64he19" id="addSalary" onClick={addSalary}>추가</button></li>
                                 <li class="salary" style={{overflowY: "scroll"}}>
-                                    <strong>급여 항목</strong><button type="button" class="btn_gray wi64he19" id="addSalary">추가</button>
                                     <ul>
                                         <li class="li_left">월급 :<input type="text" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/></li>
                                         <li class="li_right">연봉 :<input type="text" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1000000" 
                                         style={{fontSize: "25px", border:"none", width: "100px", height:"30px"}} readOnly/></li>
-                                        <br/>
+                                    </ul>    
+                                    <ul style={{border:"1px solid black", height:"0px", top:"78px"}}>
                                         <li class="li_left">기본급 :<input type="text" name="baseSalary" id="baseSalary" class="address" placeholder="1,700,000" defaultValue="1000000"/></li>
                                         <li class="li_left">식대 :<input type="text" name="foodSalary" id="foodSalary" class="address" placeholder="1,700,000" defaultValue="1000000"/></li>
                                         <li class="li_left">차량유지비 :<input type="text" name="carSalary" id="carSalary" class="address" placeholder="1,700,000" defaultValue="1000000"/></li>
@@ -268,14 +371,54 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
                                         <li>
                                             급여이체은행 :
                                             <select style={{ marginLeft: "10px", textIndent :"11px"}} id="bankName">
-                                                <option value="우리은행">우리은행</option>
-                                                <option value="국민은행">국민은행</option>
-                                                <option>우리은행</option>
-                                                <option>우리은행</option>
-                                                <option>우리은행</option>
-                                                <option>우리은행</option>
-                                                <option>우리은행</option>
-                                                <option>우리은행</option>
+                                                <option value='SC제일은행'>SC제일은행</option>
+                                                <option value='경남은행'>경남은행</option>
+                                                <option value='광주은행'>광주은행</option>
+                                                <option value='국민은행'>국민은행</option>
+                                                <option value='굿모닝신한증권'>굿모닝신한증권</option>
+                                                <option value='기업은행'>기업은행</option>
+                                                <option value='농협중앙회'>농협중앙회</option>
+                                                <option value='농협회원조합'>농협회원조합</option>
+                                                <option value='대구은행'>대구은행</option>
+                                                <option value='대신증권'>대신증권</option>
+                                                <option value='대우증권'>대우증권</option>
+                                                <option value='동부증권'>동부증권</option>
+                                                <option value='동양종합금융증권'>동양종합금융증권</option>
+                                                <option value='메리츠증권'>메리츠증권</option>
+                                                <option value='미래에셋증권'>미래에셋증권</option>
+                                                <option value='뱅크오브아메리카(BOA)'>뱅크오브아메리카(BOA)</option>
+                                                <option value='부국증권'>부국증권</option>
+                                                <option value='부산은행'>부산은행</option>
+                                                <option value='산림조합중앙회'>산림조합중앙회</option>
+                                                <option value='산업은행'>산업은행</option>
+                                                <option value='삼성증권'>삼성증권</option>
+                                                <option value='상호신용금고'>상호신용금고</option>
+                                                <option value='새마을금고'>새마을금고</option>
+                                                <option value='수출입은행'>수출입은행</option>
+                                                <option value='수협중앙회'>수협중앙회</option>
+                                                <option value='신영증권'>신영증권</option>
+                                                <option value='신한은행'>신한은행</option>
+                                                <option value='신협중앙회'>신협중앙회</option>
+                                                <option value='에스케이증권'>에스케이증권</option>
+                                                <option value='에이치엠씨투자증권'>에이치엠씨투자증권</option>
+                                                <option value='엔에이치투자증권'>엔에이치투자증권</option>
+                                                <option value='엘아이지투자증권'>엘아이지투자증권</option>
+                                                <option value='외환은행'>외환은행</option>
+                                                <option value='우리은행'>우리은행</option>
+                                                <option value='우리투자증권'>우리투자증권</option>
+                                                <option value='우체국'>우체국</option>
+                                                <option value='유진투자증권'>유진투자증권</option>
+                                                <option value='전북은행'>전북은행</option>
+                                                <option value='제주은행'>제주은행</option>
+                                                <option value='키움증권'>키움증권</option>
+                                                <option value='하나대투증권'>하나대투증권</option>
+                                                <option value='하나은행'>하나은행</option>
+                                                <option value='하이투자증권'>하이투자증권</option>
+                                                <option value='한국씨티은행'>한국씨티은행</option>
+                                                <option value='한국투자증권'>한국투자증권</option>
+                                                <option value='한화증권'>한화증권</option>
+                                                <option value='현대증권'>현대증권</option>
+                                                <option value='홍콩상하이은행'>홍콩상하이은행</option>
                                             </select>
                                         </li>
                                         <li>계좌번호 :<input type="text" id="accountNo" placeholder="1000-100-1000000" style={{width:"178px"}} defaultValue="110-222-2222"/></li>
@@ -288,8 +431,25 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
                                             </select>
                                         </li>
                                         <li>기간 :<input type="text" id="reductDate" placeholder="2020.01-01~2025.01.01" style={{width: "213px"}}  defaultValue="2020-01-01~2020-05-05"/></li>
-                                        <li>감면율 :<input type="text" id="reductPer" placeholder="90"  style={{width: "43px"}} defaultValue="80"/>%</li>
-                                        <li>감면대상 :<input type="text" id="reductTarget" placeholder="급여" style={{width: "53px"}} defaultValue="50"/>%</li>
+                                        <li>감면율 :
+                                            {/* <input type="text" id="reductPer" placeholder="90"  style={{width: "43px"}} defaultValue="80"/>% */}
+                                            &nbsp;
+                                            <select id="reductPer" style={{width: "50px",textIndent:"5px"}}>
+                                                <option value="0">0</option>
+                                                <option value="10">10</option>
+                                                <option value="20">20</option>
+                                                <option value="30">30</option>
+                                                <option value="40">40</option>
+                                                <option value="50">50</option>
+                                                <option value="60">60</option>
+                                                <option value="70">70</option>
+                                                <option value="80" defaultChecked>80</option>
+                                                <option value="90">90</option>
+                                                <option value="100">100</option>
+                                            </select>
+                                            &nbsp;%
+                                        </li>
+                                        <li>감면대상 :<input type="text" id="reductTarget" placeholder="급여" style={{width: "53px"}} defaultValue="급여"/></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -304,7 +464,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
                                     4대보험<button type="button" class="btn_gray" style={{marginLeft: "5px", marginTop: "-5px", marginLeft:"7px"}}>신청하기</button>
                                         <div class="tab_01_grid">
                                             {/* <DataGrid rowData={rowData} gridDefs={insDefs} gridCommon={gridCommon}/> */}
-                                            <table>
+                                            <table id="insurnaceTable">
                                                 <thead>
                                                     <tr>
                                                         <th>구분</th>
@@ -370,9 +530,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
                                     </li> */}
                                     <li style={{listStyle:"disc", fontSize:"17px", marginLeft:"7px"}}>
                                         부양가족
-                                        <button type="button" class="btn_gray" style={{marginLeft: "5px"}} onClick={addDependRow}>추가</button>
-                                        <button type="button" class="btn_gray" style={{marginLeft: "5px"}}>삭제</button>
-
+                                        <button type="button" class="btn_gray" style={{marginLeft: "5px"}} onClick={(e)=>addRow(e)}>추가</button>
+                                        <button type="button" class="btn_gray" style={{marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
                                         <div id="dependGrid" class="tab_02_grid grid_scrollX_none">
                                             <DataGrid rowData={rowData} gridDefs={dependDefs}/>
                                         </div>
@@ -388,20 +547,38 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
                             <ul>
                                 <li style={{marginTog:"-22px"}}>학력
                                     <div class="tab_01_inner">
-                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} onClick={addEduRow}>추가</button>
-                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}}>삭제</button>
+                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} onClick={(e)=>addRow(e)}>추가</button>
+                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
 
                                         <div id="eduGrid" class="tab_01_grid grid_scrollX_none">
                                             <DataGrid rowData={rowData2} gridDefs={euduDefs}/>
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>교육
+                                <li  style={{marginTog:"3px"}}>경력
                                     <div class="tab_02_inner">
-                                        <button type="button" class="btn_gray" onClick={addCarrerRow} style={{marginTop:"-88px", marginLeft:"36px"}}>추가</button>
-                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}}>삭제</button>
+                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
+                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
                                         <div id="carrerGrid" class="tab_02_grid grid_scrollX_none">
                                             <DataGrid rowData={rowData3} gridDefs={carrerDefs}/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li  style={{marginTog:"3px"}}>병역
+                                    <div class="tab_02_inner">
+                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
+                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
+                                        <div id="militaryGrid" class="tab_02_grid grid_scrollX_none">
+                                            <DataGrid rowData={rowData4} gridDefs={militaryDefs}/>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li  style={{marginTog:"3px"}}>교육
+                                    <div class="tab_02_inner">
+                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
+                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
+                                        <div id="curriculumGrid" class="tab_02_grid grid_scrollX_none">
+                                            <DataGrid rowData={rowData5} gridDefs={curriculumDefs}/>
                                         </div>
                                     </div>
                                 </li>
@@ -412,11 +589,59 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, rowDat
                 </div>
 
             </div>
-
-            <button type="button" class="btn_backnext next_position">이전으로</button>
+            {/* <button type="button" class="btn_backnext next_position">이전으로</button> */}
             <button type="button" class="btn_backnext save_position" onClick={fnSave}>저장하기</button>
         </form>
+        {/* 팝업 */}
+        <div className="modal_box">
+            {/* <div className=""> */}
+            {/* html 추가 */}
+            <div class="file_upload">
+
+                <img src="/images/esc.png" alt="닫기" style={{position:"absolute", right:"-95px", top:"-38px", cursor:"pointer"}} onClick={()=>closePopup()} />
+
+                <div class="file_upload_board">
+                    {/* 파일등록 전 */}
+                    <div class="file_upload_inner ">
+                        {/* <img src="/images/user_info_file_upload.png" style={{width:"53px", height:"47px", marginTop:"23%"}} />
+                        <p style={{color:"#a4a4a4", fontSize:"25px", fontWeight:"500"}}>[파일등록]</p>
+                        <p style={{color:"#a4a4a4", fontSize:"18px", fontWeight:"400"}}>업로드 할 파일을 드래그 해주세요.</p> */}
+                        {/* 파일등록 후 */}
+                        <div class="file_upload_plus">
+                            <ul>
+                                <li>
+                                    <a>
+                                        {/* <input type="file" id="test" style={{display:"none"}}/> */}
+                                        <span><img scr="/images/xhdwkdcnrk.png" /></span>
+                                        <span class="push_file"></span>
+                                        <span style={{position: "absolute", top:"160px", left:"10px"}}>파일명</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        {/* <input type="file" id="test" style={{display:"none"}}/> */}
+                                        <span><img scr="/images/xhdwkdcnrk.png" /></span>
+                                        <span class=""></span>
+                                        <span style={{position: "absolute", top:"160px", left:"10px"}}>박이삭 통장사본.jpg</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </div>
+                <p className="btn_box">
+                    <button className="btn_next" style={{marginRight:"105px"}} onClick={()=>openJoinForm2()}>삭제하기</button>
+                    <button className="btn_next" style={{ background:"#87c395"}}onClick={()=>openJoinForm2()}>완료하기</button>
+                </p>
+            </div>
+            {/* </div> */}
+            {/* 뒷배경 */}
+            <div className="modal_bg">
+            </div>
+        </div>
     </div>
+    
     )
 }
 

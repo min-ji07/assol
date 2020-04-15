@@ -25,15 +25,8 @@ const utils = {
         });
     }
     ,comma: function(number){ //콤마
-      number += '';
-      var x = number.split('.');
-      var x1 = x[0];
-      var x2 = x.length > 1 ? '.' + x[1] : '';
-      var rgx = /(\d+)(\d{3})/;
-      while ( rgx.test(x1) ) {
-          x1 = x1.replace ( rgx, '$1' + ',' + '$2' );
-      }
-      return x1 + x2;
+      number = number.replace(/\,/g,"");
+      return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     // ,tab: function(){

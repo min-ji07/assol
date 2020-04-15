@@ -1,11 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../../Assets/css/pages/user/user_info.css';
 import EamedIncomeContainer from './EamedIncome/EamedIncomeContainer';
 import BusinessIncomeContainer from './BusinessIncome/BusinessIncomeContainer';
 import DailyIncomeContainer from './DailyIncome/DailyIncomeContainer';
+import DaumPostcode from 'react-daum-postcode';
+import Utils from '../../../Utils/utils';
+import $ from 'jquery';
+
 
 
 const UserInfo = () => {
+    
+    const closePostPop = (e) => {
+        $("#daumPostPop").hide();
+    }
+
+    const daumPostComplete = (e) => {
+        let checkType = $(".user_input_inner > input:checked").attr("id");
+        const addrType = e.userSelectedType;
+        let postNo = e.zonecode;
+        let address = e.address;
+
+
+        if(addrType == "J"){    // 지번
+            address = e.jibunAddress;
+        }
+
+        switch(checkType){
+            case "tab_01" :
+                $(".div_bottom.tab_01").find("#postNo").val(postNo);
+                $(".div_bottom.tab_01").find("#address").val(address);
+                break;
+            case "tab_02" :
+                $(".div_bottom.tab_02").find("#postNo").val(postNo);
+                $(".div_bottom.tab_02").find("#address").val(address);
+                break;
+            case "tab_03" :
+                $(".div_bottom.tab_03").find("#postNo").val(postNo);
+                $(".div_bottom.tab_03").find("#address").val(address);
+                break;
+        }
+
+        $("#daumPostPop").hide();
+    }
+
+    useEffect(()=>{
+
+        $("input").on("keyup",function(e){
+            // console.log(e.target.value);
+            // e.target.value = Utils.comma(e.target.value);
+            // console.log(e);
+        });
+    },[]); //init
     
     return(
     <div class="wrapper">
@@ -28,6 +74,12 @@ const UserInfo = () => {
                     <DailyIncomeContainer />
                 </div>
             </div>
+        </div>
+        <div id="daumPostPop" class="post_wrapper">
+            <button class="post_close" onClick={closePostPop}></button>
+            <DaumPostcode
+                onComplete={daumPostComplete}
+            />
         </div>
     </div>
     )

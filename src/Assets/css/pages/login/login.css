@@ -303,20 +303,21 @@ body{
 .login .num00 {
     background: url("/images/wndirks.png") no-repeat;
     border-radius: 35px;
-    box-shadow: 0px 6px 5px #d8d8d8;
+    /* box-shadow: 0px 6px 5px #d8d8d8; */
+    box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
 }
 .login .num01 {
     background: url("/images/shdlsdydid.png") no-repeat;
     border-radius: 35px;
-    box-shadow: 0px 6px 5px #d8d8d8;
+    box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
 }
 .login .num02 {
     background: url("/images/shdlsdydidrhdehd.png") no-repeat;
     border-radius: 35px;
-    box-shadow: 0px 6px 5px #d8d8d8;
+    box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
 }
 .login .num03 {
     background: url("/images/rkwjdqkdans.png") no-repeat;
     border-radius: 35px;
-    box-shadow: 0px 6px 5px #d8d8d8;
+    box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
 }

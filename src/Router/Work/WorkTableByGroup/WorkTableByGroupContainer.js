@@ -123,6 +123,7 @@ function WorkTableByGroupContainer() {
        let workTime = ((workArr[0])*3600 + (workArr[1].replace(/분/gi,''))*60)
        let restTime = ((e.data.totalRestTime).replace(/분/gi,''))*60;
        let overTime = ((e.data.overTime).replace(/분/gi,''))*60;
+       // 
        let yaguenTime = new uuuu()
 
        let pass = 'Y'
@@ -135,7 +136,6 @@ function WorkTableByGroupContainer() {
        function uuuu(param1, param2){
 
        }
-
        e.node.setDataValue('passYn',pass)
     }
     

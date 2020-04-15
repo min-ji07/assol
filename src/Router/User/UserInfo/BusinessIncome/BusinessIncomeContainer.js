@@ -5,180 +5,224 @@ import gridCommon from '../../../../Utils/grid';
 
 
 const BusinessIncomeContainer = () => {
-    //컬럼 정의
-    const regtaxAdjustmentMappings = {
-        "0" : "소득자본인"
-        ,"1" : "소득자의 직계존속"
-        ,"2" : "배우자의 직계존속"
-        ,"3" : "배우자"
-        ,"4" : "직계비속(자녀, 입양자)"
-        ,"5" : "직계비속(코드 4 제외)"
-        ,"6" : "형제자매"
-        ,"7" : "수급자(코드1~6제외)"
-        ,"8" : "위탁아동"
-    }
-    const regHouseholdMappings = {
-        "0" : "부"
-        ,"1" : "여" 
-    }
-    const regWomanMappings = {
-        "0" : "부"
-        ,"1" : "여" 
-    }
-    const regObstacleMappings = {
-        "0" : "부"
-        ,"1" : "여"
-    }
-    const regSilverMappings = {
-        "0" : "부"
-        ,"1" : "여"
-    }
-    const regSingleParentMappings = {
-        "0" : "부"
-        ,"1" : "여"
-    }
-    const regConsignerMappings = {
-        "0" : "소득자본인"
-        ,"1" : "소득자의 직계존속"
-        ,"2" : "배우자의 직계존속"
-        ,"3" : "배우자"
-        ,"4" : "직계비속(자녀, 입양자)"
-        ,"5" : "직계비속(코드 4 제외)"
-        ,"6" : "형제자매"
-        ,"7" : "수급자(코드1~6제외)"
-        ,"8" : "위탁아동"
-    }
-
-    const columnDefs= [  
-        { headerName: "userId", field: "id", hide :true}
-        ,{ headerName: "processType", field: "processType", hide:true}
-        ,{ headerName: "branchNo", field: "branchNo", hide:true }
-        ,{ headerName: "연말정산관계", field: "relation", 
-            cellEditor : "select", 
-            cellEditorParams: { values : gridCommon.extractValues(regtaxAdjustmentMappings)},refData: regtaxAdjustmentMappings}
-        ,{ headerName: "기본", field: "regularEmployee"}
-        ,{ headerName: '세대주', field: "household", 
-            cellEditor : "select",
-            cellEditorParams: { values : gridCommon.extractValues(regHouseholdMappings)},refData: regHouseholdMappings}
-        ,{ headerName: "부녀자", field: "woman",
-            cellEditor : "select", 
-            cellEditorParams: { values : gridCommon.extractValues(regWomanMappings)},refData: regWomanMappings}
-        ,{ headerName: "장애", field: "employeeNumber",
-            cellEditor : "select", 
-            cellEditorParams: { values : gridCommon.extractValues(regObstacleMappings)},refData: regObstacleMappings}
-        ,{ headerName: '경로70세', field: "joinDate", 
-            cellEditor : "select", 
-            cellEditorParams: { values : gridCommon.extractValues(regSilverMappings)},refData: regSilverMappings}
-        ,{ headerName: '한부모', field: "personalNumber",
-            cellEditor : "select", 
-            cellEditorParams: { values : gridCommon.extractValues(regSingleParentMappings)},refData: regSingleParentMappings}
-        ,{ headerName: '성명', field: "mobile",}
-        ,{ headerName: '주민(외국인)번호', field: "email", cellEditor : "richSelect"}
-        ,{ headerName: '위탁자관계', field: "leaveDate", 
-            cellEditor : "select",
-            cellEditorParams: { values : gridCommon.extractValues(regConsignerMappings)},refData: regConsignerMappings}
-    ]
-    
-    //기본컬럼 정의
-    const defaultColDef ={
+     //기본컬럼 정의
+     const defaultColDef ={
         width: 100
         ,editable : true
         ,cellStyle: {textAlign: 'center'}
-        ,resizable : true
+        ,resizable : false
     } 
 
-    //그리드 정의
-    const [gridDefs, setGridDefs] = useState({}); 
     const [rowData, setRowData] = useState([]);
-    const [euduDefs, setEduDefs] = useState([]);
-    const [carrerDefs, setCarrerDefs] = useState([]);
-    useEffect(()=>{
-       async function initGrid(params) {
-        try {
-            if(!params){
-                const d = new Date();
-                params = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);
-            } 
-            // //근속연도 세팅 
-            // const target = document.querySelector('#month-picker')
-            params = {
-                "branchNo" : 1
-            }
-            await callApi.getUserInfo(params).then(res=>{
-                if(res.data && res.data.Data){ 
-                    console.log(res, 'Data');                   
-                      //공통 그리드 데이터 셋팅
-                    setRowData(res.data.Data);
-                    setGridDefs({columnDefs, defaultColDef});
-                }
-                setEduDefs(gridEducationSetting());
-                setCarrerDefs(gridAllCarrerSetting());
-                
-            })
-        }catch{
-            // console.log(error.me)
-        }
-       };
-       initGrid(); 
-    //    //날짜 피커 변경시 콜백으로 리로드 
-    //    picker.setMonthPicker(('#month-picker'),function(value){
-    //         initGrid(value); 
-    //     });
-    },[]); //init
+    const [rowData2, setRowData2] = useState([]);
+    const [rowData3, setRowData3] = useState([]);
+    const [rowData4, setRowData4] = useState([]);
 
-    // 사원등록 페이지로 이동
-    // const nextPage = () => {
-    //     window.location.href="/user/userInfo/"
-    // };
-    const gridAllCarrerSetting =()=>{
-        //컬럼 정의
-           const columnDefs= [  
-               { headerName: "회사명", field: "exCompanyName", width: 50 }
-               ,{headerName: "입사일자",field:"exEnterDate", width:75}
-               ,{headerName: "퇴사일자", field: "exLeaveDate ", width:110}
-                ,{headerName: "근무기간", field: "exWorkPeriod", width:80}
-               ,{ headerName: "최종직위", field: "exLastWorkLevel", width:100}
-               ,{ headerName: "담당직무", field: "exPosition", width:100}
-               ,{ headerName: "퇴직사유", field: "exLeaveReason", width:100}
-           ]
-           //기본컬럼 정의
-           const defaultColDef ={
-               width: 100
-               ,editable : false
-               ,cellStyle: {textAlign: 'center'}
-               ,resizable : true
-           } 
-   
-           //컴포넌트 세팅 
-           const components = {  };
-       
-           return {columnDefs, defaultColDef, components};
+    //그리드 정의
+    const [euduDefs, setEduDefs] = useState({});
+    const [carrerDefs, setCarrerDefs] = useState({});
+    const [militaryDefs, setMilitaryDefs] = useState({});
+    const [curriculumDefs, setCurriculumDefs] = useState({});
+
+    const eGradeMappings = {
+        "0" : "초등학교"
+        ,"1" : "중학교"
+        ,"2" : "고등학교"
+        ,"3" : "대학교"
     }
+
+    const mContentMappings = {
+        "0" : "만기제대",
+        "1" : "의가사제대",
+        "2" : "의병제대",
+        "3" : "소집해제",
+        "4" : "불명예제대",
+        "5" : "상이제대",
+        "6" : "면제",
+        "7" : "기타"
+    }
+
+    const mTypeMappings = {
+        "0" : "육군",
+        "1" : "해군",
+        "2" : "공군",
+        "3" : "해병",
+        "4" : "의경",
+        "5" : "전경",
+        "6" : "공익",
+        "7" : "기타"
+    }
+
+    // 교육
+    const gridCurriculumSeitting = () =>{
+        const columnDefs= [  
+            { headerName: "userId", field: "id", hide :true}
+            ,{ headerName: "processType", field: "processType", hide:true}
+            ,{ headerName: "branchNo", field: "branchNo", hide:true }
+            ,{ headerName: '교육과정', field: "curriculum",  width:200}
+            ,{ headerName: "시간", field: "classTime", width:80,}
+            ,{ headerName: '강사', field: "teacher",  width:90}
+            ,{ headerName: '교육상태', field: "isStatus",  width:90 }
+            ,{ headerName: '교육기간', field: "curriculumDate",  width:200}
+        ]
+
+        //컴포넌트 세팅 
+        const components = {  };
+        return {columnDefs, defaultColDef, components};
+    }
+
+    // 병역
+    const gridMilitarySeitting = () =>{
+        const columnDefs= [  
+            { headerName: "userId", field: "id", hide :true}
+            ,{ headerName: "processType", field: "processType", hide:true}
+            ,{ headerName: "branchNo", field: "branchNo", hide:true }
+            ,{ headerName: '병역구분', field: "militaryContent",  width:90,
+                cellEditor : "select", 
+                cellEditorParams: { values : gridCommon.extractValues(mContentMappings)},
+                refData: mContentMappings
+            }
+            ,{ headerName: "군별", field: "militaryType", width:80,
+                cellEditor : "select", 
+                cellEditorParams: { values : gridCommon.extractValues(mTypeMappings)},
+                refData: mTypeMappings
+            }
+            ,{ headerName: '복무기간', field: "militaryDate",  width:200}
+            ,{ headerName: '최종계급', field: "finalLevel",  width:90 }
+            ,{ headerName: '병과', field: "miltaryClass",  width:90}
+            ,{ headerName: '미필사유', field: "unmiltaryReason",  width:90}
+        ]
+
+        //컴포넌트 세팅 
+        const components = {  };
+        return {columnDefs, defaultColDef, components};
+    }
+
+    // 학력
     const gridEducationSetting =()=>{
         //컬럼 정의
            const columnDefs= [  
-               { headerName: "구분", field: "eGrade", width: 50 }
-               ,{headerName: "입학년월",field:"eEnterDate", width:75}
-               ,{headerName: "졸업년월", field: "eGraduaterDate", width:110}
-                ,{headerName: "학교명", field: "eSchoolName", width:80}
-               ,{ headerName: "전공", field: "major", width:100}
-               ,{ headerName: "이수", field: "complete", width:100}
+                { headerName: "userId", field: "id", hide :true}
+                ,{ headerName: "processType", field: "processType", hide:true}
+                ,{ headerName: "branchNo", field: "branchNo", hide:true }
+               ,{ headerName: "구분", field: "eGrade", width: 120,
+                    cellEditor : "select", 
+                    cellEditorParams: { values : gridCommon.extractValues(eGradeMappings)},refData: eGradeMappings
+                }
+               ,{headerName: "입학년월",field:"eEnterDate", width:150}
+               ,{headerName: "졸업년월", field: "eGraduaterDate", width:150}
+                ,{headerName: "학교명", field: "eSchoolName", width:100}
+               ,{ headerName: "전공", field: "major", width:150}
+               ,{ headerName: "이수", field: "complete", width:198}
            ]
-           //기본컬럼 정의
-           const defaultColDef ={
-               width: 100
-               ,editable : false
-               ,cellStyle: {textAlign: 'center'}
-               ,resizable : true
-           } 
-   
            //컴포넌트 세팅 
            const components = {  };
-       
            return {columnDefs, defaultColDef, components};
     }
+
+
+    // 경력
+    const gridAllCarrerSetting =()=>{
+        //컬럼 정의
+           const columnDefs= [
+                { headerName: "processType", field: "processType", hide:true}
+                ,{ headerName: "branchNo", field: "branchNo", hide:true }
+                ,{ headerName: "회사명", field: "exCompanyName", width: 130}
+                ,{headerName: "입사일자",field:"exEnterDate", width:130}
+                ,{headerName: "퇴사일자", field: "exLeaveDate", width:130}
+                ,{headerName: "근무기간", field: "exWorkPeriod", width:100}
+                ,{ headerName: "최종직위", field: "exLastWorkLevel", width:100}
+                ,{ headerName: "담당직무", field: "exPosition", width:130}
+                ,{ headerName: "퇴직사유", field: "exLeaveReason", width:148}
+           ]
+           //컴포넌트 세팅 
+           const components = {  };
+           return {columnDefs, defaultColDef, components};
+    }
+
+    useEffect(()=>{
+        async function init() {
+         try {
+            setEduDefs(gridEducationSetting());
+            setCarrerDefs(gridAllCarrerSetting());
+            setMilitaryDefs(gridMilitarySeitting());
+            setCurriculumDefs(gridCurriculumSeitting());
+
+            let rowData = [
+                {
+                    "eGrade":0,
+                    "eEnterDate":"2020-05-05",
+                    "eGraduaterDate":"2020-05-05",
+                    "eSchoolName":"에솔초",
+                    "major":"종이접기",
+                    "complete":"종이접기4급"
+                },
+                {
+                    "eGrade":1,
+                    "eEnterDate":"2020-05-05",
+                    "eGraduaterDate":"2020-05-05",
+                    "eSchoolName":"에솔중",
+                    "major":"일찐",
+                    "complete":"담배1급"
+                },
+            ];
+
+            let rowData2 = [
+                {
+                    "exCompanyName":"에쏠컴퍼니",
+                    "exEnterDate":"2020-05-05",
+                    "exLeaveDate":"2020-10-05",
+                    "exWorkPeriod":"4개월",
+                    "exLastWorkLevel":"부장",
+                    "exPosition":"퍼블리싱",
+                    "exLeaveReason":"힘들옹 ㅠ"
+                },{
+                    "exCompanyName":"에이치엘솔루션",
+                    "exEnterDate":"2020-02-05",
+                    "exLeaveDate":"2020-03-05",
+                    "exWorkPeriod":"4개월",
+                    "exLastWorkLevel":"선임",
+                    "exPosition":"백엔드",
+                    "exLeaveReason":"오류가 너무 많이나서..."
+                },
+            ];
+
+            let rowData3 = [
+                {
+                    "militaryContent": 1,
+                    "militaryType": 3,
+                    "militaryDate": "2020-04-05~2020-05-05",
+                    "finalLevel": "병장",
+                    "miltaryClass": "포병",
+                    "unmiltaryReason": ""
+                }
+            ]
+
+            let rowData4 = [
+                {
+                    "curriculum": "리액트 개발",
+                    "classTime": 100,
+                    "teacher": "김민지",
+                    "isStatus": "수료",
+                    "curriculumDate": "2020-05-05~2020-07-06",
+                }
+            ]
+
+            setRowData(rowData);
+            setRowData2(rowData2);
+            setRowData3(rowData3);
+            setRowData4(rowData4);
+
+         }catch{
+ 
+         }
+        };
+        init();
+     },[]); //init
+
+
     return(
-        <BusinessincomePresenter rowData={rowData} gridDefs={gridDefs} euduDefs ={euduDefs} carrerDefs= {carrerDefs} />
+        <BusinessincomePresenter rowData={rowData} rowData2={rowData2} rowData3={rowData3} rowData4={rowData4} euduDefs ={euduDefs} carrerDefs= {carrerDefs} militaryDefs={militaryDefs} curriculumDefs={curriculumDefs}/>
     )
 }
 export default BusinessIncomeContainer;

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import DataGrid from "../../../Components/DataGrid"
 import "../../../Assets/css/pages/work/work_setting_01.css";
+import DataGrid from "../../../Components/DataGrid"
 import gridCommon from '../../../Utils/grid';
 import $ from 'jquery';
 
