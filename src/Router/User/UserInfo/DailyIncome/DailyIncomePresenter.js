@@ -140,11 +140,14 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
 
     const nationalChange = (e) => {
         if(e.target.value == "내국인"){
-            $(e.target).parent().next().hide();
+            $(e.target).next().hide();
+            $(e.target).next().val("");
         } else {
-            $(e.target).parent().next().show();
+            $(e.target).next().show();
+            $(e.target).next().val("");
         }
     }
+    
      // 팝업 띄우기, 닫기
      const openJoinPop = () => {
         $(".modal_box").show();

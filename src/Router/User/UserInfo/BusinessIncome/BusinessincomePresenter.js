@@ -141,9 +141,11 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
 
     const nationalChange = (e) => {
         if(e.target.value == "내국인"){
-            $(e.target).parent().next().hide();
+            $(e.target).next().hide();
+            $(e.target).next().val("");
         } else {
-            $(e.target).parent().next().show();
+            $(e.target).next().show();
+            $(e.target).next().val("");
         }
     }
 
