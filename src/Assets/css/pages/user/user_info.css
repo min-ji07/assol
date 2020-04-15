@@ -395,8 +395,26 @@ textarea::placeholder {
 /* 정렬 */
 .user_input .user_input_inner .sal_inner .li_left {
     float: left;
-    width: 200px;
+    width: auto;
+    margin-right:17px;
 }
+.user_input .user_input_inner .sal_inner .li_left.add_li{
+    width:180px;
+}
+.user_input .user_input_inner .sal_inner .li_left.add_li input:first-child{
+    width:50px;
+}
+
+.user_input .user_input_inner .sal_inner .li_left input{
+    width:80px;
+}
+.user_input .user_input_inner .sal_inner .li_left.big input{
+    width:100px;
+}
+.user_input .user_input_inner .sal_inner .li_left span{
+    vertical-align: middle;
+}
+
 .user_input .user_input_inner .sal_inner .li_right {
     float: right;
     margin-right: 25px;

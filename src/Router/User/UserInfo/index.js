@@ -40,16 +40,37 @@ const UserInfo = () => {
                 $(".div_bottom.tab_03").find("#address").val(address);
                 break;
         }
-
         $("#daumPostPop").hide();
     }
 
     useEffect(()=>{
-
-        $("input").on("keyup",function(e){
-            // console.log(e.target.value);
-            // e.target.value = Utils.comma(e.target.value);
-            // console.log(e);
+        $(document).on("keyup","input.money_input",function(e){
+            var targetVal = e.target.value;
+            e.target.value = Utils.regExr.comma(targetVal);
+        });
+        $("input[type=email]").on("keyup",function(e){
+            var targetVal = e.target.value;
+            e.target.value = Utils.regExr.email(targetVal);
+        });
+        $("input.phone_input").on("keyup",function(e){
+            var targetVal = e.target.value;
+            e.target.value = Utils.regExr.phone(targetVal);
+        });
+        $("input.tell_input").on("keyup",function(e){
+            var targetVal = e.target.value;
+            e.target.value = Utils.regExr.tell(targetVal);
+        });
+        $("input.dateto_input").on("keyup",function(e){
+            var targetVal = e.target.value;
+            e.target.value = Utils.regExr.dateToDate(targetVal);
+        });
+        $("input.date_input").on("keyup",function(e){
+            var targetVal = e.target.value;
+            e.target.value = Utils.regExr.date(targetVal);
+        });
+        $("input.personal_input, div[col-id=sfPersnoalNumber]").on("keyup",function(e){
+            var targetVal = e.target.value;
+            e.target.value = Utils.regExr.personalNum(targetVal); 
         });
     },[]); //init
     

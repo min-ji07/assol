@@ -163,6 +163,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                 $('#userImgView').attr('src', e.target.result);
             }
             reader.readAsDataURL(fileInput.files[0]);
+            console.log(reader);
         }
         $("#userImgText").hide();
     }
@@ -189,12 +190,12 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
 
     const addSalary = (e) => {
         const salaryUl = $("#userInfoRight li.salary > ul:nth-child(2)");
-        const li = $("<li class='li_left' style='width:227px;'>");
+        const li = $("<li class='li_left add_li'>");
         const btn = $('<button type="button" style="color:#7d7d7d; background-color:transparent;">X</button>').on("click",function(e){
             $(e.target).parent().remove();  // 삭제이벤트
         });
-        li.append('<input style="width:65px;" type="text" id="addSalaryTitle" class="address" placeholder="추가수당"/>');
-        li.append(' : <input type="text" id="addSalaryPay" class="address" placeholder="1,700,000" style="margin-right:5px;"/>');
+        li.append('<input class="money_input" type="text" id="addSalaryTitle" class="address" placeholder="추가수당"/>');
+        li.append(' : <input class="money_input" type="text" id="addSalaryPay" class="address" placeholder="1,700,000" style="margin-right:5px;"/>');
         li.append(btn);
         salaryUl.append(li);
     }
@@ -205,7 +206,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
 
     return (
     <div class="div_bottom tab_01">
-        <form>
+        <form id="test">
             <div class="left_div">
                 {/* 왼쪽기본 내용 */}
                 <div id="userInfoLeft" class="test">
@@ -289,7 +290,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             </li>
                             <li>계약기간 :<input type="text" class="dateto_input" name="contractPeriod" id="contractPeriod" placeholder="2020-01-01 ~ 2021-01-01" defaultValue="2020-01-01~2020-01-16"/></li>
                             {/* 숫자제한 , 3자리 4자리 4자리 -추가*/}
-                            <li>전화번호 :<input type="tel" class="phone_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="010-4412-8516"/></li>
+                            <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="010-4412-8516"/></li>
                             {/* 숫자제한 , 3자리 4자리 4자리 -추가*/}
                             <li>휴대폰 :<input type="tel" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-4412-8516"/></li>
                             <li>
@@ -343,11 +344,26 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </li>
                                     </ul>    
                                     <ul style={{height:"0px", top:"78px"}}>
-                                        <li class="li_left">기본급 :<input type="text" name="baseSalary" id="baseSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/></li>
-                                        <li class="li_left">식대 :<input type="text" name="foodSalary" id="foodSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/></li>
-                                        <li class="li_left">차량유지비 :<input type="text" name="carSalary" id="carSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/></li>
-                                        <li class="li_left">복리후생 :<input type="text" name="welfareSalary" id="welfareSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/></li>
-                                        <li class="li_left">직책수당 :<input type="text" name="positionSalary" id="positionSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/></li>     
+                                        <li class="li_left big">
+                                            <span>기본급 :</span>
+                                            <input type="text" name="baseSalary" id="baseSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
+                                        </li>
+                                        <li class="li_left">
+                                            <span>식대 :</span>
+                                           <input type="text" name="foodSalary" id="foodSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
+                                        </li>
+                                        <li class="li_left">
+                                            <span>차량유지비 :</span>
+                                            <input type="text" name="carSalary" id="carSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
+                                        </li>
+                                        <li class="li_left">
+                                            <span>복리후생 :</span>
+                                            <input type="text" name="welfareSalary" id="welfareSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
+                                        </li>
+                                        <li class="li_left">
+                                            <span>직책수당 :</span>
+                                            <input type="text" name="positionSalary" id="positionSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
+                                        </li>     
                                     </ul>
                                 </li>
                                 <li class="clear">

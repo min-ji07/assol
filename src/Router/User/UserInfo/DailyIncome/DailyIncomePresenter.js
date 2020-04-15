@@ -147,7 +147,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             $(e.target).next().val("");
         }
     }
-    
+
      // 팝업 띄우기, 닫기
      const openJoinPop = () => {
         $(".modal_box").show();
@@ -166,8 +166,8 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         <div class="imgload"><img id="userImgView3" src='/images/user02.png' alt="유저사진" style={{width:"140px",height:"140px",borderRadius:"50%"}}/></div>
                         <br/><span id="userImgText3">사원 사진을 등록해주세요.</span><br/>
                         <div style={{marginTop:"10px"}}>
-                            <label for="userImage" class="userImg">수정</label><input type="file" id="userImage3" onChange={imgUpload3}/>
-                            <label for="imgDelete">삭제</label><button type="button" id="imgDelete3" onClick={userImgDelete3}/>
+                            <label for="userImage3" class="userImg">수정</label><input type="file" id="userImage3" onChange={imgUpload3}/>
+                            <label for="imgDelete3">삭제</label><button type="button" id="imgDelete3" onClick={userImgDelete3}/>
                         </div>
                         <ul>
                             <li>성명 :<input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="김경주"/></li>
