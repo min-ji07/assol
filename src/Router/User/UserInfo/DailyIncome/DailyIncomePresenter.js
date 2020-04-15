@@ -209,16 +209,16 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     <div class="right_div_inner">
                         <ul>
                             <li>주민번호 :<input type="text" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101"/></li>
-                            <li style={{display:"inline-block" , width:"130px", marginLeft:"5px" }}>  
-                            국적 :
-                                <select name="national" id="national" onChange={nationalChange}>
-                                    <option value="내국인" selected>내국인</option>
-                                    <option value="외국인">외국인</option>                                                
-                                </select>
-                            </li>
-                            <li style={{display:"inline-block" , width:"170px"}}> 
-                            비자타입 :
-                                <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
+                            <li style={{display:"inline-block" , width:"300px", marginLeft:"5px" }}>  
+                                국적 :
+                                    <select name="national" id="national" onChange={nationalChange}>
+                                        <option value="내국인" selected>내국인</option>
+                                        <option value="외국인">외국인</option>                                                
+                                    </select>
+                                <span style={{display:"none"}}>
+                                    비자타입 :
+                                    <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
+                                </span>
                             </li>
                             <li>최초등록일 : <input type="text" id="currentWorkDate" name="currentWorkDate" defaultValue="2020-05-06"/></li>
                             <li>전화번호 :<input type="tel" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="02-4555-6666"/></li>

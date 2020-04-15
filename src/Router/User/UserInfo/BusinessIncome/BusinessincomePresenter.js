@@ -210,16 +210,16 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                     <div class="right_div_inner">
                         <ul>
                             <li>주민번호 :<input type="text" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  defaultValue="123456-1234567"/></li>
-                            <li style={{display:"inline-block" , width:"130px", marginLeft:"5px" }}>  
-                            국적 :
-                                <select name="national" id="national" onChange={nationalChange}>
-                                    <option value="내국인" selected>내국인</option>
-                                    <option value="외국인">외국인</option>                                                
-                                </select>
-                            </li>
-                            <li style={{display:"inline-block" , width:"170px"}}> 
-                            비자타입 :
-                                <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
+                            <li style={{display:"inline-block" , width:"300px", marginLeft:"5px" }}>  
+                                국적 :
+                                    <select name="national" id="national" onChange={nationalChange}>
+                                        <option value="내국인" selected>내국인</option>
+                                        <option value="외국인">외국인</option>                                                
+                                    </select>
+                                <span style={{display:"none"}}>
+                                    비자타입 :
+                                    <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
+                                </span>
                             </li>
                             <li>입사일 :<input type="text" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/></li>
                             <li>그룹입사일 :<input type="text" name="groupJoinDate" id="groupJoinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01" style={{width:"215px"}}/></li>
