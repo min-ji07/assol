@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import '../../../Assets/css/pages/login/login.css';
+import { callApi } from '../../../Utils/api';
 
 function LoginMain(){
 
@@ -9,6 +10,7 @@ const openJoinPop = () => {
 
 const closePopup = () => {
     $(".modal_box").hide();
+   
     return false;
 }
 
@@ -24,8 +26,26 @@ const fnLogin = () => {
         alert("비밀번호를 입력해 주세요");
         return false;
     }
-
-    window.location.pathname = "/user/userInfo";
+    
+    var params = {
+        "id" : idInput.val(),
+        "password" : pwInput.val()
+    };
+    init(params);
+    async function init(params) {
+        await callApi.joinLogin(params).then(res => 
+            {
+            console.log(res.headers);
+            if(res.data.ErrorCode == 1 ){
+                alert("아이디 또는 비밀번호가 틀렸습니다.");
+                $("#idInput").val('');
+                $("#pwInput").val('');
+                return false;
+            }
+            window.location.pathname = "/user/userInfo";
+            }).catch(err => alert(err));
+    }
+    
 }
 
 const openJoinForm = () =>{
@@ -72,7 +92,7 @@ return(
         <div className="modal_box mb1">
             <div className="modal_top">
                 <div className="modal_title">회원가입</div>
-                <div className="modal_close"><a href="#" onClick={()=>closePopup()}></a></div>
+                <div className="modal_close"><a href="#"></a></div>
             </div>
             <div className="modal_bottom">
                 <form>

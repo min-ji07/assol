@@ -12,7 +12,8 @@ const api = axios.create({
 )
 
 const testUrl = "http://172.30.1.29:5302"; // 이석민 ip
-const testUrl2 = "http://172.30.1.24:5302"; // 김성일 ip
+const localURL = "http://localhost:5302";
+const testUrl2 = "http://453b7208.ngrok.io"; // 김성일 ip
 
 
 //const testUrl_user = testUrl2 + "User/GetUserInfobyBranchNo?branchNo=";
@@ -37,14 +38,7 @@ export const callApi = {
         data: params
     }), // 사원등록 - 일용직근로자
     
-    ImgUpload:(params) => axios({
-        method: 'post',
-        url: 'http://47e88f0f.ngrok.io/Save/UploadFileToServer',
-        data: params,
-        headers: {'content-type': 'multipart/form-data'},
-    }), // 사원등록 - 일용직근로자
 
-    
     // getUserInfo:(params) => axios.get('/Work/dummy/User/UserInfoTable.json',{params:params}), // 사원등록
     /*
         /work/workTableByGroup
@@ -77,5 +71,15 @@ export const callApi = {
 
     
     getWithholdingTax:(params)=> axios.get('/Withholding/dummy/getWithholdingTax.json',{params:params}), //원천세신고조회
-    setWorkerListByRestDay:(params)=>axios.post('/test/test',{wokerAnnalInfos:params}) //연차사용 - 저장
+    setWorkerListByRestDay:(params)=>axios.post('/test/test',{wokerAnnalInfos:params}), //연차사용 - 저장
+
+    /*
+        로그인 콜 
+    */
+   joinLogin:(params) => axios({
+    method: 'post',
+    url: localURL+'/Admin/Login',
+    data: params
+    }), // 로그인
+    
 };
