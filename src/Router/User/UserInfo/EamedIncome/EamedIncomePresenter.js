@@ -109,7 +109,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                 });
 
             }catch(e){
-                console.log(e);
+                alert(e);
             }
         };
         saveInit();

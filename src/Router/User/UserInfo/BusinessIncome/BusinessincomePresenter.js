@@ -104,7 +104,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                 });
 
             }catch(e){
-                console.log(e);
+                alert(e);
             }
         };
         saveInit();
