@@ -51,15 +51,39 @@ const EmploymentApplyPresenter = () => {
                             {/* 표 */}
                             <div class="apply_content">
                                 <div class="content_top">
-                                    <ul>
-                                        <li>성명</li>
-                                        <li>직책</li>
-                                        <li>입사일</li>
-                                        <li>나이</li>
-                                        <li>지원가능지원금</li>
-                                        <li>지원가능총액</li>
-                                        <li>확인</li>
-                                    </ul>
+                                    <div class="header">
+                                        <ul>
+                                            <li>성명</li>
+                                            <li>직책</li>
+                                            <li>입사일</li>
+                                            <li>나이</li>
+                                            <li>지원가능지원금</li>
+                                            <li>지원가능총액</li>
+                                            <li>확인</li>
+                                        </ul>
+                                    </div>
+                                    <div class="body">
+                                        <ul>
+                                            <li>박이삭</li>
+                                            <li>사회복지사</li>
+                                            <li>2020.01.06</li>
+                                            <li>만 <span>28세</span></li>
+                                            <li>
+                                                <div style={{float:"left", width:"368px",}}>
+                                                    <div style={{height:"48px", lineHeight:"48px"}}>청년고용장려금</div>
+                                                    <div style={{height:"45px", lineHeight:"45px"}}>일자리안정자금</div>
+                                                    {/* 중복지원 after달기 */}
+                                                </div>
+                                                <div style={{width:"414px", float:"left"}}>
+                                                    <div style={{float:"left", width:"302px"}}>2020.04.13부로가능</div>
+                                                    {/* 지원가능 after달기 */}
+                                                    <div style={{float:"left", width:"108px"}}>월 40만원</div>
+                                                </div>
+                                            </li>
+                                            <li>월 70만원</li>
+                                            <li><a href="">신청</a></li>
+                                        </ul>
+                                    </div>
                                 </div>
                                 <div class="content_bottom">
 

@@ -141,30 +141,6 @@
     width: 1628px; height: 432px;
     margin: 0px auto;
 }
-.employment_apply .apply_content .content_top {
-    width: 1628px; height: 40px;
-    border-radius: 10px 10px 0 0;
-    background: #f5f3f4;
-}
-/* 성명 직책 입사일 등 */
-.employment_apply .apply_content .content_top ul li {
-    float: left;
-    color: #818181; font-size: 17px;
-    width: 140px; height: 40px; line-height: 40px;
-    text-align: center;
-}
-.employment_apply .apply_content .content_top ul li::after {
-    display: block;
-    content: ""; background: rgba(112, 112, 112, 0.1);
-    width: 1px; height: 31px;
-    margin-top: -35px;
-}
-.employment_apply .apply_content .content_top ul li:nth-child(1)::after {
-    display: inline;
-}
-
-
-
 
 .employment_apply .apply_content .content_bottom {
     width: 1628px; height: 393px;
@@ -176,39 +152,90 @@
 .employment_apply .content_bottom::-webkit-scrollbar-thumb {background: #a2a2a2; width: 9px; height: 63px; border-radius: 50px;}
 .employment_apply .content_bottom::-webkit-scrollbar-track {background: #e9e9e9; width: 9px; height: 300px;}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/* 이건뭐냐 나중에 삭제 */
-.employment_apply .button_set input {
-    width: 90px; height: 20px; line-height: 20px;
-    color: white; font-size: 14px; font-weight: bold;
-    background: transparent; border: none; border-bottom: 1px solid white;
-    border-radius: 0px; text-indent: 0px;
-    margin-left: 5px;
+.employment_apply .apply_content .content_top {
+    width: 1628px; height: 40px;
+    border-radius: 10px 10px 0 0;
+    background: #f5f3f4;
 }
-.employment_apply .button_set select {
-    width: 90px; height: 20px; line-height: 20px;
-    color: white; font-size: 14px; font-weight: bold;
-    background: transparent; border: none; border-bottom: 1px solid white;
-    border-radius: 0px;
+/* 성명 직책 입사일 등 */
+.employment_apply .apply_content .content_top .header ul li {
+    float: left;
+    color: #818181; font-size: 17px;
+    width: 140px; height: 40px; line-height: 40px;
+    text-align: center;
 }
-/* 여기까지 삭제 */
+/* header after */
+.employment_apply .apply_content .content_top .header ul li::after {
+    display: block;
+    content: ""; background: rgba(112, 112, 112, 0.1);
+    width: 1px; height: 31px;
+    margin-top: -35px;
+}
+/* header after 첫번째 없앰 */
+.employment_apply .apply_content .content_top ul li:nth-child(1)::after {
+    display: inline;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(1) {
+    width: 140px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(2) {
+    width: 124px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(3) {
+    width: 143px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(4) {
+    width: 119px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(5) {
+    width: 797px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(6) {
+    width: 151px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(7) {
+    width: 153px;
+}
+
+.employment_apply .apply_content .content_top .body ul li:nth-child(1) {
+    width: 140px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(2) {
+    width: 121px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(3) {
+    width: 140px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(4) {
+    width: 119px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(5) {
+    width: 794px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(6) {
+    width: 148px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(7) {
+    width: 151px;
+}
+
+
+
+
+
+/* body */
+.employment_apply .apply_content .content_top .body ul li {
+    float: left;
+    color: #6b6b6b; font-size: 16px;
+    width: 125px; min-height: 96px; line-height: 96px;
+    /* margin: 54px 39px; */
+    /* text-align: center; */
+    border: 1px solid black;
+    text-align: center;
+}
+
+
+
+
+
+
