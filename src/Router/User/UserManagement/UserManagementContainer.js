@@ -96,7 +96,7 @@ function UserManagementContainer({yearMonth}) {
                     setGridDefs({columnDefs, defaultColDef});                    
                 }
                 else{
-                    console.log("데이터 안왔어 시밸 -저스틴");
+                    console.log("데이터 안왔어 시밸 -저스틴 -> ??? : 민지님임");
                 }
             })
         }catch{
