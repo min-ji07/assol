@@ -202,7 +202,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         const btn = $('<button type="button" style="color:#7d7d7d; background-color:transparent;">X</button>').on("click",function(e){
             $(e.target).parent().remove();  // 삭제이벤트
         });
-        li.append('<input class="money_input" type="text" id="addSalaryTitle" class="address" placeholder="추가수당"/>');
+        li.append('<input type="text" id="addSalaryTitle" class="address" placeholder="추가수당"/>');
         li.append(' : <input class="money_input" type="text" id="addSalaryPay" class="address" placeholder="1,700,000" style="margin-right:5px;"/>');
         li.append(btn);
         salaryUl.append(li);
@@ -267,17 +267,17 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
                                 </span>
                             </li>
-                            <li>입사일 :<input type="text" class="date_input" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
+                            <li>입사일 :<input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
                             <li>그룹입사일 :<input type="text" class="date_input" name="groupJoinDate" id="groupJoinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
-                            <li style={{display:"inline-block" , width:"119px", marginLeft:"5px"}}>  
+                            <li style={{display:"inline-block" , width:"300px", marginLeft:"5px"}}>  
                             수습적용 :
                                 <select name="isProbation" id="isProbation" style={{width:"38px"}}>
                                     <option value="0" selected>부</option>
                                     <option value="1">여</option>                                                
                                 </select>
-                            </li>
-                            <li style={{display:"inline-block" , width:"178px"}}>
-                                수습만료일 :<input type="text" class="date_input" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
+                                <span  style={{display:"none"}}>
+                                    수습만료일 :<input type="text" class="date_input" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
+                                </span>
                             </li>
                             <li style={{display:"inline-block" , width:"155px", marginLeft:"5px" }}>고용형태 : 
                                 <select name="regularEmployee" id="regularEmployee" style={{marginLeft:"5px"}}>
@@ -348,7 +348,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </li>
                                         <li class="li_right">
                                             연봉 :<input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
-                                            style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>원
+                                            tabindex="-1" style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>원
                                         </li>
                                     </ul>    
                                     <ul style={{height:"0px", top:"78px"}}>

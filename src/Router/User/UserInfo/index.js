@@ -8,6 +8,7 @@ import Utils from '../../../Utils/utils';
 import { callApi } from '../../../Utils/api';
 import { post } from 'axios';
 import $ from 'jquery';
+import utils from '../../../Utils/utils';
 
 
 
@@ -70,10 +71,41 @@ const UserInfo = () => {
         $("input.date_input").on("keyup",function(e){
             var targetVal = e.target.value;
             e.target.value = Utils.regExr.date(targetVal);
+        }).on("blur",function(e){
+            var check = isValidDate(utils.regExr.numOnly(e.target.value));
+            // if(!check){
+            //     e.target.select();
+            //     e.target.focus();
+            // }
         });
         $("input.personal_input").on("keyup",function(e){
             var targetVal = e.target.value;
             e.target.value = Utils.regExr.personalNum(targetVal); 
+        });
+
+        $(".join_date").on("focusout",function(e){
+            e.target.parentElement.nextSibling.children[0].value = e.target.value;
+        });
+
+        $("#salaryOfMonth").on("focusout",function(e){
+            var targetVal = Number(utils.regExr.numOnly(e.target.value));
+            var yearVal = targetVal*12;
+            $("#salaryOfYears").val(utils.regExr.comma(yearVal));
+        });
+
+        $(".tab_03 #workTime, .tab_03 #payOfHour").on("focusout",function(e){
+            var salaryMonth = utils.regExr.numOnly($(".tab_03 #workTime").val());
+            var hour = utils.regExr.numOnly($(".tab_03 #payOfHour").val());
+
+            $("#predictionMonth").val(utils.regExr.comma(Number(salaryMonth)*Number(hour)));
+        });
+
+        $("select[name=isProbation]").on("change",function(e){
+            if(e.target.value == "0"){
+                $(e.target.nextSibling).hide();
+            } else {
+                $(e.target.nextSibling).show();
+            }
         });
 
         $("#addFile").on("click",(e)=>{
@@ -104,6 +136,32 @@ const UserInfo = () => {
 
         fileDropDown();
     },[]); //init
+
+
+    function isValidDate(dateStr) {
+        console.log(dateStr);
+
+        var year = Number(dateStr.substr(0,4));
+        var month = Number(dateStr.substr(4,2));
+        var day = Number(dateStr.substr(6,2));
+     
+        if (month < 1 || month > 12) { // check month range
+         return false;
+        }
+        if (day < 1 || day > 31) {
+         return false;
+        }
+        if ((month==4 || month==6 || month==9 || month==11) && day==31) {
+         return false
+        }
+        if (month == 2) { // check for february 29th
+         var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+         if (day>29 || (day==29 && !isleap)) {
+          return false;
+         }
+        }
+        return true;
+    }
 
 
     async function saveInit(formData) {

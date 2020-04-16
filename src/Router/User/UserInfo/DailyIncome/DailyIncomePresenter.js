@@ -13,7 +13,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         
         let i=0;
         const inputListLeft = $("#userInfoLeft3 input:not([name=tab]), #userInfoLeft3 select, #userInfoLeft3 textarea");
-        const inputListTab1 = $("#userInfoRight3 input:not([name=tab]), #userInfoRight3 select");
+        const inputListTab1 = $("#userInfoRight3 input:not([name=tab]):not(#predictionMonth), #userInfoRight3 select");
         const inputListTab2 = $("#insurnaceTable2 input");
         
         let tempParams = {};
@@ -285,14 +285,14 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <li class="salary" style={{marginTop:"10px", listStyle:"none", height:"70px"}}>
                                     <ul>
                                         <li class="li_left">
-                                            소정근로시간 :<input type="text" class="num_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/>
+                                            소정근로시간 :<input type="text" class="num_input" name="workTime" id="workTime" placeholder="1,700,000" defaultValue="1000000"/>
                                         </li>
                                         <li style={{display:"inline-block"}}>
                                             시급 : <input type="text" class="money_input" name="payOfHour" id="payOfHour" defaultValue="1,000,000" onKeyUp={(e)=>commaInput(e)}/>원
                                         </li>
                                         <li class="li_right">
-                                            총예상월수령금액 :<input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
-                                            style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>원
+                                            총예상월수령금액 :<input type="text" class="money_input" name="predictionMonth" id="predictionMonth" placeholder="2,100,500" defaultValue="1,000,000" 
+                                            tabindex="-1" style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>원
                                         </li>
                                     </ul>
                                 </li>

@@ -40,6 +40,9 @@ input:-webkit-autofill:active {
     border: none; 
 
 }
+.user_input select:focus{
+    border:1px solid #1E90FF !important;
+}
 .grayfont { color: #919191;}
 .user_input .span_bold { font-weight: bold; }
 .user_input .title span { font-size: 15px; color: #e26b6b;}
@@ -406,12 +409,11 @@ textarea::placeholder {
     margin-right:17px;
 }
 .user_input .user_input_inner .sal_inner .li_left.add_li{
-    width:180px;
+    width:198px;
 }
 .user_input .user_input_inner .sal_inner .li_left.add_li input:first-child{
-    width:50px;
+    width:79px;
 }
-
 .user_input .user_input_inner .sal_inner .li_left input{
     width:80px;
 }
