@@ -504,49 +504,49 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                     <tr>
                                                         <th>국민연금</th>
                                                         <td>
-                                                            <input type="text" class="money_input" id="fourIns0" defaultValue=""/>
+                                                            <input type="text" id="fourIns0" defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="money_input" id="getOfIns0"  defaultValue=""/>
+                                                            <input type="text" class="date_input " id="getOfIns0"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="money_input" id="lostOfIns0" defaultValue=""/>
+                                                            <input type="text" class="date_input " id="lostOfIns0" defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>건강보험</th>
                                                         <td>
-                                                            <input type="text" class="money_input" id="fourIns1"  defaultValue=""/>
+                                                            <input type="text" id="fourIns1"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="money_input" id="getOfIns1"  defaultValue=""/>
+                                                            <input type="text" class="date_input " id="getOfIns1"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="money_input" id="lostOfIns1"  defaultValue=""/>
+                                                            <input type="text" class="date_input " id="lostOfIns1"  defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>고용보험</th>
                                                         <td>
-                                                            <input type="text" class="money_input" id="fourIns2"   defaultValue=""/>
+                                                            <input type="text" id="fourIns2"   defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="money_input" id="getOfIns2" defaultValue=""/>
+                                                            <input type="text" class="date_input " id="getOfIns2" defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="money_input" id="lostOfIns2" defaultValue=""/>
+                                                            <input type="text" class="date_input " id="lostOfIns2" defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>산재보험</th>
                                                         <td>
-                                                            <input type="text" class="money_input" id="fourIns3" defaultValue=""/>
+                                                            <input type="text" id="fourIns3" defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="money_input" id="getOfIns3"  defaultValue=""/>
+                                                            <input type="text" class="date_input " id="getOfIns3"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="money_input" id="lostOfIns3"  defaultValue=""/>
+                                                            <input type="text" class="date_input " id="lostOfIns3"  defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                 </tbody>

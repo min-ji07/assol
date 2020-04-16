@@ -416,23 +416,23 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                             <ul>
                                 <li style={{marginTog:"-22px"}}>학력
                                     <div class="tab_01_inner">
-                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-32px", marginLeft: "36px"}} onClick={(e)=>addRow(e)}>추가</button>
-                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-32px", marginLeft: "111px"}} onClick={(e)=>removeRow(e)}>삭제</button>
-                                        <div id="eduGrid2" class="tab_01_grid grid_scrollX_none" style={{marginTop:"0px",     height: "240px"}}>
+                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} onClick={(e)=>addRow(e)}>추가</button>
+                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
+                                        <div id="eduGrid2" class="tab_01_grid grid_scrollX_none">
                                             <DataGrid rowData={rowData} gridDefs={euduDefs}/>
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>경력
+                                <li style={{marginTog:"3px"}}>경력
                                     <div class="tab_02_inner">
-                                        <button type="button" class="btn_gray" style={{marginTop:"-32px", marginLeft:"40px"}} onClick={(e)=>addRow(e)}>추가</button>
-                                        <button type="button" class="btn_gray" style={{marginTop: "-32px",marginLeft: "115px"}} onClick={(e)=>removeRow(e)}>삭제</button>
+                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
+                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
                                         <div id="carrerGrid2" class="tab_02_grid grid_scrollX_none">
                                             <DataGrid rowData={rowData2} gridDefs={carrerDefs}/>
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>병역
+                                <li style={{marginTog:"3px"}}>병역
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
@@ -441,7 +441,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>교육
+                                <li style={{marginTog:"3px"}}>교육
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>

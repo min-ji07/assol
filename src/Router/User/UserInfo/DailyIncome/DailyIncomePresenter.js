@@ -156,6 +156,8 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         $(".modal_box").hide();
         return false;
     }
+
+    
     
     return (
     <div class="div_bottom tab_03">
@@ -259,22 +261,39 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         {/* 급여상세 */}
                         <div id="userInfoRight3" class="input_content tab_006">
                             <ul>
-                                <li style={{listStyle:"disc", height:"21px", lineHeight:"21px"}}>
+                                <li class="salary" style={{listStyle:"disc", height:"21px", lineHeight:"21px"}}>
                                     <strong>급여항목</strong>
+                                    <ul>
+                                        <li class="li_left">
+                                            소정근로시간 :<input type="text" class="money_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/>
+                                        </li>
+                                        <li>
+                                            시급 : <input type="text" name="payOfHour" id="payOfHour" defaultValue="1,000,000" onKeyUp={(e)=>commaInput(e)}/>원
+                                        </li>
+                                        <li class="li_right">
+                                            총예상월수령금액 :<input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
+                                            style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>원
+                                        </li>
+                                    </ul>
                                 </li>
-                                <li>소정근로시간 :<input type="text" name="workTime" id="workTime" defaultValue="30"/></li>
-                                <li>시급 : <input type="text" name="payOfHour" id="payOfHour" defaultValue="1,000,000" onKeyUp={(e)=>commaInput(e)}/>원</li>
-                                <li>총예상월수령금액 : (값 불러오기) </li>
-                                <li>관리사항</li>
-                                <li>예금주 : <input type="text" id="accountHolder" name="accountHolder" placeholder="박이삭" defaultValue="박이삭"/></li>
-                                <li>
-                                    급여이체
-                                    <select id="bankName" name="bankName">
-                                        <option value="우리은행">우리은행</option>
-                                        <option value="국민은행">국민은행</option>
-                                    </select>
-                                </li>
-                                <li>계좌번호 : <input type="text" placeholder="1002-122-113541" id="accountNo" name="accountNo" defaultValue="2220-22220-2222"/></li>
+                                <li class="clear">
+                                    <strong style={{display:"block", marginTop:"20px"}}>관리사항</strong>
+                                    <ul>
+                                        <li>
+                                            예금주 : <input type="text" id="accountHolder" name="accountHolder" placeholder="박이삭" defaultValue="박이삭"/>
+                                        </li>
+                                        <li>
+                                        급여이체
+                                            <select id="bankName" name="bankName">
+                                                <option value="우리은행">우리은행</option>
+                                                <option value="국민은행">국민은행</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                            계좌번호: <input type="text" placeholder="1002-122-113541" id="accountNo" name="accountNo" defaultValue="2220-22220-2222"/>
+                                        </li>
+                                    </ul>
+                                 </li>
                             </ul>
                         </div>
                         {/* 급여상세 */}
@@ -287,7 +306,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     4대보험<button type="button" class="btn_gray" style={{marginLeft: "5px", marginTop: "-5px", marginLeft:"7px"}}>신청하기</button>
                                         <div class="tab_01_grid">
                                             {/* <DataGrid rowData={rowData} gridDefs={insDefs} gridCommon={gridCommon}/> */}
-                                            <table id="insurnaceTable2">
+                                            <table id="insurnaceTable">
                                                 <thead>
                                                     <tr>
                                                         <th>구분</th>
@@ -300,49 +319,49 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                     <tr>
                                                         <th>국민연금</th>
                                                         <td>
-                                                            <input type="text" id="fourIns0" defaultValue="국민1"/>
+                                                            <input type="text" id="fourIns0" defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="getOfIns0"  defaultValue="국민2"/>
+                                                            <input type="text" class="date_input " id="getOfIns0"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="lostOfIns0" defaultValue="국민3"/>
+                                                            <input type="text" class="date_input " id="lostOfIns0" defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>건강보험</th>
                                                         <td>
-                                                            <input type="text" id="fourIns1"  defaultValue="건강1"/>
+                                                            <input type="text" id="fourIns1"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="getOfIns1"  defaultValue="건강2"/>
+                                                            <input type="text" class="date_input " id="getOfIns1"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="lostOfIns1"  defaultValue="건강3"/>
+                                                            <input type="text" class="date_input " id="lostOfIns1"  defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>고용보험</th>
                                                         <td>
-                                                            <input type="text" id="fourIns2"   defaultValue="고용1"/>
+                                                            <input type="text" id="fourIns2"   defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="getOfIns2" defaultValue="고용2"/>
+                                                            <input type="text" class="date_input " id="getOfIns2" defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="lostOfIns2" defaultValue="고용3"/>
+                                                            <input type="text" class="date_input " id="lostOfIns2" defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>산재보험</th>
                                                         <td>
-                                                            <input type="text" id="fourIns3" defaultValue="산재1"/>
+                                                            <input type="text" id="fourIns3" defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="getOfIns3"  defaultValue="산재2"/>
+                                                            <input type="text" class="date_input " id="getOfIns3"  defaultValue=""/>
                                                         </td>
                                                         <td>
-                                                            <input type="text" id="lostOfIns3"  defaultValue="산재3"/>
+                                                            <input type="text" class="date_input " id="lostOfIns3"  defaultValue=""/>
                                                         </td>
                                                     </tr>
                                                 </tbody>
