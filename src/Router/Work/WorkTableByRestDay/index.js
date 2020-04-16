@@ -3,7 +3,7 @@ import '../../../Assets/css/pages/work/work_setting_03.css';
 import WorkRestDay from '../../../Components/Work/WorkRestDay';
 import gridCommon from '../../../Utils/grid';
 import { callApi } from '../../../Utils/api';
-
+import WorkTableByRestDayContainer from './WorkTableByRestDayContainer';
 const WorkTableByRestDay=()=>{
     return (
         <div class="wrapper">
@@ -14,6 +14,7 @@ const WorkTableByRestDay=()=>{
             </div>
             <div class="emTable">
                 <div class="leftDiv">
+                    
                     <div class="left_inner">
                         <div class="option">
                             <p>연차설정</p>

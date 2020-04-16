@@ -12,9 +12,22 @@ function SalaryInputContainer() {
     const [rowData2, setRowData2] = useState([]); //그리드 데이터 
     const [gridDefs2, setGridDefs2] = useState({}); //그리드 정의
 
+    const regEmployeeMappings = {
+        "0" : "사회복지사"
+        ,"1" : "요양보호사" 
+        ,"2" : "시간제" 
+        ,"3" : "사무원" 
+        ,"4" : "시설장" 
+        ,"5" : "조리원" 
+        ,"6" : "운전사" 
+        ,"7" : "물리치료사" 
+        ,"8" : "촉탁의" 
+        ,"9" : "대표" 
+    }
+
     let params = {
-        "branchNo" : 1,
-        "yearsMonthDate" : "202010"
+        "branchNo" : 30,
+        "userType" : 0
     }
     
     useEffect(()=>{
@@ -23,13 +36,19 @@ function SalaryInputContainer() {
 
             await callApi.getUserInfo(params).then(res=> {
 
+                
+                console.log(res, "  시발이게뭐야ㅕ")    
                 /* 사원 리스트 */
                 setGridDefs(gridSetting());
-                setRowData(res.data.ListData);
-
-                /* 선택사원 */
+                setRowData(res.data.Data);
+                
+                
+                    /* 선택사원 */
                 setGridDefs2(gridSetting2());
-                setRowData2(res.data.ListData); 
+                setRowData2(res.data.Data); 
+                                
+
+              
                 picker.setMonthPicker(('#month-picker'),function(value){
                     // initGrid(value);
                 });
@@ -47,7 +66,11 @@ function SalaryInputContainer() {
            const columnDefs= [  
                { headerName: "rowId", field: "rowId", hide:true }
                ,{headerName: "성명 ",field:"userName", width:75}
-               ,{headerName: "직책", field: "position", width:110}
+               ,{headerName: "직책", field: "position", width:110,
+                    cellEditor: "select",
+                    cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
+                    refData: regEmployeeMappings
+                }
             //    ,{headerName: "직책", field: "position", width:80}
                ,{ headerName: "사원번호", field: "employeeNumber", width:75}
            ]
@@ -73,7 +96,11 @@ function SalaryInputContainer() {
            const columnDefs= [  
                { headerName: "rowId", field: "rowId", hide:true }
                ,{headerName: "성명 ",field:"userName", width:75, editable:false}
-               ,{headerName: "직책", field: "position", width:110, editable:false}
+               ,{headerName: "직책", field: "position", width:110, editable:false,
+                    cellEditor: "select",
+                    cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
+                    refData: regEmployeeMappings
+                }
                ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
                ,{ headerName: "기본급", field: "baseSalary", width:120,
                     valueFormatter: function(params) {
@@ -90,7 +117,7 @@ function SalaryInputContainer() {
                         return utils.regExr.comma(params.value);
                     }    
                 }
-                ,{ headerName: "성과급", field: "insentive", width:120,
+                ,{ headerName: "성과급", field: "welfareSalary", width:120,
                   valueFormatter: function(params) {
                         return utils.regExr.comma(params.value);
                     }    

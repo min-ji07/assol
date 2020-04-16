@@ -18,17 +18,18 @@ const WorkRestDay = () => {
        async function init() {
         try {
             const params = {
-                "branchNo" : state.branchNo,
+                "branchNo" : 30,
                 "yearsMonthDate" : "202010"
             }
 
-            await callApi.getWorkerList(params).then(res=> {
+            await callApi.getSearchList(params).then(res=> {
                 //사원데이터 선호출
+                
                     for(var i=0;i<res.data.Data.length;i++){
                         let user = res.data.Data[i];
                         workersMap[user.userNo] =user.userName;
                         workersNumber[user.userNo] = user.employeeNumber;
-                        workersPosition[user.userNo] = user.workPosition;
+                        workersPosition[user.userNo] = user.position;
                     }
                 
                 //연차설정 데이터
@@ -67,9 +68,8 @@ const WorkRestDay = () => {
                     cellEditorParams: { values: gridCommon.extractValues(workersNumber) },
                     refData: workersNumber
                 }
-                ,{ headerName: "직책", field: "userNo", width:130,
-                    cellEditor: "select",
-                    cellEditorParams: { values: gridCommon.extractValues(workersPosition) },
+                ,{ headerName: "직책", field: "userNo", width:130, editable:false,
+                    cellEditorParams: {  values: gridCommon.extractValues(workersPosition) },
                     refData: workersPosition
                 }
                ,{ headerName: "근무연월", field: "yearsMonthDate",editable:false,
@@ -85,7 +85,48 @@ const WorkRestDay = () => {
                     cellEditorParams: { values: gridCommon.extractValues(annalMap) },
                     refData: annalMap
                 }
-               ,{ headerName: "사용일수", field: "useAnnal", width:90 }
+               ,{ headerName: "사용일수", field: "useAnnal", width:90 
+                    , valueGetter:function(params){
+                        console.log(params);
+                        console.log(params.data.endDate);
+                        var endDate = new Date(params.data.endDate);
+                        var startDate = new Date(params.data.startDate);
+                        var diff = (endDate.getTime() - startDate.getTime()) / (1000*60*60*24) + 1;
+                        
+
+                        console.log(diff);
+                        console.log((endDate.getTime() - startDate.getTime()));
+                        //console.log(Math.ceil(cal / (1000 * 3600 * 24)));
+                        var count = 0;
+                        var temp_date = startDate;
+                        while(params.data.endDate != undefined && params.data.startDate != undefined) {                              
+                            
+                            if(temp_date.getTime() > endDate.getTime()) {
+                                console.log("count : " + count);
+                                break;
+                            } else {
+                                var tmp = temp_date.getDay();
+                                console.log("tmp : " + tmp);
+                                if(tmp == 0 || tmp == 6) {
+                                    // 주말
+                                    console.log("주말");
+                                } else {
+                                    // 평일
+                                    console.log("평일");
+                                    console.log(count + "ㅋㅇㅌ ^^ㅣ발");
+                                    console.log("else else count : " + count);
+                                    count++;         
+                                }
+                                temp_date.setDate(temp_date.getDate() + 1); 
+                            }
+
+                        }
+                        
+                        return count;
+                        
+
+                    }
+                }
                ,{ headerName: "휴가사유", field: "reason", width:200   }
            ]
    

@@ -11,16 +11,17 @@ const WorkTableByRestDayContainer = () => {
 
     const [rowData, setRowData] = useState([]); //그리드 데이터 
     const [gridDefs, setGridDefs] = useState({}); //그리드 정의
-    let params = {
-        "branchNo" : 1,
-        "yearsMonthDate" : "202010"
-    }
+    
     useEffect(()=>{
+        console.log("hi00");
        async function init() {
         try {
-
-            await callApi.getWorkerList(params).then(res=> {
+            var params = {
+                "branchNo" : 30        
+            }
+            await callApi.getSearchList(params).then(res=> {
                 //사원데이터 선호출
+                console.log(res.data, ".>: ->", params)
                     for(var i=0;i<res.data.Data.length;i++){
                         let user = res.data.Data[i];
                         workersMap[user.userNo] =user.userName;
@@ -31,7 +32,7 @@ const WorkTableByRestDayContainer = () => {
                 
                 
                 params = {
-                    "branchNo" : 1,
+                    "branchNo" : 30,
                     "yearsMonthDate" :"202004"
                 }
                 params.yearsMonthDate = "202010";
