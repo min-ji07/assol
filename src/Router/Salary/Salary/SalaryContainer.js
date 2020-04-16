@@ -9,8 +9,10 @@ function SalaryContainer() {
     const [rowData, setRowData] = useState([]); //그리드 데이터 
     const [gridDefs, setGridDefs] = useState({}); //그리드 정의
 
-    // const [rowData2, setRowData2] = useState([]); //그리드 데이터 
-    // const [gridDefs2, setGridDefs2] = useState({}); //그리드 정의
+    // const [rowData2, setRowData2] = useState([]); 
+    //그리드 데이터 
+    // const [gridDefs2, setGridDefs2] = useState({}); 
+    //그리드 정의
 
     const SalNumMappings = {
         "0" : "01차"
@@ -114,7 +116,9 @@ function SalaryContainer() {
     //  },[]); //init
 
     return(
-        <SalaryPresenter rowData={rowData} gridDefs={gridDefs} rowData2={rowData2} gridDefs2={gridDefs2}/>
+        <SalaryPresenter rowData={rowData} gridDefs={gridDefs} 
+        // rowData2={rowData2} gridDefs2={gridDefs2}
+        />
     )
 }
 

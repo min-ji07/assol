@@ -5,10 +5,10 @@ import $ from 'jquery';
 // import DataGrid from "../../../Components/DataGrid"
 // import gridCommon from '../../../Utils/grid';
 
-function employmentApplyPresenter(){ 
+const employmentApplyPresenter = () => { 
     return(
         <div class="wrapper">
-            test
+            <div>test</div>
             {/* <div class="employment_support">
                 <div class="title">
                     <h1>고용지원금 신청</h1>
