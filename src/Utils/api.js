@@ -78,7 +78,7 @@ export const callApi = {
     */
    joinLogin:(params) => axios({
     method: 'post',
-    url: localURL+'/Admin/Login',
+    url: testUrl+'/Admin/Login',
     data: params
     }), // 로그인
     

@@ -1,14 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import employmentApplyPresenter from './employmentApplyPresenter'
-// import picker from '../../../Utils/datepicker'
-// import { callApi } from '../../../Utils/api';
-// import gridCommon from '../../../Utils/grid';
+import React, { useEffect } from 'react';
+import EmploymentApplyPresenter from './EmploymentApplyPresenter'
 
-function employmentApplyContainer() {
+function EmploymentApplyContainer() {
     
     return(
-        <employmentApplyPresenter/>
+        <EmploymentApplyPresenter/>
     )
 }
 
-export default employmentApplyContainer;
+export default EmploymentApplyContainer;
