@@ -588,6 +588,7 @@ textarea::placeholder {
 .modal_box.imgupload{
     width:800px;
     display:block;
+    left:590px;
 }
 .modal_box.imgupload .btn_close{
     position:absolute;
