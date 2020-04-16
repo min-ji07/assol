@@ -104,7 +104,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                 });
 
             }catch(e){
-                console.log(e);
+                alert(e);
             }
         };
         saveInit();
@@ -156,15 +156,9 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
             $(e.target).next().val("");
         }
     }
+    
 
-     // 팝업 띄우기, 닫기
-     const openJoinPop = () => {
-        $(".modal_box").show();
-    };
-    const closePopup = () => {
-        $(".modal_box").hide();
-        return false;
-    }
+    
     
     return (
     <div class="div_bottom tab_02">
@@ -231,17 +225,17 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
                                 </span>
                             </li>
-                            <li>입사일 :<input type="text" class="date_input" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/></li>
+                            <li>입사일 :<input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/></li>
                             <li>그룹입사일 :<input type="text" class="date_input" name="groupJoinDate" id="groupJoinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01" style={{width:"215px"}}/></li>
-                            <li style={{display:"inline-block" , width:"119px", marginLeft:"5px"}}>  
-                            수습적용 :
+                            <li style={{display:"inline-block" , width:"300px", marginLeft:"5px"}}>  
+                                수습적용 :
                                 <select name="isProbation" id="isProbation" style={{width:"38px"}}>
                                     <option value="0" selected>부</option>
                                     <option value="1">여</option>                                                
                                 </select>
-                            </li>
-                            <li style={{display:"inline-block" , width:"178px"}}>
-                                수습만료일 :<input type="text" class="date_input" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
+                                <span  style={{display:"none"}}>
+                                    수습만료일 :<input type="text" class="date_input" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
+                                </span>
                             </li>
                             <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000"  defaultValue="02-3223-2332"/></li>
                             <li>휴대폰 :<input type="tel" maxlenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  defaultValue="010-2222-3333"/></li>

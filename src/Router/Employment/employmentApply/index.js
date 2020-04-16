@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import employmentApplyContainer from './employmentApplyContainer';
+import EmploymentApplyContainer from './EmploymentApplyContainer';
 
-function employmentApply(){
+function EmploymentApply(){
     return(
-        <employmentApplyContainer/>
+        <EmploymentApplyContainer/>
     );
 }
  
-export default employmentApply;
+export default EmploymentApply;

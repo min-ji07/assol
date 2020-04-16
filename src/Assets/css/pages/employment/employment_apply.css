@@ -1,0 +1,241 @@
+@import url("../../common/default.css");
+@import url("/images");
+
+
+.employment_apply .title h1 { padding-bottom: 6px;}
+.employment_apply .title p { padding-bottom: 22px;}
+.employment_apply .emTable { 
+    background: white; width: 1689px; height: 597px; top: 62px; 
+    border-radius: 20px; box-shadow: 0px 6px 5px #d8d8d8;
+}
+/* 월 신청가능 지원금부터 전체 감싸는 디브 */
+.employment_apply .employment_apply_content { 
+    position: relative;
+    width: 1689px; height: 627px; 
+    /* border: 1px solid blue; */
+}
+/* 기본 바탕 */
+.employment_apply .employment_apply_inner { 
+    position: absolute;
+    width: 1686px; height: 531px; top: 63px;
+    /* border: 1px solid black; */
+}
+/* 버튼 감싸는 div */
+.employment_apply .button_set {
+    width: 100%;
+    height: 51px; line-height:38px; float: left;  
+    /* border: 1px solid coral; */
+}
+.employment_apply .button_set ul li:nth-child(1) {
+    width: 505px; height: 51px;
+    border-radius: 13px;
+    background: white;
+}
+/* 월 신청가능 지원금 */
+.employment_apply .button_set .apply_support {
+    float: left; 
+    width: 253px; height: 51px; line-height: 51px;
+    color: white; background: #627c80;
+    font-size: 17px; border-radius: 13px;
+    text-indent: 39px;
+    
+}
+.employment_apply .f5 {
+    background: url('/images/employment_apply_button00.png') no-repeat 5px center transparent;
+    text-indent: -999px;
+    width: 31px; height: 27px;
+}
+/* 금액 */
+.employment_apply .button_set .apply_support_money {
+    float: right; width: 252px;
+    border-radius: 0 13px 13px 0;
+    color: #6195e4;
+}
+/* 금액 진한색 */
+.employment_apply .button_set .apply_support_money span {
+    font-size: 35px; color: #6195e4;
+    font-weight:  bold;
+    height: 51px; line-height: 51px;
+    text-align: center;
+    margin-left: 29px;
+}
+
+/* 사원정보불러오기 외 ul li*/
+.employment_apply .button_set ul li { 
+    float:left;
+    list-style: none; 
+    color: white; font-size: 15px;
+}
+/* 외부 버튼 */
+.employment_apply .employment_button {
+    width: 180px; height: 51px; line-height: 51px; border-radius: 10px;
+    margin-left: 10px; font-size: 17px;
+}
+.employment_apply .card {
+    background: url('/images/employment_apply_button01.png') no-repeat 10px center #bdbdbd;
+    text-indent: 20px;
+}
+.employment_apply .folder {
+    background: url('/images/salary_folder.png')no-repeat 19px center #bdbdbd;
+    text-indent: 17px;
+}
+.employment_apply .page {
+    background: url('/images/employment_apply_button03.png') no-repeat 28px center #bdbdbd;
+    text-indent: 17px;
+}
+.employment_apply .send {
+    background: url('/images/salary_send.png') no-repeat 27px center #bdbdbd;
+    text-indent: 17px;
+}
+.employment_apply .apply_top {
+    background:#b4b4b4; 
+    height: 62px; border-radius: 30px 30px 0 0;
+}
+
+/* 월 신청가능 지원금 첫번째 li 두번째 li로 나눠야 하는지 한번 보기*/
+.employment_apply .apply_top_left {
+    float: left;
+}
+/* 일괄계산, 일괄신청 div */
+.employment_apply .apply_top_right {
+    float: right;
+}
+.employment_apply .apply_top_right ul li {
+    float: left;
+}
+/* content top 사원명을 검색하세요 */
+.employment_apply .apply_top_left .employment_input {
+    width: 200px; border-radius: 0px;
+    color: white; font-size: 19px;
+    margin-left: 30px; margin-top: 16px;
+    background: url('/images/search_button.png') no-repeat 175px center transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    text-indent: 2px;
+}
+/* input 안내문자 */
+.apply_top_left .employment_input::placeholder {
+    color: white;
+}
+/* 일괄계산, 일괄신청 button */
+.employment_apply .apply_top_right li button {
+    float: left;
+    width: 130px; height: 33px; color: white;
+    font-size: 17px; border-radius: 12px;
+    background: url('/images/employment_apply_button004.png') no-repeat 16px 7px #828282;
+    box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.1);
+    margin: 16px 15px 0 0; text-indent: 21px;
+}
+.employment_apply .apply_top_right li button.white_button {
+    background: url('/images/employment_apply_button05.png') no-repeat 16px 5px white;
+    color: #6d6d6d; margin-right: 30px;
+}
+/* 기본바탕 전체 div */
+.employment_apply .apply_bottom {
+    /* border: 1px solid black; */
+    background:white; height:468px; 
+    border-radius: 0 0 30px 30px;
+}
+/* content 내용 */
+.employment_apply .employment_apply_inner .apply_content {
+    width: 1628px; height: 432px;
+    margin: 0px auto;
+}
+
+.employment_apply .apply_content .content_bottom {
+    width: 1628px; height: 393px;
+    border-bottom: 1px solid black;
+    overflow-y: scroll;
+}
+/* 스크롤 */
+.employment_apply .content_bottom::-webkit-scrollbar {background: #e9e9e9; width: 9px; height: 363px; border-radius: 50px;}
+.employment_apply .content_bottom::-webkit-scrollbar-thumb {background: #a2a2a2; width: 9px; height: 63px; border-radius: 50px;}
+.employment_apply .content_bottom::-webkit-scrollbar-track {background: #e9e9e9; width: 9px; height: 300px;}
+
+.employment_apply .apply_content .content_top {
+    width: 1628px; height: 40px;
+    border-radius: 10px 10px 0 0;
+    background: #f5f3f4;
+}
+/* 성명 직책 입사일 등 */
+.employment_apply .apply_content .content_top .header ul li {
+    float: left;
+    color: #818181; font-size: 17px;
+    width: 140px; height: 40px; line-height: 40px;
+    text-align: center;
+}
+/* header after */
+.employment_apply .apply_content .content_top .header ul li::after {
+    display: block;
+    content: ""; background: rgba(112, 112, 112, 0.1);
+    width: 1px; height: 31px;
+    margin-top: -35px;
+}
+/* header after 첫번째 없앰 */
+.employment_apply .apply_content .content_top ul li:nth-child(1)::after {
+    display: inline;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(1) {
+    width: 140px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(2) {
+    width: 124px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(3) {
+    width: 143px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(4) {
+    width: 119px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(5) {
+    width: 797px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(6) {
+    width: 151px;
+}
+.employment_apply .apply_content .content_top .header ul li:nth-child(7) {
+    width: 153px;
+}
+
+.employment_apply .apply_content .content_top .body ul li:nth-child(1) {
+    width: 140px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(2) {
+    width: 121px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(3) {
+    width: 140px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(4) {
+    width: 119px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(5) {
+    width: 794px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(6) {
+    width: 148px;
+}
+.employment_apply .apply_content .content_top .body ul li:nth-child(7) {
+    width: 151px;
+}
+
+
+
+
+
+/* body */
+.employment_apply .apply_content .content_top .body ul li {
+    float: left;
+    color: #6b6b6b; font-size: 16px;
+    width: 125px; min-height: 96px; line-height: 96px;
+    /* margin: 54px 39px; */
+    /* text-align: center; */
+    border: 1px solid black;
+    text-align: center;
+}
+
+
+
+
+
+

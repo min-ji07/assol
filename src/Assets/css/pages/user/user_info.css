@@ -14,6 +14,7 @@ input:-webkit-autofill:active {
  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }
 /* 직위 css 준거 삭제해도됨*/
+
 /* 
 .user_input .left_div .left_div_inner select {
     border-radius: 0px;
@@ -39,6 +40,9 @@ input:-webkit-autofill:active {
     border-radius: 0px; background: transparent;
     border: none; 
 
+}
+.user_input select:focus{
+    border:1px solid #1E90FF !important;
 }
 .grayfont { color: #919191;}
 .user_input .span_bold { font-weight: bold; }
@@ -285,10 +289,10 @@ textarea::placeholder {
 
 
 /* 사원등록 상세 설정 input */
-.user_input .right input[type="text"],
-.user_input .right input[type="email"],
-.user_input .right input[type="tel"],
-.user_input .right input[type="address"]{
+.user_input .right li > input[type="text"],
+.user_input .right li > input[type="email"],
+.user_input .right li > input[type="tel"],
+.user_input .right li > input[type="address"]{
     border: 1px solid #8a8a8a; text-align: center;
     width: 100px; height: 24px;
     margin: 0 0px;
@@ -297,7 +301,7 @@ textarea::placeholder {
     margin-left: 5px;
 /* input box margin */
 }
-.user_input .right select {
+.user_input .right li > select {
     border-radius: 0px;
     border: 1px solid #707070;
     width: 100px; height: 26px; 
@@ -406,12 +410,11 @@ textarea::placeholder {
     margin-right:17px;
 }
 .user_input .user_input_inner .sal_inner .li_left.add_li{
-    width:180px;
+    width:198px;
 }
 .user_input .user_input_inner .sal_inner .li_left.add_li input:first-child{
-    width:50px;
+    width:79px;
 }
-
 .user_input .user_input_inner .sal_inner .li_left input{
     width:80px;
 }
@@ -582,31 +585,117 @@ textarea::placeholder {
 }
 
 /* 파일업로드 팝업 */
+.modal_box.imgupload{
+    width:800px;
+    display:block;
+}
+.modal_box.imgupload .btn_close{
+    position:absolute;
+    right:0px;
+    top:-50px;
+    z-index:2;
+    cursor:pointer;
+}
+.modal_box.imgupload .btn_box{
+    margin-top:-50px;
+    padding-right: 65px;
+}
 .file_upload_board {
-    position: absolute;
-    top: 50%; left: -30%;
-    width: 760px; height: 507px;
+    width: 760px;
+    height: 507px;
     background: white;
     border-radius: 20px;
     box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
+    padding-top:20px;
 } 
 /* 이미지, p태그 감싸는 div */
 .file_upload_inner {
     border: 1px dotted #b6b6b6;
-    margin: 25px 23px;
     width: 713px;
     height: 432px;
     text-align: center;
+    margin:0 auto;
+    overflow-y:auto;
+}
+.file_upload_inner::-webkit-scrollbar {
+    background: #e9e9e9;
+    width: 9px;
+    height:9px;
+    border-radius: 20px;
+}
+.file_upload_inner::-webkit-scrollbar-thumb {
+    background: #a2a2a2;
+    border-radius: 20px;
 }
 /* 팝업 버튼 */
 .div_bottom .modal_box .btn_next {
-    position: absolute;
     width: 100px; height: 20px; line-height: 20px;
     color: white;
     font-size: 17px;
     top: 480px; right: -80px;
     padding: 0px;
 }
+.modal_box.imgupload .file_list{
+    width:100%;
+    height:100%;
+    box-sizing:border-box;
+    padding:20px 20px 0 30px;
+}
+.modal_box.imgupload .file_list li{
+    width:148px;
+    height:175px;
+    float:left;
+    margin-right:20px;
+    margin-bottom:20px;
+    position: relative;
+}
+.modal_box.imgupload .file_list li:nth-child(4n){
+    margin-right:0px;
+}
+.modal_box.imgupload .file_list li a{
+    display:block;
+    width:100%;
+    height:100%;
+}
+.modal_box.imgupload .file_list .img_box{
+    display:block;
+    width:100%;
+    height:148px;
+    border-radius: 15px;
+}
+.modal_box.imgupload .file_list .img_box.add{
+    background:url("/images/icon_img_add.png") no-repeat;
+    border:1px dashed #707070;
+    background-size:65%;
+    background-position-x:center;
+    background-position-y:72%;
+    box-shadow: #ccc 0px 0px 5px;
+}
+.modal_box.imgupload .file_list .img_box img{
+    display:block;
+    width:100%;
+    height:100%;
+    border-radius: 15px;
+}
+.modal_box.imgupload .file_list .title_box{
+    display:block;
+    width:100%;
+    height:25px;
+    font-size: 13px;
+    line-height:25px;
+}
+.modal_box.imgupload .file_list .check_box{
+    display: block;
+    width:100%;
+    height:148px;
+    position:absolute;
+    left:0;
+    top:0;
+    /* background: url('/images/info_checked.png')no-repeat 23px center; */
+    /* background-color: rgba(135,195,149,0.8); */
+    border-radius: 15px;
+}
+
 .file_upload_plus ul li a{
     position: relative;
     width: 155px;
@@ -616,6 +705,7 @@ textarea::placeholder {
     margin-left: 19px;
     border-radius: 20px;
     background: url('/images/xhdwkdcnrk.png')no-repeat -3px center;
+    cursor:pointer
 }
 
 .file_upload_plus button {
@@ -624,7 +714,7 @@ textarea::placeholder {
 
 .file_upload_plus .push_file {
     display: block;
-    width: 154px; height: 157px;
+    width:100%;
     background: url('/images/info_checked.png')no-repeat 23px center;
     background-color: rgba(135,195,149,0.8);
     border-radius: 16px;

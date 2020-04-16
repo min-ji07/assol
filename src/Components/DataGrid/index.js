@@ -23,7 +23,7 @@ function DataGrid({rowData:rowData,gridDefs,idTest}){
                 // suppressRowClickSelection={true} // rowsapn시 필요, 공통속성으론 쓰면 안될듯
                 suppressRowTransform={true}
                 enableRangeSelection= {true}
-                singleClickEdit={true}
+                // singleClickEdit={true}
                 >      
             </AgGridReact>
         </div>

@@ -3,6 +3,7 @@ import EamedIncomePresenter from './EamedIncomePresenter'
 import { callApi } from '../../../../Utils/api';
 import gridCommon from '../../../../Utils/grid';
 import picker from '../../../../Utils/datepicker';
+import utils from '../../../../Utils/utils';
 
 
 const EamedIncomeContainer = () => {
@@ -115,7 +116,7 @@ const EamedIncomeContainer = () => {
             ,{ headerName: "시간", field: "classTime", width:120,}
             ,{ headerName: '강사', field: "teacher",  width:120}
             ,{ headerName: '교육상태', field: "isStatus",  width:120 }
-            ,{ headerName: '교육기간', field: "curriculumDate",  width:278}
+            ,{ headerName: '교육기간', field: "curriculumDate",  width:278,valueFormatter: function(params){return utils.regExr.dateToDate(params.data.curriculumDate)}}
         ]
 
         //컴포넌트 세팅 
@@ -139,7 +140,7 @@ const EamedIncomeContainer = () => {
                 cellEditorParams: { values : gridCommon.extractValues(mTypeMappings)},
                 refData: mTypeMappings
             }
-            ,{ headerName: '복무기간', field: "militaryDate",  width:200}
+            ,{ headerName: '복무기간', field: "militaryDate",  width:200,valueFormatter: function(params){return utils.regExr.dateToDate(params.data.militaryDate)}}
             ,{ headerName: '최종계급', field: "finalLevel",  width:100 }
             ,{ headerName: '병과', field: "miltaryClass",  width:100}
             ,{ headerName: '미필사유', field: "unmiltaryReason",  width:218}
@@ -157,7 +158,10 @@ const EamedIncomeContainer = () => {
             ,{ headerName: "processType", field: "processType", hide:true}
             ,{ headerName: "branchNo", field: "branchNo", hide:true }
             ,{ headerName: '성명', field: "sfName",  width:90}
-            ,{ headerName: '주민(외국인)번호', field: "sfPersnoalNumber", editable:true, width:120}
+            ,{ headerName: '주민(외국인)번호', field: "sfPersnoalNumber", editable:true, width:120
+                ,valueFormatter: function(params){
+                    return utils.regExr.personalNum(params.data.sfPersnoalNumber);
+            }}
             ,{ headerName: "연말정산관계", field: "sfRelation", width:120,
                 cellEditor : "select", 
                 cellEditorParams: { values : gridCommon.extractValues(regtaxAdjustmentMappings)},refData: regtaxAdjustmentMappings}
@@ -195,8 +199,14 @@ const EamedIncomeContainer = () => {
                     cellEditor : "select", 
                     cellEditorParams: { values : gridCommon.extractValues(eGradeMappings)},refData: eGradeMappings
                 }
-               ,{headerName: "입학년월",field:"eEnterDate", width:150}
-               ,{headerName: "졸업년월", field: "eGraduaterDate", width:150}
+               ,{headerName: "입학년월",field:"eEnterDate", width:150
+                    ,valueFormatter: function(params){
+                        return utils.regExr.date(params.data.eEnterDate);
+                }}
+               ,{headerName: "졸업년월", field: "eGraduaterDate", width:150
+                    ,valueFormatter: function(params){
+                        return utils.regExr.date(params.data.eGraduaterDate);
+                }}
                 ,{headerName: "학교명", field: "eSchoolName", width:100}
                ,{ headerName: "전공", field: "major", width:150}
                ,{ headerName: "이수", field: "complete", width:198}
@@ -214,9 +224,30 @@ const EamedIncomeContainer = () => {
                 { headerName: "processType", field: "processType", hide:true}
                 ,{ headerName: "branchNo", field: "branchNo", hide:true }
                 ,{ headerName: "회사명", field: "exCompanyName", width: 130}
-                ,{headerName: "입사일자",field:"exEnterDate", width:130}
-                ,{headerName: "퇴사일자", field: "exLeaveDate", width:130}
-                ,{headerName: "근무기간", field: "exWorkPeriod", width:100}
+                ,{headerName: "입사일자",field:"exEnterDate", width:130,
+                    valueFormatter: function(params){
+                        return utils.regExr.date(params.data.exEnterDate);
+                    }
+                }
+                ,{headerName: "퇴사일자", field: "exLeaveDate", width:130
+                    ,valueFormatter: function(params){
+                        return utils.regExr.date(params.data.exLeaveDate);
+                    }
+                }
+                ,{headerName: "근무기간", field: "exWorkPeriod", width:100,
+                    valueGetter: function(params){
+                        var enterDate = utils.regExr.date(params.data.exEnterDate);
+                        var leaveDate = utils.regExr.date(params.data.exLeaveDate);
+
+                        var date1 = new Date(enterDate);
+                        var date2 = new Date(leaveDate);
+                        var interval = date2 - date1;
+                        var day = 1000*60*60*24;
+                        var month = day*30;
+
+                        return parseInt(interval/month);
+                    }
+                }
                 ,{ headerName: "최종직위", field: "exLastWorkLevel", width:100}
                 ,{ headerName: "담당직무", field: "exPosition", width:130}
                 ,{ headerName: "퇴직사유", field: "exLeaveReason", width:148}

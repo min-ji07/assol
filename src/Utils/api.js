@@ -20,7 +20,9 @@ const local = "http://172.30.1.24:5302"; // 김성일 ip
 //const testUrl_user = testUrl2 + "User/GetUserInfobyBranchNo?branchNo=";
 export const callApi = {
 
+
     getUserInfo:(params) => axios.get(testUrl2+'/PayRoll/SetPayRollPage',{params:params}), // 사원조회
+
 
     // saveUserInfo:(params) => axios.post('http://82230995.ngrok.io/User/UserRegistration',{params:params}), // 사원등록
     UserRegistration:(params) => axios({
@@ -74,9 +76,11 @@ export const callApi = {
 
     
     getWithholdingTax:(params)=> axios.get('/Withholding/dummy/getWithholdingTax.json',{params:params}), //원천세신고조회
+
     setWorkerListByRestDay:(params)=>axios ({
         method: 'post',
         url: testUrl2+'/Worker/SetAnnualWorker',
         data: params
     }), //연차사용 - 저장
+
 };
