@@ -5,12 +5,15 @@ import BusinessIncomeContainer from './BusinessIncome/BusinessIncomeContainer';
 import DailyIncomeContainer from './DailyIncome/DailyIncomeContainer';
 import DaumPostcode from 'react-daum-postcode';
 import Utils from '../../../Utils/utils';
+import { callApi } from '../../../Utils/api';
+import { post } from 'axios';
 import $ from 'jquery';
 
 
 
 const UserInfo = () => {
-    
+    var test = "12334";
+
     const closePostPop = (e) => {
         $("#daumPostPop").hide();
     }
@@ -68,15 +71,80 @@ const UserInfo = () => {
             var targetVal = e.target.value;
             e.target.value = Utils.regExr.date(targetVal);
         });
-        $("input.personal_input, div[col-id=sfPersnoalNumber]").on("keyup",function(e){
+        $("input.personal_input").on("keyup",function(e){
             var targetVal = e.target.value;
             e.target.value = Utils.regExr.personalNum(targetVal); 
         });
 
+        $("#addFile").on("click",(e)=>{
+            console.log(e);
+            $("#imgFileInput").click();
+            return false;
+        });
+        $("#imgFileInput").on("change",(e)=>{
+            const fileInput = e.target;
+            $(".modal_box.imgupload").append($("<span>"));
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                var fileName = e.target.files[0].name;
+                reader.onload = function(e) {
+                    var filePath = e.target.result;
+                    addFileList(fileName,filePath);
+                }
+                reader.readAsDataURL(fileInput.files[0]);
+                // const formData = new FormData();    
+                // formData.append('body', fileInput.files[0]);
+                // console.log(fileInput.files[0]);
+                // console.log(formData);
+                
+                // saveInit(formData);
+                
+            }
+        });
 
         fileDropDown();
     },[]); //init
+
+
+    async function saveInit(formData) {
+        console.log("실행이 되냐!!?");
+        try{
+            console.log("실행부");
+            await callApi.ImgUpload(formData).then(res=> {
+                console.log(res,"리스풘스!!!");
+                if(res.data.ErrorCode == 1){
+                    alert(res.data.Msg);
+                } else {
+                    console.log(res);
+                    alert("저장이 완료되었습니다.");
+                }
+            });
+        } catch(e){
+            console.log(e,"<에러!!!!!!!!");
+        }
+    }
     
+
+    async function submit (e) {
+        // console.log("가즈아!!!!!!!!!!!!!");
+        //     e.preventDefault();    
+        //     const url = 'http://47e88f0f.ngrok.io/Save/UploadFileToServer';    
+        //     const formData = new FormData();    
+        //     let file = $("#imgFileInput")[0].files[0];
+        //     let test ={
+        //         "qwer":"qwer"
+        //     }
+        //     // console.log(file);
+        //     formData.append('body', file);
+        //     formData.append("qwer","qwer");
+        //     // formData.append("test")
+        //     const config = {    
+        //             headers: {    
+        //                     'content-type': 'multipart/form-data',    
+        //             },    
+        //     };    
+        //     return post(url, formData, config);    
+    }    
 
     /***************************************
      * 파일 드래그앤 드롭
@@ -123,7 +191,9 @@ const UserInfo = () => {
             dropZone.css('background-color','#FFFFFF');
             
             var files = e.originalEvent.dataTransfer.files;
-
+            var path = e.originalEvent.dataTransfer.files.webkitRelativePath;
+            console.log(path);
+            console.log(files);
             if(files != null){
                 if(files.length < 1){
                     alert("폴더 업로드 불가");
@@ -135,6 +205,8 @@ const UserInfo = () => {
             }
         });
     }
+
+    $(".modal_box.imgupload")
  
     // 파일 선택시
     function selectFile(files){
@@ -149,7 +221,7 @@ const UserInfo = () => {
                 // 파일 사이즈(단위 :MB)
                 var fileSize = files[i].size / 1024 / 1024;
                 
-                if($.inArray(ext, ['exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css', 'xml']) >= 0){
+                if($.inArray(ext, ['exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css', 'xml', 'psd']) >= 0){
                     // 확장자 체크
                     alert("등록 불가 확장자");
                     break;
@@ -180,15 +252,21 @@ const UserInfo = () => {
     }
  
     // 업로드 파일 목록 생성
-    function addFileList(fIndex, fileName, fileSize){
-        var html = "";
-        html += "<tr id='fileTr_" + fIndex + "'>";
-        html += "    <td class='left' >";
-        html +=         fileName + " / " + fileSize + "MB "  + "<a href='#' onclick='deleteFile(" + fIndex + "); return false;' class='btn small bg_02'>삭제</a>"
-        html += "    </td>"
-        html += "</tr>"
+    function addFileList(fileName, filePath){
+        var li = $("<li>");
+        var a = $("<a>");
+        var img_box = $("<span class='img_box'>");
+        var img = $("<img src='"+filePath+"'>");
+        var title_box = $("<span class='title_box'>");
+        var check_box = $("<span class='check_box'>");
+
+        img_box.append(img);
+        title_box.text(fileName);
+        a.append(img_box).append(title_box).append(check_box);
+
+        li.append(a);
  
-        $('#fileTableTbody').append(html);
+        $('#fileBox').prepend(li);
     }
  
     // 업로드 파일 삭제
@@ -210,7 +288,7 @@ const UserInfo = () => {
     function uploadFile(){
 
     }
-
+    
     const closePopup = () => {
         $(".modal_box.imgupload").hide();
     }
@@ -244,22 +322,35 @@ const UserInfo = () => {
             />
         </div>
         {/* 팝업 */}
-        <div className="modal_box imgupload">
+        <div className="modal_box imgupload" style={{display:"none"}}>
             {/* <div className=""> */}
             {/* html 추가 */}
             <div class="file_upload">
-
                 <img class="btn_close" src="/images/esc.png" alt="닫기" onClick={()=>closePopup()} />
-
                 <div class="file_upload_board">
-                    {/* 파일등록 전 */}
                     <div class="file_upload_inner">
-                        <img src="/images/user_info_file_upload.png" style={{width:"53px", height:"47px", marginTop:"23%"}} />
-                        <p style={{color:"#a4a4a4", fontSize:"25px", fontWeight:"500"}}>[파일등록]</p>
-                        <p style={{color:"#a4a4a4", fontSize:"18px", fontWeight:"400"}}>업로드 할 파일을 드래그 해주세요.</p>
+                        {/* 파일등록 전 */}
+                        {/* <div class="drag_box">
+                            <img src="/images/user_info_file_upload.png" style={{width:"53px", height:"47px", marginTop:"23%"}} />
+                            <p style={{color:"#a4a4a4", fontSize:"25px", fontWeight:"500"}}>[파일등록]</p>
+                            <p style={{color:"#a4a4a4", fontSize:"18px", fontWeight:"400"}}>업로드 할 파일을 드래그 해주세요.</p>
+                        </div> */}
+                        
                         {/* 파일등록 후 */}
+                        <ul id="fileBox" class="file_list">
+                            <li>
+                                <a id="addFile" href="#">
+                                    <span class="img_box add"></span>
+                                    <span class="title_box"></span>
+                                    <span class="check_box"></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <form method="post" action="http://47e88f0f.ngrok.io/Save/UploadFileToServer" onSubmit={(e) => submit(e)} style={{display:"none"}}>
+                            <input id="imgFileInput" type="file"/>
+                            <input id="test" type="submit"/>
+                        </form>
                     </div>
-                    
                 </div>
                 <p className="btn_box">
                     <button className="btn_next" onClick={()=>openJoinForm2()}>삭제하기</button>

@@ -77,27 +77,27 @@ function SalaryInputContainer() {
                ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
                ,{ headerName: "기본급", field: "baseSalary", width:120,
                     valueFormatter: function(params) {
-                        return utils.comma(params.value);
+                        return utils.regExr.comma(params.value);
                     }
                 }
                 ,{ headerName: "식비", field: "foodSalary", width:120,
                     valueFormatter: function(params) {
-                        return utils.comma(params.value);
+                        return utils.regExr.comma(params.value);
                     }    
                 }
                 ,{ headerName: "차량유지비", field: "carSalary", width:120,
                     valueFormatter: function(params) {
-                        return utils.comma(params.value);
+                        return utils.regExr.comma(params.value);
                     }    
                 }
                 ,{ headerName: "성과급", field: "insentive", width:120,
                   valueFormatter: function(params) {
-                        return utils.comma(params.value);
+                        return utils.regExr.comma(params.value);
                     }    
                 }
                 ,{ headerName: "직책수당", field: "positionSalary", width:120,
                     valueFormatter: function(params) {
-                        return utils.comma(params.value);
+                        return utils.regExr.comma(params.value);
                     }    
                 }
            ]

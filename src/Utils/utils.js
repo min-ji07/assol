@@ -67,6 +67,9 @@ const utils = {
           return phone;
       }
       ,tell : function(num){
+          if(num.substring(0,2) == "02" && num.length > 12){
+              return num.substring(0,12);
+          }
           num = this.numOnly(num);
           return num.replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})/,"$1-$2-$3").replace("--", "-");
       }
