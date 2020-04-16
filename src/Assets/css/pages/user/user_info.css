@@ -556,25 +556,39 @@ textarea::placeholder {
 }
 
 /* 파일업로드 팝업 */
+.modal_box.imgupload{
+    width:800px;
+    display:block;
+}
+.modal_box.imgupload .btn_close{
+    position:absolute;
+    right:0px;
+    top:-50px;
+    z-index:2;
+    cursor:pointer;
+}
+.modal_box.imgupload .btn_box{
+    margin-top:-50px;
+    padding-right: 65px;
+}
 .file_upload_board {
-    position: absolute;
-    top: 50%; left: -30%;
-    width: 760px; height: 507px;
+    width: 760px;
+    height: 507px;
     background: white;
     border-radius: 20px;
     box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
+    padding-top:20px;
 } 
 /* 이미지, p태그 감싸는 div */
 .file_upload_inner {
     border: 1px dotted #b6b6b6;
-    margin: 25px 23px;
     width: 713px;
     height: 432px;
     text-align: center;
+    margin:0 auto;
 }
 /* 팝업 버튼 */
 .div_bottom .modal_box .btn_next {
-    position: absolute;
     width: 100px; height: 20px; line-height: 20px;
     color: white;
     font-size: 17px;
@@ -590,6 +604,7 @@ textarea::placeholder {
     margin-left: 19px;
     border-radius: 20px;
     background: url('/images/xhdwkdcnrk.png')no-repeat -3px center;
+    cursor:pointer
 }
 
 .file_upload_plus button {

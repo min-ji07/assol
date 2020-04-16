@@ -619,54 +619,6 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             {/* <button type="button" class="btn_backnext next_position">이전으로</button> */}
             <button type="button" class="btn_backnext save_position" onClick={fnSave}>저장하기</button>
         </form>
-        {/* 팝업 */}
-        <div className="modal_box">
-            {/* <div className=""> */}
-            {/* html 추가 */}
-            <div class="file_upload">
-
-                <img src="/images/esc.png" alt="닫기" style={{position:"absolute", right:"-95px", top:"-38px", cursor:"pointer"}} onClick={()=>closePopup()} />
-
-                <div class="file_upload_board">
-                    {/* 파일등록 전 */}
-                    <div class="file_upload_inner ">
-                        {/* <img src="/images/user_info_file_upload.png" style={{width:"53px", height:"47px", marginTop:"23%"}} />
-                        <p style={{color:"#a4a4a4", fontSize:"25px", fontWeight:"500"}}>[파일등록]</p>
-                        <p style={{color:"#a4a4a4", fontSize:"18px", fontWeight:"400"}}>업로드 할 파일을 드래그 해주세요.</p> */}
-                        {/* 파일등록 후 */}
-                        <div class="file_upload_plus">
-                            <ul>
-                                <li>
-                                    <a>
-                                        {/* <input type="file" id="test" style={{display:"none"}}/> */}
-                                        <span><img scr="/images/xhdwkdcnrk.png" /></span>
-                                        <span class="push_file"></span>
-                                        <span style={{position: "absolute", top:"160px", left:"10px"}}>파일명</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a>
-                                        {/* <input type="file" id="test" style={{display:"none"}}/> */}
-                                        <span><img scr="/images/xhdwkdcnrk.png" /></span>
-                                        <span class=""></span>
-                                        <span style={{position: "absolute", top:"160px", left:"10px"}}>박이삭 통장사본.jpg</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    
-                </div>
-                <p className="btn_box">
-                    <button className="btn_next" style={{marginRight:"105px"}} onClick={()=>openJoinForm2()}>삭제하기</button>
-                    <button className="btn_next" style={{ background:"#87c395"}}onClick={()=>openJoinForm2()}>완료하기</button>
-                </p>
-            </div>
-            {/* </div> */}
-            {/* 뒷배경 */}
-            <div className="modal_bg">
-            </div>
-        </div>
     </div>
     
     )
