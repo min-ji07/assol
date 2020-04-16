@@ -4,5 +4,3 @@
 
 .env
 package-lock.json
-
-src/Utils/api.js
