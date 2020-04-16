@@ -70,6 +70,14 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
             "exModels" : getCarrerRow()
         };
 
+        params["miData"] = {
+            "miModels" : getMilitaryRow()
+        };
+
+        params["cuData"] = {
+            "cuModels" : getCurriculumRow()
+        };
+
         let militaryRow = getMilitaryRow();
         let curriculumRow = getCurriculumRow();
         
@@ -211,7 +219,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                     </div>
                     <div class="right_div_inner">
                         <ul>
-                            <li>주민번호 :<input type="text" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  defaultValue="123456-1234567"/></li>
+                            <li>주민번호 :<input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  defaultValue="123456-1234567"/></li>
                             <li style={{display:"inline-block" , width:"300px", marginLeft:"5px" }}>  
                                 국적 :
                                     <select name="national" id="national" onChange={nationalChange}>
@@ -223,8 +231,8 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
                                 </span>
                             </li>
-                            <li>입사일 :<input type="text" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/></li>
-                            <li>그룹입사일 :<input type="text" name="groupJoinDate" id="groupJoinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01" style={{width:"215px"}}/></li>
+                            <li>입사일 :<input type="text" class="date_input" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/></li>
+                            <li>그룹입사일 :<input type="text" class="date_input" name="groupJoinDate" id="groupJoinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01" style={{width:"215px"}}/></li>
                             <li style={{display:"inline-block" , width:"119px", marginLeft:"5px"}}>  
                             수습적용 :
                                 <select name="isProbation" id="isProbation" style={{width:"38px"}}>
@@ -233,10 +241,10 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                 </select>
                             </li>
                             <li style={{display:"inline-block" , width:"178px"}}>
-                                수습만료일 :<input type="text" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
+                                수습만료일 :<input type="text" class="date_input" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
                             </li>
-                            <li>전화번호 :<input type="tel" name="tellNo" id="tellNo" placeholder="02-000-0000"  defaultValue="02-3223-2332"/></li>
-                            <li>휴대폰 :<input type="tel" name="mobile" id="mobile" placeholder="010-0000-0000"  defaultValue="010-2222-3333"/></li>
+                            <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000"  defaultValue="02-3223-2332"/></li>
+                            <li>휴대폰 :<input type="tel" maxlenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  defaultValue="010-2222-3333"/></li>
                             {/* <li>
                                 소득구분 : 
                                 <select name="socialInsurance" id="socialInsurance">
@@ -271,9 +279,9 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     <option value="28">851101 | 병의원</option>
                                 </select>
                             </li> */}
-                            <li>
+                            <li style={{position:"relative"}}>
                                 우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="133-32" style={{width:"152px"}}/>
-                                <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
+                                <button type="button" class="btn_gray postal_code" onClick={openPostPop} style={{top:"23px"}}>우편번호</button>
                             </li>
                             <li>
                                 <input type="text" name="address" id="address" placeholder="주소"  defaultValue="중랑구 면목동 답십리로 77길 45" style={{width:"300px"}}/>
@@ -301,32 +309,31 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                         {/* 급여상세 */}
                         <div id="userInfoRight2" class="input_content tab_004">
                             <ul>
-                                <li class="salary" style={{marginTop:"10px", height:"140px"}}>
+                                <li style={{listStyle:"disc", height:"21px", lineHeight:"21px"}}>
                                     <strong>급여항목</strong>
+                                </li>
+                                <li class="salary" style={{marginTop:"10px", height:"100px", listStyle:"none"}}>
                                     <ul>
-                                        <li style={{listStyle:"none"}}>총 연간 소득금액 :
-                                        <input type="text" name="totalPayOfYear" id="totalPayOfYear" placeholder="10,000,000" defaultValue="10,000,000"/> 원
-                                        {/* <select name="totalPayOfYear" id="totalPayOfYear">
-                                            <option value="0">60시간</option>
-                                        </select> */}
+                                        <li>총 연간 소득금액 :
+                                            <input type="text" class="money_input" name="totalPayOfYear" id="totalPayOfYear" placeholder="10,000,000" defaultValue="10,000,000"/> 원
                                         </li>
-                                        <li style={{listStyle:"none", float:"left", display:"inline-block"}}>
+                                        <li style={{listStyle:"none", float:"left", display:"inline-block", marginLeft:"48px"}}>
                                             <select name="payQuarterType" id="payQuarterType" style={{width: "74px", textAling: "center"}}>
                                                 <option value="0">월간</option>
                                                 <option value="1">분기</option>
                                                 <option value="2">반기</option>
                                                 <option value="2">년간</option>
                                             </select>
-                                            <input type="text" name="payQuarter" id="payQuarter" placeholder="10,000,000" defaultValue="1,000,000"/> 원
+                                            <input type="text" class="money_input" name="payQuarter" id="payQuarter" placeholder="10,000,000" defaultValue="1,000,000"/> 원
                                         </li>
-                                        <li style={{listStyle:"none", marginLeft:"25px"}}>기타부대수당 : 
+                                        <li style={{width:"325px", marginLeft:"280px"}}>기타부대수당 : 
                                             <select name="otherExtraPayType" id="otherExtraPayType" style={{marginLeft:"10px", width: "74px", textAling: "center"}}>
                                                 <option value="0">월간</option>
                                                 <option value="1">분기</option>
                                                 <option value="2">반기</option>
                                                 <option value="2">년간</option>
                                             </select>
-                                            <input type="text" name="otherExtraPay" id="otherExtraPay" placeholder="10,000,000" defaultValue="1,000,000"/>원
+                                            <input type="text" class="money_input" name="otherExtraPay" id="otherExtraPay" placeholder="10,000,000" defaultValue="1,000,000"/>원
                                         </li>
                                     </ul>
                                 </li>
@@ -334,7 +341,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                 <li class="clear">
                                     <strong style={{display:"block", marginTop:"20px"}}>관리사항</strong>
                                     <ul>
-                                        <li style={{listStyle:"none", float:"left", display:"inline-block"}}>
+                                        <li style={{listStyle:"none", float:"left", display:"inline-block", marginLeft:"0px"}}>
                                             예금주 : <input type="text" name="accountHolder" id="accountHolder" placeholder="박이삭" defaultValue="박이삭"/>
                                         </li>
                                         <li style={{listStyle:"none", display:"inline-block"}}>
@@ -400,10 +407,10 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     <strong>사업자등록번호</strong>
                                     <span style={{color:"#f38d8d", fontSize:"13px"}}> *소유자일 경우</span>
                                     <ul>
-                                        <li style={{listStyle:"none"}}>
-                                            사업자등록번호 : <input type="text" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                            <input type="text" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                            <input type="text" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"35px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
+                                        <li style={{listStyle:"none", marginLeft:"0px"}}>
+                                            사업자등록번호 : <input type="text" maxlenght="2" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input type="text" maxlenght="2" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input type="text" maxlenght="3" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"35px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
                                         </li>
                                     </ul>
                                 </li>

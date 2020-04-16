@@ -55,6 +55,14 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         params["exData"] = {
             "exModels" : getCarrerRow()
         };
+
+        params["miData"] = {
+            "miModels" : getMilitaryRow()
+        };
+
+        params["cuData"] = {
+            "cuModels" : getCurriculumRow()
+        };
         
         async function saveInit() {
             try {
@@ -119,6 +127,16 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
     }
     const getCarrerRow = () => {
         var gridApi = $("#carrerGrid3").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        return gridCommon.getRowData();
+    }
+    const getMilitaryRow = () => {
+        var gridApi = $("#militaryGrid3").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        return gridCommon.getRowData();
+    }
+    const getCurriculumRow = () => {
+        var gridApi = $("#curriculumGrid3").find(".ag-root")[0]["__agComponent"].gridApi;
         gridCommon.setGridApi(gridApi);
         return gridCommon.getRowData();
     }
@@ -213,7 +231,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     </div>
                     <div class="right_div_inner">
                         <ul>
-                            <li>주민번호 :<input type="text" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101"/></li>
+                            <li>주민번호 :<input type="text" class="personal_input" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101"/></li>
                             <li style={{display:"inline-block" , width:"300px", marginLeft:"5px" }}>  
                                 국적 :
                                     <select name="national" id="national" onChange={nationalChange}>
@@ -225,12 +243,12 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
                                 </span>
                             </li>
-                            <li>최초등록일 : <input type="text" id="currentWorkDate" name="currentWorkDate" defaultValue="2020-05-06" style={{width:"216px"}}/></li>
-                            <li>전화번호 :<input type="tel" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="02-4555-6666"/></li>
-                            <li>휴대폰 :<input type="tel" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-6666-7777"/></li>
-                            <li>
+                            <li>최초등록일 : <input type="text" class="date_input" id="currentWorkDate" name="currentWorkDate" defaultValue="2020-05-06" style={{width:"216px"}}/></li>
+                            <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="02-4555-6666"/></li>
+                            <li>휴대폰 :<input type="tel" maxlenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-6666-7777"/></li>
+                            <li style={{position:"relative"}}>
                                 우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="131-222" style={{width:"152px"}}/>
-                                <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
+                                <button type="button" class="btn_gray postal_code" onClick={openPostPop} style={{top:"23px"}}>우편번호</button>
                             </li>
                             <li>
                                 <input type="text" name="address" id="address" placeholder="주소" defaultValue="은평구 대조동" style={{width:"300px"}}/>
@@ -261,14 +279,16 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         {/* 급여상세 */}
                         <div id="userInfoRight3" class="input_content tab_006">
                             <ul>
-                                <li class="salary" style={{listStyle:"disc", height:"21px", lineHeight:"21px"}}>
+                                <li style={{listStyle:"disc", height:"21px", lineHeight:"21px"}}>
                                     <strong>급여항목</strong>
+                                </li>
+                                <li class="salary" style={{marginTop:"10px", listStyle:"none", height:"70px"}}>
                                     <ul>
                                         <li class="li_left">
-                                            소정근로시간 :<input type="text" class="money_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/>
+                                            소정근로시간 :<input type="text" class="num_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/>
                                         </li>
-                                        <li>
-                                            시급 : <input type="text" name="payOfHour" id="payOfHour" defaultValue="1,000,000" onKeyUp={(e)=>commaInput(e)}/>원
+                                        <li style={{display:"inline-block"}}>
+                                            시급 : <input type="text" class="money_input" name="payOfHour" id="payOfHour" defaultValue="1,000,000" onKeyUp={(e)=>commaInput(e)}/>원
                                         </li>
                                         <li class="li_right">
                                             총예상월수령금액 :<input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
@@ -279,7 +299,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <li class="clear">
                                     <strong style={{display:"block", marginTop:"20px"}}>관리사항</strong>
                                     <ul>
-                                        <li>
+                                        <li style={{marginLeft:"0px"}}>
                                             예금주 : <input type="text" id="accountHolder" name="accountHolder" placeholder="박이삭" defaultValue="박이삭"/>
                                         </li>
                                         <li>
@@ -290,7 +310,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                             </select>
                                         </li>
                                         <li>
-                                            계좌번호: <input type="text" placeholder="1002-122-113541" id="accountNo" name="accountNo" defaultValue="2220-22220-2222"/>
+                                            계좌번호: <input type="text" placeholder="1002-122-113541" id="accountNo" name="accountNo" defaultValue="2220-22220-2222" style={{width:"178px"}}/>
                                         </li>
                                     </ul>
                                  </li>
