@@ -11,7 +11,7 @@
 .work_setting_01 .team_option {float: left;}
 .work_setting_01 .team_option p { font-size: 18px; color: #797979; }
 .work_setting_01 .search1 { background-color: #aaaaaa; width: 189px; height: 27px; border-radius: 30px; color: white; font-size: 18px; cursor:pointer;}
-.work_setting_01 input[type="text"]{
+.work_setting_01 input.datepicker-here{
     width: 67px; height: 21px; margin-top: -3px; margin-left: 10px; 
     border: 1px solid #aaaaaa; border-radius: 0px; text-indent: 13px;
     font-size: 18px;

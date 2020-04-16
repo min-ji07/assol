@@ -116,7 +116,7 @@ const EamedIncomeContainer = () => {
             ,{ headerName: "시간", field: "classTime", width:120,}
             ,{ headerName: '강사', field: "teacher",  width:120}
             ,{ headerName: '교육상태', field: "isStatus",  width:120 }
-            ,{ headerName: '교육기간', field: "curriculumDate",  width:278}
+            ,{ headerName: '교육기간', field: "curriculumDate",  width:278,valueFormatter: function(params){return utils.regExr.dateToDate(params.data.curriculumDate)}}
         ]
 
         //컴포넌트 세팅 
@@ -140,7 +140,7 @@ const EamedIncomeContainer = () => {
                 cellEditorParams: { values : gridCommon.extractValues(mTypeMappings)},
                 refData: mTypeMappings
             }
-            ,{ headerName: '복무기간', field: "militaryDate",  width:200}
+            ,{ headerName: '복무기간', field: "militaryDate",  width:200,valueFormatter: function(params){return utils.regExr.dateToDate(params.data.militaryDate)}}
             ,{ headerName: '최종계급', field: "finalLevel",  width:100 }
             ,{ headerName: '병과', field: "miltaryClass",  width:100}
             ,{ headerName: '미필사유', field: "unmiltaryReason",  width:218}
@@ -229,14 +229,13 @@ const EamedIncomeContainer = () => {
                         return utils.regExr.date(params.data.exEnterDate);
                     }
                 }
-                ,{headerName: "퇴사일자", field: "exLeaveDate", width:130,
-                    valueFormatter: function(params){
+                ,{headerName: "퇴사일자", field: "exLeaveDate", width:130
+                    ,valueFormatter: function(params){
                         return utils.regExr.date(params.data.exLeaveDate);
                     }
                 }
                 ,{headerName: "근무기간", field: "exWorkPeriod", width:100,
                     valueGetter: function(params){
-                        console.log(params);
                         var enterDate = utils.regExr.date(params.data.exEnterDate);
                         var leaveDate = utils.regExr.date(params.data.exLeaveDate);
 
@@ -245,9 +244,8 @@ const EamedIncomeContainer = () => {
                         var interval = date2 - date1;
                         var day = 1000*60*60*24;
                         var month = day*30;
-                        var year = month*12;
 
-                        return parseInt(interval/month)+"개월";
+                        return parseInt(interval/month);
                     }
                 }
                 ,{ headerName: "최종직위", field: "exLastWorkLevel", width:100}
