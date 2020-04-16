@@ -74,6 +74,14 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             "exModels" : getCarrerRow()
         };
         
+        params["miData"] = {
+            "miModels" : getMilitaryRow()
+        };
+
+        params["cuData"] = {
+            "cuModels" : getCurriculumRow()
+        };
+
         let militaryRow = getMilitaryRow();
         let curriculumRow = getCurriculumRow();
         
@@ -293,7 +301,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="010-4412-8516"/></li>
                             {/* 숫자제한 , 3자리 4자리 4자리 -추가*/}
                             <li>휴대폰 :<input type="tel" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-4412-8516"/></li>
-                            <li>
+                            <li style={{position:"relative"}}>
                                 우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="서울시" style={{width:"152px"}}/>
                                 <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
                             </li>

@@ -170,15 +170,16 @@ textarea::placeholder {
 .user_input .right_div_inner .address {
     position: absolute;
     width: 156px;
-    left: 401px;
+    /* left: 401px; */
     text-indent: 26px;
 }
 .user_input .right_div_inner .postal_code {
-    width: 90px; height: 19px; line-height: 18px;
+    width: 90px; height: 19px; line-height: 19px;
     font-size: 15px;
     position: absolute;
-    left: 556px;
-    top: 391px;
+    top: 16px; 
+    right:0px;
+
 }
 .imgload {
     width: 137px; height: 131px;
@@ -425,10 +426,13 @@ textarea::placeholder {
     float: right;
     margin-right: 25px;
 }
-.user_input .user_input_inner .sal_inner .in_block {
+/* .user_input .user_input_inner .sal_inner .in_block {
     display: inline-block;
-}
-.user_input .ul_li_left ul li {
+    margin-left: 0px;
+} */
+.user_input .ul_li_left ul li,
+.user_input .clear ul li
+{
     display: inline-block;
     text-align: center;
     margin-left: 18px;
@@ -453,10 +457,10 @@ textarea::placeholder {
 .user_input .tab_002 input[type="text"],
 .user_input .tab_007 input[type="text"]
 {
-    width: 200px;
-    height: 36px; margin: 0;
+    width: 160px;
+    height: 30px; margin: 0;
     font-size: 16px;
-    border: none;
+    border: 1px solid #c8c8c8;
 }
 
 
@@ -520,6 +524,11 @@ textarea::placeholder {
     height: 119px;
     border-bottom: 1px solid #dedede;
 }
+
+.user_input .user_input_inner .salary {
+    height: 119px;
+    border-bottom: 1px solid #dedede;
+}
 /* 성과급, 상여급 div */
 .user_input .user_input_inner .sal_inner .clear {
     /* clear: both; */
@@ -573,39 +582,25 @@ textarea::placeholder {
 }
 
 /* 파일업로드 팝업 */
-.modal_box.imgupload{
-    width:800px;
-    /* display:block; */
-}
-.modal_box.imgupload .btn_close{
-    position:absolute;
-    right:0px;
-    top:-50px;
-    z-index:2;
-    cursor:pointer;
-}
-.modal_box.imgupload .btn_box{
-    margin-top:-50px;
-    padding-right: 65px;
-}
 .file_upload_board {
-    width: 760px;
-    height: 507px;
+    position: absolute;
+    top: 50%; left: -30%;
+    width: 760px; height: 507px;
     background: white;
     border-radius: 20px;
     box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
-    padding-top:20px;
 } 
 /* 이미지, p태그 감싸는 div */
 .file_upload_inner {
     border: 1px dotted #b6b6b6;
+    margin: 25px 23px;
     width: 713px;
     height: 432px;
     text-align: center;
-    margin:0 auto;
 }
 /* 팝업 버튼 */
 .div_bottom .modal_box .btn_next {
+    position: absolute;
     width: 100px; height: 20px; line-height: 20px;
     color: white;
     font-size: 17px;
@@ -621,7 +616,6 @@ textarea::placeholder {
     margin-left: 19px;
     border-radius: 20px;
     background: url('/images/xhdwkdcnrk.png')no-repeat -3px center;
-    cursor:pointer
 }
 
 .file_upload_plus button {

@@ -72,7 +72,7 @@ return(
         <div className="modal_box mb1">
             <div className="modal_top">
                 <div className="modal_title">회원가입</div>
-                <div className="modal_close"><a href="#"></a></div>
+                <div className="modal_close"><a href="#" onClick={()=>closePopup()}></a></div>
             </div>
             <div className="modal_bottom">
                 <form>
@@ -125,7 +125,7 @@ return(
                             </label>
                         </p>
                         <p className="btn_box">
-                            <button className="btn_next" onClick={()=>openJoinForm()}>다음으로</button>
+                            <button type="button" className="btn_next" onClick={()=>openJoinForm()}>다음으로</button>
                         </p>
                     </fieldset>
                 </form>

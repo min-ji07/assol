@@ -26,14 +26,23 @@ function UserManagementContainer({yearMonth}) {
     }
 
     const columnDefs= [  
-        { headerName: "userId", field: "id", hide :true}
+        ,{ headerName: "재직자", field: "id", hide :true}
+        ,{ headerName: "정규직", field: "id", hide :true}
+        ,{ headerName: "userId", field: "id", hide :true}
+        ,{ headerName: "userId", field: "id", hide :true}
+        ,{ headerName: "userId", field: "id", hide :true}
+        ,{ headerName: "userId", field: "id", hide :true}
+        ,{ headerName: "userId", field: "id", hide :true}
+        ,{ headerName: "userId", field: "id", hide :true}
+        ,{ headerName: "userId", field: "id", hide :true}
+        ,{ headerName: "userId", field: "id", hide :true}
         ,{ headerName: "processType", field: "processType", hide:true}
         ,{ headerName: "branchNo", field: "branchNo", hide:true }
         ,{ headerName: "성명", field: "userName", editable: false}
         ,{ headerName: "고용형태", field: "regularEmployee", 
             cellEditor : "richSelect", 
             cellEditorParams: { values : gridCommon.extractValues(regEmployeeMappings)},refData: regEmployeeMappings}
-        ,{ headerName: '직책', field: "workPosition", cellEditor : "richSelect"}
+        ,{ headerName: '직책', field: "position", cellEditor : "richSelect"}
         ,{ headerName: "직위", field: "workLevel",
             cellEditor : "richSelect", 
             cellEditorParams: { values : gridCommon.extractValues(workTypeMappings)},refData: workTypeMappings}
@@ -74,19 +83,25 @@ function UserManagementContainer({yearMonth}) {
             // //근속연도 세팅 
             // const target = document.querySelector('#month-picker')
             params = {
-                "branchNo" : 1
+                "branchNo" : 30,
+                "pageIdx" : 1 * 10,
             }
+            console.log("베인1");
             await callApi.getUserInfo(params).then(res=>{
-                if(res.data && res.data.Data){ 
+                console.log("베인2 : =>", res , "  //", res.data.ListData , "  "  +  res.data.CountData);
+                if(res.data && res.data.ListData){ 
                     console.log(res, 'Data');                   
                       //공통 그리드 데이터 셋팅
-                    setRowData(res.data.Data);
-                    setGridDefs({columnDefs, defaultColDef});
+                    setRowData(res.data.ListData);
+                    setGridDefs({columnDefs, defaultColDef});                    
+                }
+                else{
+                    console.log("데이터 안왔어 시밸");
                 }
             })
         }catch{
-            //console.log(error.me)
-        }
+            console.log("CATCH !! : " + error);
+        }        
        };
        initGrid(); 
     //    //날짜 피커 변경시 콜백으로 리로드 
