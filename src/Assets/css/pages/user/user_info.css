@@ -575,7 +575,7 @@ textarea::placeholder {
 /* 파일업로드 팝업 */
 .modal_box.imgupload{
     width:800px;
-    display:block;
+    /* display:block; */
 }
 .modal_box.imgupload .btn_close{
     position:absolute;
