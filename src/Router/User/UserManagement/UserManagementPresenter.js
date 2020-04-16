@@ -24,7 +24,7 @@ function UserManagementPresenter({rowData ,gridDefs, nextPage}) {
                             재직자
                         </div>
                         <div class="number">
-                            35
+                            32
                         </div>
                     </div>
                     <div class="status_green le_mg18">

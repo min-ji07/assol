@@ -26,33 +26,33 @@ function UserManagementContainer({yearMonth}) {
     }
 
     const columnDefs= [  
-        ,{ headerName: "재직자", field: "id", hide :true}
-        ,{ headerName: "정규직", field: "id", hide :true}
-        ,{ headerName: "userId", field: "id", hide :true}
-        ,{ headerName: "userId", field: "id", hide :true}
-        ,{ headerName: "userId", field: "id", hide :true}
-        ,{ headerName: "userId", field: "id", hide :true}
-        ,{ headerName: "userId", field: "id", hide :true}
-        ,{ headerName: "userId", field: "id", hide :true}
-        ,{ headerName: "userId", field: "id", hide :true}
-        ,{ headerName: "userId", field: "id", hide :true}
+        // ,{ headerName: "재직자", field: "id", hide :true}
+        // ,{ headerName: "정규직", field: "id", hide :true}
+        // ,{ headerName: "userId", field: "id", hide :true}
+        // ,{ headerName: "userId", field: "id", hide :true}
+        // ,{ headerName: "userId", field: "id", hide :true}
+        // ,{ headerName: "userId", field: "id", hide :true}
+        // ,{ headerName: "userId", field: "id", hide :true}
+        // ,{ headerName: "userId", field: "id", hide :true}
+        // ,{ headerName: "userId", field: "id", hide :true},
+        { headerName: "userId", field: "id", hide :true}
         ,{ headerName: "processType", field: "processType", hide:true}
         ,{ headerName: "branchNo", field: "branchNo", hide:true }
-        ,{ headerName: "성명", field: "userName", editable: false}
-        ,{ headerName: "고용형태", field: "regularEmployee", 
+        ,{ headerName: "성명", field: "userName", editable: false, width:150}
+        ,{ headerName: "고용형태", field: "regularEmployee",  width:150,
             cellEditor : "richSelect", 
             cellEditorParams: { values : gridCommon.extractValues(regEmployeeMappings)},refData: regEmployeeMappings}
-        ,{ headerName: '직책', field: "position", cellEditor : "richSelect"}
-        ,{ headerName: "직위", field: "workLevel",
+        ,{ headerName: '직책', field: "position", cellEditor : "richSelect" , width:100}
+        ,{ headerName: "직위", field: "workLevel", width:100,
             cellEditor : "richSelect", 
             cellEditorParams: { values : gridCommon.extractValues(workTypeMappings)},refData: workTypeMappings}
-        ,{ headerName: "사원번호", field: "employeeNumber", cellEditor : "richSelect" }
-        ,{ headerName: '입사일', field: "joinDate", cellEditor : "richSelect"}
-        ,{ headerName: '주민번호', field: "personalNumber", cellEditor : "richSelect"}
-        ,{ headerName: '전화번호', field: "mobile", cellEditor : "richSelect"}
-        ,{ headerName: '이메일', field: "email", cellEditor : "richSelect"}
-        ,{ headerName: '퇴사일', field: "leaveDate", cellEditor : "richSelect"}
-        ,{ headerName: '상태', field: "isActive",
+        ,{ headerName: "사원번호", field: "employeeNumber", cellEditor : "richSelect" , width:100}
+        ,{ headerName: '입사일', field: "joinDate", cellEditor : "richSelect", width:200}
+        ,{ headerName: '주민번호', field: "personalNumber", cellEditor : "richSelect", width:150}
+        ,{ headerName: '전화번호', field: "mobile", cellEditor : "richSelect", width:200}
+        ,{ headerName: '이메일', field: "email", cellEditor : "richSelect", width:200}
+        ,{ headerName: '퇴사일', field: "leaveDate", cellEditor : "richSelect", width:150}
+        ,{ headerName: '상태', field: "isActive", width:100,
             cellEditor : "richSelect", 
             cellEditorParams: { values : gridCommon.extractValues(regStatusMappings)},refData: regStatusMappings}
 
@@ -89,14 +89,14 @@ function UserManagementContainer({yearMonth}) {
             console.log("베인1");
             await callApi.getUserInfo(params).then(res=>{
                 console.log("베인2 : =>", res , "  //", res.data.ListData , "  "  +  res.data.CountData);
-                if(res.data && res.data.ListData){ 
+                if(res.data && res.data.ListData && res.data.CountData){ 
                     console.log(res, 'Data');                   
                       //공통 그리드 데이터 셋팅
                     setRowData(res.data.ListData);
                     setGridDefs({columnDefs, defaultColDef});                    
                 }
                 else{
-                    console.log("데이터 안왔어 시밸");
+                    console.log("데이터 안왔어 시밸 -저스틴");
                 }
             })
         }catch{
@@ -114,6 +114,12 @@ function UserManagementContainer({yearMonth}) {
     const nextPage = () => {
         window.location.href="/user/userInfo/"
     };
+
+
+    //재직자수 외 데이터 가져오기
+    // const UserData = ({}) => {
+        
+    // };
 
     return(
         <>

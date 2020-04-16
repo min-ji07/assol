@@ -23,6 +23,8 @@ import UserManagement from "./User/UserManagement";
 import useHook from "../GlobalState/Hooks/useHook";
 import WorkTableByReplaceUser from "./Work/WorkTableByReplaceUser";
 import LoginMain from "./Login/LoginMain";
+import employmentApply from "./Employment/employmentApply";
+
 
 const Routes = () => {
   const { state } = useHook();
@@ -58,6 +60,7 @@ const Routes = () => {
             <Route path="/salary/salaryInput" component={SalaryInput} />
             <Route path="/salary/salary" component={Salary} />
             <Route path="/work/workTableByReplaceUser" component={WorkTableByReplaceUser} />
+            <Route path="/employment/employmentApply" component={employmentApply} />
           </Switch>
         }
       </BrowserRouter>
