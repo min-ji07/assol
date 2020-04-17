@@ -5,6 +5,75 @@ import gridCommon from '../../../../Utils/grid';
 import { callApi } from '../../../../Utils/api';
 
 const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDefs, carrerDefs, militaryDefs, curriculumDefs}) => {
+    const fnValidation = () => {
+        var tabDiv = ".div_bottom.tab_02";
+        var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+        
+        if(!regEmail.test($(".div_bottom.tab_01 input[type='email']").val())){
+            alert("이메일이 올바르지 않습니다.");
+            return false;
+        }
+
+        var dateInput = $(tabDiv+" input.date_input");
+        var i = 0;
+        for(i; i<dateInput.length; i++){
+            if(dateInput[i].value.length == 0){
+                continue;
+            }
+            if(!dateValidation(dateInput[i].value)){
+                alert("날짜가 올바르지 않습니다.");
+                if(dateInput[i].id == "getOfIns0" || dateInput[i].id == "lostOfIns0"
+                    || dateInput[i].id == "getOfIns1" || dateInput[i].id == "lostOfIns3"
+                    || dateInput[i].id == "getOfIns2" || dateInput[i].id == "lostOfIns2"
+                    || dateInput[i].id == "getOfIns3" || dateInput[i].id == "lostOfIns1"
+                ){
+                    $(tabDiv).find("label[for='tab_002']").click();
+                }
+                dateInput[i].select();
+                dateInput[i].focus();
+                return false;
+            }
+        }
+
+        var dateToInput = $(tabDiv+" input.dateto_input");
+        i=0;
+        for(i; i<dateToInput.length; i++){
+            var targetArr = dateToInput[i].value.split("~");
+            var date1 = utils.regExr.numOnly(targetArr[0]);
+            var date2 = utils.regExr.numOnly(targetArr[1]);
+
+            if(!dateValidation(date1) || !dateValidation(date2)){
+                alert("날짜가 올바르지 않습니다.");
+                dateToInput[i].select();
+                dateToInput[i].focus();
+                return false;
+            }
+            if(date1 > date2){
+                alert("기간이 올바르지 않습니다.");
+                dateToInput[i].select();
+                dateToInput[i].focus();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    const dateValidation = (date) =>{
+        var date = utils.regExr.numOnly(date);
+        var month = date.substring(4,6);
+        var day = date.substring(6,8);
+        console.log(month);
+        console.log(day);
+        
+        if(month>12 || month<1){
+            return false;
+        }
+
+        if(day>31 || day<1){
+            return false;
+        }
+        return true;
+    }
 
     const imgUpload2 = (e) => {
         console.log(e);
@@ -25,6 +94,11 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
 
     let params = {};
     const fnSave2 = () => {
+
+        if(!fnValidation()){
+            return;
+        }
+        
         let i=0;
         const inputListLeft = $("#userInfoLeft2 input:not([name=tab]), #userInfoLeft2 select, #userInfoLeft2 textarea");
         const inputListTab1 = $("#userInfoRight2 input:not([name=tab]), #userInfoRight2 select");

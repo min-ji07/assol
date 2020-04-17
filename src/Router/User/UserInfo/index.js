@@ -71,12 +71,6 @@ const UserInfo = () => {
         $("input.date_input").on("keyup",function(e){
             var targetVal = e.target.value;
             e.target.value = Utils.regExr.date(targetVal);
-        }).on("blur",function(e){
-            var check = isValidDate(utils.regExr.numOnly(e.target.value));
-            // if(!check){
-            //     e.target.select();
-            //     e.target.focus();
-            // }
         });
         $("input.personal_input").on("keyup",function(e){
             var targetVal = e.target.value;
@@ -132,6 +126,14 @@ const UserInfo = () => {
                 // saveInit(formData);
                 
             }
+        });
+        $("input[name=userName]").on("keyup",function(e){
+            var targetVal = e.target.value;
+            e.target.value = Utils.regExr.koreanOnly(targetVal);
+        });
+        $("#accountHolder").on("keyup",function(e){
+            var targetVal = e.target.value;
+            e.target.value = Utils.regExr.koreanOnly(targetVal);
         });
 
         fileDropDown();

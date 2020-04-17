@@ -117,6 +117,9 @@ const utils = {
           }
           return returnVal;
       }
+      ,koreanOnly : function(string){
+          return string.replace(/[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"\\]/g,"");
+      }
     }
 
 
