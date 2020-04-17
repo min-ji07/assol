@@ -14,7 +14,6 @@ input:-webkit-autofill:active {
  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }
 /* 직위 css 준거 삭제해도됨*/
-
 /* 
 .user_input .left_div .left_div_inner select {
     border-radius: 0px;
@@ -147,6 +146,12 @@ input:-webkit-autofill:active {
 .user_input .right_div_inner ul li:nth-child(9) input{
     width: 207px;
 }
+/* 밑줄 삭제 */
+.user_input .right_div_inner ul li:nth-child(13),
+.user_input .tab_02 .right_div_inner ul li:nth-child(10),
+.user_input .tab_03 .right_div_inner ul li:nth-child(8) {
+    border-bottom: none;
+}
 .user_input .right_div_inner ul li:nth-child(13) input{
     width: 300px;
 }
@@ -161,9 +166,9 @@ input:-webkit-autofill:active {
     resize: none; font-size: 16px;
     width: 298px;
     text-indent: 2px;
-    height: 40px;
+    height: 50px;
     background: #eeeeee; border-radius: 15px;
-    margin-top: 5px;
+    margin-top: 10px;
     text-indent: 3px;
 }
 textarea::placeholder {
@@ -289,10 +294,10 @@ textarea::placeholder {
 
 
 /* 사원등록 상세 설정 input */
-.user_input .right li > input[type="text"],
-.user_input .right li > input[type="email"],
-.user_input .right li > input[type="tel"],
-.user_input .right li > input[type="address"]{
+.user_input .right input[type="text"],
+.user_input .right input[type="email"],
+.user_input .right input[type="tel"],
+.user_input .right input[type="address"]{
     border: 1px solid #8a8a8a; text-align: center;
     width: 100px; height: 24px;
     margin: 0 0px;
@@ -301,7 +306,7 @@ textarea::placeholder {
     margin-left: 5px;
 /* input box margin */
 }
-.user_input .right li > select {
+.user_input .right select {
     border-radius: 0px;
     border: 1px solid #707070;
     width: 100px; height: 26px; 

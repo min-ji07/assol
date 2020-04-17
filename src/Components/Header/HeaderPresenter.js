@@ -42,7 +42,7 @@ function HeaderPresenter() {
                     <a href="#" className="menu" ><img src="/images/menu.png" alt="메뉴" /></a>
                     <ul className="gnb">
                         <li>   
-                            <a href="#" className="answer01" >사원관리</a> 
+                            <a href="/user/userManagement" className="answer01" >사원관리</a> 
                             <ul className="submenu">
                                 <li><a href="#">사원등록</a></li>
                                 <li><a href="#">시간제사원등록</a></li>
@@ -61,7 +61,7 @@ function HeaderPresenter() {
                             </ul>
                         </li>
                         <li>
-                            <a href="#" className="answer03">급여대장</a>
+                            <a href="/salary/salary" className="answer03">급여대장</a>
                             <ul className="submenu">
                                 <li><a href="#">급여자료입력</a></li>
                                 <li><a href="sal.html">급여대장</a></li>

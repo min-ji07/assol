@@ -4,6 +4,15 @@ import '../../../Assets/css/pages/employment/employment_apply.css';
 // import DataGrid from "../../../Components/DataGrid"
 // import gridCommon from '../../../Utils/grid';
 
+// 팝업 띄우기, 닫기
+const openJoinPop = () => {
+    $(".modal_box").show();
+};
+const closePopup = () => {
+    $(".modal_box").hide();
+    return false;
+}
+
 const EmploymentApplyPresenter = () => { 
     return(
         <div class="wrapper">
@@ -25,7 +34,7 @@ const EmploymentApplyPresenter = () => {
                             </li>
                             <li><button type="button" class="btn_gray employment_button card">사원정보불러오기</button></li>
                             <li><button type="button" class="btn_gray employment_button folder">지원금 상세보기</button></li>
-                            <li><button type="button" class="btn_gray employment_button page">신청서류확인</button></li>
+                            <li><button type="button" class="btn_gray employment_button page" onClick={()=>openJoinPop()}>신청서류확인</button></li>
                             <li><button type="button" class="btn_gray employment_button send">신청내역확인</button></li>
                         </ul>
                     </div>
@@ -62,31 +71,30 @@ const EmploymentApplyPresenter = () => {
                                             <li>확인</li>
                                         </ul>
                                     </div>
+                                </div>
+                                <div class="content_bottom">
                                     <div class="body">
+                                        {/* 추가시 javascript로 ul을 추가 */}
                                         <ul>
                                             <li>박이삭</li>
                                             <li>사회복지사</li>
                                             <li>2020.01.06</li>
                                             <li>만 <span>28세</span></li>
                                             <li>
-                                                <div style={{float:"left", width:"368px",}}>
-                                                    <div style={{height:"48px", lineHeight:"48px"}}>청년고용장려금</div>
-                                                    <div style={{height:"45px", lineHeight:"45px"}}>일자리안정자금</div>
-                                                    {/* 중복지원 after달기 */}
+                                                <div>
+                                                    <div>청년고용장려금</div>
+                                                    <div>일자리안정자금</div>
                                                 </div>
-                                                <div style={{width:"414px", float:"left"}}>
-                                                    <div style={{float:"left", width:"302px"}}>2020.04.13부로가능</div>
+                                                <div>
+                                                    <div>2020.04.13부로가능</div>
                                                     {/* 지원가능 after달기 */}
-                                                    <div style={{float:"left", width:"108px"}}>월 40만원</div>
+                                                    <div>월 40만원</div>
                                                 </div>
                                             </li>
                                             <li>월 70만원</li>
-                                            <li><a href="">신청</a></li>
+                                            <li><a href="#">신청</a></li>
                                         </ul>
                                     </div>
-                                </div>
-                                <div class="content_bottom">
-
                                 </div>
 
 
@@ -94,6 +102,73 @@ const EmploymentApplyPresenter = () => {
                             {/* <!-- content 흰색 바탕 --> */}
                         </div>
                         {/* <!-- 기본바탕 전체 div --> */}
+                    </div>
+                </div>
+
+                {/* 팝업 */}
+                <div className="modal_box imgupload" style={{display:"none"}}>
+                    <div class="document_popup">
+                        <img class="btn_close" src="/images/esc.png" alt="닫기" onClick={()=>closePopup()} />
+
+                        <div class="document_popup_inner">
+                            <div class="title">
+                                <h1>신청서류양식</h1>
+                                <p>고용지원금을 신청하기 위한 서류 양식입니다</p>
+                            </div>
+                            {/* 팝업내용헤더 */}
+                            <div class="em_popup_header">
+                                <ul>
+                                    <li>구분</li>
+                                    <li>내용</li>
+                                </ul>
+                            </div>
+
+                            <div class="em_popup_body">
+                                <ul>
+                                    <li>
+                                        <div>
+                                            <div class="popup_button left_content">
+                                                <button type="button">취업규칙</button>
+                                            </div>
+                                            <div class="right_content">
+                                                <p>취업규칙조건</p>
+                                                <p>내용</p>
+                                                <p>내용</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <div class="popup_button">
+                                                <button type="button">근로자명부</button>
+                                            </div>
+                                            <div>
+                                                <p>취업규칙조건</p>
+                                                <p>내용</p>
+                                                <p>내용</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <div class="popup_button">
+                                                <button type="button">3개월급여대장</button>
+                                            </div>
+                                            <div>
+                                                <p>취업규칙조건</p>
+                                                <p>내용</p>
+                                                <p>내용</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    {/* 팝업배경 */}
+                    <div className="modal_bg">
                     </div>
                 </div>
             </div>

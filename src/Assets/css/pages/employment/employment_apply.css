@@ -122,7 +122,7 @@
     float: left;
     width: 130px; height: 33px; color: white;
     font-size: 17px; border-radius: 12px;
-    background: url('/images/employment_apply_button004.png') no-repeat 16px 7px #828282;
+    background: url('/images/employment_apply_button04.png') no-repeat 16px 7px #828282;
     box-shadow: 2px 3px 2px rgba(0, 0, 0, 0.1);
     margin: 16px 15px 0 0; text-indent: 21px;
 }
@@ -196,46 +196,165 @@
 .employment_apply .apply_content .content_top .header ul li:nth-child(7) {
     width: 153px;
 }
-
-.employment_apply .apply_content .content_top .body ul li:nth-child(1) {
-    width: 140px;
-}
-.employment_apply .apply_content .content_top .body ul li:nth-child(2) {
-    width: 121px;
-}
-.employment_apply .apply_content .content_top .body ul li:nth-child(3) {
-    width: 140px;
-}
-.employment_apply .apply_content .content_top .body ul li:nth-child(4) {
-    width: 119px;
-}
-.employment_apply .apply_content .content_top .body ul li:nth-child(5) {
-    width: 794px;
-}
-.employment_apply .apply_content .content_top .body ul li:nth-child(6) {
-    width: 148px;
-}
-.employment_apply .apply_content .content_top .body ul li:nth-child(7) {
-    width: 151px;
-}
-
-
-
-
-
 /* body */
-.employment_apply .apply_content .content_top .body ul li {
+.employment_apply .apply_content .content_bottom .body ul li {
     float: left;
     color: #6b6b6b; font-size: 16px;
     width: 125px; min-height: 96px; line-height: 96px;
     /* margin: 54px 39px; */
     /* text-align: center; */
-    border: 1px solid black;
+    border-bottom: 1px solid #f5f3f4;
     text-align: center;
+    /* box-shadow: 0px 6px 5px #d8d8d8; */
 }
 
 
 
+.employment_apply .apply_content .content_bottom .body ul {
+    box-shadow: 4px 6px 10px #f5f3f4; min-height: 96px;
+}
 
+/* 성명 */
+.employment_apply .apply_content .content_bottom .body ul li:nth-child(1) {
+    width: 140px;
+}
+/* 직책 */
+.employment_apply .apply_content .content_bottom .body ul li:nth-child(2) {
+    width: 123px;
+}
+/* 입사일 */
+.employment_apply .apply_content .content_bottom .body ul li:nth-child(3) {
+    width: 144px;
+}
+/* 나이 */
+.employment_apply .apply_content .content_bottom .body ul li:nth-child(4) {
+    width: 121px;
+}
+/* 지원가능지원금 */
+.employment_apply .apply_content .content_bottom .body ul li:nth-child(5) {
+    width: 796px;
+}
+.employment_apply .body ul li:nth-child(5) > div:nth-child(1) {
+    float: left; width: 322px;
+}
+/* 청년고용장려금 앞에 아이콘*/
+.employment_apply .body ul li:nth-child(5) > div:nth-child(1) div:nth-child(1) {
+    height: 48px; line-height: 48px;
+    background: url('/images/employment_apply_button06.png')no-repeat 94px 21px transparent;
+}
+/* 청년고용장려금 밑줄*/
+.employment_apply .body ul li:nth-child(5) > div:nth-child(1) div:nth-child(1)::after {
+    display: block;
+    content: "";
+    width: 153px; height: 1px; background: #c7c7c7;
+    margin-left: 240px; margin-top: -23px;
+}
+.employment_apply .body ul li:nth-child(5) > div:nth-child(1) div:nth-child(2) {
+    height: 45px; line-height: 27px; color: #a2a2a2;
+}
+/* 일자리안정자금 중복지원*/
+.employment_apply .body ul li:nth-child(5) > div:nth-child(1) div:nth-child(2)::after {
+    display: block;
+    content: "중복지원X"; color: white;
+    width: 85px; height: 22px; line-height: 22px;
+    background: #d1d1d1; border-radius: 15px;
+    margin-left: 219px; margin-top: -24px;
+}
+.employment_apply .body ul li:nth-child(5) > div:nth-child(2) {
+    float: left; width: 414px;
+}
+/* 2020.04.13부로 가능 */
+.employment_apply .body ul li:nth-child(5) > div:nth-child(2) div:nth-child(1){
+    float: left; width: 302px;
+}
+.employment_apply .body ul li:nth-child(5) > div:nth-child(2) div:nth-child(1)::after {
+    display: block;
+    content: "지원가능"; color: white;
+    width: 85px; height: 22px; line-height: 22px;
+    background: #9fc8e8; border-radius: 15px;
+    margin-left: 229px; margin-top: -57px;
+}
+/* 월 40만원 */
+.employment_apply .body ul li:nth-child(5) > div:nth-child(2) div:nth-child(2){
+    float: left; width: 108px;
+}
 
+/* 지원가능총액 */
+.employment_apply .apply_content .content_bottom .body ul li:nth-child(6) {
+    width: 152px;
+}
+/* 확인 */
+.employment_apply .apply_content .content_bottom .body ul li:nth-child(7) {
+    width: 143px;
+}
 
+.employment_apply .apply_content .content_bottom .body a {
+    display: block;
+    width: 83px; height: 30px; line-height: 30px;
+    color: white; background: #d6d6d6;
+    font-size: 16px; border-radius: 11px;
+    margin-top: 33px; margin-left: 30px;
+}
+/* 팝업 */
+.employment_apply .document_popup_inner {
+    width: 760px; height: 495px;
+    background: white;
+    border-radius: 20px; box-shadow: 6px 6px 5px rgba(0, 0, 0, 0.3);
+    padding-top: 20px;
+} 
+/* 팝업 title */
+.employment_apply .document_popup .title { margin-left: 28px;}
+.employment_apply .document_popup .title h1 {font-size: 24px; color: #4a4a4a; padding-bottom: 3px;}
+.employment_apply .document_popup .title p {font-size: 17px; color: #555555; padding-bottom: 3px;}
+
+.employment_apply .em_popup_header {
+    background: #f5f3f4;
+    width: 714px; height: 42px; line-height: 42px;
+    border-radius: 15px 15px 0 0;
+    margin: 0 auto;
+}
+.employment_apply .em_popup_header ul li {
+    float: left;
+    color: #4a4a4a; font-size: 17px;
+    text-align: center;
+}
+.employment_apply .em_popup_header ul li:nth-child(1) {
+    width: 224px;
+    /* border: 1px solid black; */
+}
+.employment_apply .em_popup_header ul li:nth-child(2) {
+    width: 488px;
+    /* border: 1px solid black; */
+}
+.employment_apply .em_popup_body {
+    background: white;
+    width: 714px; height: 326px;
+    border-radius: 0 0 15px 15px;
+    margin: 0 auto;
+    /* border: 1px solid black; */
+    overflow-y: scroll;
+}
+/* 팝업 스크롤 */
+.employment_apply .em_popup_body::-webkit-scrollbar {background: #e9e9e9; width: 9px; height: 363px; border-radius: 50px;}
+.employment_apply .em_popup_body::-webkit-scrollbar-thumb {background: #a2a2a2; width: 9px; height: 63px; border-radius: 50px;}
+.employment_apply .em_popup_body::-webkit-scrollbar-track {background: #e9e9e9; width: 9px; height: 300px;}
+
+/* 팝업 취업규칙 li */
+.employment_apply .em_popup_body ul li {
+    width: 700px; height: 113px; line-height: 113px;
+    border-bottom: 1px solid #dddddd;
+}
+.employment_apply .em_popup_body .popup_button button {
+    float: left;
+    width: 206px; height: 96px; line-height: 96px;
+    background: #cccccc; color: white;
+    font-size: 24px; font-weight: bold;
+    border-radius: 15px;
+    margin: -3px 10px 0 10px;
+}
+/* .employment_apply .em_popup_body .left_content {
+    float: left;
+} */
+.employment_apply .em_popup_body .right_content {
+    float: right;
+}
