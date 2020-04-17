@@ -153,7 +153,7 @@ function WorkTableByGroupContainer() {
             //근속연도 세팅 
             const target = document.querySelector('#month-picker')
             params = {
-                "branchNo" : 1,
+                "branchNo" : 30,
                 "yearsMonthDate" : target.value.replace("-","")
             }
             await callApi.getGridData(params).then(res=>{

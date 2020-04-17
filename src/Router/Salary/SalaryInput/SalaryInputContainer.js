@@ -34,7 +34,7 @@ function SalaryInputContainer() {
        async function init() {
         try {
 
-            await callApi.getUserInfo(params).then(res=> {
+            await callApi.setInitSalary(params).then(res=> {
 
                 
                 console.log(res, "  시발이게뭐야ㅕ")    

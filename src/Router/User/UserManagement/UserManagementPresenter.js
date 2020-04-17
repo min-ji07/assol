@@ -6,10 +6,9 @@ import gridCommon from '../../../Utils/grid';
 
 
 
-
-function UserManagementPresenter({rowData ,gridDefs, nextPage}) {
+function UserManagementPresenter({rowData , rowData2, gridDefs, nextPage}) {
    
-   return(
+   return(    
     <>
     <div class="wrapper">
         <div class="user_management">
@@ -23,8 +22,8 @@ function UserManagementPresenter({rowData ,gridDefs, nextPage}) {
                         <div class="font">
                             재직자
                         </div>
-                        <div class="number">
-                            32
+                        <div class="number">                        
+                            {rowData2.activeEmp}
                         </div>
                     </div>
                     <div class="status_green le_mg18">
