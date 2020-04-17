@@ -406,7 +406,7 @@ const UserInfo = () => {
                                 </a>
                             </li>
                         </ul>
-                        <form method="post" action="http://47e88f0f.ngrok.io/Save/UploadFileToServer" onSubmit={(e) => submit(e)} style={{display:"none"}}>
+                        <form method="post" action="http://172.30.1.24:5302/Save/UploadFileToServer" onSubmit={(e) => submit(e)} style={{display:"none"}}>
                             <input id="imgFileInput" type="file"/>
                             <input id="test" type="submit"/>
                         </form>

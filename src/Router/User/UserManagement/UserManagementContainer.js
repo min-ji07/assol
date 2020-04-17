@@ -25,24 +25,39 @@ function UserManagementContainer({yearMonth}) {
         ,"1" : "퇴사" 
     }
 
+    const regPositionMappings = {
+        "0" : "사회복지사"
+        ,"1" : "요양보호사" 
+        ,"2" : "사무원" 
+        ,"3" : "시설자" 
+        ,"4" : "조리원" 
+        ,"5" : "운전사" 
+        ,"6" : "물리치료사" 
+        ,"7" : "촉탁의" 
+        ,"8" : "대표"         
+    }
+    
+    
     const columnDefs= [  
-        // ,{ headerName: "재직자", field: "id", hide :true}
-        // ,{ headerName: "정규직", field: "id", hide :true}
-        // ,{ headerName: "userId", field: "id", hide :true}
-        // ,{ headerName: "userId", field: "id", hide :true}
-        // ,{ headerName: "userId", field: "id", hide :true}
-        // ,{ headerName: "userId", field: "id", hide :true}
-        // ,{ headerName: "userId", field: "id", hide :true}
-        // ,{ headerName: "userId", field: "id", hide :true}
-        // ,{ headerName: "userId", field: "id", hide :true},
-        { headerName: "userId", field: "id", hide :true}
+        { headerName: "재직자", field: "activeEmp", hide :true}
+        ,{ headerName: "정규직", field: "fullTimeEmp", hide :true}
+        ,{ headerName: "계약직", field: "comtractEmp", hide :true}
+        ,{ headerName: "임시직", field: "temporaryEmp", hide :true}
+        ,{ headerName: "파견직", field: "disPatchEmp", hide :true}
+        ,{ headerName: "위촉직", field: "commisionEmp", hide :true}
+        ,{ headerName: "일용직", field: "dailyEmp", hide :true}        
+        ,{ headerName: "퇴사자", field: "leaveEmp", hide :true}        
+        ,{ headerName: "전체현황", field: "allEmpList", hide :true}        
+        ,{ headerName: "userId", field: "id", hide :true}
         ,{ headerName: "processType", field: "processType", hide:true}
         ,{ headerName: "branchNo", field: "branchNo", hide:true }
         ,{ headerName: "성명", field: "userName", editable: false, width:150}
         ,{ headerName: "고용형태", field: "regularEmployee",  width:150,
             cellEditor : "richSelect", 
             cellEditorParams: { values : gridCommon.extractValues(regEmployeeMappings)},refData: regEmployeeMappings}
-        ,{ headerName: '직책', field: "position", cellEditor : "richSelect" , width:100}
+        ,{ headerName: '직책', field: "position", cellEditor : "richSelect" , width:100,
+            cellEditor : "richSelect", 
+            cellEditorParams: { values : gridCommon.extractValues(regPositionMappings)},refData: regPositionMappings}         
         ,{ headerName: "직위", field: "workLevel", width:100,
             cellEditor : "richSelect", 
             cellEditorParams: { values : gridCommon.extractValues(workTypeMappings)},refData: workTypeMappings}
@@ -72,6 +87,7 @@ function UserManagementContainer({yearMonth}) {
     //그리드 정의
     const [gridDefs, setGridDefs] = useState({}); 
     const [rowData, setRowData] = useState([]);
+    const [rowData2, setRowData2] = useState([]);
 
     useEffect(()=>{
        async function initGrid(params) {
@@ -90,13 +106,15 @@ function UserManagementContainer({yearMonth}) {
             await callApi.getUserInfo(params).then(res=>{
                 console.log("베인2 : =>", res , "  //", res.data.ListData , "  "  +  res.data.CountData);
                 if(res.data && res.data.ListData && res.data.CountData){ 
-                    console.log(res, 'Data');                   
-                      //공통 그리드 데이터 셋팅
+                    console.log(res, 'In IF Data');                   
+                     
+                    //공통 그리드 데이터 셋팅
+                    setRowData2(res.data.CountData);                    
                     setRowData(res.data.ListData);
                     setGridDefs({columnDefs, defaultColDef});                    
                 }
                 else{
-                    console.log("데이터 안왔어 시밸 -저스틴 -> ??? : 민지님임");
+                    console.log("데이터 안왔어");
                 }
             })
         }catch{
@@ -126,6 +144,7 @@ function UserManagementContainer({yearMonth}) {
             {
                 <UserManagementPresenter 
                 rowData={rowData}
+                rowData2={rowData2}
                 gridDefs={gridDefs}
                 nextPage={nextPage}
                 />
