@@ -107,30 +107,67 @@ const EmploymentApplyPresenter = () => {
 
                 {/* 팝업 */}
                 <div className="modal_box imgupload" style={{display:"none"}}>
-                    <div class="file_upload">
+                    <div class="document_popup">
                         <img class="btn_close" src="/images/esc.png" alt="닫기" onClick={()=>closePopup()} />
-                        <div class="file_upload_board">
-                            <div class="file_upload_inner">
-                                <ul id="fileBox" class="file_list">
+
+                        <div class="document_popup_inner">
+                            <div class="title">
+                                <h1>신청서류양식</h1>
+                                <p>고용지원금을 신청하기 위한 서류 양식입니다</p>
+                            </div>
+                            {/* 팝업내용헤더 */}
+                            <div class="em_popup_header">
+                                <ul>
+                                    <li>구분</li>
+                                    <li>내용</li>
+                                </ul>
+                            </div>
+
+                            <div class="em_popup_body">
+                                <ul>
                                     <li>
-                                        <a id="addFile" href="#">
-                                            <span class="img_box add"></span>
-                                            <span class="title_box"></span>
-                                            <span class="check_box"></span>
-                                        </a>
+                                        <div>
+                                            <div class="popup_button left_content">
+                                                <button type="button">취업규칙</button>
+                                            </div>
+                                            <div class="right_content">
+                                                <p>취업규칙조건</p>
+                                                <p>내용</p>
+                                                <p>내용</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <div class="popup_button">
+                                                <button type="button">근로자명부</button>
+                                            </div>
+                                            <div>
+                                                <p>취업규칙조건</p>
+                                                <p>내용</p>
+                                                <p>내용</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div>
+                                            <div class="popup_button">
+                                                <button type="button">3개월급여대장</button>
+                                            </div>
+                                            <div>
+                                                <p>취업규칙조건</p>
+                                                <p>내용</p>
+                                                <p>내용</p>
+                                            </div>
+                                        </div>
                                     </li>
                                 </ul>
-                                <form method="post" action="http://47e88f0f.ngrok.io/Save/UploadFileToServer" onSubmit={(e) => submit(e)} style={{display:"none"}}>
-                                    <input id="imgFileInput" type="file"/>
-                                    <input id="test" type="submit"/>
-                                </form>
                             </div>
+
                         </div>
-                        <p className="btn_box">
-                            <button className="btn_next" onClick={()=>openJoinForm2()}>삭제하기</button>
-                            <button className="btn_next" style={{ background:"#87c395"}}onClick={()=>openJoinForm2()}>완료하기</button>
-                        </p>
+
                     </div>
+                    {/* 팝업배경 */}
                     <div className="modal_bg">
                     </div>
                 </div>
