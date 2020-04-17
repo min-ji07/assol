@@ -572,6 +572,8 @@ textarea::placeholder {
     margin-top: 58px;
     border-radius: 15px;
     display:none;
+    background: #dad7d7;
+    border: 1px solid #949493;
 }
 .post_wrapper > div > div{
     /* border-radius: 15px; */
@@ -579,13 +581,13 @@ textarea::placeholder {
 }
 .post_wrapper .post_close{
     display: block;
-    margin-top: 9px ;
+    margin-top: 5px ;
+    margin-bottom:11px;
     width: 25px;
     height: 25px;
     background-image: url('/images/esc_gray.png');
     background-color:transparent;
     float:right;
-    margin-bottom:5px;
     background-size:100%;
 }
 

@@ -23,7 +23,9 @@ import UserManagement from "./User/UserManagement";
 import useHook from "../GlobalState/Hooks/useHook";
 import WorkTableByReplaceUser from "./Work/WorkTableByReplaceUser";
 import LoginMain from "./Login/LoginMain";
-import employmentApply from "./Employment/EmploymentApply";
+import EmploymentApply from "./Employment/EmploymentApply";
+import EmploymentHistory from "./Employment/EmploymentHistory";
+
 
 
 const Routes = () => {
@@ -60,7 +62,8 @@ const Routes = () => {
             <Route path="/salary/salaryInput" component={SalaryInput} />
             <Route path="/salary/salary" component={Salary} />
             <Route path="/work/workTableByReplaceUser" component={WorkTableByReplaceUser} />
-            <Route path="/employment/employmentApply" component={employmentApply} />
+            <Route path="/employment/employmentApply" component={EmploymentApply} />
+            <Route path="/employment/employmentHistory" component={EmploymentHistory} />
           </Switch>
         }
       </BrowserRouter>
