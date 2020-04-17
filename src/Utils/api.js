@@ -76,7 +76,17 @@ export const callApi = {
 
     
     getWithholdingTax:(params)=> axios.get('/Withholding/dummy/getWithholdingTax.json',{params:params}), //원천세신고조회
+    setWorkerListByRestDay:(params)=>axios.post('/test/test',{wokerAnnalInfos:params}), //연차사용 - 저장
 
+    /*
+        로그인 콜 
+    */
+   joinLogin:(params) => axios({
+    method: 'post',
+    url: testUrl+'/Admin/Login',
+    data: params
+    }), // 로그인
+    
     setWorkerListByRestDay:(params)=>axios ({
         method: 'post',
         url: testUrl2+'/Worker/SetAnnualWorker',
