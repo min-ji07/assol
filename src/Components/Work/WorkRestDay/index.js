@@ -14,6 +14,20 @@ const WorkRestDay = () => {
     const [rowData, setRowData] = useState([]); //그리드 데이터 
     const [gridDefs, setGridDefs] = useState({}); //그리드 정의
    
+
+    const regPositionMappings = {
+        "0" : "사회복지사"
+        ,"1" : "요양보호사" 
+        ,"2" : "사무원" 
+        ,"3" : "시설자" 
+        ,"4" : "조리원" 
+        ,"5" : "운전사" 
+        ,"6" : "물리치료사" 
+        ,"7" : "촉탁의" 
+        ,"8" : "대표"         
+    }
+
+
     useEffect(()=>{
        async function init() {
         try {
@@ -21,15 +35,20 @@ const WorkRestDay = () => {
                 "branchNo" : 30,
                 "yearsMonthDate" : "202010"
             }
-
-            await callApi.getSearchList(params).then(res=> {
-                //사원데이터 선호출
-                
+            console.log(params);
+            await callApi.getWorkerList(params).then(res=> {
+                    //사원데이터 선호출
+                    console.log(res);
+                    console.log(res.data.ErrorCode);
+                    if(res.data.ErrorCode == 1){
+                        alert(res.data.Msg);
+                        return;
+                    }
                     for(var i=0;i<res.data.Data.length;i++){
                         let user = res.data.Data[i];
                         workersMap[user.userNo] =user.userName;
                         workersNumber[user.userNo] = user.employeeNumber;
-                        workersPosition[user.userNo] = user.position;
+                        workersPosition[user.userNo] = regPositionMappings[user.position];
                     }
                 
                 //연차설정 데이터
@@ -86,6 +105,7 @@ const WorkRestDay = () => {
                     refData: annalMap
                 }
                ,{ headerName: "사용일수", field: "useAnnal", width:90 
+                    , editable:false
                     , valueGetter:function(params){
                         console.log(params);
                         console.log(params.data.endDate);
@@ -99,12 +119,21 @@ const WorkRestDay = () => {
                         //console.log(Math.ceil(cal / (1000 * 3600 * 24)));
                         var count = 0;
                         var temp_date = startDate;
+
+                        // 반차일때 무조건 0.5로...?
+                        if(params.data.annalType == "3"){
+                            return 0.5;
+                        }
                         while(params.data.endDate != undefined && params.data.startDate != undefined) {                              
                             
                             if(temp_date.getTime() > endDate.getTime()) {
                                 console.log("count : " + count);
                                 break;
-                            } else {
+                            }
+                            // } else if(temp_date.getTime() == endDate.getTime()){
+                            //     count = 0.5;
+                            // }
+                             else {
                                 var tmp = temp_date.getDay();
                                 console.log("tmp : " + tmp);
                                 if(tmp == 0 || tmp == 6) {

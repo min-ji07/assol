@@ -117,7 +117,7 @@ function SalaryInputContainer() {
                         return utils.regExr.comma(params.value);
                     }    
                 }
-                ,{ headerName: "성과급", field: "welfareSalary", width:120,
+                ,{ headerName: "성과금", field: "welfareSalary", width:120,
                   valueFormatter: function(params) {
                         return utils.regExr.comma(params.value);
                     }    

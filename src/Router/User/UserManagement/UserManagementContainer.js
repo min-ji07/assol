@@ -20,6 +20,11 @@ function UserManagementContainer({yearMonth}) {
         ,"2" : "일용근로자" 
         ,"3" : "시간직"
     }
+    const userTypeMappings = {
+        "0" : "일반근로자"
+        ,"1" : "사업소득자" 
+        ,"2" : "일용근로자"
+    }
     const regStatusMappings = {
         "0" : "재직"
         ,"1" : "퇴사" 
@@ -52,9 +57,12 @@ function UserManagementContainer({yearMonth}) {
         ,{ headerName: "processType", field: "processType", hide:true}
         ,{ headerName: "branchNo", field: "branchNo", hide:true }
         ,{ headerName: "성명", field: "userName", editable: false, width:150}
-        ,{ headerName: "고용형태", field: "regularEmployee",  width:150,
+        ,{ headerName: "고용형태", field: "userType",  width:150,
             cellEditor : "richSelect", 
-            cellEditorParams: { values : gridCommon.extractValues(regEmployeeMappings)},refData: regEmployeeMappings}
+            cellEditorParams: { values : gridCommon.extractValues(userTypeMappings)},refData: userTypeMappings}
+        // ,{ headerName: "고용형태", field: "regularEmployee",  width:150,
+        //     cellEditor : "richSelect", 
+        //     cellEditorParams: { values : gridCommon.extractValues(regEmployeeMappings)},refData: regEmployeeMappings}
         ,{ headerName: '직책', field: "position", cellEditor : "richSelect" , width:100,
             cellEditor : "richSelect", 
             cellEditorParams: { values : gridCommon.extractValues(regPositionMappings)},refData: regPositionMappings}         
@@ -66,10 +74,11 @@ function UserManagementContainer({yearMonth}) {
         ,{ headerName: '주민번호', field: "personalNumber", cellEditor : "richSelect", width:150}
         ,{ headerName: '전화번호', field: "mobile", cellEditor : "richSelect", width:200}
         ,{ headerName: '이메일', field: "email", cellEditor : "richSelect", width:200}
-        ,{ headerName: '퇴사일', field: "leaveDate", cellEditor : "richSelect", width:150}
         ,{ headerName: '상태', field: "isActive", width:100,
-            cellEditor : "richSelect", 
+            cellEditor : "richSelect",
             cellEditorParams: { values : gridCommon.extractValues(regStatusMappings)},refData: regStatusMappings}
+        ,{ headerName: '퇴사일', field: "leaveDate", cellEditor : "richSelect", width:150}
+        
 
     
     ]
@@ -87,7 +96,7 @@ function UserManagementContainer({yearMonth}) {
     //그리드 정의
     const [gridDefs, setGridDefs] = useState({}); 
     const [rowData, setRowData] = useState([]);
-    const [rowData2, setRowData2] = useState([]);
+    const [countData, setCountData] = useState([]);
 
     useEffect(()=>{
        async function initGrid(params) {
@@ -102,16 +111,13 @@ function UserManagementContainer({yearMonth}) {
                 "branchNo" : 30,
                 "pageIdx" : 1 * 10,
             }
-            console.log("베인1");
             await callApi.getUserInfo(params).then(res=>{
-                console.log("베인2 : =>", res , "  //", res.data.ListData , "  "  +  res.data.CountData);
                 if(res.data && res.data.ListData && res.data.CountData){ 
-                    console.log(res, 'In IF Data');                   
                      
                     //공통 그리드 데이터 셋팅
-                    setRowData2(res.data.CountData);                    
+                    setCountData(res.data.CountData[0]);
                     setRowData(res.data.ListData);
-                    setGridDefs({columnDefs, defaultColDef});                    
+                    setGridDefs({columnDefs, defaultColDef});
                 }
                 else{
                     console.log("데이터 안왔어");
@@ -144,9 +150,9 @@ function UserManagementContainer({yearMonth}) {
             {
                 <UserManagementPresenter 
                 rowData={rowData}
-                rowData2={rowData2}
                 gridDefs={gridDefs}
                 nextPage={nextPage}
+                countData={countData}
                 />
              }
         </>

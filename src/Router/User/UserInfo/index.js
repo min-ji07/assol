@@ -13,8 +13,6 @@ import utils from '../../../Utils/utils';
 
 
 const UserInfo = () => {
-    var test = "12334";
-
     const closePostPop = (e) => {
         $("#daumPostPop").hide();
     }
@@ -32,16 +30,16 @@ const UserInfo = () => {
 
         switch(checkType){
             case "tab_01" :
-                $(".div_bottom.tab_01").find("#postNo").val(postNo);
-                $(".div_bottom.tab_01").find("#address").val(address);
+                $(".div_bottom.tab_01").find("#postNo").val(postNo).attr("readonly",true);
+                $(".div_bottom.tab_01").find("#address").val(address).attr("readonly",true);
                 break;
             case "tab_02" :
-                $(".div_bottom.tab_02").find("#postNo").val(postNo);
-                $(".div_bottom.tab_02").find("#address").val(address);
+                $(".div_bottom.tab_02").find("#postNo").val(postNo).attr("readonly",true);
+                $(".div_bottom.tab_02").find("#address").val(address).attr("readonly",true);
                 break;
             case "tab_03" :
-                $(".div_bottom.tab_03").find("#postNo").val(postNo);
-                $(".div_bottom.tab_03").find("#address").val(address);
+                $(".div_bottom.tab_03").find("#postNo").val(postNo).attr("readonly",true);
+                $(".div_bottom.tab_03").find("#address").val(address).attr("readonly",true);
                 break;
         }
         $("#daumPostPop").hide();
@@ -95,7 +93,7 @@ const UserInfo = () => {
         });
 
         $("select[name=isProbation]").on("change",function(e){
-            if(e.target.value == "0"){
+            if(e.target.value == "1"){
                 $(e.target.nextSibling).hide();
             } else {
                 $(e.target.nextSibling).show();

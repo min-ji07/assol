@@ -300,17 +300,6 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                 </span>
                             </li>
                             <li>입사일 :<input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/></li>
-                            <li>그룹입사일 :<input type="text" class="date_input" name="groupJoinDate" id="groupJoinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01" style={{width:"215px"}}/></li>
-                            <li style={{display:"inline-block" , width:"300px", marginLeft:"5px"}}>  
-                                수습적용 :
-                                <select name="isProbation" id="isProbation" style={{width:"38px"}}>
-                                    <option value="0" selected>부</option>
-                                    <option value="1">여</option>                                                
-                                </select>
-                                <span  style={{display:"none"}}>
-                                    수습만료일 :<input type="text" class="date_input" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
-                                </span>
-                            </li>
                             <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000"  defaultValue="02-3223-2332"/></li>
                             <li>휴대폰 :<input type="tel" maxlenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  defaultValue="010-2222-3333"/></li>
                             {/* <li>
@@ -368,9 +357,9 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                 <label for="tab_004">상세설정</label>
                 <input type="radio" id="tab_005" name="tab02" />
                 <label for="tab_005">학력/교육</label>
-                <button type="button" class="upload" onClick={()=>openJoinPop()}>통장사본 및 신분증사본 업로드</button>
+                <button type="button" class="upload" onClick={()=>openJoinPop()}>인사서류 업로드</button>
                 {/* <input type="file" id="upload"/>
-                <label for="upload" class="upload">통장사본 및 신분증사본 업로드</label> */}
+                <label for="upload" class="upload">인사서류 업로드</label> */}
                 {/* </div> */}
                 <div class="div_bottom right">
                     <div class="sal_inner">

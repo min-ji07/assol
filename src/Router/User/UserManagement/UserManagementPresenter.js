@@ -6,8 +6,8 @@ import gridCommon from '../../../Utils/grid';
 
 
 
-function UserManagementPresenter({rowData , rowData2, gridDefs, nextPage}) {
-   
+function UserManagementPresenter({rowData, gridDefs, nextPage,countData}) {
+console.log(countData);
    return(    
     <>
     <div class="wrapper">
@@ -23,7 +23,7 @@ function UserManagementPresenter({rowData , rowData2, gridDefs, nextPage}) {
                             재직자
                         </div>
                         <div class="number">                        
-                            {rowData2.activeEmp}
+                            {countData.activeEmp}
                         </div>
                     </div>
                     <div class="status_green le_mg18">
@@ -32,7 +32,7 @@ function UserManagementPresenter({rowData , rowData2, gridDefs, nextPage}) {
                                 정규직
                             </div>
                             <div class="number">
-                                35
+                                {countData.fullTimeEmp}
                             </div>
                         </div>
                         <div class="status_green_inner">
@@ -40,7 +40,7 @@ function UserManagementPresenter({rowData , rowData2, gridDefs, nextPage}) {
                                 계약직
                             </div>
                             <div class="number">
-                                2
+                                {countData.comtractEmp}
                             </div>
                         </div>
                         <div class="status_green_inner">
@@ -48,7 +48,7 @@ function UserManagementPresenter({rowData , rowData2, gridDefs, nextPage}) {
                                 임시직
                             </div>
                             <div class="number">
-                                0
+                                {countData.temporaryEmp}
                             </div>
                         </div>
                         <div class="status_green_inner">
@@ -56,7 +56,7 @@ function UserManagementPresenter({rowData , rowData2, gridDefs, nextPage}) {
                                 파견직
                             </div>
                             <div class="number">
-                                0
+                                {countData.disPatchEmp}
                             </div>
                         </div>
                         <div class="status_green_inner">
@@ -64,7 +64,7 @@ function UserManagementPresenter({rowData , rowData2, gridDefs, nextPage}) {
                                 위촉직
                             </div>
                             <div class="number">
-                                0
+                              {countData.commisionEmp}
                             </div>
                         </div>
                         <div class="status_green_inner">
@@ -72,16 +72,16 @@ function UserManagementPresenter({rowData , rowData2, gridDefs, nextPage}) {
                                 일용직
                             </div>
                             <div class="number">
-                                0
+                                 {countData.dailyEmp}
                             </div>
                         </div>
                     </div>
                     <div class="status_div bg_gray le_mg18">
                         <div class="font">
-                                퇴사자
+                            퇴사자
                         </div>
                         <div class="number">
-                            3
+                            {countData.leaveEmp}
                         </div>
                     </div>
                     <div class="status_div bg_navy le_mg18">
@@ -89,7 +89,7 @@ function UserManagementPresenter({rowData , rowData2, gridDefs, nextPage}) {
                             전체 현황
                         </div>
                         <div class="number">
-                            32
+                           {countData.allEmpList}
                         </div>
                     </div>
                 </div>

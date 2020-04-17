@@ -176,7 +176,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         console.log(res.data);
                     } else {
                         alert("저장이 완료되었습니다.");
-                        location.reload();
+                        window.location.href = "/user/userManagement";
+                        // location.reload();
                     }
                 });
 
@@ -254,18 +255,12 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         $("#userImgText").show();
     }
 
-    const nationalChange = (e) => {
-        if(e.target.value == "내국인"){
-            $(e.target).next().hide();
-            $(e.target).next().val("");
-        } else {
-            $(e.target).next().show();
-            $(e.target).next().val("");
-        }
-    }
-
     const openPostPop = (e) => {
         $("#daumPostPop").show();
+    }
+
+    const personalNumberChange = (e) => {
+
     }
 
     const addSalary = (e) => {
@@ -291,16 +286,33 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                 {/* 왼쪽기본 내용 */}
                 <div id="userInfoLeft" class="test">
                     <div class="left_div_inner">
-                    <div class="imgload"><img id="userImgView" src='/images/user02.png' alt="유저사진" style={{width:"140px",height:"140px",borderRadius:"50%"}}/></div>
-                        <br/><span id="userImgText">사원 사진을 등록해주세요.</span><br />
+                    <div class="imgload">
+                        <img id="userImgView" src='/images/user02.png' alt="유저사진"/>
+                        <span id="userImgText">사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"10px"}}>
                             <label for="userImage" class="userImg">수정</label><input type="file" id="userImage" onChange={imgUpload}/>
                             <label for="imgDelete">삭제</label><button type="button" id="imgDelete" onClick={userImgDelete}/>
                         </div>
-                        <ul>
-                        <li>성명 :<input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="테스트"/></li>
+                    </div>
+                    <ul class="userinfo_left_box">
+                        <li><span>성명 :</span><input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="테스트"/></li>
+                        <li>
+                            <span>주민번호 :</span>
+                            <input type="text" class="personal_input" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101" onChange={personalNumberChange}/>
+                            <select name="national" id="national">
+                                <option value="내국인" selected>내국인</option>
+                                <option value="외국인">외국인</option>                                                
+                            </select>
+                        </li>
+                        <li class="visa_li">
+                            <span>
+                                비자타입 :
+                            </span>
+                            <input type="text" id="visaType" name="visaType" placeholder="K-9011"/>
+                        </li>
+                        <li><span>입사일 :</span><input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
                         {/* <li>아이디 :<input type="text" name="id" id="joinId" placeholder="아이디를 입력해주세요."/></li> */}
-                        <li>직무 : 
+                        <li><span>직무 :</span> 
                             {/* <input type="text" name="position" id="position" placeholder="사회복지사" defaultValue="테스트"/> */}
                             <select name="position" id="position" style={{width:"182px"}}>
                                 <option value="0">사회복지사</option>
@@ -314,65 +326,42 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <option value="8">대표</option>
                             </select>
                         </li>
-                        <li>직위 : 
-                            <select name="workLevel" id="workLevel" style={{borderRadius:"0px", marginLeft:"20px", width:"172px", marginTop:"-4px"}}>
-                                <option value="0">부장</option>
-                                <option value="1">과장</option>
-                                <option value="2">대리</option>
-                                <option value="3">사원</option>
-                            </select>
+                        <li><span>직위 : </span>
+                            <input type="text" name="workLevel" id="workLevel"/>
                         </li>
-                        <li>이메일 :<input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/></li>
                         </ul>
                     </div>
                     <div class="right_div_inner">
-                        <ul>
-                            <li>주민번호 :<input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567" defaultValue="950527-00101001"/></li>
-                            <li style={{display:"inline-block" , width:"300px", marginLeft:"5px" }}>  
-                                국적 :
-                                    <select name="national" id="national" onChange={nationalChange}>
-                                        <option value="내국인" selected>내국인</option>
-                                        <option value="외국인">외국인</option>                                                
-                                    </select>
-                                <span style={{display:"none"}}>
-                                    비자타입 :
-                                    <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
-                                </span>
+                        <ul class="userinfo_right_box">
+                            <li style={{display:"inline-block" , width:"155px", marginLeft:"5px" }}>
+                                <span>고용형태 : </span>
+                                <select name="regularEmployee" id="regularEmployee" style={{marginLeft:"5px"}}>
+                                    <option value="0">정규직</option>
+                                    <option value="1">계약직</option>
+                                    <option value="2">파견직</option>
+                                    <option value="3">위촉직</option>                   
+                                </select>
                             </li>
-                            <li>입사일 :<input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
-                            <li>그룹입사일 :<input type="text" class="date_input" name="groupJoinDate" id="groupJoinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
-                            <li style={{display:"inline-block" , width:"300px", marginLeft:"5px"}}>  
-                            수습적용 :
+                            <li>  
+                                <span>수습적용 :</span>
                                 <select name="isProbation" id="isProbation" style={{width:"38px"}}>
-                                    <option value="0" selected>부</option>
-                                    <option value="1">여</option>                                                
+                                    <option value="1" selected>부</option>
+                                    <option value="0">여</option>                                                
                                 </select>
                                 <span  style={{display:"none"}}>
                                     수습만료일 :<input type="text" class="date_input" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
                                 </span>
                             </li>
-                            <li style={{display:"inline-block" , width:"155px", marginLeft:"5px" }}>고용형태 : 
-                                <select name="regularEmployee" id="regularEmployee" style={{marginLeft:"5px"}}>
-                                    <option value="0">정규직</option>
-                                    <option value="1" selected>계약직</option>
-                                    <option value="2">임시직</option>
-                                    <option value="3">파견직</option>
-                                    <option value="4">위촉직</option>
-                                    <option value="5">일용직</option>                                                
-                                </select>
+                            <li>
+                                <span>계약기간 :</span>
+                                <input type="text" class="dateto_input" name="contractPeriod" id="contractPeriod" placeholder="2020-01-01 ~ 2021-01-01" defaultValue="2020-01-01~2020-01-16"/>
                             </li>
-                            <li style={{display:"inline-block" , width:"140px"}}>  
-                            재직여부 :
-                                <select name="isActive" id="isActive" style={{width:"50px"}}>
-                                    <option value="0" selected>부</option>
-                                    <option value="1">여</option>                                                
-                                </select>
-                            </li>
-                            <li>계약기간 :<input type="text" class="dateto_input" name="contractPeriod" id="contractPeriod" placeholder="2020-01-01 ~ 2021-01-01" defaultValue="2020-01-01~2020-01-16"/></li>
-                            {/* 숫자제한 , 3자리 4자리 4자리 -추가*/}
                             <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="010-4412-8516"/></li>
-                            {/* 숫자제한 , 3자리 4자리 4자리 -추가*/}
                             <li>휴대폰 :<input type="tel" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-4412-8516"/></li>
+                            <li>
+                                <span>이메일 :</span>
+                                <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/>
+                            </li>
                             <li style={{position:"relative"}}>
                                 우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="서울시" style={{width:"152px"}}/>
                                 <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
@@ -380,8 +369,15 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <li>
                                 <input type="text" name="address" id="address" placeholder="주소"  defaultValue="중랑구 답십리로" style={{width:"300px"}}/>
                             </li>
-                            <li>
+                            <li style={{height:"70px"}}>
                                 <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  defaultValue="77길45"></textarea>
+                            </li>
+                            <li style={{display:"inline-block" , width:"140px"}}>  
+                                <span>재직여부 :</span>
+                                <select name="isActive" id="isActive" style={{width:"50px"}}>
+                                    <option value="0" selected>여</option>
+                                    <option value="1">부</option>                                      
+                                </select>
                             </li>
                         </ul>
                     </div>
@@ -399,8 +395,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     <label for="tab_003">학력/교육</label>
                     
                     {/* <input type="file" id="upload"/>
-                    <label for="upload" class="upload">통장사본 및 신분증사본 업로드</label> */}
-                    <button type="button" class="upload" onClick={()=>openJoinPop()}>통장사본 및 신분증사본 업로드</button>
+                    <label for="upload" class="upload">인사서류 업로드</label> */}
+                    <button type="button" class="upload" onClick={()=>openJoinPop()}>인사서류 업로드</button>
                 {/* </div> */}
 
                 <div class="div_bottom right"> 
@@ -414,25 +410,24 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <button type="button" class="btn_gray wi64he19" id="addSalary" onClick={addSalary}>추가</button>
                                 </li>
                                 <li class="salary" style={{overflowY: "scroll", marginTop:"10px"}}>
-                                    <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"51px"}}>
-                                        <li class="li_left">
-                                            월급 :<input type="text" class="money_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/>
-                                        </li>
-                                        <li class="li_right">
-                                            연봉 :<input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
-                                            tabindex="-1" style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>원
+                                    <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"40px"}}>
+                                        <li>
+                                            <span>월급 :</span>
+                                            <input type="text" id="salaryOfMonth" name="salaryOfMonth" readOnly defaultValue="100,000,000"/>
+                                            <span>원</span>
+                                            {/* <input type="text" class="money_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/> */}
                                         </li>
                                     </ul>    
-                                    <ul style={{height:"0px", top:"78px"}}>
-                                        <li class="li_left big">
-                                            <span>기본급 :</span>
-                                            <input type="text" name="baseSalary" id="baseSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
-                                        </li>
+                                    <ul>
                                         <li class="li_left">
+                                            <span>기본급 :</span>
+                                            <input type="text" name="baseSalary" id="baseSalary" class="address money_input big" placeholder="1,700,000" defaultValue="1000000"/>
+                                        </li>
+                                        <li class="li_left small">
                                             <span>식대 :</span>
                                            <input type="text" name="foodSalary" id="foodSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
                                         </li>
-                                        <li class="li_left">
+                                        <li class="li_left big">
                                             <span>차량유지비 :</span>
                                             <input type="text" name="carSalary" id="carSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
                                         </li>
@@ -447,7 +442,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     </ul>
                                 </li>
                                 <li class="clear">
-                                    <strong style={{display:"block", marginTop:"20px"}}>성과급, 상여급</strong>
+                                    <strong style={{display:"block", marginTop:"20px"}}>성과금, 상여금</strong>
                                     <ul>
                                         <li class="in_block">
                                             성과금 :<input type="text" class="money_input" name="insentive" id="insentive" placeholder="1,700,000" defaultValue="1000000"/>
@@ -467,9 +462,15 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                 <option value="3">년간</option>
                                             </select>
                                         </li>
+                                        <li class="salary_years">
+                                            <span>연봉 :</span>
+                                            <input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
+                                            tabindex="-1" style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>
+                                            <span>원</span>
+                                        </li>
                                     </ul>
                                 </li>
-                                <li class="ul_li_left" style={{height:"132px", borderBottom:"1px solid #dedede"}}>
+                                <li class="ul_li_left" style={{height:"132px"}}>
                                     <strong style={{display:"block", margknTop:"8px"}}>관리사항</strong>
                                     <ul>
                                         <li style={{marginLeft:"0px"}}>
@@ -533,8 +534,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         <li style={{marginLeft:"0px"}}>
                                             중소기업취업감면 여부 :
                                             <select id="jobReductActive" class="small_bs" style={{width: "43px", marginLeft: "10px"}}>
-                                                <option value="0" defaultChecked>부</option>
-                                                <option value="1">여</option>
+                                                <option value="1" defaultChecked>부</option>
+                                                <option value="0">여</option>
                                             </select>
                                         </li>
                                         <li>기간 :<input type="text" class="dateto_input" id="reductDate" placeholder="2020.01-01~2025.01.01" style={{width: "213px"}}  defaultValue="2020-01-01~2020-05-05"/></li>
