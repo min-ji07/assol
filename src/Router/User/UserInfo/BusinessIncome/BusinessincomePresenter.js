@@ -170,7 +170,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
             try {
                 console.log(JSON.stringify(params));
                 console.log(params);
-                await callApi.BusinessUserRegistration(params).then(res=> {
+                await callApi.businessUserRegistration(params).then(res=> {
                     if(res.data.ErrorCode == 1){
                         alert(res.data.Msg);
                     } else {
@@ -258,7 +258,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                             </li>
                             <li>
                                 <span>주민번호 :</span>
-                                <input type="text" class="personal_input" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101"/>
+                                <input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  defaultValue="123456-1234567"/>
                                 <select name="national" id="national">
                                     <option value="내국인" selected>내국인</option>
                                     <option value="외국인">외국인</option>                                                
@@ -308,23 +308,14 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     <option value="851101">851101 | 병의원</option>
                                 </select>
                             </li>
-                            <li><span>이메일 :</span><input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/></li>
+                            <li>
+                                <span>이메일 :</span>
+                                <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/>
+                            </li>
                         </ul>
                     </div>
                     <div class="right_div_inner">
                         <ul>
-                            <li>주민번호 :<input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  defaultValue="123456-1234567"/></li>
-                            <li style={{display:"inline-block" , width:"300px", marginLeft:"5px" }}>  
-                                국적 :
-                                    <select name="national" id="national" onChange={nationalChange}>
-                                        <option value="내국인" selected>내국인</option>
-                                        <option value="외국인">외국인</option>                                                
-                                    </select>
-                                <span style={{display:"none"}}>
-                                    비자타입 :
-                                    <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
-                                </span>
-                            </li>
                             <li>입사일 :<input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/></li>
                             <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000"  defaultValue="02-3223-2332"/></li>
                             <li>휴대폰 :<input type="tel" maxlenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  defaultValue="010-2222-3333"/></li>
@@ -383,7 +374,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                 <label for="tab_004">상세설정</label>
                 <input type="radio" id="tab_005" name="tab02" />
                 <label for="tab_005">학력/교육</label>
-                <button type="button" class="upload" onClick={()=>openJoinPop()}>인사서류 업로드</button>
+                <button type="button" class="upload">인사서류 업로드</button>
                 {/* <input type="file" id="upload"/>
                 <label for="upload" class="upload">인사서류 업로드</label> */}
                 {/* </div> */}

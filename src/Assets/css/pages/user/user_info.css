@@ -26,7 +26,7 @@ input:-webkit-autofill:active {
 .user_input .left_div select {
     border-radius: 0px;
     border: none;
-    margin: -4px 0 0 10px;
+    margin: -4px 0 0 12px;
     width: 69px; font-size: 15px;
 }
 
@@ -98,7 +98,7 @@ input:-webkit-autofill:active {
     /* margin: 0 auto; */
     margin-left: -9px;
     /* border: 1px solid black; */
-    margin-top: 23px;
+    margin-top: 30px;
 }
 /* 사원등록 성명 ~ li*/
 .user_input .left_div_inner ul li {
@@ -209,6 +209,7 @@ input:-webkit-autofill:active {
     margin:0 auto;
     margin-top:20px;
     cursor:pointer;
+    border-radius: 50%;
 }
 
 .user_input .div_top {
@@ -760,6 +761,7 @@ input:-webkit-autofill:active {
     display:block;
     width:100%;
     height:100%;
+    cursor:pointer;
 }
 .modal_box.imgupload .file_list .img_box{
     display:block;
@@ -795,9 +797,11 @@ input:-webkit-autofill:active {
     position:absolute;
     left:0;
     top:0;
-    /* background: url('/images/info_checked.png')no-repeat 23px center; */
-    /* background-color: rgba(135,195,149,0.8); */
     border-radius: 15px;
+}
+.modal_box.imgupload .file_list li a.check_file:not(.btn_img_add) .check_box{
+    background: url('/images/info_checked.png')no-repeat 23px center;
+    background-color: rgba(135,195,149,0.8);
 }
 
 .file_upload_plus ul li a{

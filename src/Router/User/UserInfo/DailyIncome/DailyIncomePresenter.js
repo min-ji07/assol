@@ -141,7 +141,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             try {
                 console.log(JSON.stringify(params));
                 console.log(params);
-                await callApi.DayilyUserRegistration(params).then(res=> {
+                await callApi.dayilyUserRegistration(params).then(res=> {
                     if(res.data.ErrorCode == 1){
                         alert(res.data.Msg);
                     } else {
@@ -163,22 +163,6 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
 
     const openPostPop = (e) => {
         $("#daumPostPop").show();
-    }
-
-    const addDependRow = () => {
-        var gridApi = $("#dependGrid2").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        gridCommon.onAddRow();
-    }
-    const addEduRow = () => {
-        var gridApi = $("#eduGrid3").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        gridCommon.onAddRow();
-    }
-    const addCarrerRow = () => {
-        var gridApi = $("#carrerGrid3").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        gridCommon.onAddRow();
     }
 
     const getDependRow = () => {

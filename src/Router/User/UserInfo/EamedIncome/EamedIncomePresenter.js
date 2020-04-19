@@ -10,6 +10,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
     
 
     let params = {};
+    let frm = new FormData();
     const fnValidation = () => {
         var tabDiv = ".div_bottom.tab_01";
         var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -132,7 +133,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             key = inputListLeft[i].id;
             value = inputListLeft[i].value;
             if(key.indexOf("userImage") != -1){
-                key = "imagePath";   
+                frm.append("userImage",inputListLeft[i].files[0]);
+                continue;
             }
             tempParams[key] = value;
         }
@@ -204,17 +206,29 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             try {
                 console.log(JSON.stringify(params));
                 console.log(params);
-                await callApi.UserRegistration(params).then(res=> {
+                await callApi.userRegistration(params).then(res=> {
                     if(res.data.ErrorCode == 1){
                         alert(res.data.Msg);
-                        console.log(res.data);
+                    } else {
+                        alert("저장이 완료되었습니다.");
+                        frm.append("userNo",res.data.Data);
+                        frm.append("employeeNumber",res.data.Id);
+                        // window.location.href = "/user/userManagement";
+                        // location.reload();
+                    }
+                });
+
+                console.log(frm);
+                await callApi.uploadFileToServer(frm).then(res=> {
+                    console.log(res);
+                    if(res.data.ErrorCode == 1){
+                        alert(res.data.Msg);
                     } else {
                         alert("저장이 완료되었습니다.");
                         // window.location.href = "/user/userManagement";
                         // location.reload();
                     }
                 });
-
             }catch(e){
                 alert(e);
             }
@@ -280,13 +294,13 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             }
             reader.readAsDataURL(fileInput.files[0]);
         }
-        $("#userImgText").hide();
+        $("#userImgText").removeClass("txt_hide");
     }
 
     const userImgDelete = (e) => {
         $("#userImgView").attr("src","/images/user02.png");
         $("#userImage").val("");
-        $("#userImgText").show();
+        $("#userImgText").addClass("txt_hide");
     }
 
     const openPostPop = (e) => {
@@ -375,7 +389,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             </li>
                             <li>  
                                 <span>수습적용 :</span>
-                                <select name="isProbation" id="isProbation" style={{width:"38px",marginLeft:"18px",marginRight:"15px"}}>
+                                <select name="isProbation" id="isProbation" style={{width:"38px",marginLeft:"15px",marginRight:"15px"}}>
                                     <option value="1" selected>부</option>
                                     <option value="0">여</option>                                                
                                 </select>
@@ -445,7 +459,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <strong>급여항목</strong>
                                     <button type="button" class="btn_gray wi64he19" id="addSalary" onClick={addSalary}>추가</button>
                                 </li>
-                                <li id="monthSalary" class="salary" style={{overflowY: "scroll", marginTop:"10px"}}>
+                                <li id="monthSalary" class="salary" style={{overflowY: "auto", marginTop:"10px"}}>
                                     <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"40px"}}>
                                         <li>
                                             <span>월급 :</span>
@@ -498,10 +512,10 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                 <option value="3">년간</option>
                                             </select>
                                         </li>
-                                        <li class="salary_years">
+                                        <li class="salary_years" style={{marginRight:"30px"}}>
                                             <span>연봉 :</span>
                                             <input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
-                                            tabindex="-1" style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>
+                                            tabindex="-1" style={{fontSize: "20px", border:"none", width: "130px", height:"30px"}} readOnly/>
                                             <span>원</span>
                                         </li>
                                     </ul>
