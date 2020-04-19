@@ -199,11 +199,13 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             }
             reader.readAsDataURL(fileInput.files[0]);
         }
+        $("#userImgText3").addClass("txt_hide");
     }
 
     const userImgDelete3 = (e) => {
         $("#userImgView3").attr("src","/images/user02.png");
         $("#userImage3").val("");
+        $("#userImgText3").removeClass("txt_hide");
     }
 
     const nationalChange = (e) => {
@@ -233,24 +235,39 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             <div class="left_div">
                 <div id="userInfoLeft3" class="test">
                     <div class="left_div_inner">
-                        {/* <div class="imgload"><img id="userImgView3" class="userImgView" src='/images/user02.png' alt="유저사진"/></div>
-                        <br/><span id="userImgText3">사원 사진을 등록해주세요.</span><br/>
-                        <div style={{marginTop:"10px"}}>
+                    <div class="imgload">
+                        <img id="userImgView3" class="userImgView" src='/images/user02.png' alt="유저사진"/>
+                        <span id="userImgText3" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
+                        <div style={{marginTop:"5px"}}>
                             <label for="userImage3" class="userImg">수정</label><input type="file" id="userImage3" onChange={imgUpload3}/>
                             <label for="imgDelete3">삭제</label><button type="button" id="imgDelete3" onClick={userImgDelete3}/>
-                        </div> */}
-                        <div class="imgload">
-                            <img id="userImgView3" class="userImgView" src='/images/user02.png' alt="유저사진"/>
-                            <span id="userImgText3">사원 사진을 등록해주세요.</span>
-                            <div style={{marginTop:"5px"}}>
-                                <label for="userImage3" class="userImg">수정</label><input type="file" id="userImage3" onChange={imgUpload3}/>
-                                <label for="imgDelete3">삭제</label><button type="button" id="imgDelete3" onClick={userImgDelete3}/>
-                            </div>
                         </div>
-                        <ul>
-                            <li>성명 :<input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="김경주"/></li>
+                    </div>
+                    <ul class="userinfo_left_box">
+                        <li>
+                            <span>성명 :</span>
+                            <input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="홍길동"/>
+                        </li>
                             <li>
-                                업무 : 
+                                <span>주민번호 :</span>
+                                <input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  defaultValue="123456-1234567"/>
+                                <select name="national" id="national">
+                                    <option value="내국인" selected>내국인</option>
+                                    <option value="외국인">외국인</option>                                                
+                                </select>
+                            </li>
+                            <li class="visa_li">
+                                <span>
+                                    비자타입 :
+                                </span>
+                                <input type="text" id="visaType" name="visaType" placeholder="K-9011"/>
+                            </li>
+                            <li>
+                                <span>등록일 :</span>
+                                <input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/>
+                            </li>
+                            <li>
+                                <span>업무 :</span>
                                 <select id="position" name="position" style={{borderRadius:"0px", marginLeft:"20px", width:"172px", marginTop:"-4px"}}>
                                     <option value="940100">940100 | 저술가</option>
                                     <option value="940200">940200 | 화가관련</option>
@@ -283,43 +300,10 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <option value="851101">851101 | 병의원</option>
                                 </select>
                             </li>
-                            <li>
-                                <span>입사일 :</span>
-                                <input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/>
-                            </li>
-                            <li>이메일 :<input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="test@naver.com"/>
-                            </li>
                         </ul>
                     </div>
                     <div class="right_div_inner">
                         <ul>
-                        <li>
-                            <span>주민번호 :</span>
-                            <input type="text" class="personal_input" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101"/>
-                            <select name="national" id="national">
-                                <option value="내국인" selected>내국인</option>
-                                <option value="외국인">외국인</option>                                                
-                            </select>
-                        </li>
-                        <li class="visa_li">
-                            <span>
-                                비자타입 :
-                            </span>
-                            <input type="text" id="visaType" name="visaType" placeholder="K-9011"/>
-                        </li>
-                        
-                        {/* <li style={{display:"inline-block" , width:"300px", marginLeft:"5px" }}>  
-                            국적 :
-                                <select name="national" id="national" onChange={nationalChange}>
-                                    <option value="내국인" selected>내국인</option>
-                                    <option value="외국인">외국인</option>                                                
-                                </select>
-                            <span style={{display:"none"}}>
-                                비자타입 :
-                                <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
-                            </span>
-                        </li> */}
-                            <li>최초등록일 : <input type="text" class="date_input" id="currentWorkDate" name="currentWorkDate" defaultValue="2020-05-06" style={{width:"216px"}}/></li>
                             <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="02-4555-6666"/></li>
                             <li>휴대폰 :<input type="tel" maxlenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-6666-7777"/></li>
                             <li style={{position:"relative"}}>
@@ -360,7 +344,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 </li>
                                 <li class="salary" style={{marginTop:"10px", listStyle:"none", height:"70px"}}>
                                     <ul>
-                                        <li class="li_left">
+                                        <li class="li_left" style={{width:"200px"}}>
                                             소정근로시간 :<input type="text" class="num_input" name="workTime" id="workTime" placeholder="1,700,000" defaultValue="1000000"/>
                                         </li>
                                         <li style={{display:"inline-block"}}>

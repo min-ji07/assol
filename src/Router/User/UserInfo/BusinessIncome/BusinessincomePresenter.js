@@ -4,11 +4,18 @@ import $ from 'jquery';
 import gridCommon from '../../../../Utils/grid';
 import { callApi } from '../../../../Utils/api';
 
-const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDefs, carrerDefs, militaryDefs, curriculumDefs}) => {
+const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, militaryDefs, curriculumDefs, rowData2, rowData3, rowData4, rowData5}) => {
     const fnValidation = () => {
         var tabDiv = ".div_bottom.tab_02";
         var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         
+        
+        var personalNumber = $(tabDiv).find("#personalNumber").val();
+        if(!personalValidaition(personalNumber)){
+            alert("주민번호가 올바르지 않습니다.");
+            return false;
+        }
+
         if(!regEmail.test($(".div_bottom.tab_01 input[type='email']").val())){
             alert("이메일이 올바르지 않습니다.");
             return false;
@@ -85,13 +92,13 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
             }
             reader.readAsDataURL(fileInput.files[0]);
         }
-        $("#userImgText").hide();
+        $("#userImgText2").addClass("txt_hide");
     }
 
     const userImgDelete2 = (e) => {
         $("#userImgView2").attr("src","/images/user02.png");
         $("#userImage2").val("");
-        $("#userImgText").show();
+        $("#userImgText2").removeClass("txt_hide");
     }
 
     let params = {};
@@ -114,7 +121,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
             key = inputListLeft[i].id;
             value = inputListLeft[i].value;
             if(key.indexOf("userImage") != -1){
-                key = "imagePath";   
+                continue;
             }
             tempParams[key] = value; 
         }
@@ -222,19 +229,6 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
         gridCommon.setGridApi(gridApi);
         return gridCommon.getRowData();
     }
-
-    const nationalChange = (e) => {
-        if(e.target.value == "내국인"){
-            $(e.target).next().hide();
-            $(e.target).next().val("");
-        } else {
-            $(e.target).next().show();
-            $(e.target).next().val("");
-        }
-    }
-    
-
-    
     
     return (
     <div class="div_bottom tab_02">
@@ -244,18 +238,17 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                     <div class="left_div_inner">
                     <div class="imgload">
                         <img id="userImgView2" class="userImgView" src='/images/user02.png' alt="유저사진"/>
-                        <span id="userImgText2">사원 사진을 등록해주세요.</span>
+                        <span id="userImgText2" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"5px"}}>
-                            <label for="userImage" class="userImg">수정</label><input type="file" id="userImage" onChange={imgUpload2}/>
-                            <label for="imgDelete">삭제</label><button type="button" id="imgDelete" onClick={userImgDelete2}/>
+                            <label for="userImage2" class="userImg">수정</label><input type="file" id="userImage2" onChange={imgUpload2}/>
+                            <label for="imgDelete2">삭제</label><button type="button" id="imgDelete2" onClick={userImgDelete2}/>
                         </div>
                     </div>
-
                         <ul class="userinfo_left_box">
-                            <li>
-                                <span>성명 :</span>
-                                <input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="김경주"/>
-                            </li>
+                        <li>
+                            <span>성명 :</span>
+                            <input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="홍길동"/>
+                        </li>
                             <li>
                                 <span>주민번호 :</span>
                                 <input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  defaultValue="123456-1234567"/>
@@ -272,7 +265,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                             </li>
                             <li>
                                 <span>입사일 :</span>
-                                <input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/>
+                                <input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/>
                             </li>
                             <li>
                                 <span>업무 :</span>
@@ -308,60 +301,31 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     <option value="851101">851101 | 병의원</option>
                                 </select>
                             </li>
+                        </ul>
+                    </div>
+                    <div class="right_div_inner">
+                        <ul class="userinfo_right_box">
+                            <li>
+                                <span>전화번호 :</span>
+                                <input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000"  defaultValue="02-3223-2332"/>
+                            </li>
+                            <li>
+                                <span>휴대폰 :</span>
+                                <input type="tel" maxlenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  defaultValue="010-2222-3333"/>
+                            </li>
                             <li>
                                 <span>이메일 :</span>
                                 <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/>
                             </li>
-                        </ul>
-                    </div>
-                    <div class="right_div_inner">
-                        <ul>
-                            {/* <li>입사일 :<input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/></li> */}
-                            <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000"  defaultValue="02-3223-2332"/></li>
-                            <li>휴대폰 :<input type="tel" maxlenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  defaultValue="010-2222-3333"/></li>
-                            {/* <li>
-                                소득구분 : 
-                                <select name="socialInsurance" id="socialInsurance">
-                                    <option value="0">940100 | 저술가</option>
-                                    <option value="1">940200 | 화가관련</option>
-                                    <option value="2">940301 | 작곡가</option>
-                                    <option value="3">940302 | 배우</option>
-                                    <option value="4">940303 | 모델</option>
-                                    <option value="5">940304 | 가수</option>
-                                    <option value="6">940305 | 성악가</option>
-                                    <option value="7">940500 | 연예보조</option>
-                                    <option value="8">940600 | 자문,고문</option>
-                                    <option value="9">940901 | 바둑기사</option>
-                                    <option value="10">940902 | 꽃꽃이교사</option>
-                                    <option value="11">940903 | 학원강사</option>
-                                    <option value="12">940904 | 직업운동가</option>
-                                    <option value="13">940905 | 봉사료수취자</option>
-                                    <option value="14">940906 | 보험설계</option>
-                                    <option value="15">940907 | 음료배달</option>
-                                    <option value="16">940908 | 방판,외판</option>
-                                    <option value="17">940909 | 기타자영업</option>
-                                    <option value="18">940910 | 다단계판매</option>
-                                    <option value="19">940911 | 기타모집수당</option>
-                                    <option value="20">940912 | 간병인</option>
-                                    <option value="21">940913 | 대리운전</option>
-                                    <option value="22">940914 | 캐디</option>
-                                    <option value="23">940915 | 목욕관리사</option>
-                                    <option value="24">940916 | 행사도우미</option>
-                                    <option value="25">940917 | 심부름용역</option>
-                                    <option value="26">940918 | 퀵서비스</option>
-                                    <option value="27">940919 | 물품배달</option>
-                                    <option value="28">851101 | 병의원</option>
-                                </select>
-                            </li> */}
                             <li style={{position:"relative"}}>
-                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="133-32" style={{width:"152px"}}/>
-                                <button type="button" class="btn_gray postal_code" onClick={openPostPop} style={{top:"23px"}}>우편번호</button>
+                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="서울시" style={{width:"152px"}}/>
+                                <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
                             </li>
                             <li>
-                                <input type="text" name="address" id="address" placeholder="주소"  defaultValue="중랑구 면목동 답십리로 77길 45" style={{width:"300px"}}/>
+                                <input type="text" name="address" id="address" placeholder="주소"  defaultValue="중랑구 답십리로" style={{width:"300px"}}/>
                             </li>
-                            <li>
-                                <textarea type="text" name="addressDetail" id="addressDetail" placeholder="상세주소"  defaultValue="2층"></textarea>
+                            <li style={{height:"70px"}}>
+                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  defaultValue="77길45"></textarea>
                             </li>
                         </ul>
                     </div>
@@ -482,9 +446,9 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     <span style={{color:"#f38d8d", fontSize:"13px"}}> *소유자일 경우</span>
                                     <ul>
                                         <li style={{listStyle:"none", marginLeft:"0px"}}>
-                                            사업자등록번호 : <input type="number" maxLength="3" id="businessNo1" placeholder="000" defaultValue="111" style={{width:"33px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            사업자등록번호 : <input type="number" maxLength="2" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
                                             <input type="number" maxLength="2" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                            <input type="number" maxLength="5" id="businessNo3" placeholder="000"defaultValue="11111" style={{width:"40px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
+                                            <input type="number" maxLength="3" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"35px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
                                         </li>
                                     </ul>
                                 </li>
@@ -500,7 +464,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                         <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
                                         <div id="eduGrid2" class="tab_01_grid grid_scrollX_none">
-                                            <DataGrid rowData={rowData} gridDefs={euduDefs}/>
+                                            <DataGrid rowData={rowData2} gridDefs={euduDefs}/>
                                         </div>
                                     </div>
                                 </li>
@@ -509,7 +473,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
                                         <div id="carrerGrid2" class="tab_02_grid grid_scrollX_none">
-                                            <DataGrid rowData={rowData2} gridDefs={carrerDefs}/>
+                                            <DataGrid rowData={rowData3} gridDefs={carrerDefs}/>
                                         </div>
                                     </div>
                                 </li>
@@ -518,7 +482,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
                                         <div id="militaryGrid2" class="tab_02_grid grid_scrollX_none">
-                                            <DataGrid rowData={rowData3} gridDefs={militaryDefs}/>
+                                            <DataGrid rowData={rowData4} gridDefs={militaryDefs}/>
                                         </div>
                                     </div>
                                 </li>
@@ -527,7 +491,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
                                         <div id="curriculumGrid2" class="tab_02_grid grid_scrollX_none">
-                                            <DataGrid rowData={rowData4} gridDefs={curriculumDefs}/>
+                                            <DataGrid rowData={rowData5} gridDefs={curriculumDefs}/>
                                         </div>
                                     </div>
                                 </li>

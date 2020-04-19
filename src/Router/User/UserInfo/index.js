@@ -124,7 +124,18 @@ const UserInfo = () => {
             ,{ headerName: "시간", field: "classTime", width:120,}
             ,{ headerName: '강사', field: "teacher",  width:120}
             ,{ headerName: '교육상태', field: "isStatus",  width:120 }
-            ,{ headerName: '교육기간', field: "curriculumDate",  width:278,valueFormatter: function(params){return utils.regExr.dateToDate(params.data.curriculumDate)}}
+            ,{ headerName: '교육기간', field: "curriculumDate",  width:278,
+                valueGetter: function(params){
+                    var num = utils.regExr.numOnly(params.data.curriculumDate);
+                    var checkVal = utils.regExr.date(num.substring(0,8));
+                    var checkVal2 = utils.regExr.date(num.substring(8,16));
+
+                    if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
+                        return "";
+                    }
+                    return utils.regExr.dateToDate(params.data.curriculumDate);
+                }
+            }
         ]
 
         //컴포넌트 세팅 
@@ -148,7 +159,18 @@ const UserInfo = () => {
                 cellEditorParams: { values : gridCommon.extractValues(mTypeMappings)},
                 refData: mTypeMappings
             }
-            ,{ headerName: '복무기간', field: "militaryDate",  width:200,valueFormatter: function(params){return utils.regExr.dateToDate(params.data.militaryDate)}}
+            ,{ headerName: '복무기간', field: "militaryDate",  width:200,
+                valueGetter: function(params){
+                    var num = utils.regExr.numOnly(params.data.militaryDate);
+                    var checkVal = utils.regExr.date(num.substring(0,8));
+                    var checkVal2 = utils.regExr.date(num.substring(8,16));
+
+                    if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
+                        return "";
+                    }
+                    return utils.regExr.dateToDate(num);
+                }
+            }
             ,{ headerName: '최종계급', field: "finalLevel",  width:100 }
             ,{ headerName: '병과', field: "miltaryClass",  width:100}
             ,{ headerName: '미필사유', field: "unmiltaryReason",  width:218}
@@ -208,13 +230,23 @@ const UserInfo = () => {
                     cellEditorParams: { values : gridCommon.extractValues(eGradeMappings)},refData: eGradeMappings
                 }
                ,{headerName: "입학년월",field:"eEnterDate", width:150
-                    ,valueFormatter: function(params){
-                        return utils.regExr.date(params.data.eEnterDate);
-                }}
+                    ,valueGetter: function(params){
+                        var checkVal = utils.regExr.date(params.data.eEnterDate);
+                        if(!dateValidation(checkVal)){
+                            return "";
+                        }
+                        return checkVal;
+                    }
+                }
                ,{headerName: "졸업년월", field: "eGraduaterDate", width:150
-                    ,valueFormatter: function(params){
-                        return utils.regExr.date(params.data.eGraduaterDate);
-                }}
+                    ,valueGetter: function(params){
+                        var checkVal = utils.regExr.date(params.data.eGraduaterDate);
+                        if(!dateValidation(checkVal)){
+                            return "";
+                        }
+                        return checkVal;
+                    }
+                }
                 ,{headerName: "학교명", field: "eSchoolName", width:100}
                ,{ headerName: "전공", field: "major", width:150}
                ,{ headerName: "이수", field: "complete", width:198}
@@ -233,27 +265,40 @@ const UserInfo = () => {
                 ,{ headerName: "branchNo", field: "branchNo", hide:true }
                 ,{ headerName: "회사명", field: "exCompanyName", width: 130}
                 ,{headerName: "입사일자",field:"exEnterDate", width:130,
-                    valueFormatter: function(params){
-                        return utils.regExr.date(params.data.exEnterDate);
+                    valueGetter: function(params){
+                        var checkVal = utils.regExr.date(params.data.exEnterDate);
+                        if(!dateValidation(checkVal)){
+                            return "";
+                        }
+                        return checkVal;
                     }
                 }
                 ,{headerName: "퇴사일자", field: "exLeaveDate", width:130
-                    ,valueFormatter: function(params){
-                        return utils.regExr.date(params.data.exLeaveDate);
+                    ,valueGetter: function(params){
+                        var checkVal = utils.regExr.date(params.data.exLeaveDate);
+                        if(!dateValidation(checkVal)){
+                            return "";
+                        }
+                        return checkVal;
                     }
                 }
                 ,{headerName: "근무기간", field: "exWorkPeriod", width:100,
                     valueGetter: function(params){
                         var enterDate = utils.regExr.date(params.data.exEnterDate);
                         var leaveDate = utils.regExr.date(params.data.exLeaveDate);
-
+                        console.log(leaveDate);
                         var date1 = new Date(enterDate);
                         var date2 = new Date(leaveDate);
                         var interval = date2 - date1;
                         var day = 1000*60*60*24;
                         var month = day*30;
-
-                        return parseInt(interval/month);
+                        var checkVal = parseInt(interval/month);
+                        if(isNaN(checkVal)){
+                            return 0;
+                        } else if(checkVal < 0){
+                            return 0;
+                        }
+                        return checkVal;
                     }
                 }
                 ,{ headerName: "최종직위", field: "exLastWorkLevel", width:100}
@@ -263,6 +308,23 @@ const UserInfo = () => {
            //컴포넌트 세팅 
            const components = {  };
            return {columnDefs, defaultColDef, components};
+    }
+
+    const dateValidation = (date) =>{
+        var date = utils.regExr.numOnly(date);
+        var month = date.substring(4,6);
+        var day = date.substring(6,8);
+        console.log(month);
+        console.log(day);
+        
+        if(month>12 || month<1){
+            return false;
+        }
+
+        if(day>31 || day<1){
+            return false;
+        }
+        return true;
     }
     
     const closePostPop = (e) => {
