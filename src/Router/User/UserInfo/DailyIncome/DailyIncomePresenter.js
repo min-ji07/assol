@@ -249,7 +249,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             <div class="left_div">
                 <div id="userInfoLeft3" class="test">
                     <div class="left_div_inner">
-                        <div class="imgload"><img id="userImgView3" src='/images/user02.png' alt="유저사진" style={{width:"140px",height:"140px",borderRadius:"50%"}}/></div>
+                        <div class="imgload"><img id="userImgView3" class="userImgView" src='/images/user02.png' alt="유저사진" style={{width:"140px",height:"140px",borderRadius:"50%"}}/></div>
                         <br/><span id="userImgText3">사원 사진을 등록해주세요.</span><br/>
                         <div style={{marginTop:"10px"}}>
                             <label for="userImage3" class="userImg">수정</label><input type="file" id="userImage3" onChange={imgUpload3}/>

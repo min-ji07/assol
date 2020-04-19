@@ -85,11 +85,13 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
             }
             reader.readAsDataURL(fileInput.files[0]);
         }
+        $("#userImgText").hide();
     }
 
     const userImgDelete2 = (e) => {
         $("#userImgView2").attr("src","/images/user02.png");
         $("#userImage2").val("");
+        $("#userImgText").show();
     }
 
     let params = {};
@@ -191,7 +193,6 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
    /* row click event */
    const addRow = (e) => {
         var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
-        console.log(gridApi,"<----비지니스");
         gridCommon.setGridApi(gridApi);
         gridCommon.onAddRow();
     }
@@ -241,16 +242,40 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
             <div class="left_div">
                 <div id="userInfoLeft2" class="test">
                     <div class="left_div_inner">
-                    <div class="imgload"><img id="userImgView2" src='/images/user02.png' alt="유저사진" style={{width:"140px",height:"140px",borderRadius:"50%"}}/></div>
-                    <br/><span id="userImgText2">사원 사진을 등록해주세요.</span><br/>
-                        <div style={{marginTop:"10px"}}>
-                            <label for="userImage2" class="userImg">수정</label><input type="file" id="userImage2" onChange={imgUpload2}/>
+                    <div class="imgload">
+                        <img id="userImgView2" class="userImgView" src='/images/user02.png' alt="유저사진"/>
+                        <span id="userImgText2">사원 사진을 등록해주세요.</span>
+                        <div style={{marginTop:"5px"}}>
+                            <label for="userImage" class="userImg">수정</label><input type="file" id="userImage" onChange={imgUpload2}/>
                             <label for="imgDelete">삭제</label><button type="button" id="imgDelete" onClick={userImgDelete2}/>
                         </div>
-                        <ul>
-                            <li>성명 :<input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="김경주"/></li>
+                    </div>
+
+                        <ul class="userinfo_left_box">
                             <li>
-                                업무 : 
+                                <span>성명 :</span>
+                                <input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="김경주"/>
+                            </li>
+                            <li>
+                                <span>주민번호 :</span>
+                                <input type="text" class="personal_input" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101"/>
+                                <select name="national" id="national">
+                                    <option value="내국인" selected>내국인</option>
+                                    <option value="외국인">외국인</option>                                                
+                                </select>
+                            </li>
+                            <li class="visa_li">
+                                <span>
+                                    비자타입 :
+                                </span>
+                                <input type="text" id="visaType" name="visaType" placeholder="K-9011"/>
+                            </li>
+                            <li>
+                                <span>입사일 :</span>
+                                <input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/>
+                            </li>
+                            <li>
+                                <span>업무 :</span>
                                 <select id="position" name="position" style={{borderRadius:"0px", marginLeft:"20px", width:"172px", marginTop:"-4px"}}>
                                     <option value="940100">940100 | 저술가</option>
                                     <option value="940200">940200 | 화가관련</option>
@@ -466,9 +491,9 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     <span style={{color:"#f38d8d", fontSize:"13px"}}> *소유자일 경우</span>
                                     <ul>
                                         <li style={{listStyle:"none", marginLeft:"0px"}}>
-                                            사업자등록번호 : <input type="text" maxLength="2" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                            <input type="text" maxLength="2" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                            <input type="text" maxLength="3" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"35px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
+                                            사업자등록번호 : <input type="number" maxLength="2" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input type="number" maxLength="2" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input type="number" maxLength="3" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"35px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
                                         </li>
                                     </ul>
                                 </li>

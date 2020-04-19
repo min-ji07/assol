@@ -73,6 +73,15 @@ const UserInfo = () => {
         $("input.personal_input").on("keyup",function(e){
             var targetVal = e.target.value;
             e.target.value = Utils.regExr.personalNum(targetVal); 
+        }).on("change",function(e){
+            var checkVisa = e.target.value.substring(7,8);
+            if(checkVisa == "5" || checkVisa == "6"){
+                e.target.parentElement.nextSibling.style.display = "inline-block";
+                e.target.nextSibling.value = "외국인";
+            } else {
+                e.target.parentElement.nextSibling.style.display = "none";
+                e.target.nextSibling.value = "내국인";
+            }
         });
 
         $(".join_date").on("focusout",function(e){
@@ -111,7 +120,7 @@ const UserInfo = () => {
                 }
                 monthSalary += Number(utils.regExr.numOnly(inputList[i].value));
             }
-            $("#salaryOfMonth").val(monthSalary).click();
+            $("#salaryOfMonth").val(utils.regExr.comma(monthSalary)).click();
         }
 
         const yearSalaryEvent = () => {
@@ -136,7 +145,7 @@ const UserInfo = () => {
                 yearsSalary += baseVal * typeVal;
             }
             yearsSalary += monthSalary;
-            $("#salaryOfYears").val(yearsSalary);
+            $("#salaryOfYears").val(utils.regExr.comma(yearsSalary));
         }
 
         // 연봉변경 이벤트
@@ -155,6 +164,11 @@ const UserInfo = () => {
         $(document).on("change","input[name=addSalaryPay]",function(){
             monthSalaryEvent();
         })
+        
+        $(".userImgView").on("click",function(e){
+            console.log(e);
+            e.target.nextSibling.nextSibling.children[0].click();
+        });
 
         $("#addFile").on("click",(e)=>{
             console.log(e);

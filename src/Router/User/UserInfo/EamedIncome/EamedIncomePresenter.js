@@ -14,6 +14,13 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         var tabDiv = ".div_bottom.tab_01";
         var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         
+        
+        var personalNumber = $(tabDiv).find("#personalNumber").val();
+        if(!personalValidaition(personalNumber)){
+            alert("주민번호가 올바르지 않습니다.");
+            return false;
+        }
+
         if(!regEmail.test($(".div_bottom.tab_01 input[type='email']").val())){
             alert("이메일이 올바르지 않습니다.");
             return false;
@@ -62,6 +69,33 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         }
         return true;
     }
+
+    function personalValidaition(jumin) {
+        console.log(jumin);
+        jumin = utils.regExr.numOnly(jumin);
+       
+        //주민등록 번호 13자리를 검사한다.
+         var fmt = /^\d{6}[123456]\d{6}$/;  //포멧 설정
+         if (!fmt.test(jumin)) {
+          return false;
+         }
+       
+         // 생년월일 검사
+         var birthYear = (jumin.charAt(6) <= "2") ? "19" : "20";
+         birthYear += jumin.substr(0, 2);
+         var birthMonth = jumin.substr(2, 2) - 1;
+         var birthDate = jumin.substr(4, 2);
+         var birth = new Date(birthYear, birthMonth, birthDate);
+       
+         if ( birth.getYear() % 100 != jumin.substr(0, 2) ||
+              birth.getMonth() != birthMonth ||
+              birth.getDate() != birthDate) {
+            return false;
+         }
+       
+        
+         return true;
+       }
 
     const dateValidation = (date) =>{
         var date = utils.regExr.numOnly(date);
@@ -259,10 +293,6 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         $("#daumPostPop").show();
     }
 
-    const personalNumberChange = (e) => {
-
-    }
-
     const addSalary = (e) => {
         const salaryUl = $("#userInfoRight li.salary > ul:nth-child(2)");
         const li = $("<li class='li_left add_li'>");
@@ -288,10 +318,9 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                 <div id="userInfoLeft" class="test">
                     <div class="left_div_inner">
                     <div class="imgload">
-                        <img id="userImgView" src='/images/user02.png' alt="유저사진"/>
+                        <img id="userImgView" class="userImgView" src='/images/user02.png' alt="유저사진"/>
                         <span id="userImgText">사원 사진을 등록해주세요.</span>
-                        <button type="button" class="btn_userimg" id="btnUserImg"></button>
-                        <div style={{marginTop:"10px"}}>
+                        <div style={{marginTop:"5px"}}>
                             <label for="userImage" class="userImg">수정</label><input type="file" id="userImage" onChange={imgUpload}/>
                             <label for="imgDelete">삭제</label><button type="button" id="imgDelete" onClick={userImgDelete}/>
                         </div>
@@ -300,7 +329,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         <li><span>성명 :</span><input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="테스트"/></li>
                         <li>
                             <span>주민번호 :</span>
-                            <input type="text" class="personal_input" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101" onChange={personalNumberChange}/>
+                            <input type="text" class="personal_input" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101"/>
                             <select name="national" id="national">
                                 <option value="내국인" selected>내국인</option>
                                 <option value="외국인">외국인</option>                                                
@@ -329,7 +358,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             </select>
                         </li>
                         <li><span>직위 : </span>
-                            <input type="text" name="workLevel" id="workLevel"/>
+                            <input type="text" name="workLevel" id="workLevel" placeholder="부장"/>
                         </li>
                         </ul>
                     </div>
@@ -420,7 +449,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"40px"}}>
                                         <li>
                                             <span>월급 :</span>
-                                            <input type="text" id="salaryOfMonth" readOnly name="salaryOfMonth" defaultValue="100,000,000"/>
+                                            <input type="text" id="salaryOfMonth" name="salaryOfMonth" defaultValue="100,000,000"/>
                                             <span>원</span>
                                             {/* <input type="text" class="money_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/> */}
                                         </li>
