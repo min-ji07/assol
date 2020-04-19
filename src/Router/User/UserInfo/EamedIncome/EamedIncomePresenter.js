@@ -605,10 +605,43 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <div class="tab_01_inner">
                                 <ul>
                                     <li style={{listStyle:"disc", fontSize:"17px"}}>
-                                    4대보험<button type="button" class="btn_gray" style={{marginLeft: "5px", marginTop: "-5px", marginLeft:"7px"}}>신청하기</button>
+                                    <strong>4대보험</strong>
+                                    <button type="button" class="btn_gray" style={{marginLeft: "5px", marginTop: "-5px", marginLeft:"7px"}}>신청하기</button>
                                         <div class="tab_01_grid">
+                                            <ul>
+                                                <li>
+                                                    <div style={{height:"26px", lineHeight:"26px"}}>구분</div>
+                                                    <div style={{height:"26px", lineHeight:"26px", fontWeight:"blod", background:"#f5f3f4"}}>기호번호</div>
+                                                    <div style={{height:"26px", lineHeight:"26px", fontWeight:"blod", background:"#f5f3f4"}}>취득일</div>
+                                                    <div style={{height:"26px", lineHeight:"26px", fontWeight:"blod", background:"#f5f3f4"}}>상실일</div>
+                                                </li>
+                                                <li>
+                                                    <div>국민연금</div>
+                                                    <div> </div>
+                                                    <div> </div>
+                                                    <div> </div>
+                                                </li>
+                                                <li>
+                                                    <div>건강보험</div>
+                                                    <div> </div>
+                                                    <div> </div>
+                                                    <div> </div>
+                                                </li>
+                                                <li>
+                                                    <div>고용보험</div>
+                                                    <div> </div>
+                                                    <div> </div>
+                                                    <div></div>
+                                                </li>
+                                                <li>
+                                                    <div>산재보험</div>
+                                                    <div> </div>
+                                                    <div> </div>
+                                                    <div> </div>
+                                                </li>
+                                            </ul>
                                             {/* <DataGrid rowData={rowData} gridDefs={insDefs} gridCommon={gridCommon}/> */}
-                                            <table id="insurnaceTable">
+                                            {/* <table id="insurnaceTable">
                                                 <thead>
                                                     <tr>
                                                         <th>구분</th>
@@ -667,13 +700,13 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                         </td>
                                                     </tr>
                                                 </tbody>
-                                            </table>
+                                            </table> */}
                                         </div>
                                     </li>
                                     {/* <li style={{marginLeft: "25px"}}>
                                     </li> */}
-                                    <li style={{listStyle:"disc", fontSize:"17px", marginLeft:"7px"}}>
-                                        부양가족
+                                    <li style={{listStyle:"disc", fontSize:"17px", marginLeft:"7px", marginTop:"35px"}}>
+                                        <strong>부양가족</strong>
                                         <button type="button" class="btn_gray" style={{marginLeft: "5px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
                                         <div id="dependGrid" class="tab_02_grid grid_scrollX_none">
@@ -689,7 +722,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         {/* 학력교육 */}
                         <div class="input_content tab_003">
                             <ul>
-                                <li style={{marginTog:"-22px"}}>학력
+                                <li style={{marginTog:"-22px"}}>
+                                    <strong>학력</strong>
                                     <div class="tab_01_inner">
                                         <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
@@ -699,7 +733,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>경력
+                                <li  style={{marginTog:"3px"}}>
+                                    <strong>경력</strong>
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
@@ -708,7 +743,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>병역
+                                <li  style={{marginTog:"3px"}}>
+                                    <strong>병역</strong>
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
@@ -717,7 +753,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>교육
+                                <li  style={{marginTog:"3px"}}>
+                                    <strong>교육</strong>
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>

@@ -435,7 +435,8 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <div class="tab_01_inner">
                                 <ul>
                                     <li style={{listStyle:"disc", fontSize:"17px"}}>
-                                    4대보험<button type="button" class="btn_gray" style={{marginLeft: "5px", marginTop: "-5px", marginLeft:"7px"}}>신청하기</button>
+                                    <strong>4대보험</strong>
+                                    <button type="button" class="btn_gray" style={{marginLeft: "5px", marginTop: "-5px", marginLeft:"7px"}}>신청하기</button>
                                         <div class="tab_01_grid">
                                             {/* <DataGrid rowData={rowData} gridDefs={insDefs} gridCommon={gridCommon}/> */}
                                             <table id="insurnaceTable">
@@ -503,7 +504,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     {/* <li style={{marginLeft: "25px"}}>
                                     </li> */}
                                     <li style={{listStyle:"disc", fontSize:"17px", marginLeft:"7px"}}>
-                                        부양가족
+                                        <strong>부양가족</strong>
                                         <button type="button" class="btn_gray" style={{marginLeft: "5px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
                                         <div id="dependGrid2" class="tab_02_grid grid_scrollX_none">
@@ -519,7 +520,8 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         {/* 학력교육 */}
                         <div class="input_content tab_008">
                             <ul>
-                                <li style={{marginTog:"-22px"}}>학력
+                                <li style={{marginTog:"-22px"}}>
+                                    <strong>학력</strong>
                                     <div class="tab_01_inner">
                                         <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
@@ -529,7 +531,8 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>경력
+                                <li  style={{marginTog:"3px"}}>
+                                    <strong>경력</strong>
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
@@ -538,7 +541,8 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>병역
+                                <li  style={{marginTog:"3px"}}>
+                                    <strong>병역</strong>
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
@@ -547,7 +551,8 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>교육
+                                <li  style={{marginTog:"3px"}}>
+                                    <strong>교육</strong>
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
