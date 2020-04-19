@@ -6,11 +6,10 @@ import gridCommon from '../../../../Utils/grid';
 import utils from '../../../../Utils/utils';
 
 const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, militaryDefs, curriculumDefs, rowData2, rowData3, rowData4, rowData5}) => {
-
-    
-
     let params = {};
     let frm = new FormData();
+    let checkUserImage = true;
+
     const fnValidation = () => {
         var tabDiv = ".div_bottom.tab_01";
         var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -133,7 +132,6 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             key = inputListLeft[i].id;
             value = inputListLeft[i].value;
             if(key.indexOf("userImage") != -1){
-                frm.append("userImage",inputListLeft[i].files[0]);
                 continue;
             }
             tempParams[key] = value;
@@ -211,14 +209,37 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         alert(res.data.Msg);
                     } else {
                         alert("저장이 완료되었습니다.");
-                        frm.append("userNo",res.data.Data);
-                        frm.append("employeeNumber",res.data.Id);
+                        saveImgFile(res.data.Data, res.data.Id);
                         // window.location.href = "/user/userManagement";
                         // location.reload();
                     }
                 });
+            }catch(e){
+                alert("관리자에게 문의하세요.",e);
+            }
+        };
+        
+        saveInit();
+    }
 
-                console.log(frm);
+    const saveImgFile = (userNo,employeeNumber) => {
+        frm = new FormData();
+        frm.append("userNo",userNo);
+        frm.append("employeeNumber",employeeNumber);
+        checkUserImage = $(".tab_01 #userImage")[0].value == "" ? true : false;
+        if(checkUserImage){
+            frm.append("imageIsNull",1);
+        } else {
+            frm.append("userImage",$(".tab_01 #userImage")[0].files[0]);
+        }
+        var imgFileArr = selectFileList();
+        var i = 0;
+        for(i; i<imgFileArr.length; i++){
+            console.log(imgFileArr[i]);
+            frm.append("insa"+i,imgFileArr[i]);
+        }
+        async function saveImg(){
+            try {
                 await callApi.uploadFileToServer(frm).then(res=> {
                     console.log(res);
                     if(res.data.ErrorCode == 1){
@@ -229,17 +250,32 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         // location.reload();
                     }
                 });
-            }catch(e){
-                alert(e);
+            } catch (e) {
+                alert("관리자에게 문의하세요.",e);
             }
-        };
-        saveInit();
+        }
+        saveImg();
+    }
+
+    // 인사서류 파일 리스트 리턴
+    const selectFileList = () => {
+        let checkList = $("#fileBox li a");
+        var inputList = $("input[name=imgFileInput]");
+        let i = 0;
+        let tempArr = [];
+        for(i; i<checkList.length; i++){
+            if(checkList[i].className == "check_file"){
+                tempArr.push(inputList[i].files[0]);
+            }
+        }
+        return tempArr;
     }
 
     // 팝업 띄우기, 닫기
     const openJoinPop = () => {
         $(".modal_box").show();
-    };
+    }
+
     const closePopup = () => {
         $(".modal_box").hide();
         return false;
@@ -294,13 +330,13 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             }
             reader.readAsDataURL(fileInput.files[0]);
         }
-        $("#userImgText").removeClass("txt_hide");
+        $("#userImgText").addClass("txt_hide");
     }
 
     const userImgDelete = (e) => {
         $("#userImgView").attr("src","/images/user02.png");
         $("#userImage").val("");
-        $("#userImgText").addClass("txt_hide");
+        $("#userImgText").removeClass("txt_hide");
     }
 
     const openPostPop = (e) => {
@@ -320,6 +356,10 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         salaryUl.append(li);
     }
     
+
+    
+    
+
     useEffect(()=>{
 
     },[]); //init
@@ -333,7 +373,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     <div class="left_div_inner">
                     <div class="imgload">
                         <img id="userImgView" class="userImgView" src='/images/user02.png' alt="유저사진"/>
-                        <span id="userImgText">사원 사진을 등록해주세요.</span>
+                        <span id="userImgText" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"5px"}}>
                             <label for="userImage" class="userImg">수정</label><input type="file" id="userImage" onChange={imgUpload}/>
                             <label for="imgDelete">삭제</label><button type="button" id="imgDelete" onClick={userImgDelete}/>
@@ -372,7 +412,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             </select>
                         </li>
                         <li><span>직위 : </span>
-                            <input type="text" name="workLevel" id="workLevel" placeholder="부장"/>
+                            <input type="text" name="workLevel" id="workLevel" placeholder="부장" defaultValue="사원"/>
                         </li>
                         </ul>
                     </div>
@@ -417,7 +457,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <li style={{height:"70px"}}>
                                 <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  defaultValue="77길45"></textarea>
                             </li>
-                            <li>  
+                            <li class="leave_li">  
                                 <span>퇴사여부 :</span>
                                 <select name="isActive" id="isActive" style={{width:"50px"}}>
                                     <option value="0" selected>여</option>
@@ -425,7 +465,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 </select>
                                 <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04"/>
                             </li>
-                            <li>  
+                            <li class="leave_li">
                                 <span>퇴사사유 :</span>
                                 <input type="text" name="leaveReason" id="leaveReason"/>
                             </li>

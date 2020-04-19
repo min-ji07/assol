@@ -900,3 +900,6 @@ input:-webkit-autofill:active {
 /* input[name=postNo]{
     
 } */
+.leave_li{
+    display:none !important;
+}

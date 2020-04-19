@@ -14,10 +14,14 @@ import utils from '../../../Utils/utils';
 
 const UserInfo = () => {
     let imgFileList = [];
+    let selectImgFileList = [];
+    let imgInputLastIndex = 0;
 
     const saveImgList = () => {
 
     }
+
+    
 
     const closePostPop = (e) => {
         $("#daumPostPop").hide();
@@ -177,11 +181,12 @@ const UserInfo = () => {
         });
 
         $("#addFile").on("click",(e)=>{
-            $("#imgFileInput").click();
+            imgInputLastIndex = $("input[name=imgFileInput]").length - 1;
+            $("input[name=imgFileInput]")[imgInputLastIndex].click();
             return false;
         });
 
-        $("#imgFileInput").on("change",(e)=>{
+        $(document).on("change","input[name=imgFileInput]",(e)=>{
             const fileInput = e.target;
             $(".modal_box.imgupload").append($("<span>"));
             if (fileInput.files && fileInput.files[0]) {
@@ -333,14 +338,16 @@ const UserInfo = () => {
         var img = $("<img src='"+filePath+"'>");
         var title_box = $("<span class='title_box'>");
         var check_box = $("<span class='check_box'>");
-
+        var file_input = $("<input type='file' name='imgFileInput'/>")
+        
+        $(".img_file_box").append(file_input);
         img_box.append(img);
         title_box.text(fileName);
         a.append(img_box).append(title_box).append(check_box);
-
+        
         li.append(a);
-        imgFileList.push($("#imgFileInput")[0].files[0]);
-        $('#fileBox').prepend(li);
+        $('#fileBox').append(li);
+        $("#fileBox").append($("#fileBox .img_add_li"));
     }
     
     $(document).on("click","#fileBox li a",function(e){
@@ -355,17 +362,24 @@ const UserInfo = () => {
         }
     });
 
-    const selectFileList = () => {
+    const removeFileList = () => {
         let checkList = $("#fileBox li a");
+        let checkInputList = $("input[name=imgFileInput]");
         let i = 0;
         let tempArr = [];
         for(i; i<checkList.length; i++){
             if(checkList[i].className == "check_file"){
-                tempArr.push(imgFileList[i]);
+                checkList[i].parentElement.remove();
+                checkInputList[i].remove();
+                // tempArr.push(imgFileList[i]);
+            } else if(checkList[i].className != "btn_img_add"){
+                // checkList[i].parentElement.remove();
             }
         }
-        imgFileList = tempArr;
-        console.log(imgFileList);
+    }
+
+    const hideFileList = () => {
+        $(".modal_box.imgupload").hide();
     }
     
     // 업로드 파일 삭제
@@ -438,7 +452,7 @@ const UserInfo = () => {
                         
                         {/* 파일등록 후 */}
                         <ul id="fileBox" class="file_list">
-                            <li>
+                            <li class="img_add_li">
                                 <a id="addFile" class="btn_img_add" href="#">
                                     <span class="img_box add"></span>
                                     <span class="title_box"></span>
@@ -447,13 +461,13 @@ const UserInfo = () => {
                             </li>
                         </ul>
                         <div class="img_file_box">
-                            <input id="imgFileInput" type="file" multiple/>
+                            <input name="imgFileInput" type="file"/>
                         </div>
                     </div>
                 </div>
                 <p className="btn_box">
-                    <button className="btn_next">삭제하기</button>
-                    <button className="btn_next" style={{ background:"#87c395"}} onClick={selectFileList}>완료하기</button>
+                    <button className="btn_next" onClick={removeFileList}>삭제하기</button>
+                    <button className="btn_next" style={{ background:"#87c395"}} onClick={hideFileList}>완료하기</button>
                 </p>
             </div>
             {/* </div> */}

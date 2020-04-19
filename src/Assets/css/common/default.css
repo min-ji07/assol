@@ -554,3 +554,7 @@ input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+.txt_hide{
+    text-indent: -9999px;
+    font-size:0;
+}
