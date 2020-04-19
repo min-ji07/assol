@@ -12,7 +12,7 @@ const api = axios.create({
 )
 
 const testUrl = "http://172.30.1.29:5302"; // 이석민 ip
-const testUrl2 = "http://172.30.1.24:5302"; // 김성일 ip
+const testUrl2 = "http://150f7585.ngrok.io"; // 김성일 ip
 
 const local = "http://172.30.1.24:5302"; // 김성일 ip
 

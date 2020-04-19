@@ -171,7 +171,6 @@ const UserInfo = () => {
         });
 
         $("#addFile").on("click",(e)=>{
-            console.log(e);
             $("#imgFileInput").click();
             return false;
         });
@@ -291,17 +290,13 @@ const UserInfo = () => {
             e.preventDefault();
             // 드롭다운 영역 css
             dropZone.css('background-color','#FFFFFF');
-            
-            var files = e.originalEvent.dataTransfer.files;
-            var path = e.originalEvent.dataTransfer.files.webkitRelativePath;
-            console.log(path);
-            console.log(files);
+
             if(files != null){
                 if(files.length < 1){
                     alert("폴더 업로드 불가");
                     return;
                 }
-                selectFile(files)
+                selectFile(files);
             }else{
                 alert("ERROR");
             }
@@ -340,7 +335,7 @@ const UserInfo = () => {
                     fileSizeList[fileIndex] = fileSize;
  
                     // 업로드 파일 목록 생성
-                    addFileList(fileIndex, fileName, fileSize);
+                    addFileList(fileName, fileSize);
 
                     // 파일 번호 증가
                     fileIndex++;
@@ -368,7 +363,16 @@ const UserInfo = () => {
  
         $('#fileBox').prepend(li);
     }
- 
+    
+    $(document).on("click","#fileBox li a",function(e){
+        console.log($(this));
+        if(this.className == "check_file"){
+            $(this).removeClass("check_file");
+        } else {
+            $(this).addClass("check_file");
+        }
+    });
+    
     // 업로드 파일 삭제
     function deleteFile(fIndex){
         // 전체 파일 사이즈 수정
@@ -440,22 +444,22 @@ const UserInfo = () => {
                         {/* 파일등록 후 */}
                         <ul id="fileBox" class="file_list">
                             <li>
-                                <a id="addFile" href="#">
+                                <a id="addFile" class="btn_img_add" href="#">
                                     <span class="img_box add"></span>
                                     <span class="title_box"></span>
                                     <span class="check_box"></span>
                                 </a>
                             </li>
                         </ul>
-                        <form method="post" action="http://172.30.1.24:5302/Save/UploadFileToServer" onSubmit={(e) => submit(e)} style={{display:"none"}}>
+                        <div class="img_file_box">
                             <input id="imgFileInput" type="file"/>
                             <input id="test" type="submit"/>
-                        </form>
+                        </div>
                     </div>
                 </div>
                 <p className="btn_box">
-                    <button className="btn_next" onClick={()=>openJoinForm2()}>삭제하기</button>
-                    <button className="btn_next" style={{ background:"#87c395"}}onClick={()=>openJoinForm2()}>완료하기</button>
+                    <button className="btn_next">삭제하기</button>
+                    <button className="btn_next" style={{ background:"#87c395"}}>완료하기</button>
                 </p>
             </div>
             {/* </div> */}

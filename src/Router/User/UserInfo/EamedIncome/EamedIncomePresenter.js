@@ -132,7 +132,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             key = inputListLeft[i].id;
             value = inputListLeft[i].value;
             if(key.indexOf("userImage") != -1){
-                key = "imagePath";   
+                key = "imagePath";
+                value = inputListLeft[i].files[0];
             }
             tempParams[key] = value;
         }
@@ -280,13 +281,13 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             }
             reader.readAsDataURL(fileInput.files[0]);
         }
-        $("#userImgText").hide();
+        $("#userImgText").removeClass("txt_hide");
     }
 
     const userImgDelete = (e) => {
         $("#userImgView").attr("src","/images/user02.png");
         $("#userImage").val("");
-        $("#userImgText").show();
+        $("#userImgText").addClass("txt_hide");
     }
 
     const openPostPop = (e) => {
@@ -375,7 +376,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             </li>
                             <li>  
                                 <span>수습적용 :</span>
-                                <select name="isProbation" id="isProbation" style={{width:"38px",marginLeft:"18px",marginRight:"15px"}}>
+                                <select name="isProbation" id="isProbation" style={{width:"38px",marginLeft:"15px",marginRight:"15px"}}>
                                     <option value="1" selected>부</option>
                                     <option value="0">여</option>                                                
                                 </select>
@@ -445,7 +446,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <strong>급여항목</strong>
                                     <button type="button" class="btn_gray wi64he19" id="addSalary" onClick={addSalary}>추가</button>
                                 </li>
-                                <li id="monthSalary" class="salary" style={{overflowY: "scroll", marginTop:"10px"}}>
+                                <li id="monthSalary" class="salary" style={{overflowY: "auto", marginTop:"10px"}}>
                                     <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"40px"}}>
                                         <li>
                                             <span>월급 :</span>
@@ -498,10 +499,10 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                 <option value="3">년간</option>
                                             </select>
                                         </li>
-                                        <li class="salary_years">
+                                        <li class="salary_years" style={{marginRight:"30px"}}>
                                             <span>연봉 :</span>
                                             <input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
-                                            tabindex="-1" style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>
+                                            tabindex="-1" style={{fontSize: "20px", border:"none", width: "130px", height:"30px"}} readOnly/>
                                             <span>원</span>
                                         </li>
                                     </ul>

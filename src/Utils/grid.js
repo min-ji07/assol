@@ -12,6 +12,13 @@ var gridCommon = function() {
         }
         ,onGridReady:(params)=>{
             gridApi = params;
+            // console.log(gridApi);
+
+            // var allColumnIds = [];
+            // gridApi.columnApi.getAllColumns().forEach(function(column) {
+            //   allColumnIds.push(column.colId);
+            // });
+            // gridApi.columnApi.autoSizeColumns(allColumnIds, false);
         }
         ,getRowData : ()=> { //전체로우 탐색
             var rowData = [];
