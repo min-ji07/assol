@@ -17,6 +17,7 @@ const EmploymentHistoryPresenter = () => {
                         <ul>
                             <li>
                                 <a href="#" class="button_01">STEP1-신청접수</a>
+                                <img src="/images/employment_apply_button07.png" alt=""/>
                             </li>
                             <li>
                                 <a href="#" class="button_02">STEP2-담당자접수</a>

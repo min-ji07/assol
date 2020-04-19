@@ -14,26 +14,30 @@
     width: 1689px; height: 627px; 
     /* border: 1px solid blue; */
 }
-
+ 
 /* 신청접수 버튼 외 */
 /* 위에 메뉴 div */
 .employment_history .employment_history_content .button_set ul {
     width: 1686px; height: 142px;
     /* border: 1px solid pink; */
 }
-
 .employment_history .employment_history_content .button_set ul li {
     float: left;
     width: 337px; 
     /* border: 3px solid orange; */
 }
-
 .employment_history .employment_history_content ul li a {
     display:block;
     width: 298px; height: 142px; line-height: 142px;
     color: white; border-radius: 15px; 
-    margin: 0 auto; font-weight: blod;
+    /* margin: 0 auto;  */
+    font-weight: bold;
     font-size: 20px; text-align: center;
+}
+.employment_history .employment_history_content .button_set ul li img {
+    width: 19px;
+    height: 51px;
+    margin: -162px 0 0 324px;
 }
 
 /* 흰색바탕 */

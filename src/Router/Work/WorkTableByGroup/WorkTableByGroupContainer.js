@@ -24,26 +24,26 @@ function WorkTableByGroupContainer() {
         { headerName: "rowId", field: "rowId", hide:true }
         ,{ headerName: "processType", field: "processType", hide:true}
         ,{ headerName: "branchNo", field: "branchNo", hide:true }
-        ,{ headerName: "", field: "", width:30 ,resizable:false,editable : false
+        ,{ headerName: "", field: "", width:50 ,  align:'center', resizable:false,editable : false
             ,checkboxSelection:true,headerCheckboxSelection: true,
          }
-         ,{ headerName: "근무타입", field: "workType",
-            cellEditor: "select",
-            cellEditorParams: { values: gridCommon.extractValues(workTypeMappings) },
-            refData: workTypeMappings
-            }
-         ,{ headerName: "근무형태", field: "regularEmployee",
+        //  ,{ headerName: "근무타입", field: "workType",
+        //     cellEditor: "select",
+        //     cellEditorParams: { values: gridCommon.extractValues(workTypeMappings) },
+        //     refData: workTypeMappings
+        //     }
+        ,{ headerName: "근무팀명", field: "groupName" , width:150
+           , valueFormatter:function(params){
+               if(!params || !params.value || params.value=='') return;
+                return params.value.slice(0,6);
+           }}
+         ,{ headerName: "근무형태", field: "regularEmployee",  width:120,
             cellEditor: "select",
             cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
             filter: "agSetColumnFilter",  //-- 필터 사용가능 ! 
             refData: regEmployeeMappings
             }
-         ,{ headerName: "근무조", field: "groupName"
-            , valueFormatter:function(params){
-                if(!params || !params.value || params.value=='') return;
-                 return params.value.slice(0,6);
-            }}
-         ,{ headerName: "근무인원수", field: "workerCount",width:90, align:'center',
+         ,{ headerName: "최소인원수", field: "workerCount",width:120, align:'center',
              cellEditor:'select', cellEditorParams:{values: function(){
                  const list=[];
                     for(var i=1; i<=100 ;i++){
@@ -52,27 +52,27 @@ function WorkTableByGroupContainer() {
                     return list;
                 }()
              }, valueFormatter:function(params) { return (!params.value)?'':params.value+'명'}} 
-        ,{ headerName: "근무시간 ",field:"workTime", editable:true
-            ,cellEditor: picker.getTimePicker(), width:150}
+        ,{ headerName: "근무시간",field:"workTime", editable:true
+            ,cellEditor: picker.getTimePicker(), width:200}
         ,{ headerName: "휴게시간", field: "restTime", editable:true
-            ,cellEditor: picker.getTimePicker(), width:130}
+            ,cellEditor: picker.getTimePicker(), width:200}
         ,{ headerName: "서브휴게시간", field: "subRestTime", editable:true
-            ,cellEditor: picker.getTimePicker(), width:130}
-        ,{ headerName: "총합", field: "totalRestTime", editable:false}
-        ,{ headerName: "현재근무시간", field: "currentTime", editable:false}
-        ,{ headerName: "연장근무시간", field: "overTime", cellEditor:'select'
+            ,cellEditor: picker.getTimePicker(), width:200}
+        // ,{ headerName: "총합", field: "totalRestTime", width:80, editable:false}
+        ,{ headerName: "현재근무시간", field: "currentTime", width:120,  editable:false}
+        ,{ headerName: "연장근무시간", field: "overTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
             ,cellEditorParams:{values:[30,60,90,120,150,180,210,220,250]}
             ,valueFormatter: function(params){ 
                 return (!params.value)?'':params.value+'분'} }
-        ,{ headerName: "야간근무시간", field: "yaguenTime", editable:false
+        ,{ headerName: "야간근무시간", field: "yaguenTime",width:120, editable:false
 
         }
-        ,{ headerName: "권장근무시간", field: "recommTime", editable:false
+        ,{ headerName: "권장근무시간", field: "recommTime", width:120, editable:false
             , valueSetter:function(params){ 
                 params.data.recommTime = '8시간' 
                 return '8시간'
             } }
-        ,{ headerName: "검토", field: "passYn", editable:false }
+        ,{ headerName: "검토", field: "passYn", width:80, editable:false }
     ]
 
     //기본컬럼 정의
