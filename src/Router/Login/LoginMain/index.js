@@ -71,9 +71,8 @@ const fnLogin = () => {
 
 
 
-    // 이거 수정 
+    // 우편 검색후 선택시 event
     const daumPostComplete = (e) => {
-        let checkType = $(".user_input_inner > input:checked").attr("id");
         const addrType = e.userSelectedType;
         let postNo = e.zonecode;
         let address = e.address;
@@ -82,20 +81,9 @@ const fnLogin = () => {
             address = e.jibunAddress;
         }
 
-        switch(checkType){
-            case "tab_01" :
-                $(".modal_bottom").find("#postNo").val(postNo);
-                $(".modal_bottom").find("#address").val(address);
-                break;
-            // case "tab_02" :
-            //     $(".div_bottom.tab_02").find("#postNo").val(postNo);
-            //     $(".div_bottom.tab_02").find("#address").val(address);
-            //     break;
-            // case "tab_03" :
-            //     $(".div_bottom.tab_03").find("#postNo").val(postNo);
-            //     $(".div_bottom.tab_03").find("#address").val(address);
-            //     break;
-        }
+        $(".modal_bottom").find("#postNo").val(postNo).attr("readonly",true);
+        $(".modal_bottom").find("#address").val(address).attr("readonly",true);
+
         $("#daumPostPop").hide();
     }
 
