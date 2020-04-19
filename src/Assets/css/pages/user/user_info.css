@@ -267,6 +267,12 @@ input:-webkit-autofill:active {
     font-weight: 500;
 }
 
+/* 4대보험 */
+.right_div .tab_01_inner > ul li strong {
+    font-size: 18px;
+    font-weight: 500;
+}
+
 /* 학력/교육탭 감싸는 div */
 .right_div .input_content.tab_003,
 .right_div .input_content.tab_005,
@@ -287,14 +293,26 @@ input:-webkit-autofill:active {
     clear: both;
 }
 
+/* 테이블 */
+.user_input th {
+    width: 113px; height: 30px;
+}
+.user_input table td {
+    width: 113px; height: 30px;
+    border: 2px solid coral;
+}
+
 .user_input .input_content table th,
 .user_input .input_content tbody th {
     background: #f5f3f4;
     color: #585858;
     text-align: center;
 }
+/* 4대보험 글꼴 설정 */
+.user_input .input_content thead th,
 .user_input .input_content tbody th {
-    font-weight: 500;
+    font-weight: 400;
+    font-size: 15px;
 }
 .user_input .input_content table,
 .user_input .input_content table th,
@@ -521,15 +539,47 @@ input:-webkit-autofill:active {
 .user_input .tab_007 .tab_01_grid
  {
     width: 870px;
-    height: 225px;
+    /* height: 225px; */
     margin-left: 1px;
+    height: 132px;
+    /* border: 1px solid black; */
+    /* overflow-y: scroll; */
 }
+
+/* 테이블 내부 속성 */
+.user_input .tab_002 .tab_01_grid ul li div {
+    float: left;
+    width: 211px; height: 25px; line-height: 25px;
+    text-align: center; color: #585858; font-size: 15px;
+    border: 1px solid #c8c8c8; font-size: 15px; 
+}
+/* 테이블 셀 크기 지정 */
+.user_input .tab_002 .tab_01_grid ul li div:nth-child(1) {
+    width: 146px; height: 30px; line-height: 30px;
+    background: #f5f3f4; color: #585858;
+    font-weight: blod;
+}
+.user_input .tab_002 .tab_01_grid ul li div:nth-child(2) {
+    width: 320px; height: 30px; line-height: 30px;
+}
+.user_input .tab_002 .tab_01_grid ul li div:nth-child(3),
+.user_input .tab_002 .tab_01_grid ul li div:nth-child(4)
+ {
+    width: 198px; height: 30px; line-height: 30px;
+}
+
+.user_input .tab_002 .tab_01_grid ul li div:nth-child(1) {
+    width: 146px; height: 30px; line-height: 30px;
+}
+
+
+
 /* 부양가족 */
 .user_input .tab_002 .tab_02_grid,
 .user_input .tab_007 .tab_02_grid
  {
     width: 870px;
-    height: 146px;
+    height: 203px;
     margin-top: -1px;
     margin-left: -6px;
 }
