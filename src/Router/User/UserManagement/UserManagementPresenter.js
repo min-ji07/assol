@@ -43,14 +43,14 @@ console.log(countData);
                                 {countData.comtractEmp}
                             </div>
                         </div>
-                        <div class="status_green_inner">
+                        {/* <div class="status_green_inner">
                             <div class="font">
                                 임시직
                             </div>
                             <div class="number">
                                 {countData.temporaryEmp}
                             </div>
-                        </div>
+                        </div> */}
                         <div class="status_green_inner">
                             <div class="font">
                                 파견직
@@ -67,14 +67,14 @@ console.log(countData);
                               {countData.commisionEmp}
                             </div>
                         </div>
-                        <div class="status_green_inner">
+                        {/* <div class="status_green_inner">
                             <div class="font">
                                 일용직
                             </div>
                             <div class="number">
                                  {countData.dailyEmp}
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                     <div class="status_div bg_gray le_mg18">
                         <div class="font">
@@ -109,7 +109,7 @@ console.log(countData);
                         <div class="bottom_inner">
                             <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon}/>
                         </div>
-                        <div class="paging">
+                        {/* <div class="paging">
                             <ul>
                                 <li class="user_back"></li>
                                 <li>1</li>
@@ -118,7 +118,7 @@ console.log(countData);
                                 <li>4</li>
                                 <li class="user_next"></li>
                             </ul>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             

@@ -308,7 +308,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     <option value="851101">851101 | 병의원</option>
                                 </select>
                             </li>
-                            <li>이메일 :<input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/></li>
+                            <li><span>이메일 :</span><input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/></li>
                         </ul>
                     </div>
                     <div class="right_div_inner">

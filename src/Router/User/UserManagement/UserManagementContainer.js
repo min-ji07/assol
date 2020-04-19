@@ -56,24 +56,25 @@ function UserManagementContainer({yearMonth}) {
         ,{ headerName: "userId", field: "id", hide :true}
         ,{ headerName: "processType", field: "processType", hide:true}
         ,{ headerName: "branchNo", field: "branchNo", hide:true }
-        ,{ headerName: "성명", field: "userName", editable: false, width:150}
-        ,{ headerName: "고용형태", field: "userType",  width:150,
-            cellEditor : "richSelect", 
-            cellEditorParams: { values : gridCommon.extractValues(userTypeMappings)},refData: userTypeMappings}
-        // ,{ headerName: "고용형태", field: "regularEmployee",  width:150,
-        //     cellEditor : "richSelect", 
-        //     cellEditorParams: { values : gridCommon.extractValues(regEmployeeMappings)},refData: regEmployeeMappings}
+        ,{ headerName: "성명", field: "userName", editable: false, width:100 }
+        ,{ headerName: '입사일', field: "joinDate", cellEditor : "richSelect", width:150}
+        ,{ headerName: '주민번호', field: "personalNumber", cellEditor : "richSelect", width:170}
         ,{ headerName: '직책', field: "position", cellEditor : "richSelect" , width:100,
             cellEditor : "richSelect", 
             cellEditorParams: { values : gridCommon.extractValues(regPositionMappings)},refData: regPositionMappings}         
-        ,{ headerName: "직위", field: "workLevel", width:100,
-            cellEditor : "richSelect", 
-            cellEditorParams: { values : gridCommon.extractValues(workTypeMappings)},refData: workTypeMappings}
+            ,{ headerName: "직위", field: "workLevel", width:100,
+                cellEditor : "richSelect", 
+                cellEditorParams: { values : gridCommon.extractValues(workTypeMappings)},refData: workTypeMappings}
         ,{ headerName: "사원번호", field: "employeeNumber", cellEditor : "richSelect" , width:100}
-        ,{ headerName: '입사일', field: "joinDate", cellEditor : "richSelect", width:200}
-        ,{ headerName: '주민번호', field: "personalNumber", cellEditor : "richSelect", width:150}
-        ,{ headerName: '전화번호', field: "mobile", cellEditor : "richSelect", width:200}
-        ,{ headerName: '이메일', field: "email", cellEditor : "richSelect", width:200}
+        ,{ headerName: "고용형태", field: "userType",  width:130,
+            cellEditor : "richSelect", 
+            cellEditorParams: { values : gridCommon.extractValues(userTypeMappings)},refData: userTypeMappings}
+        ,{ headerName: '전화번호', field: "mobile", cellEditor : "richSelect", width:150}
+        ,{ headerName: '이메일', field: "email", cellEditor : "richSelect", width:180}
+        ,{ headerName: '주소', field: "address", cellEditor : "richSelect", width:180}
+            // ,{ headerName: "고용형태", field: "regularEmployee",  width:150,
+            //     cellEditor : "richSelect", 
+            //     cellEditorParams: { values : gridCommon.extractValues(regEmployeeMappings)},refData: regEmployeeMappings}
         ,{ headerName: '상태', field: "isActive", width:100,
             cellEditor : "richSelect",
             cellEditorParams: { values : gridCommon.extractValues(regStatusMappings)},refData: regStatusMappings}
