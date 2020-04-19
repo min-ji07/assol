@@ -16,7 +16,7 @@ return (
     <div className="wrapper">
         <div className="work_setting_01">
             <div className="title">
-                <h1>근무설정</h1>
+                <h1>근무조 설정</h1>
                 <p>설정하신 데이터기반으로 근무 현황을 확인 할 수 있습니다.</p>
             </div>
             <div className="worktable">
@@ -26,19 +26,29 @@ return (
                         <p>WORKING GROUP SETTINGS</p>
                     </div>
                     <div className="num01">
+
                         <p className="year_inner">근속년도
-                        <input type="text"
-                            readOnly
-                            id="month-picker"
-                            className="datepicker-here"
-                            data-language='lang'
-                            data-min-view="years"
-                            data-view="years"
-                            data-date-format="yyyy"/>
+                            <input type="text"
+                                readOnly
+                                id="month-picker"
+                                className="datepicker-here"
+                                data-language='lang'
+                                data-min-view="years"
+                                data-view="years"
+                                data-date-format="yyyy"/>
+                            근무일 설정
+                            <input type="radio" id="select_01" name="select" />
+                            <label for="select_01">월 ~ 금</label>
+                            <input type="radio" id="select_02" name="select" />
+                            <label for="select_02">월 ~ 토</label>
+                            <input type="radio" id="select_03" name="select" />
+                            <label for="select_03">월 ~ 일</label>
                         </p>
+
+
                         <div className="left">
                             <div className="team_option">
-                                <p>근무조설정</p>
+                                <p>근무조 설정</p>
                             </div>
                             <div className="buttonset">
                             <button type="button" className="insert" onClick={gridCommon.onAddRow}>추가</button>
@@ -46,10 +56,10 @@ return (
                                 <button onClick={gridCommon.onSaveRow}> 완료 </button>
                             </div>
                         </div>
-                        <div className="right">
+                        {/* <div className="right">
                             <button type="button" className="search1" onClick={openPopup}>수급자 현황보기 
                             <img src="/images/search1.png"/></button>
-                        </div>
+                        </div> */}
                     </div>
                     <div className="table"> 
                     <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon}/>

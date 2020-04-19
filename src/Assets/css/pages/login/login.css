@@ -92,7 +92,7 @@ body{
 .login .mb2{
     width:980px;
     left:470px;
-    top:41px;
+    top:66px;
 }
 
 .login .mb1 label{
@@ -210,6 +210,7 @@ body{
     color: white;
     margin: 0 5px;
     font-size: 16px;
+    cursor: pointer;
 }
 .login .mb2 .required{
     position: relative;
@@ -273,6 +274,7 @@ body{
     background-color:#87c395;
     color:white; font-size: 18px;
     margin-top:50px;
+    box-shadow: 3px 3px 4px rgba(0,0,0,0.3);
 }
 /* 3번째 다음*/
 .login .modal_box .btn_box_join button{
@@ -320,4 +322,17 @@ body{
     background: url("/images/rkwjdqkdans.png") no-repeat;
     border-radius: 35px;
     box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
+}
+.login .post_wrapper {
+    position: absolute;
+    width: 349px;
+    height: 445px;
+    left: 773px;
+    padding: 15px;
+    margin-top: -710px;
+    border-radius: 15px;
+    display: none;
+    background: #dad7d7;
+    border: 1px solid #949493;
+    z-index: 100;
 }

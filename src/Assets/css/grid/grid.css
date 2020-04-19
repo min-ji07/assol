@@ -8,7 +8,10 @@
     전체 틀 
 */
 .ag-root{
-    border:0 none !important;
+    border:0 none !important; font-size: 15px;
+}
+.ag-root select, input {
+    font-size:15px;
 }
 .ag-root-wrapper{
     border:0 none !important;
@@ -28,6 +31,9 @@
 /* 헤더 text 가운데 정렬 */
 .ag-header-cell-label{
     justify-content: center !important;
+
+    /* 헤더 글씨 크기 변경*/
+    font-weight: 900; font-size: 15px;
 }
 /* 헤더컬럼 구분선 마지막 삭제*/
 .ag-header-cell:last-child::after,

@@ -2,23 +2,80 @@
 @import url("/images");
 
 
-.employment_apply .title h1 { padding-bottom: 6px;}
-.employment_apply .title p { padding-bottom: 22px;}
-.employment_apply .emTable { 
+.employment_history .title h1 { padding-bottom: 6px;}
+.employment_history .title p { padding-bottom: 22px;}
+.employment_history .emTable { 
     background: white; width: 1689px; height: 597px; top: 62px; 
     border-radius: 20px; box-shadow: 0px 6px 5px #d8d8d8;
 }
 /* 월 신청가능 지원금부터 전체 감싸는 디브 */
-.employment_apply .employment_history_content { 
+.employment_history .employment_history_content { 
     position: relative;
     width: 1689px; height: 627px; 
     /* border: 1px solid blue; */
 }
-
-
-.employment_apply .employment_history_content ul li a {
+ 
+/* 신청접수 버튼 외 */
+/* 위에 메뉴 div */
+.employment_history .employment_history_content .button_set ul {
+    width: 1686px; height: 142px;
+    /* border: 1px solid pink; */
+}
+.employment_history .employment_history_content .button_set ul li {
+    float: left;
+    width: 337px; 
+    /* border: 3px solid orange; */
+}
+.employment_history .employment_history_content ul li a {
     display:block;
     width: 298px; height: 142px; line-height: 142px;
-    color: white;
-    border: 4px solid ;
+    color: white; border-radius: 15px; 
+    /* margin: 0 auto;  */
+    font-weight: bold;
+    font-size: 20px; text-align: center;
+}
+.employment_history .employment_history_content .button_set ul li img {
+    width: 19px;
+    height: 51px;
+    margin: -162px 0 0 324px;
+}
+
+/* 흰색바탕 */
+.employment_history .employment_history_inner {
+    position: absolute; top: 165px;
+    width: 1686px; height: 440px;
+    /* border: 1px solid black; */
+    background: white;
+    border-radius: 15px;
+}
+/* 버튼*/
+.employment_history .button_set .button_01 {
+    background: #dad7d7;
+    border: 4px solid #bebebe;
+    margin-left: 0px;
+}
+.employment_history .button_set .button_02 {
+    background: #c1c1c1;
+    border: 4px solid #979797;
+}
+.employment_history .button_set .button_03 {
+    background: #c1d5d0;
+    border: 4px solid #8cb1a9;
+}
+.employment_history .button_set .button_04 {
+    background: #c6e7e0;
+    border: 4px solid #95c7bc;
+}
+.employment_history .button_set .button_05 {
+    background: #9bd7b7;
+    border: 4px solid #72b994;
+    margin-right: 0px;
+}
+
+/* 신청지원금 목록 외*/
+.employment_history .history_content {
+    width: 1629px; height: 397px;
+    margin: 21px auto;
+    border: 1px solid black;
+
 }

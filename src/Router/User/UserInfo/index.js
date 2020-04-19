@@ -401,6 +401,7 @@ const UserInfo = () => {
                 </div>
             </div>
         </div>
+        {/* 우편번호 api*/}
         <div id="daumPostPop" class="post_wrapper">
             <button class="post_close" onClick={closePostPop}></button>
             <DaumPostcode

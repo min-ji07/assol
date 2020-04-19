@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import '../../../Assets/css/pages/login/login.css';
 import { callApi } from '../../../Utils/api';
+import DaumPostcode from 'react-daum-postcode';
 
 function LoginMain(){
 
+// 회원가입 클릭시
 const openJoinPop = () => {
     $(".modal_box.mb1").show();
 };
-
 const closePopup = () => {
     $(".modal_box").hide();
    
@@ -48,16 +49,58 @@ const fnLogin = () => {
     
 }
 
-const openJoinForm = () =>{
-    console.log("요기");
-    $(".modal_box.mb1").hide();
-    $(".modal_box.mb3").show();
-}
-// 동의 - 다음으로
-const openJoinForm2 = () =>{
-    $(".modal_box.mb3").hide();
-    $(".modal_box.mb2").show();
-}
+    const openJoinForm = () =>{
+        console.log("요기");
+        $(".modal_box.mb1").hide();
+        $(".modal_box.mb3").show(); // 기관선택 mb3
+    }
+    // 동의 - 다음으로
+    const openJoinForm2 = () =>{
+        $(".modal_box.mb3").hide(); // 기관선택 mb3
+        $(".modal_box.mb2").show(); // 내용입력 mb2
+    }
+
+
+    // 우편번호 검색창 띄우기 
+    const post_wrapper = () => {
+        $(".post_wrapper").show();
+    };
+    const closePostPop = (e) => {
+        $("#daumPostPop").hide();
+    }
+
+
+
+    // 이거 수정 
+    const daumPostComplete = (e) => {
+        let checkType = $(".user_input_inner > input:checked").attr("id");
+        const addrType = e.userSelectedType;
+        let postNo = e.zonecode;
+        let address = e.address;
+
+        if(addrType == "J"){    // 지번
+            address = e.jibunAddress;
+        }
+
+        switch(checkType){
+            case "tab_01" :
+                $(".modal_bottom").find("#postNo").val(postNo);
+                $(".modal_bottom").find("#address").val(address);
+                break;
+            // case "tab_02" :
+            //     $(".div_bottom.tab_02").find("#postNo").val(postNo);
+            //     $(".div_bottom.tab_02").find("#address").val(address);
+            //     break;
+            // case "tab_03" :
+            //     $(".div_bottom.tab_03").find("#postNo").val(postNo);
+            //     $(".div_bottom.tab_03").find("#address").val(address);
+            //     break;
+        }
+        $("#daumPostPop").hide();
+    }
+
+
+
 
 return(
     <div className="login" style={{width:"100%",height:"100%"}}>
@@ -92,7 +135,7 @@ return(
         <div className="modal_box mb1">
             <div className="modal_top">
                 <div className="modal_title">회원가입</div>
-                <div className="modal_close"><a href="#"></a></div>
+                <div className="modal_close"><a href="#" onClick={()=>closePopup()}></a></div>
             </div>
             <div className="modal_bottom">
                 <form>
@@ -224,11 +267,14 @@ return(
                             <input type="text" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>-
                             <input type="text" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>
                         </p>
-                        <p>
+                        <p style={{marginBottom:"13px"}}>
                             <label className="required">기관주소</label>
-                            <input type="text"/>
-                            <button className="btn_addr">우편번호</button>
-                            <input type="text" style={{ width:"221px"}}placeholder="상세주소를 입력해 주세요."/>
+                            <input type="text" id="postNo" placeholder="우편번호"/>
+                            <button type="button" className="btn_addr post_close" onClick={post_wrapper}>
+                                우편번호
+                            </button>
+                            <input type="text" id="address" style={{ width:"221px", display:"block", height:"33px", marginLeft:"105px"}} placeholder="주소를 입력해 주세요."/>
+                            <input type="text" id="addressDetail" style={{ width:"221px",height:"38px", marginLeft:"105px"}} placeholder="상세주소를 입력해 주세요."/>
                         </p>
                         <p>
                             <label className="required">아이디</label>
@@ -297,6 +343,14 @@ return(
             <div className="modal_bg">
             </div>
         </div>
+        {/* 우편번호 api */}
+        <div id="daumPostPop" class="post_wrapper" onClic={post_wrapper}>
+            <button class="post_close" onClick={closePostPop}></button>
+            <DaumPostcode
+                onComplete={daumPostComplete}
+            />
+        </div>
+
         {/* --회원가입 */}
     </div>
     );

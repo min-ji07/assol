@@ -12,18 +12,36 @@
 .work_setting_01 .team_option p { font-size: 18px; color: #797979; }
 .work_setting_01 .search1 { background-color: #aaaaaa; width: 189px; height: 27px; border-radius: 30px; color: white; font-size: 18px; cursor:pointer;}
 .work_setting_01 input.datepicker-here{
-    width: 67px; height: 21px; margin-top: -3px; margin-left: 10px; 
-    border: 1px solid #aaaaaa; border-radius: 0px; text-indent: 13px;
-    font-size: 18px;
+    width: 95px; height: 20px; margin-top: -3px; margin-left: 7px; 
+    border: 1px solid #aaaaaa; border-radius: 0px; text-align: center;
+    font-size: 18px; margin-right: 16px;
 }
+.work_setting_01 .num01 label {
+    margin-right: 8px; font-size: 16px;
+}
+.work_setting_01 .num01 input {
+    margin-right: 1px;
+}
+.work_setting_01 .num01 label,
+.work_setting_01 .num01 input
+{
+    vertical-align: initial;
+}
+.work_setting_01 .num01 p:nth-child(1) input {
+    margin-left: 10px; 
+    margin-right: 10px;
+}
+
 .work_setting_01 select {width: 41px; height: 21px; border: 1px solid #aaaaaa; border-radius: 0px; }
-.work_setting_01 .num01 {position: absolute; top: 56px;} 
-.work_setting_01 .year_inner { font-size: 18px; color: #797979; padding-bottom: 10px;} 
-.work_setting_01 .buttonset { float: left; margin-left: 10px; transform:translateY(15%); } 
+.work_setting_01 .num01 {position: absolute; top: 58px;} 
+.work_setting_01 .year_inner { font-size: 18px; color: #797979; padding-bottom: 5px;} 
+.work_setting_01 .buttonset { float: left; margin-left: 20px; transform:translateY(15%); } 
 .work_setting_01 .buttonset button { background-color: #bdbdbd; width: 68px; height: 22px; border-radius: 50px; color: white; font-size: 16px; line-height: 50%; margin-right: 6px; cursor:pointer;} 
 .work_setting_01 .left {float: left;}
-.work_setting_01 .right { float: right; position: absolute; left: 1413px;}
-.work_setting_01 .right img {margin-left: 5px;}
+/*수급자 현황보기*/
+/* .work_setting_01 .right { float: right; position: absolute; left: 1413px;}
+.work_setting_01 .right img {margin-left: 5px;} */
+
 .work_setting_01 .table { position: absolute; top: 130px; width: 1600px; height: 404px;  text-align: center;}
 .work_setting_01 .backnext { position: absolute; float: right; top: 552px; right: 6px;}
 .work_setting_01 .back, .next { width: 118px; height: 27px; border-radius: 30px; font-size: 19.5px; color: white; } 
