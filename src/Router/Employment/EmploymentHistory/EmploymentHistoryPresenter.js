@@ -6,7 +6,7 @@ const EmploymentHistoryPresenter = () => {
 
     return(
         <div class="wrapper">
-            <div class="employment_apply">
+            <div class="employment_history">
                 <div class="title">
                     <h1>고용지원금 신청 내역확인</h1>
                     <p>기관에서 신청한 고용지원금의 내역을 확인할 수 있습니다.</p>
@@ -16,35 +16,25 @@ const EmploymentHistoryPresenter = () => {
                     <div class="button_set">
                         <ul>
                             <li>
-                                <a href="#" >STEP1-신청접수</a>
+                                <a href="#" class="button_01">STEP1-신청접수</a>
                             </li>
                             <li>
-                                <a href="#" >STEP2-담당자접수</a>
+                                <a href="#" class="button_02">STEP2-담당자접수</a>
                             </li>
                             <li>
-                                <a href="#" >STEP3-서류요청</a>
+                                <a href="#" class="button_03">STEP3-서류요청</a>
                             </li>
                             <li>
-                                <a href="#" >STEP4-시,군,구 제출</a>
+                                <a href="#" class="button_04">STEP4-시,군,구 제출</a>
                             </li>
                             <li>
-                                <a href="#" >STEP5-승인완료</a>
+                                <a href="#" class="button_05">STEP5-승인완료</a>
                             </li>
                         </ul>
                     </div>
 
-                    <div class="employment_apply_inner">
-                        {/* <div class="apply_top">
-                            <div class="apply_top_left">
-
-                            </div>
-                        </div> */}
-                        {/* <!-- 기본바탕 전체 div --> */}
-
-
-                        {/* 위에 둥그렇게 하고 흰색바탕으로 만들기 */}
-                        <div class="apply_bottom">
-                            {/* 표 */}
+                    <div class="employment_history_inner">
+                        <div class="history_content">
                             <div class="apply_content">
                                 <div class="content_top">
                                     <div class="header">
@@ -86,9 +76,7 @@ const EmploymentHistoryPresenter = () => {
 
 
                             </div>
-                            {/* <!-- content 흰색 바탕 --> */}
                         </div>
-                        {/* <!-- 기본바탕 전체 div --> */}
                     </div>
                 </div>
 
