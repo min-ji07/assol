@@ -441,8 +441,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <span>계약기간 :</span>
                                 <input type="text" class="dateto_input" name="contractPeriod" id="contractPeriod" placeholder="2020-01-01 ~ 2021-01-01" defaultValue="2020-01-01~2020-01-16"/>
                             </li>
-                            <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="010-4412-8516"/></li>
-                            <li>휴대폰 :<input type="tel" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-4412-8516"/></li>
+                            <li>전화번호 :<input type="tel" maxLength="13" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="010-4412-8516"/></li>
+                            <li>휴대폰 :<input type="tel" maxLength="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-4412-8516"/></li>
                             <li>
                                 <span>이메일 :</span>
                                 <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/>

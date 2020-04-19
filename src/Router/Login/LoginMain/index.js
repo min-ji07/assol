@@ -241,21 +241,21 @@ return(
                         <p className="title_label">기관정보 입력</p>
                         <p>
                             <label className="required">요양 기관명</label>
-                            <input type="text" placeholder="기관명을 입력해주세요."/>
+                            <input type="text" maxLength="15" placeholder="기관명을 입력해주세요."/>
                         </p>
                         <p style={{display:"inline-block", float:"left"}}>
                             <label>기관기호</label>
-                            <input type="text" placeholder="기관명을 입력해주세요."/>
+                            <input type="text" maxLength="10" placeholder="기관명을 입력해주세요."/>
                         </p>
                         <p style={{display:"inline-block", marginLeft:"-335px"}}>
                             <label htmlFor="businessNum" className="required">사업자번호</label>
-                            <input id="businessNum" type="text" placeholder="00" maxLength="2" style={{width:"25px"}}/> - 
+                            <input id="businessNum" type="text" placeholder="000" maxLength="3" style={{width:"33px"}}/> - 
                             <input id="businessNum2" type="text" placeholder="00" maxLength="2" style={{width:"25px"}}/> - 
                             <input id="businessNum3" type="text" placeholder="00000" maxLength="5" style={{width:"50px"}}/>
                         </p>
                         <p>
                             <label for="">대표전화번호</label>
-                            <input type="text" id="" placeholder="02-000-0000"/>
+                            <input type="text" id="" maxLength="13" placeholder="02-000-0000"/>
                         </p>
                         <p>
                             <label for="">휴대전화</label>
@@ -264,8 +264,8 @@ return(
                                 <option>011</option>
                                 <option>016</option>
                             </select>-
-                            <input type="text" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>-
-                            <input type="text" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>
+                            <input type="text" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>-
+                            <input type="text" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>
                         </p>
                         <p style={{marginBottom:"13px"}}>
                             <label className="required">기관주소</label>
@@ -278,15 +278,15 @@ return(
                         </p>
                         <p>
                             <label className="required">아이디</label>
-                            <input type="text" placeholder="아이디를 입력해주세요"/>
+                            <input type="text" maxLength="10" placeholder="아이디를 입력해주세요"/>
                         </p>
                         <p class="pw_con">
                             <label className="required">비밀번호</label>
-                            <input type="password" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요."/>
+                            <input type="password" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요."/>
                         </p>
                         <p>
                             <label className="required">비밀번호확인</label>
-                            <input type="password" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요."/>
+                            <input type="password" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요."/>
                         </p>
                         {/* <p>
                             <span className="required">급여종류</span>
@@ -301,7 +301,7 @@ return(
                         </p> */}
                         <p>
                             <label className="">이메일주소</label>
-                            <input type="text"/>@
+                            <input type="text" maxLength="20"/>@
                             <select style={{borderRadius:"0px", width:"100px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
                                 <option>직접입력</option>
                                 <option>naver.com</option>
@@ -309,12 +309,12 @@ return(
                                 <option>naver.com</option>
                                 <option>naver.com</option>
                             </select>
-                            <button className="btn_addr">인증</button>
+                            <button type="button" className="btn_addr">인증</button>
                         </p>
                         <p>
                             <label className="">이메일인증</label>
-                            <input type="text" style={{width:"100px"}}/>
-                            <button className="btn_addr">인증확인</button>
+                            <input type="text" maxLength="10" style={{width:"100px"}}/>
+                            <button type="button" className="btn_addr">인증확인</button>
                         </p>
                         <p style={{display:"inline-block", float:"left"}}>
                             <span>이메일수신</span>
@@ -332,7 +332,7 @@ return(
                         </p>
                         <p>
                             <span style={{display:"block", marginBottom:"10px"}}>공인인증서등록</span>
-                            <button className="certificate" style={{textIndent:"-999px"}}>공인인증서등록</button>
+                            <button type="button" className="certificate" style={{textIndent:"-999px"}}>공인인증서등록</button>
                         </p>
                         <p className="btn_box_join">
                             <button className="btn_next">회원가입</button>
