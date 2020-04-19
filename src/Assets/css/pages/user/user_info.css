@@ -507,96 +507,121 @@ input:-webkit-autofill:active {
 /* 일반근로자 4대보험 */
 
 
+
+
+/* 일반근로자 학력 */
+.user_input .tab_003 .tab_01_grid,
+.user_input .tab_008 .tab_01_grid,
+.user_input .tab_005 .tab_01_grid {
+    width: 870px; height: 170px;
+    margin-top: -35px;
+}
+/* 일반근로자 교육 */
+.user_input .tab_003 .tab_02_grid,
+.user_input .tab_008 .tab_02_grid,
+.user_input .tab_005 .tab_02_grid {
+    width: 870px; height: 175px;
+    margin-top: -38px;
+}
+/* 일용직근로자 4대보험 */
+.user_input .tab_002 .tab_01_grid,
+.user_input .tab_007 .tab_01_grid {
+    width: 870px;
+    margin-left: 1px;
+    height: 132px;
+}
+.user_input .tab_002 .tab_01_grid ul,
+.user_input .tab_007 .tab_01_grid ul {
+    width: 100%; height: 100%;
+}
+.user_input .tab_002 .tab_01_grid ul li,
+.user_input .tab_007 .tab_01_grid ul li {
+    width:100%;
+    height:35px;
+}
+.user_input .tab_002 .tab_01_grid ul li:first-child,
+.user_input .tab_007 .tab_01_grid ul li:first-child {
+    height:27px;
+    line-height: 25px;
+    /* background:#f5f3f4; */
+}
+.user_input .tab_002 .tab_01_grid ul li:first-child div:first-child,
+.user_input .tab_007 .tab_01_grid ul li:first-child div:first-child {
+    border-radius: 13px 0 0 0;
+    background:#f5f3f4;
+}
+.user_input .tab_002 .tab_01_grid ul li:nth-child(1) div:nth-child(2) ,
+.user_input .tab_002 .tab_01_grid ul li:nth-child(1) div:nth-child(3) ,
+.user_input .tab_007 .tab_01_grid ul li:nth-child(1) div:nth-child(2),
+.user_input .tab_007 .tab_01_grid ul li:nth-child(1) div:nth-child(3) {
+    background:#f5f3f4;
+}
+.user_input .tab_002 .tab_01_grid ul li:nth-child(1) div:nth-child(4) ,
+.user_input .tab_007 .tab_01_grid ul li:nth-child(1) div:nth-child(4) {
+    border-radius: 0 13px 0 0;
+    background:#f5f3f4;
+}
+.user_input .tab_002 .tab_01_grid ul li div,
+.user_input .tab_007 .tab_01_grid ul li div {
+    width:24.5%;
+    height: 100%;
+    line-height: 30px;
+    float:left;
+    text-align: center;
+    border-top: 1px solid #c8c8c8;
+    border-left: 1px solid #c8c8c8;
+    box-sizing: border-box;
+}
+/* 4대보험 헤더 가운데정렬 */
+.user_input .tab_002 .tab_01_grid ul li:first-child div,
+.user_input .tab_007 .tab_01_grid ul li:first-child div
+{
+    line-height:25px;
+}
+.user_input .tab_002 .tab_01_grid ul li div:first-child,
+.user_input .tab_007 .tab_01_grid ul li div:first-child{
+   background: #f5f3f4;
+   width: 16%;
+}
+.user_input .tab_002 .tab_01_grid ul li div:nth-child(2),
+.user_input .tab_007 .tab_01_grid ul li div:nth-child(2) {
+    width: 35%;
+ }
+.user_input .tab_002 .tab_01_grid ul li div:nth-child(3) input,
+.user_input .tab_002 .tab_01_grid ul li div:nth-child(4) input,
+.user_input .tab_007 .tab_01_grid ul li div:nth-child(3) input,
+.user_input .tab_007 .tab_01_grid ul li div:nth-child(4) input {
+    width: 120px;
+ }
+ .user_input .tab_002 .tab_01_grid .bottom_border,
+ .user_input .tab_007 .tab_01_grid .bottom_border {
+    border-bottom: 1px solid #c8c8c8;
+ }
+ .user_input .tab_002 .tab_01_grid .right_border,
+ .user_input .tab_007 .tab_01_grid .right_border{
+    border-right: 1px solid #c8c8c8;
+ }
+
+
+
+ 
 /* 4대보험 부양가족 input */
 .user_input .tab_002 input[type="text"],
 .user_input .tab_007 input[type="text"]
 {
     width: 160px;
-    height: 30px; margin: 0;
+    height: 20px; margin: 0;
     font-size: 16px;
     border: 1px solid #c8c8c8;
 }
-
-
-
-/* 일반근로자 학력 */
-.user_input .tab_003 .tab_01_grid {
-    width: 870px; height: 185px;
-    margin-top: -35px;
-}
-/* 일반근로자 교육 */
-.user_input .tab_003 .tab_02_grid {
-    width: 870px; height: 195px;
-    margin-top: -38px;
-}
-/* 사업소득자 학력*/
-.user_input .tab_005 .tab_01_grid {
-    width: 870px; height: 185px;
-    margin-top: -35px;
-}
-/* 사업소득자 교육 */
-.user_input .tab_005 .tab_02_grid {
-    width: 870px; height: 195px;
-    margin-top: -38px;
-}
-/* 일용직근로자 4대보험 */
-.user_input .tab_002 .tab_01_grid,
-.user_input .tab_007 .tab_01_grid
- {
-    width: 870px;
-    /* height: 225px; */
-    margin-left: 1px;
-    height: 132px;
-    /* border: 1px solid black; */
-    /* overflow-y: scroll; */
-}
-
-/* 테이블 내부 속성 */
-.user_input .tab_002 .tab_01_grid ul li div {
-    float: left;
-    width: 211px; height: 25px; line-height: 25px;
-    text-align: center; color: #585858; font-size: 15px;
-    border: 1px solid #c8c8c8; font-size: 15px; 
-}
-/* 테이블 셀 크기 지정 */
-.user_input .tab_002 .tab_01_grid ul li div:nth-child(1) {
-    width: 146px; height: 30px; line-height: 30px;
-    background: #f5f3f4; color: #585858;
-    font-weight: blod;
-}
-.user_input .tab_002 .tab_01_grid ul li div:nth-child(2) {
-    width: 320px; height: 30px; line-height: 30px;
-}
-.user_input .tab_002 .tab_01_grid ul li div:nth-child(3),
-.user_input .tab_002 .tab_01_grid ul li div:nth-child(4)
- {
-    width: 198px; height: 30px; line-height: 30px;
-}
-
-.user_input .tab_002 .tab_01_grid ul li div:nth-child(1) {
-    width: 146px; height: 30px; line-height: 30px;
-}
-
-
-
 /* 부양가족 */
 .user_input .tab_002 .tab_02_grid,
 .user_input .tab_007 .tab_02_grid
  {
     width: 870px;
-    height: 203px;
+    height: 194px;
     margin-top: -1px;
     margin-left: -6px;
-}
-/* 일용직근로자 학력 */
-.user_input .tab_008 .tab_01_grid {
-    width: 870px; height: 185px;
-    margin-top: -35px;
-}
-/* 일용직근로자 교육 */
-.user_input .tab_008 .tab_02_grid {
-    width: 870px; height: 195px;
-    margin-top: -38px;
 }
 
 

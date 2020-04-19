@@ -504,7 +504,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                         {/* 학력교육 */}
                         <div class="input_content tab_005">
                             <ul>
-                                <li style={{marginTog:"-22px"}}>학력
+                                <li>학력
                                     <div class="tab_01_inner">
                                         <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
@@ -513,7 +513,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                         </div>
                                     </div>
                                 </li>
-                                <li style={{marginTog:"3px"}}>경력
+                                <li style={{marginTop:"20px"}}>경력
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
@@ -522,7 +522,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                         </div>
                                     </div>
                                 </li>
-                                <li style={{marginTog:"3px"}}>병역
+                                <li style={{marginTop:"20px"}}>병역
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
@@ -531,7 +531,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                         </div>
                                     </div>
                                 </li>
-                                <li style={{marginTog:"3px"}}>교육
+                                <li style={{marginTop:"20px"}}>교육
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>

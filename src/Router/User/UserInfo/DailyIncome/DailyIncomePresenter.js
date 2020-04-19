@@ -434,12 +434,44 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         <div class="input_content tab_007" style={{height: "455px"}}>
                             <div class="tab_01_inner">
                                 <ul>
-                                    <li style={{listStyle:"disc", fontSize:"17px"}}>
+                                    <li style={{listStyle:"disc", fontSize:"16px"}}>
                                     <strong>4대보험</strong>
                                     <button type="button" class="btn_gray" style={{marginLeft: "5px", marginTop: "-5px", marginLeft:"7px"}}>신청하기</button>
                                         <div class="tab_01_grid">
+                                            <ul>
+                                                <li>
+                                                    <div>구분</div>
+                                                    <div>기호번호</div>
+                                                    <div>취득일</div>
+                                                    <div class="right_border">상실일</div>
+                                                </li>
+                                                <li>
+                                                    <div>국민연금</div>
+                                                    <div><input type="text" id="fourIns0" defaultValue="" maxLength="10"/></div>
+                                                    <div><input type="text" class="date_input " id="getOfIns0"  defaultValue="2020-08-08" /></div>
+                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns0" defaultValue="2020-08-08"/></div>
+                                                </li>
+                                                <li>
+                                                    <div>건강보험</div>
+                                                    <div><input type="text" id="fourIns1"  defaultValue="" maxLength="10"/></div>
+                                                    <div><input type="text" class="date_input " id="getOfIns1"  defaultValue="2020-08-08"/></div>
+                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns1"  defaultValue="2020-08-08"/></div>
+                                                </li>
+                                                <li>
+                                                    <div>고용보험</div>
+                                                    <div><input type="text" id="fourIns2" defaultValue="" maxLength="10"/></div>
+                                                    <div><input type="text" class="date_input " id="getOfIns2" defaultValue="2020-08-08"/></div>
+                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns2" defaultValue="2020-05-06"/></div>
+                                                </li>
+                                                <li>
+                                                    <div class="bottom_border">산재보험</div>
+                                                    <div class="bottom_border"><input type="text" id="fourIns3" defaultValue="" maxLength="10"/></div>
+                                                    <div class="bottom_border"><input type="text" class="date_input " id="getOfIns3"  defaultValue="2020-05-06"/></div>
+                                                    <div class="bottom_border right_border"><input type="text" class="date_input " id="lostOfIns3"  defaultValue="2020-06-08"/></div>
+                                                </li>
+                                            </ul>
                                             {/* <DataGrid rowData={rowData} gridDefs={insDefs} gridCommon={gridCommon}/> */}
-                                            <table id="insurnaceTable">
+                                            {/* <table id="insurnaceTable">
                                                 <thead>
                                                     <tr>
                                                         <th>구분</th>
@@ -498,12 +530,12 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                         </td>
                                                     </tr>
                                                 </tbody>
-                                            </table>
+                                            </table> */}
                                         </div>
                                     </li>
                                     {/* <li style={{marginLeft: "25px"}}>
                                     </li> */}
-                                    <li style={{listStyle:"disc", fontSize:"17px", marginLeft:"7px"}}>
+                                    <li style={{listStyle:"disc", fontSize:"17px", marginLeft:"7px", marginTop:"45px"}}>
                                         <strong>부양가족</strong>
                                         <button type="button" class="btn_gray" style={{marginLeft: "5px"}} onClick={(e)=>addRow(e)}>추가</button>
                                         <button type="button" class="btn_gray" style={{marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
@@ -520,7 +552,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         {/* 학력교육 */}
                         <div class="input_content tab_008">
                             <ul>
-                                <li style={{marginTog:"-22px"}}>
+                                <li>
                                     <strong>학력</strong>
                                     <div class="tab_01_inner">
                                         <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} onClick={(e)=>addRow(e)}>추가</button>
@@ -531,7 +563,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>
+                                <li  style={{marginTop:"20px"}}>
                                     <strong>경력</strong>
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
@@ -541,7 +573,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>
+                                <li  style={{marginTop:"20px"}}>
                                     <strong>병역</strong>
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
@@ -551,7 +583,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </div>
                                     </div>
                                 </li>
-                                <li  style={{marginTog:"3px"}}>
+                                <li  style={{marginTop:"20px"}}>
                                     <strong>교육</strong>
                                     <div class="tab_02_inner">
                                         <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
