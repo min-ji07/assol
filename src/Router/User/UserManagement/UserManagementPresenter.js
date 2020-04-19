@@ -97,10 +97,10 @@ console.log(countData);
                     <div class="div_top">
                         <select>
                             <option>전체</option>
-                            <option value="0">근로소득자</option>
+                            <option value="0">일반소득자</option>
                             <option value="1">사업소득자</option>
-                            <option value="2">일용직</option>
-                            <option value="3">시간직</option>
+                            <option value="2">일용직근로자</option>
+                            {/* <option value="3">시간직</option> */}
                         </select>
                         <input type="text" placeholder="사원검색" maxlength="10" class="user_search"/>
                         <button type="button" class="user_plus" onClick={nextPage}>사원추가</button>

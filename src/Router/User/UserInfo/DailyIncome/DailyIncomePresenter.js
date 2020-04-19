@@ -233,11 +233,19 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             <div class="left_div">
                 <div id="userInfoLeft3" class="test">
                     <div class="left_div_inner">
-                        <div class="imgload"><img id="userImgView3" class="userImgView" src='/images/user02.png' alt="유저사진" style={{width:"140px",height:"140px",borderRadius:"50%"}}/></div>
+                        {/* <div class="imgload"><img id="userImgView3" class="userImgView" src='/images/user02.png' alt="유저사진"/></div>
                         <br/><span id="userImgText3">사원 사진을 등록해주세요.</span><br/>
                         <div style={{marginTop:"10px"}}>
                             <label for="userImage3" class="userImg">수정</label><input type="file" id="userImage3" onChange={imgUpload3}/>
                             <label for="imgDelete3">삭제</label><button type="button" id="imgDelete3" onClick={userImgDelete3}/>
+                        </div> */}
+                        <div class="imgload">
+                            <img id="userImgView3" class="userImgView" src='/images/user02.png' alt="유저사진"/>
+                            <span id="userImgText3">사원 사진을 등록해주세요.</span>
+                            <div style={{marginTop:"5px"}}>
+                                <label for="userImage3" class="userImg">수정</label><input type="file" id="userImage3" onChange={imgUpload3}/>
+                                <label for="imgDelete3">삭제</label><button type="button" id="imgDelete3" onClick={userImgDelete3}/>
+                            </div>
                         </div>
                         <ul>
                             <li>성명 :<input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="김경주"/></li>
@@ -275,24 +283,42 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <option value="851101">851101 | 병의원</option>
                                 </select>
                             </li>
+                            <li>
+                                <span>입사일 :</span>
+                                <input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/>
+                            </li>
                             <li>이메일 :<input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="test@naver.com"/>
                             </li>
                         </ul>
                     </div>
                     <div class="right_div_inner">
                         <ul>
-                            <li>주민번호 :<input type="text" class="personal_input" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101"/></li>
-                            <li style={{display:"inline-block" , width:"300px", marginLeft:"5px" }}>  
-                                국적 :
-                                    <select name="national" id="national" onChange={nationalChange}>
-                                        <option value="내국인" selected>내국인</option>
-                                        <option value="외국인">외국인</option>                                                
-                                    </select>
-                                <span style={{display:"none"}}>
-                                    비자타입 :
-                                    <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
-                                </span>
-                            </li>
+                        <li>
+                            <span>주민번호 :</span>
+                            <input type="text" class="personal_input" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101"/>
+                            <select name="national" id="national">
+                                <option value="내국인" selected>내국인</option>
+                                <option value="외국인">외국인</option>                                                
+                            </select>
+                        </li>
+                        <li class="visa_li">
+                            <span>
+                                비자타입 :
+                            </span>
+                            <input type="text" id="visaType" name="visaType" placeholder="K-9011"/>
+                        </li>
+                        
+                        {/* <li style={{display:"inline-block" , width:"300px", marginLeft:"5px" }}>  
+                            국적 :
+                                <select name="national" id="national" onChange={nationalChange}>
+                                    <option value="내국인" selected>내국인</option>
+                                    <option value="외국인">외국인</option>                                                
+                                </select>
+                            <span style={{display:"none"}}>
+                                비자타입 :
+                                <input type="text" id="visaType" name="visaType" placeholder="K-9011" style={{width:"97px"}}/>
+                            </span>
+                        </li> */}
                             <li>최초등록일 : <input type="text" class="date_input" id="currentWorkDate" name="currentWorkDate" defaultValue="2020-05-06" style={{width:"216px"}}/></li>
                             <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="02-4555-6666"/></li>
                             <li>휴대폰 :<input type="tel" maxlenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-6666-7777"/></li>
