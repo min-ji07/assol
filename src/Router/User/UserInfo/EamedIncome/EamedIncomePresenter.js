@@ -159,7 +159,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         }
 
         console.log(tempParams.otherContent);
-        tempParams.otherContent = JSON.parse("{"+tempParams.otherContent.slice(0,-1)+"}");
+        // tempParams.otherContent = JSON.parse("{"+tempParams.otherContent.slice(0,-1)+"}");
+        tempParams.otherContent = tempParams.otherContent.slice(0,-1);
 
         params["detailData"] = tempParams;
 
