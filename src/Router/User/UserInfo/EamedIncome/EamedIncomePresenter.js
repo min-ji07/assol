@@ -10,6 +10,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
     
 
     let params = {};
+    let frm = new FormData();
     const fnValidation = () => {
         var tabDiv = ".div_bottom.tab_01";
         var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -132,8 +133,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             key = inputListLeft[i].id;
             value = inputListLeft[i].value;
             if(key.indexOf("userImage") != -1){
-                key = "imagePath";
-                value = inputListLeft[i].files[0];
+                frm.append("userImage",inputListLeft[i].files[0]);
+                continue;
             }
             tempParams[key] = value;
         }
@@ -205,17 +206,29 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             try {
                 console.log(JSON.stringify(params));
                 console.log(params);
-                await callApi.UserRegistration(params).then(res=> {
+                await callApi.userRegistration(params).then(res=> {
                     if(res.data.ErrorCode == 1){
                         alert(res.data.Msg);
-                        console.log(res.data);
+                    } else {
+                        alert("저장이 완료되었습니다.");
+                        frm.append("userNo",res.data.Data);
+                        frm.append("employeeNumber",res.data.Id);
+                        // window.location.href = "/user/userManagement";
+                        // location.reload();
+                    }
+                });
+
+                console.log(frm);
+                await callApi.uploadFileToServer(frm).then(res=> {
+                    console.log(res);
+                    if(res.data.ErrorCode == 1){
+                        alert(res.data.Msg);
                     } else {
                         alert("저장이 완료되었습니다.");
                         // window.location.href = "/user/userManagement";
                         // location.reload();
                     }
                 });
-
             }catch(e){
                 alert(e);
             }

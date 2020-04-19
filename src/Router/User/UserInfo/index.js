@@ -13,6 +13,12 @@ import utils from '../../../Utils/utils';
 
 
 const UserInfo = () => {
+    let imgFileList = [];
+
+    const saveImgList = () => {
+
+    }
+
     const closePostPop = (e) => {
         $("#daumPostPop").hide();
     }
@@ -207,33 +213,6 @@ const UserInfo = () => {
         fileDropDown();
     },[]); //init
 
-
-    function isValidDate(dateStr) {
-        console.log(dateStr);
-
-        var year = Number(dateStr.substr(0,4));
-        var month = Number(dateStr.substr(4,2));
-        var day = Number(dateStr.substr(6,2));
-     
-        if (month < 1 || month > 12) { // check month range
-            return false;
-        }
-        if (day < 1 || day > 31) {
-            return false;
-        }
-        if ((month==4 || month==6 || month==9 || month==11) && day==31) {
-             return false
-        }
-        if (month == 2) { // check for february 29th
-            var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
-            if (day>29 || (day==29 && !isleap)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-
     async function saveInit(formData) {
         try{
             await callApi.ImgUpload(formData).then(res=> {
@@ -296,7 +275,7 @@ const UserInfo = () => {
                     alert("폴더 업로드 불가");
                     return;
                 }
-                selectFile(files);
+                // selectFile(files);
             }else{
                 alert("ERROR");
             }
@@ -360,18 +339,34 @@ const UserInfo = () => {
         a.append(img_box).append(title_box).append(check_box);
 
         li.append(a);
- 
+        imgFileList.push($("#imgFileInput")[0].files[0]);
         $('#fileBox').prepend(li);
     }
     
     $(document).on("click","#fileBox li a",function(e){
         console.log($(this));
+        if(this.id == "btn_img_add"){
+            return;
+        }
         if(this.className == "check_file"){
             $(this).removeClass("check_file");
         } else {
             $(this).addClass("check_file");
         }
     });
+
+    const selectFileList = () => {
+        let checkList = $("#fileBox li a");
+        let i = 0;
+        let tempArr = [];
+        for(i; i<checkList.length; i++){
+            if(checkList[i].className == "check_file"){
+                tempArr.push(imgFileList[i]);
+            }
+        }
+        imgFileList = tempArr;
+        console.log(imgFileList);
+    }
     
     // 업로드 파일 삭제
     function deleteFile(fIndex){
@@ -452,14 +447,13 @@ const UserInfo = () => {
                             </li>
                         </ul>
                         <div class="img_file_box">
-                            <input id="imgFileInput" type="file"/>
-                            <input id="test" type="submit"/>
+                            <input id="imgFileInput" type="file" multiple/>
                         </div>
                     </div>
                 </div>
                 <p className="btn_box">
                     <button className="btn_next">삭제하기</button>
-                    <button className="btn_next" style={{ background:"#87c395"}}>완료하기</button>
+                    <button className="btn_next" style={{ background:"#87c395"}} onClick={selectFileList}>완료하기</button>
                 </p>
             </div>
             {/* </div> */}

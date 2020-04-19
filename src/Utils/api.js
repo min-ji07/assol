@@ -12,7 +12,7 @@ const api = axios.create({
 )
 
 const testUrl = "http://172.30.1.29:5302"; // 이석민 ip
-const testUrl2 = "http://150f7585.ngrok.io"; // 김성일 ip
+const testUrl2 = "http://172.30.1.24:5302"; // 김성일 ip
 
 const local = "http://172.30.1.24:5302"; // 김성일 ip
 
@@ -24,24 +24,32 @@ export const callApi = {
     getUserInfo:(params) => axios.get(testUrl2+'/user/GetUserInfobyBranchNo',{params:params}), // 사원조회
     setInitSalary:(params) => axios.get(testUrl2+'/PayRoll/SetPayRollPage',{params:params}), // 급여입력 초기화면
 
-
-
     // saveUserInfo:(params) => axios.post('http://82230995.ngrok.io/User/UserRegistration',{params:params}), // 사원등록
-    UserRegistration:(params) => axios({
+    userRegistration:(params) => axios({
         method: 'post',
         url: testUrl2+'/User/UserRegistration',
         data: params
     }), // 사원등록 - 일반근로자
-    BusinessUserRegistration:(params) => axios({
+    businessUserRegistration:(params) => axios({
         method: 'post',
         url: testUrl2+'/User/BusinessUserRegistration',
         data: params
     }), // 사원등록 - 사업소득자
-    DayilyUserRegistration:(params) => axios({
+    dayilyUserRegistration:(params) => axios({
         method: 'post',
         url: testUrl2+'/User/DailyUserRegistration',
         data: params
     }), // 사원등록 - 일용직근로자
+
+    uploadFileToServer:(params) => axios({
+        method: 'post',
+        url: testUrl2+'/Save/UploadFileToServer',
+        data : params,
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }), // 사원등록 - 일용직근로자
+    
     
 
     // getUserInfo:(params) => axios.get('/Work/dummy/User/UserInfoTable.json',{params:params}), // 사원등록
@@ -94,12 +102,4 @@ export const callApi = {
         url: testUrl2+'/Worker/SetAnnualWorker',
         data: params
     }), //연차사용 - 저장
-
-    //joinLogin:(params)=> axios.post(testUrl2 + '/Admin/Login',{params:params})
-    joinLogin:(params)=>axios ({
-        method: 'post',
-        url: testUrl2+'/Admin/Login',
-        data: params
-    })//로그인
-
 };

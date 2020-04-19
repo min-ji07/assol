@@ -159,7 +159,7 @@ const EamedIncomeContainer = () => {
             ,{ headerName: "branchNo", field: "branchNo", hide:true }
             ,{ headerName: '성명', field: "sfName",  width:90}
             ,{ headerName: '주민(외국인)번호', field: "sfPersnoalNumber", editable:true, width:120
-                ,valueFormatter: function(params){
+                ,valueGetter: function(params){
                     return utils.regExr.personalNum(params.data.sfPersnoalNumber);
             }}
             ,{ headerName: "연말정산관계", field: "sfRelation", width:120,
