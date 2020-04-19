@@ -108,6 +108,9 @@ input:-webkit-autofill:active {
     /* line-height: 56px; */
     text-align: left;
 }
+.user_input .left_div_inner ul li.visa_li{
+    display:none;
+}
 /* 일반근로자*/
 /* 이메일 주민번호 ~ li */
 .user_input .right_div_inner ul li{
@@ -166,7 +169,7 @@ input:-webkit-autofill:active {
 
 .user_input .right_div_inner ul li textarea {
     resize: none; font-size: 16px;
-    width: 298px;
+    width: 100%;
     text-indent: 2px;
     height: 50px;
     background: #eeeeee; border-radius: 15px;
@@ -201,11 +204,11 @@ input:-webkit-autofill:active {
 }
 .user_input .imgload img{
     display:block;
-    width:140px;
-    height:140px;
+    width:152px;
+    height:155px;
     margin:0 auto;
     margin-top:20px;
-    margin-bottom:10px;
+    cursor:pointer;
 }
 
 .user_input .div_top {
@@ -430,6 +433,7 @@ input:-webkit-autofill:active {
     width: 166px;
     margin-right:12px;
 }
+
 .user_input .user_input_inner .sal_inner .li_left.small{
     width:133px;
 }
@@ -776,7 +780,7 @@ input:-webkit-autofill:active {
     margin-top:12px !important;
 }
 .userinfo_left_box li select{
-    margin-left:-6px !important;
+    margin-left:-5px !important;
 }
 .userinfo_left_box li select[name=national]{
     display:none !important;
@@ -787,12 +791,12 @@ input:-webkit-autofill:active {
 .div_bottom.right li input[name=salaryOfMonth],
 .div_bottom.right li input[name=salaryOfYears]{
     border:0 none !important;
-    width:150px !important;
     color:#707070 !important;
     cursor: default;
     margin-top:-5px;
 }
 .div_bottom.right li input[name=salaryOfMonth]{
+    width:100px !important;
     text-align:left;
 }
 .div_bottom.right li input[name=salaryOfYears]{
