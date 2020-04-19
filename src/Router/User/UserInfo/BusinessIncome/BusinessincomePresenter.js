@@ -191,6 +191,7 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
    /* row click event */
    const addRow = (e) => {
         var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
+        console.log(gridApi,"<----비지니스");
         gridCommon.setGridApi(gridApi);
         gridCommon.onAddRow();
     }
@@ -465,9 +466,9 @@ const BusinessincomePresenter = ({rowData, rowData2, rowData3, rowData4, euduDef
                                     <span style={{color:"#f38d8d", fontSize:"13px"}}> *소유자일 경우</span>
                                     <ul>
                                         <li style={{listStyle:"none", marginLeft:"0px"}}>
-                                            사업자등록번호 : <input type="text" maxlenght="2" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                            <input type="text" maxlenght="2" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                            <input type="text" maxlenght="3" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"35px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
+                                            사업자등록번호 : <input type="text" maxLength="2" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input type="text" maxLength="2" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input type="text" maxLength="3" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"35px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
                                         </li>
                                     </ul>
                                 </li>

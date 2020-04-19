@@ -26,6 +26,7 @@ const utils = {
     }
     ,regExr:{
       comma: function(num){ //콤마
+        num = num == undefined ? "" : num;
         num = num.toString();
         num = this.numOnly(num);
         return num.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -34,11 +35,13 @@ const utils = {
         return text.replace(/[^a-zA-Z\@\.0-9]/g,'');
       }
       ,date: function(num){
+        num = num == undefined ? "" : num;
         num = num.toString();
         num = this.numOnly(num);
         return num;
       }
       ,numOnly: function(num){
+        num = num == undefined ? "" : num;
         return num.replace(/[^0-9]/g,'');
       }
       ,phone : function(num){
@@ -118,6 +121,7 @@ const utils = {
           return returnVal;
       }
       ,koreanOnly : function(string){
+          string = string == undefined ? "" : string;
           return string.replace(/[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"\\]/g,"");
       }
     }

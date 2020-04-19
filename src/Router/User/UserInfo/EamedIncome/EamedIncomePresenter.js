@@ -176,7 +176,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         console.log(res.data);
                     } else {
                         alert("저장이 완료되었습니다.");
-                        window.location.href = "/user/userManagement";
+                        // window.location.href = "/user/userManagement";
                         // location.reload();
                     }
                 });
@@ -200,6 +200,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
     /* row click event */
     const addRow = (e) => {
         var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
+        console.log(gridApi,"<----일반근로자");
         gridCommon.setGridApi(gridApi);
         gridCommon.onAddRow();
     }
@@ -244,7 +245,6 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                 $('#userImgView').attr('src', e.target.result);
             }
             reader.readAsDataURL(fileInput.files[0]);
-            console.log(reader);
         }
         $("#userImgText").hide();
     }
@@ -266,11 +266,12 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
     const addSalary = (e) => {
         const salaryUl = $("#userInfoRight li.salary > ul:nth-child(2)");
         const li = $("<li class='li_left add_li'>");
-        const btn = $('<button type="button" style="color:#7d7d7d; background-color:transparent;">X</button>').on("click",function(e){
+        const btn = $('<button type="button" tabindex="-1" style="color:#7d7d7d; background-color:transparent;">X</button>').on("click",function(e){
             $(e.target).parent().remove();  // 삭제이벤트
         });
         li.append('<input type="text" id="addSalaryTitle" class="address" placeholder="추가수당"/>');
-        li.append(' : <input class="money_input" type="text" id="addSalaryPay" class="address" placeholder="1,700,000" style="margin-right:5px;"/>');
+        li.append(' : <input class="money_input" type="text" name="addSalaryPay" id="addSalaryPay" class="address" placeholder="1,700,000" style="margin-right:5px;"/>');
+        
         li.append(btn);
         salaryUl.append(li);
     }
@@ -289,6 +290,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     <div class="imgload">
                         <img id="userImgView" src='/images/user02.png' alt="유저사진"/>
                         <span id="userImgText">사원 사진을 등록해주세요.</span>
+                        <button type="button" class="btn_userimg" id="btnUserImg"></button>
                         <div style={{marginTop:"10px"}}>
                             <label for="userImage" class="userImg">수정</label><input type="file" id="userImage" onChange={imgUpload}/>
                             <label for="imgDelete">삭제</label><button type="button" id="imgDelete" onClick={userImgDelete}/>
@@ -335,7 +337,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         <ul class="userinfo_right_box">
                             <li style={{display:"inline-block" , width:"155px", marginLeft:"5px" }}>
                                 <span>고용형태 : </span>
-                                <select name="regularEmployee" id="regularEmployee" style={{marginLeft:"5px"}}>
+                                <select name="regularEmployee" id="regularEmployee">
                                     <option value="0">정규직</option>
                                     <option value="1">계약직</option>
                                     <option value="2">파견직</option>
@@ -344,7 +346,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             </li>
                             <li>  
                                 <span>수습적용 :</span>
-                                <select name="isProbation" id="isProbation" style={{width:"38px"}}>
+                                <select name="isProbation" id="isProbation" style={{width:"38px",marginLeft:"18px",marginRight:"15px"}}>
                                     <option value="1" selected>부</option>
                                     <option value="0">여</option>                                                
                                 </select>
@@ -372,12 +374,17 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <li style={{height:"70px"}}>
                                 <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  defaultValue="77길45"></textarea>
                             </li>
-                            <li style={{display:"inline-block" , width:"140px"}}>  
-                                <span>재직여부 :</span>
+                            <li>  
+                                <span>퇴사여부 :</span>
                                 <select name="isActive" id="isActive" style={{width:"50px"}}>
                                     <option value="0" selected>여</option>
                                     <option value="1">부</option>                                      
                                 </select>
+                                <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04"/>
+                            </li>
+                            <li>  
+                                <span>퇴사사유 :</span>
+                                <input type="text" name="leaveReason" id="leaveReason"/>
                             </li>
                         </ul>
                     </div>
@@ -409,11 +416,11 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <strong>급여항목</strong>
                                     <button type="button" class="btn_gray wi64he19" id="addSalary" onClick={addSalary}>추가</button>
                                 </li>
-                                <li class="salary" style={{overflowY: "scroll", marginTop:"10px"}}>
+                                <li id="monthSalary" class="salary" style={{overflowY: "scroll", marginTop:"10px"}}>
                                     <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"40px"}}>
                                         <li>
                                             <span>월급 :</span>
-                                            <input type="text" id="salaryOfMonth" name="salaryOfMonth" readOnly defaultValue="100,000,000"/>
+                                            <input type="text" id="salaryOfMonth" readOnly name="salaryOfMonth" defaultValue="100,000,000"/>
                                             <span>원</span>
                                             {/* <input type="text" class="money_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/> */}
                                         </li>
@@ -443,7 +450,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 </li>
                                 <li class="clear">
                                     <strong style={{display:"block", marginTop:"20px"}}>성과금, 상여금</strong>
-                                    <ul>
+                                    <ul id="yearsSalryBox">
                                         <li class="in_block">
                                             성과금 :<input type="text" class="money_input" name="insentive" id="insentive" placeholder="1,700,000" defaultValue="1000000"/>
                                             <select id="insentiveType" style={{width: "74px", textAling: "center"}}>

@@ -63,7 +63,8 @@ input:-webkit-autofill:active {
 }
 .user_input .white_board { 
     float: left;
-    width: 1550px; height: 612px;   
+    width: 1550px;
+    height: 560px; 
 }
 .user_input .left_div{
     position: absolute;
@@ -97,7 +98,7 @@ input:-webkit-autofill:active {
     /* margin: 0 auto; */
     margin-left: -9px;
     /* border: 1px solid black; */
-    margin-top: 10px;
+    margin-top: 23px;
 }
 /* 사원등록 성명 ~ li*/
 .user_input .left_div_inner ul li {
@@ -132,8 +133,9 @@ input:-webkit-autofill:active {
     font-size: 15px;
 }
 .user_input .right_div_inner ul li input {
-    float: right; width: 216px;
-    margin-top: 9px;
+    float: right;
+    width: 230px;
+    margin-top: 8px;
     font-size: 15px;
 }
 /* 사업소득자, 일용근로자 input */
@@ -182,7 +184,7 @@ input:-webkit-autofill:active {
     position: absolute;
     width: 156px;
     /* left: 401px; */
-    text-indent: 26px;
+    text-indent: 19px;
 }
 .user_input .right_div_inner .postal_code {
     width: 90px; height: 19px; line-height: 19px;
@@ -203,6 +205,7 @@ input:-webkit-autofill:active {
     height:140px;
     margin:0 auto;
     margin-top:20px;
+    margin-bottom:10px;
 }
 
 .user_input .div_top {
@@ -216,7 +219,7 @@ input:-webkit-autofill:active {
 }
 .user_input .div_bottom {
     width: 686px; height: 547px;
-    font-size: 16px; color: #474747;
+    font-size: 15px; color: #474747;
     margin-top: 0px;
 } 
 .user_input .div_bottom.right{
@@ -778,6 +781,9 @@ input:-webkit-autofill:active {
 .userinfo_left_box li select[name=national]{
     display:none !important;
 }
+.userinfo_left_box li input[name=postNo]{
+    text-indent:32px;
+}
 .div_bottom.right li input[name=salaryOfMonth],
 .div_bottom.right li input[name=salaryOfYears]{
     border:0 none !important;
@@ -793,6 +799,9 @@ input:-webkit-autofill:active {
     text-align:right;
     margin-right:5px;
 }
+.div_bottom.right li input[name=address]{
+    text-indent:32px;
+}
 .div_bottom.right .salary_years{
     float:right;
 }
@@ -800,3 +809,11 @@ input:-webkit-autofill:active {
     width:100% !important;
     margin:0px !important;
 }
+.btn_userimg{
+    width:20px;
+    height:20px;
+    background:url("/images/");
+}
+/* input[name=postNo]{
+    
+} */

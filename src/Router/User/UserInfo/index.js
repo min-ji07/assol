@@ -79,12 +79,6 @@ const UserInfo = () => {
             e.target.parentElement.nextSibling.children[0].value = e.target.value;
         });
 
-        $("#salaryOfMonth").on("focusout",function(e){
-            var targetVal = Number(utils.regExr.numOnly(e.target.value));
-            var yearVal = targetVal*12;
-            $("#salaryOfYears").val(utils.regExr.comma(yearVal));
-        });
-
         $(".tab_03 #workTime, .tab_03 #payOfHour").on("focusout",function(e){
             var salaryMonth = utils.regExr.numOnly($(".tab_03 #workTime").val());
             var hour = utils.regExr.numOnly($(".tab_03 #payOfHour").val());
@@ -98,13 +92,76 @@ const UserInfo = () => {
             } else {
                 $(e.target.nextSibling).show();
             }
+            e.target.nextSibling.children[0].value = "";
         });
+
+        $("select[name=isActive]").on("change",function(){
+
+        });
+
+        const monthSalaryEvent = () =>{
+            var inputList = $("#monthSalary input");
+            var i = 0;
+            var monthSalary = 0;
+
+            for(i; i<inputList.length; i++){
+                if(inputList[i].id == "salaryOfMonth" 
+                || inputList[i].id == "addSalaryTitle"){
+                    continue;
+                }
+                monthSalary += Number(utils.regExr.numOnly(inputList[i].value));
+            }
+            $("#salaryOfMonth").val(monthSalary).click();
+        }
+
+        const yearSalaryEvent = () => {
+            var monthSalary = Number(utils.regExr.numOnly($("#salaryOfMonth").val())) * 12;
+            var inputList = $("#insentive, #bonus");
+            var yearsSalary = 0;
+            var i=0;
+            for(i; i<inputList.length; i++){
+                var type = inputList[i].nextSibling.value;
+                var baseVal = Number(utils.regExr.numOnly(inputList[i].value));
+                var typeVal = 0;
+                switch(type){
+                    case "0" : typeVal = 12;
+                    break;
+                    case "1" : typeVal = 4;
+                    break;
+                    case "2" : typeVal = 2;
+                    break;
+                    case "3" : typeVal = 1;
+                    break;
+                }
+                yearsSalary += baseVal * typeVal;
+            }
+            yearsSalary += monthSalary;
+            $("#salaryOfYears").val(yearsSalary);
+        }
+
+        // 연봉변경 이벤트
+        $("#salaryOfMonth").on("click",function(){
+            yearSalaryEvent();
+        });
+        $("#insentiveType, #bonusType, #insentive, #bonus").on("change",function(e){
+            yearSalaryEvent();
+        });
+
+        // 월급변경 이벤트
+        $("#baseSalary, #foodSalary, #carSalary, #welfareSalary, #positionSalary")
+        .on("change",function(){
+            monthSalaryEvent();
+        });
+        $(document).on("change","input[name=addSalaryPay]",function(){
+            monthSalaryEvent();
+        })
 
         $("#addFile").on("click",(e)=>{
             console.log(e);
             $("#imgFileInput").click();
             return false;
         });
+
         $("#imgFileInput").on("change",(e)=>{
             const fileInput = e.target;
             $(".modal_box.imgupload").append($("<span>"));
@@ -146,63 +203,36 @@ const UserInfo = () => {
         var day = Number(dateStr.substr(6,2));
      
         if (month < 1 || month > 12) { // check month range
-         return false;
+            return false;
         }
         if (day < 1 || day > 31) {
-         return false;
+            return false;
         }
         if ((month==4 || month==6 || month==9 || month==11) && day==31) {
-         return false
+             return false
         }
         if (month == 2) { // check for february 29th
-         var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
-         if (day>29 || (day==29 && !isleap)) {
-          return false;
-         }
+            var isleap = (year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+            if (day>29 || (day==29 && !isleap)) {
+                return false;
+            }
         }
         return true;
     }
 
 
     async function saveInit(formData) {
-        console.log("실행이 되냐!!?");
         try{
-            console.log("실행부");
             await callApi.ImgUpload(formData).then(res=> {
-                console.log(res,"리스풘스!!!");
                 if(res.data.ErrorCode == 1){
                     alert(res.data.Msg);
                 } else {
                     console.log(res);
-                    alert("저장이 완료되었습니다.");
                 }
             });
         } catch(e){
-            console.log(e,"<에러!!!!!!!!");
         }
-    }
-    
-
-    async function submit (e) {
-        // console.log("가즈아!!!!!!!!!!!!!");
-        //     e.preventDefault();    
-        //     const url = 'http://47e88f0f.ngrok.io/Save/UploadFileToServer';    
-        //     const formData = new FormData();    
-        //     let file = $("#imgFileInput")[0].files[0];
-        //     let test ={
-        //         "qwer":"qwer"
-        //     }
-        //     // console.log(file);
-        //     formData.append('body', file);
-        //     formData.append("qwer","qwer");
-        //     // formData.append("test")
-        //     const config = {    
-        //             headers: {    
-        //                     'content-type': 'multipart/form-data',    
-        //             },    
-        //     };    
-        //     return post(url, formData, config);    
-    }    
+    }  
 
     /***************************************
      * 파일 드래그앤 드롭
@@ -263,8 +293,6 @@ const UserInfo = () => {
             }
         });
     }
-
-    $(".modal_box.imgupload")
  
     // 파일 선택시
     function selectFile(files){
@@ -299,7 +327,7 @@ const UserInfo = () => {
  
                     // 업로드 파일 목록 생성
                     addFileList(fileIndex, fileName, fileSize);
- 
+
                     // 파일 번호 증가
                     fileIndex++;
                 }
