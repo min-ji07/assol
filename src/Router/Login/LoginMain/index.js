@@ -267,6 +267,7 @@ return(
                         <p>
                             <label className="required">아이디</label>
                             <input type="text" maxLength="10" placeholder="아이디를 입력해주세요"/>
+                            <button type="button" class="btn_addr">중복확인</button>
                         </p>
                         <p class="pw_con">
                             <label className="required">비밀번호</label>
