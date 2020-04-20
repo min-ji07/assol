@@ -30,11 +30,10 @@ var gridCommon = function() {
         ,onAddRow : () => {
             const newRow = { processType: 1 }
             //추가 기입 
-            gridApi.api.updateRowData({add: [newRow], addIndex:0});
+            gridApi.api.updateRowData({add: [newRow]});
         }
         ,onRemoveRow : () => {
             var selectedData = gridApi.api.getSelectedRows();
-            
             //실 삭제
             selectedData.forEach(function(selectedRow, index){
                 if(selectedRow.processType !=1 ){ //1번 최초 추가만 아닐떄 
@@ -54,7 +53,6 @@ var gridCommon = function() {
             rowData.forEach(row=>{
                 var str = JSON.stringify(row);
             });
-            console.log(rowData)
             if(callback && callback instanceof Function) callback(rowData);
         },onRowEditingStopped : (e, func) =>{ //페이지내에서 미리 콜백정의, 이후 그리드 호출후 콜백으로 전달 
             if( !e.data ) return;

@@ -11,7 +11,11 @@ const WorkTableByGroupPresenter=({rowData,  gridDefs, nextPage }) => {
     }, closePopup=()=>{
         $('.modal').hide();
     }
-  
+function saveRow (result) {
+    console.log(result);
+    var params = result;
+    
+}
 return (
     <div className="wrapper">
         <div className="work_setting_01">
@@ -37,12 +41,12 @@ return (
                                 data-view="years"
                                 data-date-format="yyyy"/>
                             근무일 설정
-                            <input type="radio" id="select_01" name="select" />
+                            <input type="radio" id="select_01" value = "1" name="select" />
                             <label for="select_01">월 ~ 금</label>
-                            <input type="radio" id="select_02" name="select" />
-                            <label for="select_02">월 ~ 토</label>
-                            <input type="radio" id="select_03" name="select" />
-                            <label for="select_03">월 ~ 일</label>
+                            <input type="radio" id="select_01" value = "2" name="select" />
+                            <label for="select_01">월 ~ 토</label>
+                            <input type="radio" id="select_01" value = "3" name="select" />
+                            <label for="select_01">월 ~ 일</label>
                         </p>
 
 
@@ -53,7 +57,7 @@ return (
                             <div className="buttonset">
                             <button type="button" className="insert" onClick={gridCommon.onAddRow}>추가</button>
                                 <button type="button" className="delete1" onClick={gridCommon.onRemoveRow}>삭제</button>
-                                <button onClick={gridCommon.onSaveRow}> 완료 </button>
+                                <button onClick={() => gridCommon.onSaveRow(saveRow)}> 완료 </button>
                             </div>
                         </div>
                         {/* <div className="right">
@@ -62,6 +66,7 @@ return (
                         </div> */}
                     </div>
                     <div className="table"> 
+                    
                     <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon}/>
                     </div>
                     <div className="backnext">

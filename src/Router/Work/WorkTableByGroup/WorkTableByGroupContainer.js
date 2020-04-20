@@ -58,8 +58,12 @@ function WorkTableByGroupContainer() {
             ,cellEditor: picker.getTimePicker(), width:200}
         ,{ headerName: "서브휴게시간", field: "subRestTime", editable:true
             ,cellEditor: picker.getTimePicker(), width:200}
-        // ,{ headerName: "총합", field: "totalRestTime", width:80, editable:false}
-        ,{ headerName: "현재근무시간", field: "currentTime", width:120,  editable:false}
+        ,{ headerName: "현재근무시간", field: "currentTime", width:120,  editable:false,
+         valueGetter:function(params){
+            let current = params.data.currentTime;
+            return current;
+        }
+         }
         ,{ headerName: "연장근무시간", field: "overTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
             ,cellEditorParams:{values:[30,60,90,120,150,180,210,220,250]}
             ,valueFormatter: function(params){ 
@@ -68,11 +72,15 @@ function WorkTableByGroupContainer() {
 
         }
         ,{ headerName: "권장근무시간", field: "recommTime", width:120, editable:false
-            , valueSetter:function(params){ 
+            , valueGetter:function(params){ 
                 params.data.recommTime = '8시간' 
                 return '8시간'
             } }
-        ,{ headerName: "검토", field: "passYn", width:80, editable:false }
+        ,{ headerName: "검토", field: "passYn", width:80, editable:false,
+            valueGetter:function(params){
+                return params.data.currentTime == 8 * 60 ? "Y" : "N";
+            }
+        }
     ]
 
     //기본컬럼 정의
@@ -88,53 +96,50 @@ function WorkTableByGroupContainer() {
     
     //현 페이지에서 정의된 함수 호출
     const onRowEditingStopped = function(e) { 
-       
         if(e.data && e.data.workTime ) {//&& e.data.workTime!=='~'
            let workTimeArr  = e.data.workTime.split("~");
 
            //근무시간
            const strTime= new Date(0,0,0,workTimeArr[0].split(":")[0],workTimeArr[0].split(":")[1],0);
            const endTime = new Date(0,0,0,workTimeArr[1].split(":")[0],workTimeArr[1].split(":")[1],0);
+           
            const diffTime = endTime.getTime() - strTime.getTime();
-           
-           const diffHour = (diffTime/1000)/3600;
+           const resultHour = (diffTime/1000)/3600;
+           var diffHour = Math.floor(resultHour);
            const diffMin = ((diffTime/1000)%3600)/60;
+           console.log(diffMin);
+           let allrestTime = 0;
+           if(e.data.restTime)
+           {
+                let restTimeArr  = e.data.restTime.split("~");
+                let strTime= new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0);
+                let endTime = new Date(0,0,0,restTimeArr[1].split(":")[0],restTimeArr[1].split(":")[1],0);
+                let diffTime = endTime.getTime() - strTime.getTime();
+                const restTimeHour = (diffTime/1000)/3600;
+                const restTimeMin = ((diffTime/1000)%3600)/60;
+                allrestTime = (restTimeHour * 60) + restTimeMin;
+             if(e.data.subRestTime){
+                let subRestTimeArr  = e.data.subRestTime.split("~");
            
-           e.node.setDataValue('currentTime',Math.floor(diffHour)+'시간'+Math.floor(diffMin)+'분')
+                //휴게시간 총합
+                let subStrTime= new Date(0,0,0,subRestTimeArr[0].split(":")[0],subRestTimeArr[0].split(":")[1],0);
+                let subEndTime = new Date(0,0,0,subRestTimeArr[1].split(":")[0],subRestTimeArr[1].split(":")[1],0);
+                let subDiffTime = subEndTime.getTime() - subStrTime.getTime();
+                const restTimeHour = (subDiffTime/1000)/3600;
+                const restTimeMin = ((subDiffTime/1000)%3600)/60;
+                allrestTime += (restTimeHour * 60) + restTimeMin; 
+             }
+           }
+           const allCurrentTime = ((diffHour* 60) + diffMin) - allrestTime;
+           if(allCurrentTime < 0){
+               alert("휴게시간은 근무시간을 초과할수없습니다.");
+               return false;
+           }
+           e.node.setDataValue('currentTime',allCurrentTime)
        }
-
-       if(e.data && e.data.restTime ){//&& e.data.workTime!=='~'
-           let restTimeArr  = e.data.restTime.split("~");
-           
-           let strTime= new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0);
-           let endTime = new Date(0,0,0,restTimeArr[1].split(":")[0],restTimeArr[1].split(":")[1],0);
-           let diffTime = endTime.getTime() - strTime.getTime();
-           
-           let subRestTimeArr  = e.data.subRestTime.split("~");
-           
-           //휴게시간 총합
-           let subStrTime= new Date(0,0,0,subRestTimeArr[0].split(":")[0],subRestTimeArr[0].split(":")[1],0);
-           let subEndTime = new Date(0,0,0,subRestTimeArr[1].split(":")[0],subRestTimeArr[1].split(":")[1],0);
-           let subDiffTime = subEndTime.getTime() - subStrTime.getTime();
-           e.node.setDataValue('totalRestTime', (diffTime/60000)+(subDiffTime/60000)+'분')
-       }
-
-       let workArr = (e.data.currentTime).split('시간');
-       let workTime = ((workArr[0])*3600 + (workArr[1].replace(/분/gi,''))*60)
-       let restTime = ((e.data.totalRestTime).replace(/분/gi,''))*60;
-       let overTime = ((e.data.overTime).replace(/분/gi,''))*60;
-       // 
-       let yaguenTime = new uuuu()
-
-       let pass = 'Y'
-       if( ((workTime-restTime)+overTime)/3600 > 8 ||
-               ((workTime-restTime)+overTime)/3600 < 8 ) {
-                   pass = 'N'
-       }
-
-       // 야간근무시간
-       function uuuu(param1, param2){
-
+       let pass = "Y"
+       if(allrestTime < 8 * 60 || allrestTime > 8 * 60){
+        pass = "N";
        }
        e.node.setDataValue('passYn',pass)
     }
@@ -148,13 +153,13 @@ function WorkTableByGroupContainer() {
 
             if(!params){
                 const d = new Date();
-                params = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);
+                params = d.getFullYear();
             } 
             //근속연도 세팅 
             const target = document.querySelector('#month-picker')
             params = {
-                "branchNo" : 30,
-                "yearsMonthDate" : target.value.replace("-","")
+                "branchNo" : 1,
+                "yearsDate" : target.value
             }
             await callApi.getGridData(params).then(res=>{
                 if(res.data && res.data.Data){

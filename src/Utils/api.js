@@ -17,7 +17,7 @@ const testUrl2 = "http://172.30.1.24:5302"; // 김성일 ip
 const testUrl3 = "http://150f7585.ngrok.io"; //
 
 const local = "http://172.30.1.24:5302"; // 김성일 ip
-
+const localTest = "http://localhost:5302"; // 김성일 ip
 
 //const testUrl_user = testUrl2 + "User/GetUserInfobyBranchNo?branchNo=";
 export const callApi = {
@@ -59,7 +59,7 @@ export const callApi = {
         /work/workTableByGroup
         근무조 설정 페이지
     */
-    getGridData:(params) => axios.get(testUrl2+'/TimeTable/SelectTimeTable',{params:params}), //근무조설정
+    getGridData:(params) => axios.get(localTest+'/TimeTable/SelectTimeTable',{params:params}), //근무조설정
     /* 
         /work/workTableByPersonal/202001 
         근무자 설정 페이지 
