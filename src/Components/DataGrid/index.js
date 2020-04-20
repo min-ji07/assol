@@ -16,8 +16,8 @@ function DataGrid({rowData:rowData,gridDefs,idTest}){
                 onGridReady={gridCommon.onGridReady}
                 components={gridDefs.components}
                 // editType="fullRow"
-                onRowEditingStopped={(e)=>gridCommon.onRowEditingStopped(e,gridDefs.onRowEditingStopped)}
-                onCellEditingStopped={(e)=>gridCommon.onCellEditingStopped(e,gridDefs.onCellEditingStopped)}
+                onRowEditingStopped={(e)=>gridCommon.onCellEditingStopped(e,gridDefs.onRowEditingStopped)}
+                onCellEditingStopped={(e)=>gridCommon.onCellEditingStopped(e,gridDefs.onRowEditingStopped)}
                 onCellClicked={(e)=>gridCommon.onCellClicked(e,gridDefs.onCellClicked)}
                 onRowDoubleClicked={(e)=>gridCommon.onRowDoubleClicked(e,gridDefs.onRowDoubleClicked)}
                 rowSelection="multiple"
