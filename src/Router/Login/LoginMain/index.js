@@ -50,7 +50,6 @@ const fnLogin = () => {
 }
 
     const openJoinForm = () =>{
-        console.log("요기");
         $(".modal_box.mb1").hide();
         $(".modal_box.mb3").show(); // 기관선택 mb3
     }
@@ -69,7 +68,84 @@ const fnLogin = () => {
         $("#daumPostPop").hide();
     }
 
+    const duplicateCheckId = () =>{
 
+    }
+    const saveJoin = () =>{
+        var branchName = $("#companyName").val();
+        if(branchName == ""){
+            alert("기관명을 입력해주세요");
+            return false;
+        }
+        var branchCode = $("#companyCode").val();
+        if(branchCode == ""){
+            alert("기관 코드를 입력해 주세요");
+            return false;
+        }
+        var tellNo = $("#mainNumber").val();
+        
+        var firstMobile = $("#firstNumber").val();
+        var middleMobile = $("#middleNumber").val();
+        var lastMobile = $("#lastNumber").val();
+        if(firstMobile =="" || middleMobile =="" || lastMobile ==""){
+            alert("휴대번호 형식이 맞지않습니다");
+            return false;
+        }
+        var leeterNo = $("#postNo").val();
+        if(leeterNo == ""){
+            alert("기관 주소를 입력해주세요");
+            return false;
+        }
+        var address = $("#address").val();
+        var addressDetail = $("#addressDetail").val();
+        if(address == "" || addressDetail == ""){
+            alert("상세 주소를 입력해주세요");
+            return false;
+        }
+        var id = $("#id").val();
+        var password = $("#password").val();
+        if(id == "" || password == ""){
+            alert("아이디 또는 비밀번호를 입력해주세요");
+            return false;
+        }
+        var passwordCheck = $("#passwordCheck").val();
+        if(passwordCheck != password){
+            alert("비밀 번호를 다시 확인해주세요");
+            return false;
+        }
+        var idEmail = $("#idEmail").val();
+        var domain = $("#domain").val();
+        if(idEmail == "" || domain== ""){
+            alert("이메일을 확인해주세요");
+            return false;
+        }
+        var email = idEmail + "@" + domain;
+        var invaildEmailType = CheckEmail(email);
+        if(invaildEmailType == false){
+            alert("이메일 형식이 정확하지 않습니다");
+            return false;
+        }
+        var acceptEmail = $("#email_y");
+        var acceptSMS = $("#sms_y");
+    }
+    function CheckEmail(str)
+    {                                                 
+
+     var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
+     if(!reg_email.test(str)) {                            
+
+          return false;         
+
+     }                            
+
+     else {                       
+
+          return true;         
+
+     }                            
+
+    };                  
 
     // 우편 검색후 선택시 event
     const daumPostComplete = (e) => {
@@ -240,107 +316,106 @@ return(
             <div className="modal_bottom">
                 <form>
                     <fieldset>
-                        <p className="title_label">기관정보 입력</p>
-                        <p>
-                            <label className="required">요양 기관명</label>
-                            <input type="text" maxLength="15" placeholder="기관명을 입력해주세요."/>
-                        </p>
-                        <p style={{display:"inline-block", float:"left"}}>
-                            <label>기관기호</label>
-                            <input type="text" maxLength="10" placeholder="기관명을 입력해주세요."/>
-                        </p>
-                        <p style={{display:"inline-block", marginLeft:"-335px"}}>
-                            <label htmlFor="businessNum" className="required">사업자번호</label>
-                            <input id="businessNum" type="text" placeholder="000" maxLength="3" style={{width:"33px"}}/> - 
-                            <input id="businessNum2" type="text" placeholder="00" maxLength="2" style={{width:"25px"}}/> - 
-                            <input id="businessNum3" type="text" placeholder="00000" maxLength="5" style={{width:"50px"}}/>
-                        </p>
-                        <p>
-                            <label for="">대표전화번호</label>
-                            <input type="text" id="" maxLength="13" placeholder="02-000-0000"/>
-                        </p>
-                        <p>
-                            <label for="">휴대전화</label>
-                            <select style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
-                                <option>010</option>
-                                <option>011</option>
-                                <option>016</option>
-                            </select>-
-                            <input type="text" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>-
-                            <input type="text" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>
-                        </p>
-                        <p style={{marginBottom:"13px"}}>
-                            <label className="required">기관주소</label>
-                            <input type="text" id="postNo" placeholder="우편번호"/>
-                            <button type="button" className="btn_addr post_close" onClick={post_wrapper}>
-                                우편번호
-                            </button>
-                            <input type="text" id="address" style={{ width:"221px", display:"block", height:"33px", marginLeft:"105px"}} placeholder="주소를 입력해 주세요."/>
-                            <input type="text" id="addressDetail" style={{ width:"221px",height:"38px", marginLeft:"105px"}} placeholder="상세주소를 입력해 주세요."/>
-                        </p>
-                        <p>
-                            <label className="required">아이디</label>
-                            <input type="text" maxLength="10" placeholder="아이디를 입력해주세요"/>
-                            <button type="button" class="btn_addr">중복확인</button>
-                        </p>
-                        <p class="pw_con">
-                            <label className="required">비밀번호</label>
-                            <input type="password" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요."/>
-                        </p>
-                        <p>
-                            <label className="required">비밀번호확인</label>
-                            <input type="password" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요."/>
-                        </p>
-                        {/* <p>
-                            <span className="required">급여종류</span>
-                            <input id="radioPay" type="radio" name="pay" defaultChecked/>
-                            <label htmlFor="radioPay">주야간보호센터</label>
-                            <input id="radioPay2" type="radio" name="pay"/>
-                            <label htmlFor="radioPay2">노인요양시설</label>
-                            <input id="radioPay3" type="radio" name="pay"/>
-                            <label htmlFor="radioPay3">노인요양공동생활가정</label>
-                            <input id="radioPay4" type="radio" name="pay"/>
-                            <label htmlFor="radioPay4">가정방문급여</label>
-                        </p> */}
-                        <p>
-                            <label className="">이메일주소</label>
-                            <input type="text" maxLength="20"/>@
-                            <select style={{borderRadius:"0px", width:"100px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
-                                <option>직접입력</option>
-                                <option>naver.com</option>
-                                <option>naver.com</option>
-                                <option>naver.com</option>
-                                <option>naver.com</option>
-                            </select>
-                            <button type="button" className="btn_addr">인증</button>
-                        </p>
-                        <p>
-                            <label className="">이메일인증</label>
-                            <input type="text" maxLength="10" style={{width:"100px"}}/>
-                            <button type="button" className="btn_addr">인증확인</button>
-                        </p>
-                        <p style={{display:"inline-block", float:"left"}}>
-                            <span>이메일수신</span>
-                            <input type="radio" id="email_y" name="email" defaultChecked/>
-                            <label htmlFor="email_y">동의</label>
-                            <input type="radio" id="email_n" name="email"/>
-                            <label htmlFor="email_n">동의하지않음</label>
-                        </p>
-                        <p style={{display:"inline-block", marginLeft:"-335px"}}>
-                            <span>SMS문자수신</span>
-                            <input type="radio" id="sms_y" name="sms" defaultChecked/>
-                            <label htmlFor="sms_y">동의</label>
-                            <input type="radio" id="sms_n" name="sms"/>
-                            <label htmlFor="sms_n">동의하지않음</label>
-                        </p>
-                        <p>
-                            <span style={{display:"block", marginBottom:"10px"}}>공인인증서등록</span>
-                            <button type="button" className="certificate" style={{textIndent:"-999px"}}>공인인증서등록</button>
-                        </p>
-                        <p className="btn_box_join">
-                            <button className="btn_next">회원가입</button>
-                        </p>
-                    </fieldset>
+                    <p className="title_label">기관정보 입력</p>
+                            <p>
+                                <label className="required">요양 기관명</label>
+                                <input type="text" id ="companyName" maxLength="15" placeholder="기관명을 입력해주세요."/>
+                            </p>
+                            <p style={{display:"inline-block", float:"left"}}>
+                                <label>기관기호</label>
+                                <input type="text" id ="companyCode" maxLength="10" placeholder="기관명을 입력해주세요."/>
+                            </p>
+                            <p style={{display:"inline-block", marginLeft:"-335px"}}>
+                                <label htmlFor="businessNum" className="required">사업자번호</label>
+                                <input id="businessNum" type="text" placeholder="000" maxLength="3" style={{width:"33px"}}/> - 
+                                <input id="businessNum2" type="text" placeholder="00" maxLength="2" style={{width:"25px"}}/> - 
+                                <input id="businessNum3" type="text" placeholder="00000" maxLength="5" style={{width:"50px"}}/>
+                            </p>
+                            <p>
+                                <label for="">대표전화번호</label>
+                                <input type="text" id="mainNumber" maxLength="13" placeholder="02-000-0000"/>
+                            </p>
+                            <p>
+                                <label for="">휴대전화</label>
+                                <select id ="firstNumber" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
+                                    <option>010</option>
+                                    <option>011</option>
+                                    <option>016</option>
+                                </select>-
+                                <input type="text" id ="middleNumber" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>-
+                                <input type="text" id ="lastNumber" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>
+                            </p>
+                            <p style={{marginBottom:"13px"}}>
+                                <label className="required">기관주소</label>
+                                <input type="text" id="postNo" placeholder="우편번호"/>
+                                <button type="button" className="btn_addr post_close" onClick={post_wrapper}>
+                                    우편번호
+                                </button>
+                                <input type="text" id="address" style={{ width:"221px", display:"block", height:"33px", marginLeft:"105px"}} placeholder="주소를 입력해 주세요."/>
+                                <input type="text" id="addressDetail" style={{ width:"221px",height:"38px", marginLeft:"105px"}} placeholder="상세주소를 입력해 주세요."/>
+                            </p>
+                            <p>
+                                <label className="required">아이디</label>
+                                <input type="text" id="id" maxLength="10" placeholder="아이디를 입력해주세요"/>
+                                <button type="button" class="btn_addr" onClick={(duplicateCheckId())}>중복확인</button>
+                            </p>
+                            <p class="pw_con">
+                                <label className="required">비밀번호</label>
+                                <input type="password" id = "password" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요."/>
+                            </p>
+                            <p>
+                                <label className="required">비밀번호확인</label>
+                                <input type="password" id = "passwordCheck" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요."/>
+                            </p>
+                            {/* <p>
+                                <span className="required">급여종류</span>
+                                <input id="radioPay" type="radio" name="pay" defaultChecked/>
+                                <label htmlFor="radioPay">주야간보호센터</label>
+                                <input id="radioPay2" type="radio" name="pay"/>
+                                <label htmlFor="radioPay2">노인요양시설</label>
+                                <input id="radioPay3" type="radio" name="pay"/>
+                                <label htmlFor="radioPay3">노인요양공동생활가정</label>
+                                <input id="radioPay4" type="radio" name="pay"/>
+                                <label htmlFor="radioPay4">가정방문급여</label>
+                            </p> */}
+                            <p>
+                                <label className="">이메일주소</label>
+                                <input type="text" id = "idEmail" maxLength="20"/>@
+                                <select id ="domain" style={{borderRadius:"0px", width:"100px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
+                                    <option>직접입력</option>
+                                    <option>naver.com</option>
+                                    <option>gmail.com</option>
+                                    <option>daum.com</option>
+                                </select>
+                                <button type="button" className="btn_addr">인증</button>
+                            </p>
+                            <p>
+                                <label className="">이메일인증</label>
+                                <input type="text" maxLength="10" style={{width:"100px"}}/>
+                                <button type="button" className="btn_addr">인증확인</button>
+                            </p>
+                            <p style={{display:"inline-block", float:"left"}}>
+                                <span>이메일수신</span>
+                                <input type="radio" id="email_y" name="email" value ="1" defaultChecked/>
+                                <label htmlFor="email_y">동의</label>
+                                <input type="radio" id="email_y" value ="0" name="email"/>
+                                <label htmlFor="email_y">동의하지않음</label>
+                            </p>
+                            <p style={{display:"inline-block", marginLeft:"-335px"}}>
+                                <span>SMS문자수신</span>
+                                <input type="radio" id="sms_y" value ="1" name="sms" defaultChecked/>
+                                <label htmlFor="sms_y">동의</label>
+                                <input type="radio" id="sms_y" value ="0" name="sms"/>
+                                <label htmlFor="sms_y">동의하지않음</label>
+                            </p>
+                            <p>
+                                <span style={{display:"block", marginBottom:"10px"}}>공인인증서등록</span>
+                                <button type="button" className="certificate" style={{textIndent:"-999px"}}>공인인증서등록</button>
+                            </p>
+                            <p className="btn_box_join">
+                                <button className="btn_next" onClick ={() =>saveJoin()}>회원가입</button>
+                            </p>
+                        </fieldset>
                 </form>
             </div>
             <div className="modal_bg">
