@@ -12,6 +12,13 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         var tabDiv = ".div_bottom.tab_03";
         var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         
+        
+        var personalNumber = $(tabDiv).find("#personalNumber").val();
+        if(!personalValidaition(personalNumber)){
+            alert("주민번호가 올바르지 않습니다.");
+            return false;
+        }
+
         if(!regEmail.test($(".div_bottom.tab_01 input[type='email']").val())){
             alert("이메일이 올바르지 않습니다.");
             return false;
@@ -25,13 +32,6 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             }
             if(!dateValidation(dateInput[i].value)){
                 alert("날짜가 올바르지 않습니다.");
-                if(dateInput[i].id == "getOfIns0" || dateInput[i].id == "lostOfIns0"
-                    || dateInput[i].id == "getOfIns1" || dateInput[i].id == "lostOfIns3"
-                    || dateInput[i].id == "getOfIns2" || dateInput[i].id == "lostOfIns2"
-                    || dateInput[i].id == "getOfIns3" || dateInput[i].id == "lostOfIns1"
-                ){
-                    $(tabDiv).find("label[for='tab_002']").click();
-                }
                 dateInput[i].select();
                 dateInput[i].focus();
                 return false;
@@ -60,6 +60,33 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         }
         return true;
     }
+
+    function personalValidaition(jumin) {
+        console.log(jumin);
+        jumin = utils.regExr.numOnly(jumin);
+       
+        //주민등록 번호 13자리를 검사한다.
+         var fmt = /^\d{6}[123456]\d{6}$/;  //포멧 설정
+         if (!fmt.test(jumin)) {
+          return false;
+         }
+       
+         // 생년월일 검사
+         var birthYear = (jumin.charAt(6) <= "2") ? "19" : "20";
+         birthYear += jumin.substr(0, 2);
+         var birthMonth = jumin.substr(2, 2) - 1;
+         var birthDate = jumin.substr(4, 2);
+         var birth = new Date(birthYear, birthMonth, birthDate);
+       
+         if ( birth.getYear() % 100 != jumin.substr(0, 2) ||
+              birth.getMonth() != birthMonth ||
+              birth.getDate() != birthDate) {
+            return false;
+         }
+       
+        
+         return true;
+       }
 
     const dateValidation = (date) =>{
         var date = utils.regExr.numOnly(date);
@@ -146,7 +173,8 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         alert(res.data.Msg);
                     } else {
                         alert("저장이 완료되었습니다.");
-                        location.reload();
+                        saveImgFile(res.data.Data, res.data.Id);
+                        window.location.href = "/user/userManagement";
                     }
                 });
 
@@ -155,6 +183,55 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             }
         };
         saveInit();
+    }
+
+    const saveImgFile = (userNo,employeeNumber) => {
+        frm = new FormData();
+        frm.append("userNo",userNo);
+        frm.append("employeeNumber",employeeNumber);
+        checkUserImage = $(".tab_01 #userImage")[0].value == "" ? true : false;
+        if(checkUserImage){
+            frm.append("imageIsNull",1);
+        } else {
+            frm.append("userImage",$(".tab_01 #userImage")[0].files[0]);
+        }
+        var imgFileArr = selectFileList();
+        var i = 0;
+        for(i; i<imgFileArr.length; i++){
+            console.log(imgFileArr[i]);
+            frm.append("insa"+i,imgFileArr[i]);
+        }
+        async function saveImg(){
+            try {
+                await callApi.uploadFileToServer(frm).then(res=> {
+                    console.log(res);
+                    if(res.data.ErrorCode == 1){
+                        alert(res.data.Msg);
+                    } else {
+                        alert("저장이 완료되었습니다.");
+                        // window.location.href = "/user/userManagement";
+                        // location.reload();
+                    }
+                });
+            } catch (e) {
+                alert("관리자에게 문의하세요.",e);
+            }
+        }
+        saveImg();
+    }
+
+    // 인사서류 파일 리스트 리턴
+    const selectFileList = () => {
+        let checkList = $("#fileBox li a");
+        var inputList = $("input[name=imgFileInput]");
+        let i = 0;
+        let tempArr = [];
+        for(i; i<checkList.length; i++){
+            if(checkList[i].className == "check_file"){
+                tempArr.push(inputList[i].files[0]);
+            }
+        }
+        return tempArr;
     }
 
     /*
@@ -239,7 +316,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         <img id="userImgView3" class="userImgView" src='/images/user02.png' alt="유저사진"/>
                         <span id="userImgText3" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"5px"}}>
-                            <label for="userImage3" class="userImg">수정</label><input type="file" id="userImage3" onChange={imgUpload3}/>
+                            <label for="userImage3" class="userImg">수정</label><input type="file" id="userImage3" accept="image/*" onChange={imgUpload3}/>
                             <label for="imgDelete3">삭제</label><button type="button" id="imgDelete3" onClick={userImgDelete3}/>
                         </div>
                     </div>
@@ -305,16 +382,28 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     <div class="right_div_inner">
                         <ul>
                             <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="02-4555-6666"/></li>
-                            <li>휴대폰 :<input type="tel" maxlenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-6666-7777"/></li>
+                            <li>휴대폰 :<input type="tel" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-6666-7777"/></li>
                             <li style={{position:"relative"}}>
-                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="131-222" style={{width:"152px"}}/>
-                                <button type="button" class="btn_gray postal_code" onClick={openPostPop} style={{top:"23px"}}>우편번호</button>
+                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="서울시" style={{width:"152px"}}/>
+                                <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
                             </li>
                             <li>
-                                <input type="text" name="address" id="address" placeholder="주소" defaultValue="은평구 대조동" style={{width:"300px"}}/>
+                                <input type="text" name="address" id="address" placeholder="주소"  defaultValue="중랑구 답십리로" style={{width:"300px"}}/>
                             </li>
-                            <li>
-                                <textarea type="text" name="addressDetail" id="addressDetail" placeholder="상세주소" defaultValue="2층"></textarea>
+                            <li style={{height:"70px"}}>
+                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  defaultValue="77길45"></textarea>
+                            </li>
+                            <li class="leave_li">  
+                                <span>퇴사여부 :</span>
+                                <select name="isActive" id="isActive" style={{width:"50px"}}>
+                                    <option value="0" selected>여</option>
+                                    <option value="1">부</option>                                      
+                                </select>
+                                <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04"/>
+                            </li>
+                            <li class="leave_li">
+                                <span>퇴사사유 :</span>
+                                <input type="text" name="leaveReason" id="leaveReason"/>
                             </li>
                         </ul>
                     </div>

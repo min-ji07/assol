@@ -903,3 +903,6 @@ input:-webkit-autofill:active {
 .leave_li{
     display:none !important;
 }
+.img_file_box{
+    display:none;
+}
