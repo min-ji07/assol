@@ -19,6 +19,7 @@ function WorkTableByGroupContainer() {
         ,"2" : "계약직" 
         ,"3" : "시간제" 
     }
+    let check = true;
     //컬럼 정의
     const columnDefs= [  
         { headerName: "rowId", field: "rowId", hide:true }
@@ -54,23 +55,30 @@ function WorkTableByGroupContainer() {
              }, valueFormatter:function(params) { return (!params.value)?'':params.value+'명'}} 
         ,{ headerName: "근무시간",field:"workTime", editable:true
             ,cellEditor: picker.getTimePicker(), width:200}
+        ,{ headerName: "야간근무시간", field: "yaguenTime",width:120, editable:true
+            ,cellEditor: picker.getTimePicker(), width:200}    
+        ,
         ,{ headerName: "휴게시간", field: "restTime", editable:true
             ,cellEditor: picker.getTimePicker(), width:200}
-        ,{ headerName: "서브휴게시간", field: "subRestTime", editable:true
+        ,{ headerName: "두번째휴게시간", field: "subRestTime", editable:true
             ,cellEditor: picker.getTimePicker(), width:200}
         ,{ headerName: "현재근무시간", field: "currentTime", width:120,  editable:false,
          valueGetter:function(params){
+            if(!params.data.currentTime){
+                return "";
+            }
             let current = params.data.currentTime;
-            return current;
+            var hour = current/60;
+            var resultHour = Math.floor(hour);
+            var min = current - (resultHour * 60);
+            return resultHour+"시간"+min+"분";
         }
          }
         ,{ headerName: "연장근무시간", field: "overTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
-            ,cellEditorParams:{values:[30,60,90,120,150,180,210,220,250]}
-            ,valueFormatter: function(params){ 
-                return (!params.value)?'':params.value+'분'} }
-        ,{ headerName: "야간근무시간", field: "yaguenTime",width:120, editable:false
-
-        }
+           ,valueGetter: function(params){ 
+                return params.overTime == 0 ? "" : params.overTime+'분'} 
+         }
+       
         ,{ headerName: "권장근무시간", field: "recommTime", width:120, editable:false
             , valueGetter:function(params){ 
                 params.data.recommTime = '8시간' 
@@ -78,7 +86,7 @@ function WorkTableByGroupContainer() {
             } }
         ,{ headerName: "검토", field: "passYn", width:80, editable:false,
             valueGetter:function(params){
-                return params.data.currentTime == 8 * 60 ? "Y" : "N";
+                return params.data.currentTime == 8 * 60 ? "O" : "X";
             }
         }
     ]
@@ -98,36 +106,64 @@ function WorkTableByGroupContainer() {
     const onRowEditingStopped = function(e) { 
         if(e.data && e.data.workTime ) {//&& e.data.workTime!=='~'
            let workTimeArr  = e.data.workTime.split("~");
-
+           if(!workTimeArr[0] || !workTimeArr[1]){
+            alert("근무시간을 입력해주세요.");
+            check = false;
+            return false;    
+            }
            //근무시간
            const strTime= new Date(0,0,0,workTimeArr[0].split(":")[0],workTimeArr[0].split(":")[1],0);
            const endTime = new Date(0,0,0,workTimeArr[1].split(":")[0],workTimeArr[1].split(":")[1],0);
-           
+           if(endTime <= strTime){
+            alert("근무 마지막 시간이 시작 시간보다 큽니다.");
+            check = false;
+            return false; 
+           }
            const diffTime = endTime.getTime() - strTime.getTime();
            const resultHour = (diffTime/1000)/3600;
            var diffHour = Math.floor(resultHour);
            const diffMin = ((diffTime/1000)%3600)/60;
-           console.log(diffMin);
            let allrestTime = 0;
            if(e.data.restTime)
            {
                 let restTimeArr  = e.data.restTime.split("~");
-                let strTime= new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0);
-                let endTime = new Date(0,0,0,restTimeArr[1].split(":")[0],restTimeArr[1].split(":")[1],0);
-                let diffTime = endTime.getTime() - strTime.getTime();
+                if(!restTimeArr[0] || !restTimeArr[1]){
+                    alert("쉬는시간을 입력해주세요.");
+                    check = false;
+                    return false;    
+                    }
+                let reststrTime = new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0);
+                let restendTime = new Date(0,0,0,restTimeArr[1].split(":")[0],restTimeArr[1].split(":")[1],0);
+                if(restendTime <= reststrTime){
+                    alert("쉬는 마지막 시간이 시작 시간보다 큽니다.");
+                    check = false;
+                    return false; 
+                   }
+                let diffTime = restendTime.getTime() - reststrTime.getTime();
                 const restTimeHour = (diffTime/1000)/3600;
+                var resultFirstRestTime = Math.floor(restTimeHour);
                 const restTimeMin = ((diffTime/1000)%3600)/60;
-                allrestTime = (restTimeHour * 60) + restTimeMin;
+                allrestTime = (resultFirstRestTime * 60) + restTimeMin;
              if(e.data.subRestTime){
                 let subRestTimeArr  = e.data.subRestTime.split("~");
-           
+                if(!subRestTimeArr[0] || !subRestTimeArr[1]){
+                    alert("서브쉬는시간을 입력해주세요.");
+                    check = false;
+                    return false;    
+                }
                 //휴게시간 총합
                 let subStrTime= new Date(0,0,0,subRestTimeArr[0].split(":")[0],subRestTimeArr[0].split(":")[1],0);
                 let subEndTime = new Date(0,0,0,subRestTimeArr[1].split(":")[0],subRestTimeArr[1].split(":")[1],0);
+                if(subEndTime <= subStrTime){
+                    alert("쉬는 마지막 시간이 시작 시간보다 큽니다.");
+                    check = false;
+                    return false; 
+                   }
                 let subDiffTime = subEndTime.getTime() - subStrTime.getTime();
-                const restTimeHour = (subDiffTime/1000)/3600;
+                const restTimeHour = (diffTime/1000)/3600;
+                var resultFirstRestTime = Math.floor(restTimeHour);
                 const restTimeMin = ((subDiffTime/1000)%3600)/60;
-                allrestTime += (restTimeHour * 60) + restTimeMin; 
+                allrestTime += (resultFirstRestTime * 60) + restTimeMin; 
              }
            }
            const allCurrentTime = ((diffHour* 60) + diffMin) - allrestTime;
@@ -135,13 +171,16 @@ function WorkTableByGroupContainer() {
                alert("휴게시간은 근무시간을 초과할수없습니다.");
                return false;
            }
+           const overTime = allCurrentTime - (8 *60);
+           e.node.setDataValue('overTime',overTime);
            e.node.setDataValue('currentTime',allCurrentTime)
+           let pass = "Y"
+           if(allrestTime < 8 * 60 || allrestTime > 8 * 60){
+            pass = "N";
+           }
+           e.node.setDataValue('passYn',pass)
        }
-       let pass = "Y"
-       if(allrestTime < 8 * 60 || allrestTime > 8 * 60){
-        pass = "N";
-       }
-       e.node.setDataValue('passYn',pass)
+     
     }
     
     const [gridDefs, setGridDefs] = useState({}); //그리드 정의

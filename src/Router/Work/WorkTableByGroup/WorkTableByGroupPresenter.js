@@ -12,7 +12,12 @@ const WorkTableByGroupPresenter=({rowData,  gridDefs, nextPage }) => {
         $('.modal').hide();
     }
 function saveRow (result) {
-    console.log(result);
+    var list = [];
+    result.forEach(element => {
+        if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
+            var convertCurrent = element.currentTime;
+        }
+    });
     var params = result;
     
 }

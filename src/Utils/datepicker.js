@@ -13,7 +13,7 @@ const picker = {
       dateFormat: 'mm/dd/yyyy'
     };
   },
-  getTimePicker :  function() {
+  getTimePicker :  function(check) {
   function TimePicker() {}
   TimePicker.prototype.init = function(params) {
     var strTime='';
@@ -25,7 +25,7 @@ const picker = {
       strTime = initArr[0];
       endTime = initArr[1];
     }
-  
+
     this.ui = document.createElement("div");
     this.ui.innerHTML=`<div>
                         <input type="text" style="width:35%; text-align:center" readOnly

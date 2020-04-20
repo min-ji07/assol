@@ -65,6 +65,11 @@ var gridCommon = function() {
             if(func && func instanceof Function) func(e);
         }
         ,onCellEditingStopped : (e,func)=>{
+            if( !e.data ) return;
+            if( !e.data.processType || e.data.processType == 4 ){//조회 타입일 경우에만 업데이트 타입으로 변경
+                e.data.processType=2; 
+            }
+            gridApi.api.updateRowData({update: [e.data]});
             //콜백이 있을경우 전달
             if(func && func instanceof Function) func(e);
         }
