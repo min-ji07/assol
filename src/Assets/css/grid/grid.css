@@ -10,9 +10,6 @@
 .ag-root{
     border:0 none !important; font-size: 15px;
 }
-.ag-root select, input {
-    font-size:15px;
-}
 .ag-root-wrapper{
     border:0 none !important;
 }
@@ -203,4 +200,24 @@ div[col-id="remainAnnual"]{
 }
 .grid_scrollX_none {
 
+}
+
+/* input */
+.ag-cell-edit-input {
+    height: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-indent: 0 !important;
+    line-height: normal !important;
+    font-size: 15px !important;
+}
+.ag-root select {
+    font-size:15px !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align-last: center !important; /* select 가운데정렬 */
+    line-height: normal !important;
 }
