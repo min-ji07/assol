@@ -462,8 +462,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <li class="leave_li">  
                                 <span>퇴사여부 :</span>
                                 <select name="isActive" id="isActive" style={{width:"50px"}}>
-                                    <option value="0">여</option>
-                                    <option value="1" selected>부</option>                                      
+                                    <option value="1">여</option>
+                                    <option value="0" selected>부</option>                                      
                                 </select>
                                 <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04"/>
                             </li>

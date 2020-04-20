@@ -43,7 +43,11 @@ export const callApi = {
         url: testUrl2+'/User/DailyUserRegistration',
         data: params
     }), // 사원등록 - 일용직근로자
-
+    getUserInformation:(params) => axios({
+        method: 'post',
+        url: testUrl2+'/user/GetUserInformation',
+        data: params
+    }), // 사원상세 조회
     uploadFileToServer:(params) => axios({
         method: 'post',
         url: testUrl2+'/Save/UploadFileToServer',

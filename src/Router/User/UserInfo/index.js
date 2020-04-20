@@ -41,7 +41,7 @@ const UserInfo = () => {
     }
 
     const userInfoEvent = (data) => {
-        
+        $(".leave_li").show(); // 사원상세정보 일때만 퇴사정보 보이게
     }
 
     async function initUserInfo(paramData) {
@@ -596,7 +596,16 @@ const UserInfo = () => {
         });
 
         $("select[name=isActive]").on("change",function(){
-
+            let dateInput = e.target.nextSibling;
+            let resonBox = e.target.parentElement.nextSibling;
+            let checkVal = e.target.value;
+            if(checkVal == "1"){
+                $(dateInput).show();
+                $(resonBox).show();
+            } else {
+                $(dateInput).hide();
+                $(resonBox).hide();
+            }
         });
 
         const monthSalaryEvent = () =>{
