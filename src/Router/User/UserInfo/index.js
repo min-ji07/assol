@@ -16,6 +16,54 @@ import gridCommon from '../../../Utils/grid';
 
 const UserInfo = () => {
     let imgInputLastIndex = 0;
+    let pramsString = window.location.search.replace("?","");
+    let checkUserInfo = false;
+    let userInfoData;
+    let paramData = {};
+
+    if(pramsString.length != 0){
+        let paramArr = pramsString.split("&");
+        let paramArrLen = paramArr.length;
+        let tempArr = [];
+        let i = 0;
+
+        for(i; i<paramArrLen; i++){
+            tempArr = paramArr[i].split("=");
+            paramData[tempArr[0]] = tempArr[1];
+        };
+        
+        checkUserInfo = true;
+        // let paramsData = {
+        //     "branchNo": ,
+        //     "employeeNumber": ,
+        //     "userType":
+        // };
+    }
+
+    const userInfoEvent = (data) => {
+        
+    }
+
+    async function initUserInfo(paramData) {
+        try {
+            await callApi.getUserInformation(paramData).then(res=>{
+                console.log(res);
+                if(res.data.ErrorCode == 1){
+                    alert(res.data.Msg);
+                } else {
+                    let data = res.data;
+                    userInfoEvent(data.baseData);
+                    setRowData(data.sfData);
+                    setRowData2(data.eduData);
+                    setRowData3(data.exData);
+                    setRowData4(data.miData);
+                    setRowData5(data.cuData);
+                }   
+            })
+        }catch(error){
+            console.log("CATCH !! : " + error);
+        } 
+    };
 
     //기본컬럼 정의
     const defaultColDef ={
@@ -217,7 +265,7 @@ const UserInfo = () => {
             ,{ headerName: '한부모', field: "sfParentDeduction", width:80,
                 cellEditor : "select", 
                 cellEditorParams: { values : gridCommon.extractValues(regSingleParentMappings)},refData: regSingleParentMappings}
-            ,{ headerName: '위탁자관계', field: "sfTrustRelation", width:98,
+            ,{ headerName: '위탁자관계', field: "sfTrustRelation", width:140,
                 cellEditor : "select",
                 cellEditorParams: { values : gridCommon.extractValues(regConsignerMappings)},refData: regConsignerMappings}
         ]
@@ -322,8 +370,6 @@ const UserInfo = () => {
         var date = utils.regExr.numOnly(date);
         var month = date.substring(4,6);
         var day = date.substring(6,8);
-        console.log(month);
-        console.log(day);
         
         if(month>12 || month<1){
             return false;
@@ -470,17 +516,20 @@ const UserInfo = () => {
                        "curriculumDate": "2020-05-05~2020-07-06",
                    }
                ]
-   
-               setRowData(rowData);
-               setRowData2(rowData2);
-               setRowData3(rowData3);
-               setRowData4(rowData4);
-               setRowData5(rowData5);
-   
+
+               if(checkUserInfo){
+                    initUserInfo(paramData);
+               } else {
+                    setRowData(rowData);
+                    setRowData2(rowData2);
+                    setRowData3(rowData3);
+                    setRowData4(rowData4);
+                    setRowData5(rowData5);
+               }
             }catch(e){
                 alert(e);
             }
-           };
+        };
            init();
 
 
@@ -616,6 +665,11 @@ const UserInfo = () => {
             imgInputLastIndex = $("input[name=imgFileInput]").length - 1;
             $("input[name=imgFileInput]")[imgInputLastIndex].click();
             return false;
+        });
+
+        // 퇴사 여부
+        $("input[name=isActive]").on("change",function(){
+
         });
 
         $(document).on("click","#fileBox li a",function(e){

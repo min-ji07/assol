@@ -3,8 +3,13 @@ import DataGrid from "../../../../Components/DataGrid";
 import $ from 'jquery';
 import gridCommon from '../../../../Utils/grid';
 import { callApi } from '../../../../Utils/api';
+import utils from '../../../../Utils/utils';
 
 const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, militaryDefs, curriculumDefs, rowData2, rowData3, rowData4, rowData5}) => {
+    let params = {};
+    let frm = new FormData();
+    let checkUserImage = true;
+    
     const fnValidation = () => {
         var tabDiv = ".div_bottom.tab_02";
         var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
@@ -121,7 +126,6 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
         $("#userImgText2").removeClass("txt_hide");
     }
 
-    let params = {};
     const fnSave2 = () => {
 
         if(!fnValidation()){
@@ -202,15 +206,53 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                         alert(res.data.Msg);
                     } else {
                         alert("저장이 완료되었습니다.");
-                        location.reload();
+                        saveImgFile(res.data.Data, res.data.Id);
+                        window.location.href = "/user/userManagement";
+                        // location.reload();
                     }
                 });
 
             }catch(e){
-                alert(e);
+                // alert("관리자에게 문의하세요.",e);
             }
         };
         saveInit();
+    }
+
+    const saveImgFile = (userNo,employeeNumber) => {
+        frm = new FormData();
+        frm.append("userNo",userNo);
+        frm.append("employeeNumber",employeeNumber);
+        checkUserImage = $("#userImage2")[0].value == "" ? true : false;
+        if(checkUserImage){
+            frm.append("imageIsNull",1);
+        } else {
+            frm.append("userImage",$("#userImage2")[0].files[0]);
+        }
+        var imgFileArr = selectFileList();
+        var i = 0;
+        for(i; i<imgFileArr.length; i++){
+            console.log(imgFileArr[i]);
+            frm.append("insa"+i,imgFileArr[i]);
+        }
+        async function saveImg(){
+            try {
+                await callApi.uploadFileToServer(frm).then(res=> {
+                    console.log(res);
+                    if(res.data.ErrorCode == 1){
+                        // alert(res.data.Msg);
+                    } else {
+                        // alert("저장이 완료되었습니다.");
+                        // window.location.href = "/user/userManagement";
+                        // location.reload();
+                    }
+                    window.location.href = "/user/userManagement";
+                });
+            } catch (e) {
+                alert("관리자에게 문의하세요.",e);
+            }
+        }
+        saveImg();
     }
 
     const openPostPop = (e) => {
@@ -249,6 +291,11 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
         gridCommon.setGridApi(gridApi);
         return gridCommon.getRowData();
     }
+
+    // 팝업 띄우기, 닫기
+    const openJoinPop = () => {
+        $(".modal_box").show();
+    };
     
     return (
     <div class="div_bottom tab_02">
@@ -361,16 +408,15 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                             </li>
                         </ul>
                     </div>
-                </div>    
+                </div>
             </div>
-
             <div class="right_div tab_02">
                 {/* <div class="div_top wid843"> */}
                 <input type="radio" id="tab_004" name="tab02" defaultChecked/>
                 <label for="tab_004">상세설정</label>
                 <input type="radio" id="tab_005" name="tab02" />
                 <label for="tab_005">학력/교육</label>
-                <button type="button" class="upload">인사서류 업로드</button>
+                <button type="button" class="upload" onClick={openJoinPop}>인사서류 업로드</button>
                 {/* <input type="file" id="upload"/>
                 <label for="upload" class="upload">인사서류 업로드</label> */}
                 {/* </div> */}

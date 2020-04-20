@@ -74,6 +74,10 @@ var gridCommon = function() {
             //콜백이 있을경우 전달
             if(func && func instanceof Function) func(e);
         }
+        ,onRowDoubleClicked : (e,func) => {
+            //콜백이 있을경우 전달
+            if(func && func instanceof Function) func(e);
+        }
         ,excelDownload : () => {
             console.log(gridApi)
         },

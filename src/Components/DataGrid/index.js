@@ -19,6 +19,7 @@ function DataGrid({rowData:rowData,gridDefs,idTest}){
                 onRowEditingStopped={(e)=>gridCommon.onRowEditingStopped(e,gridDefs.onRowEditingStopped)}
                 onCellEditingStopped={(e)=>gridCommon.onCellEditingStopped(e,gridDefs.onCellEditingStopped)}
                 onCellClicked={(e)=>gridCommon.onCellClicked(e,gridDefs.onCellClicked)}
+                onRowDoubleClicked={(e)=>gridCommon.onRowDoubleClicked(e,gridDefs.onRowDoubleClicked)}
                 rowSelection="multiple"
                 // suppressRowClickSelection={true} // rowsapn시 필요, 공통속성으론 쓰면 안될듯
                 suppressRowTransform={true}

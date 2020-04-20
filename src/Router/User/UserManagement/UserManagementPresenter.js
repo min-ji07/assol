@@ -6,8 +6,10 @@ import gridCommon from '../../../Utils/grid';
 
 
 
-function UserManagementPresenter({rowData, gridDefs, nextPage,countData}) {
-console.log(countData);
+function UserManagementPresenter({rowData, gridDefs,countData}) {
+    const userInfo = () =>{
+        window.location.href="/user/userInfo";
+    }
    return(    
     <>
     <div class="wrapper">
@@ -103,7 +105,7 @@ console.log(countData);
                             {/* <option value="3">시간직</option> */}
                         </select>
                         <input type="text" placeholder="사원검색" maxlength="10" class="user_search"/>
-                        <button type="button" class="user_plus" onClick={nextPage}>사원추가</button>
+                        <button type="button" class="user_plus" onClick={userInfo}>사원추가</button>
                     </div>
                     <div class="div_bottom">
                         <div class="bottom_inner">

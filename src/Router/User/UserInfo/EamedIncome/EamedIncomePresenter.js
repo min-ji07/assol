@@ -101,8 +101,6 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         var date = utils.regExr.numOnly(date);
         var month = date.substring(4,6);
         var day = date.substring(6,8);
-        console.log(month);
-        console.log(day);
         
         if(month>12 || month<1){
             return false;
@@ -154,11 +152,10 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             if(checkId.indexOf("addSalary") != -1){
                 if(checkId == "addSalaryTitle"){
                     // tempParams.otherContent += '"'+inputListTab1[i].value+'":';
-                    tempJson[inputListTab1[i].value] = "";
-                    tempTitle = inputListTab1[i].value;
+                    tempJson.title = inputListTab1[i].value;
                 } else if(checkId == "addSalaryPay"){
                     // tempParams.otherContent += '"'+inputListTab1[i].value+'"';
-                    tempJson[tempTitle] = inputListTab1[i].value;
+                    tempJson.value = inputListTab1[i].value;
                     tempParams.otherContent.push(tempJson);
                     tempJson = {};
                 }
@@ -252,15 +249,16 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                 await callApi.uploadFileToServer(frm).then(res=> {
                     console.log(res);
                     if(res.data.ErrorCode == 1){
-                        alert(res.data.Msg);
+                        // alert(res.data.Msg);
                     } else {
-                        alert("저장이 완료되었습니다.");
+                        // alert("저장이 완료되었습니다.");
                         // window.location.href = "/user/userManagement";
                         // location.reload();
                     }
+                    window.location.href = "/user/userManagement";
                 });
             } catch (e) {
-                alert("관리자에게 문의하세요.",e);
+                // alert("관리자에게 문의하세요.",e);
             }
         }
         saveImg();
@@ -464,8 +462,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <li class="leave_li">  
                                 <span>퇴사여부 :</span>
                                 <select name="isActive" id="isActive" style={{width:"50px"}}>
-                                    <option value="0" selected>여</option>
-                                    <option value="1">부</option>                                      
+                                    <option value="0">여</option>
+                                    <option value="1" selected>부</option>                                      
                                 </select>
                                 <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04"/>
                             </li>
