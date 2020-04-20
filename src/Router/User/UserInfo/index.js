@@ -15,13 +15,14 @@ import gridCommon from '../../../Utils/grid';
 
 
 const UserInfo = () => {
+    let imgInputLastIndex = 0;
 
     //기본컬럼 정의
     const defaultColDef ={
         width: 100
         ,editable : true
         ,cellStyle: {textAlign: 'center'}
-        ,resizable : false
+        ,resizable : true
     } 
 
     const [rowData, setRowData] = useState([]);
@@ -187,23 +188,30 @@ const UserInfo = () => {
             { headerName: "userId", field: "id", hide :true}
             ,{ headerName: "processType", field: "processType", hide:true}
             ,{ headerName: "branchNo", field: "branchNo", hide:true }
-            ,{ headerName: '성명', field: "sfName",  width:90}
-            ,{ headerName: '주민(외국인)번호', field: "sfPersnoalNumber", editable:true, width:120
+            ,{ headerName: '성명', field: "sfName",  width:90
+                ,valueGetter: function(params){
+                    return utils.regExr.koreanOnly(params.data.sfName);
+                }
+            }
+            ,{ headerName: '주민(외국인)번호', field: "sfPersnoalNumber", editable:true, width:160
                 ,valueGetter: function(params){
                     return utils.regExr.personalNum(params.data.sfPersnoalNumber);
             }}
             ,{ headerName: "연말정산관계", field: "sfRelation", width:120,
                 cellEditor : "select", 
                 cellEditorParams: { values : gridCommon.extractValues(regtaxAdjustmentMappings)},refData: regtaxAdjustmentMappings}
-            ,{ headerName: '세대주', field: "sfHouseHolder" , width:120,
+            ,{ headerName: '세대주', field: "sfHouseHolder" , width:120
+                ,valueGetter: function(params){
+                    return utils.regExr.koreanOnly(params.data.sfName);
+                }
             }
-            ,{ headerName: "부녀자", field: "sfWomenDeduction", width:80,
+            ,{ headerName: "부녀자", field: "sfWomenDeduction", width:70,
                 cellEditor : "select", 
                 cellEditorParams: { values : gridCommon.extractValues(regWomanMappings)},refData: regWomanMappings}
-            ,{ headerName: "장애", field: "sfdisable", width:80,
+            ,{ headerName: "장애", field: "sfdisable", width:60,
                 cellEditor : "select", 
                 cellEditorParams: { values : gridCommon.extractValues(regObstacleMappings)},refData: regObstacleMappings}
-            ,{ headerName: '경로70세', field: "sfSeventy", width:80,
+            ,{ headerName: '경로70세', field: "sfSeventy", width:120,
                 cellEditor : "select", 
                 cellEditorParams: { values : gridCommon.extractValues(regSilverMappings)},refData: regSilverMappings}
             ,{ headerName: '한부모', field: "sfParentDeduction", width:80,
@@ -513,12 +521,16 @@ const UserInfo = () => {
                 e.target.nextSibling.value = "내국인";
             }
         });
+        $("input.num_input").on("keyup",function(e){
+            var targetVal = e.target.value;
+            e.target.value = Utils.regExr.numOnly(targetVal);
+        });
 
         $(".join_date").on("focusout",function(e){
             e.target.parentElement.nextSibling.children[0].value = e.target.value;
         });
 
-        $(".tab_03 #workTime, .tab_03 #payOfHour").on("focusout",function(e){
+        $(".tab_03 #workTime, .tab_03 #payOfHour").on("change",function(e){
             var salaryMonth = utils.regExr.numOnly($(".tab_03 #workTime").val());
             var hour = utils.regExr.numOnly($(".tab_03 #payOfHour").val());
 
@@ -606,8 +618,26 @@ const UserInfo = () => {
             return false;
         });
 
+        $(document).on("click","#fileBox li a",function(e){
+            if(this.className == "check_file"){
+                $(this).removeClass("check_file");
+            } else {
+                $(this).addClass("check_file");
+            }
+            return false;
+        });
+
         $(document).on("change","input[name=imgFileInput]",(e)=>{
             const fileInput = e.target;
+            console.log(e);
+            if(e.target.files.length != 0){
+                var type = e.target.files[0].type;
+                if(type.indexOf("image") == -1){
+                    alert("이미지 파일만 업로드 가능합니다.");
+                    e.target.value = "";
+                    return;
+                }
+            }
             $(".modal_box.imgupload").append($("<span>"));
             if (fileInput.files && fileInput.files[0]) {
                 var reader = new FileReader();
@@ -635,21 +665,12 @@ const UserInfo = () => {
             e.target.value = Utils.regExr.koreanOnly(targetVal);
         });
 
+        // default데이터 계산용 나중에 삭제
+        $("input").trigger("keyup");
+        $("input").trigger("change");
+
         fileDropDown();
     },[]); //init
-
-    async function saveInit(formData) {
-        try{
-            await callApi.ImgUpload(formData).then(res=> {
-                if(res.data.ErrorCode == 1){
-                    alert(res.data.Msg);
-                } else {
-                    console.log(res);
-                }
-            });
-        } catch(e){
-        }
-    }  
 
     /***************************************
      * 파일 드래그앤 드롭
@@ -691,6 +712,7 @@ const UserInfo = () => {
             dropZone.css('background-color','#E3F2FC');
         });
         dropZone.on('drop',function(e){
+            var files = e.originalEvent.dataTransfer.files;
             e.preventDefault();
             // 드롭다운 영역 css
             dropZone.css('background-color','#FFFFFF');
@@ -700,7 +722,7 @@ const UserInfo = () => {
                     alert("폴더 업로드 불가");
                     return;
                 }
-                // selectFile(files);
+                selectFile(files);
             }else{
                 alert("ERROR");
             }
@@ -720,7 +742,7 @@ const UserInfo = () => {
                 // 파일 사이즈(단위 :MB)
                 var fileSize = files[i].size / 1024 / 1024;
                 
-                if($.inArray(ext, ['exe', 'bat', 'sh', 'java', 'jsp', 'html', 'js', 'css', 'xml', 'psd']) >= 0){
+                if($.inArray(ext, ['jsp', 'png', 'gif', 'jpeg']) < 0){
                     // 확장자 체크
                     alert("등록 불가 확장자");
                     break;
@@ -753,12 +775,12 @@ const UserInfo = () => {
     // 업로드 파일 목록 생성
     function addFileList(fileName, filePath){
         var li = $("<li>");
-        var a = $("<a>");
+        var a = $("<a style='cursor:pointer'>");
         var img_box = $("<span class='img_box'>");
         var img = $("<img src='"+filePath+"'>");
         var title_box = $("<span class='title_box'>");
         var check_box = $("<span class='check_box'>");
-        var file_input = $("<input type='file' name='imgFileInput'/>")
+        var file_input = $("<input type='file' name='imgFileInput' accept='image/*'/>")
         
         $(".img_file_box").append(file_input);
         img_box.append(img);
@@ -769,19 +791,6 @@ const UserInfo = () => {
         $('#fileBox').append(li);
         $("#fileBox").append($("#fileBox .img_add_li"));
     }
-    
-    $(document).on("click","#fileBox li a",function(e){
-        console.log($(this));
-        if(this.id == "btn_img_add"){
-            return;
-        }
-        if(this.className == "check_file"){
-            $(this).removeClass("check_file");
-        } else {
-            $(this).addClass("check_file");
-        }
-    });
-
     const removeFileList = () => {
         let checkList = $("#fileBox li a");
         let checkInputList = $("input[name=imgFileInput]");
@@ -815,11 +824,6 @@ const UserInfo = () => {
         
         // 업로드 파일 테이블 목록에서 삭제
         $("#fileTr_" + fIndex).remove();
-    }
- 
-    // 파일 등록
-    function uploadFile(){
-
     }
     
     const closePopup = () => {
@@ -880,7 +884,7 @@ const UserInfo = () => {
                             </li>
                         </ul>
                         <div class="img_file_box">
-                            <input name="imgFileInput" type="file"/>
+                            <input name="imgFileInput" type="file" accept="image/*"/>
                         </div>
                     </div>
                 </div>

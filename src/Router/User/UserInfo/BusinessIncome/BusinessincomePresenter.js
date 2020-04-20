@@ -29,13 +29,6 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
             }
             if(!dateValidation(dateInput[i].value)){
                 alert("날짜가 올바르지 않습니다.");
-                if(dateInput[i].id == "getOfIns0" || dateInput[i].id == "lostOfIns0"
-                    || dateInput[i].id == "getOfIns1" || dateInput[i].id == "lostOfIns3"
-                    || dateInput[i].id == "getOfIns2" || dateInput[i].id == "lostOfIns2"
-                    || dateInput[i].id == "getOfIns3" || dateInput[i].id == "lostOfIns1"
-                ){
-                    $(tabDiv).find("label[for='tab_002']").click();
-                }
                 dateInput[i].select();
                 dateInput[i].focus();
                 return false;
@@ -64,6 +57,33 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
         }
         return true;
     }
+
+    function personalValidaition(jumin) {
+        console.log(jumin);
+        jumin = utils.regExr.numOnly(jumin);
+       
+        //주민등록 번호 13자리를 검사한다.
+         var fmt = /^\d{6}[123456]\d{6}$/;  //포멧 설정
+         if (!fmt.test(jumin)) {
+          return false;
+         }
+       
+         // 생년월일 검사
+         var birthYear = (jumin.charAt(6) <= "2") ? "19" : "20";
+         birthYear += jumin.substr(0, 2);
+         var birthMonth = jumin.substr(2, 2) - 1;
+         var birthDate = jumin.substr(4, 2);
+         var birth = new Date(birthYear, birthMonth, birthDate);
+       
+         if ( birth.getYear() % 100 != jumin.substr(0, 2) ||
+              birth.getMonth() != birthMonth ||
+              birth.getDate() != birthDate) {
+            return false;
+         }
+       
+        
+         return true;
+       }
 
     const dateValidation = (date) =>{
         var date = utils.regExr.numOnly(date);
@@ -240,7 +260,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                         <img id="userImgView2" class="userImgView" src='/images/user02.png' alt="유저사진"/>
                         <span id="userImgText2" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"5px"}}>
-                            <label for="userImage2" class="userImg">수정</label><input type="file" id="userImage2" onChange={imgUpload2}/>
+                            <label for="userImage2" class="userImg">수정</label><input type="file" id="userImage2" accept="image/*" onChange={imgUpload2}/>
                             <label for="imgDelete2">삭제</label><button type="button" id="imgDelete2" onClick={userImgDelete2}/>
                         </div>
                     </div>
@@ -311,7 +331,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                             </li>
                             <li>
                                 <span>휴대폰 :</span>
-                                <input type="tel" maxlenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  defaultValue="010-2222-3333"/>
+                                <input type="tel" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  defaultValue="010-2222-3333"/>
                             </li>
                             <li>
                                 <span>이메일 :</span>
@@ -326,6 +346,18 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                             </li>
                             <li style={{height:"70px"}}>
                                 <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  defaultValue="77길45"></textarea>
+                            </li>
+                            <li class="leave_li">  
+                                <span>퇴사여부 :</span>
+                                <select name="isActive" id="isActive" style={{width:"50px"}}>
+                                    <option value="0" selected>여</option>
+                                    <option value="1">부</option>                                      
+                                </select>
+                                <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04"/>
+                            </li>
+                            <li class="leave_li">
+                                <span>퇴사사유 :</span>
+                                <input type="text" name="leaveReason" id="leaveReason"/>
                             </li>
                         </ul>
                     </div>
@@ -446,9 +478,9 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                                     <span style={{color:"#f38d8d", fontSize:"13px"}}> *소유자일 경우</span>
                                     <ul>
                                         <li style={{listStyle:"none", marginLeft:"0px"}}>
-                                            사업자등록번호 : <input type="number" maxLength="2" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                            <input type="number" maxLength="2" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"25px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                            <input type="number" maxLength="3" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"35px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
+                                            사업자등록번호 : <input class="num_input" type="text" maxLength="3" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"40px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input class="num_input" type="text" maxLength="2" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"40px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input class="num_input" type="text" maxLength="5" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"70px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
                                         </li>
                                     </ul>
                                 </li>

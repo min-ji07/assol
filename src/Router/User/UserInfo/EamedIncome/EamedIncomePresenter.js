@@ -159,8 +159,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         }
 
         console.log(tempParams.otherContent);
-        // tempParams.otherContent = JSON.parse("{"+tempParams.otherContent.slice(0,-1)+"}");
-        tempParams.otherContent = tempParams.otherContent.slice(0,-1);
+        tempParams.otherContent = JSON.parse("{"+tempParams.otherContent.slice(0,-1)+"}");
+        // tempParams.otherContent = tempParams.otherContent.slice(0,-1);
 
         params["detailData"] = tempParams;
 
@@ -211,7 +211,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     } else {
                         alert("저장이 완료되었습니다.");
                         saveImgFile(res.data.Data, res.data.Id);
-                        // window.location.href = "/user/userManagement";
+                        window.location.href = "/user/userManagement";
                         // location.reload();
                     }
                 });
@@ -275,11 +275,6 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
     // 팝업 띄우기, 닫기
     const openJoinPop = () => {
         $(".modal_box").show();
-    }
-
-    const closePopup = () => {
-        $(".modal_box").hide();
-        return false;
     }
 
     /* row click event */
@@ -376,7 +371,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         <img id="userImgView" class="userImgView" src='/images/user02.png' alt="유저사진"/>
                         <span id="userImgText" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"5px"}}>
-                            <label for="userImage" class="userImg">수정</label><input type="file" id="userImage" onChange={imgUpload}/>
+                            <label for="userImage" class="userImg">수정</label><input type="file" id="userImage" accept="image/*" onChange={imgUpload}/>
                             <label for="imgDelete">삭제</label><button type="button" id="imgDelete" onClick={userImgDelete}/>
                         </div>
                     </div>
@@ -406,7 +401,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <option value="2">사무원</option>
                                 <option value="3">시설장</option>
                                 <option value="4">조리원</option>
-                                <option value="5">운전사</option>
+                                <option value="5">운전사</option>2
                                 <option value="6">물리치료사</option>
                                 <option value="7">촉탁의</option>
                                 <option value="8">대표</option>

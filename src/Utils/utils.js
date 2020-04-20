@@ -34,12 +34,6 @@ const utils = {
       ,email: function(text){
         return text.replace(/[^a-zA-Z\@\.0-9]/g,'');
       }
-      ,date: function(num){
-        num = num == undefined ? "" : num;
-        num = num.toString();
-        num = this.numOnly(num);
-        return num;
-      }
       ,numOnly: function(num){
         num = num == undefined ? "" : num;
         return num.replace(/[^0-9]/g,'');
@@ -77,6 +71,7 @@ const utils = {
           return num.replace(/(^02|^0505|^1[0-9]{3}|^0[0-9]{2})([0-9]+)?([0-9]{4})/,"$1-$2-$3").replace("--", "-");
       }
       ,date : function(num){
+          num = num == undefined ? "" : num;
           num = this.numOnly(num);
           var numLen = num.length;
 
