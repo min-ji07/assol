@@ -14,6 +14,7 @@ const api = axios.create({
 const testUrl = "http://172.30.1.29:5302"; // 이석민 ip
 const testUrl2 = "http://172.30.1.24:5302"; // 김성일 ip
 
+//http://172.30.1.24:5302/Admin/CheckDuplicateAdmin
 const testUrl3 = "http://150f7585.ngrok.io"; //
 
 const local = "http://172.30.1.24:5302"; // 김성일 ip
@@ -90,6 +91,8 @@ export const callApi = {
     getWithholdingTax:(params)=> axios.get('/Withholding/dummy/getWithholdingTax.json',{params:params}), //원천세신고조회
     setWorkerListByRestDay:(params)=>axios.post('/test/test',{wokerAnnalInfos:params}), //연차사용 - 저장
 
+    get :(params) => axios.get(testUrl2 + 'Admin/CheckDuplicateAdmin', ),
+
     /*
         로그인 콜 
     */
@@ -104,4 +107,18 @@ export const callApi = {
         url: testUrl2+'/Worker/SetAnnualWorker',
         data: params
     }), //연차사용 - 저장
+
+    /* 회원가입 */
+    JoinUser:(params) => axios ({
+        method: 'post',
+        url: testUfl2 + '/Admin/AdminRegistration',
+        data: params
+    }) ,  
+    checkDuplicateAdmin:(params) => axios.post(testUrl2+'/Admin/CheckDuplicateAdmin',{params:params}), // 아이디 중복체크
+
+    SendCertificationValue:(params) => axios.get(testUrl2+'/SendMailer/SendCertificationValue',{params:params}), // 이메일 인증번호 보내기
+
+
+
+
 };

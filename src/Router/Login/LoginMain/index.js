@@ -48,29 +48,68 @@ const fnLogin = () => {
     }
     
 }
-
-    const openJoinForm = () =>{
-        $(".modal_box.mb1").hide();
-        $(".modal_box.mb3").show(); // 기관선택 mb3
+    // 아이디 중복체크
+    const duplicateCheckId = () => {
+        console.log("duplicateCheckId 시작==");
+        var idVal = $('#id').val();
+        async function init(params) {
+            try {
+                if(!params){
+                    const d = new Date();
+                    params = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);
+                }
+                params = {
+                    "id" : idVal       
+                }
+                await callApi.checkDuplicateAdmin(params).then(res=>{
+                    if(res.data.ErrorCode == 0){ 
+                        alert("가입 가능한 아이디입니다.");
+                    }
+                    else{
+                        console.log("중복된 아이디입니다.");
+                    }
+                })
+            }catch{
+                console.log("CATCH !! : " + error);
+            }        
+           };
+           init();
     }
-    // 동의 - 다음으로
-    const openJoinForm2 = () =>{
-        $(".modal_box.mb3").hide(); // 기관선택 mb3
-        $(".modal_box.mb2").show(); // 내용입력 mb2
+
+
+    // 이메일 인증번호 보내기 -- 수정
+    const SendCertification = () => {
+        console.log("SendCertification 시작==");
+
+        var idEmail = $('#idEmail').val();
+        var idDomain = $('#domain option:selected').val();
+
+        async function init(params) {
+            try {
+                if(!params){
+                    const d = new Date();
+                    params = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);
+                }
+                params = {
+                    "eamil" : idEmail,
+                    "domain" : idDomain        
+                }
+                await callApi.SendCertificationValue(params).then(res=>{
+                    if(res.data.ErrorCode == 0){ 
+                        alert("오는겨");
+                    }
+                    else{
+                        console.log("마는겨");
+                    }
+                })
+            }catch{
+                console.log("CATCH !! : " + error);
+            }        
+           };
+           init();
     }
+    
 
-
-    // 우편번호 검색창 띄우기 
-    const post_wrapper = () => {
-        $(".post_wrapper").show();
-    };
-    const closePostPop = (e) => {
-        $("#daumPostPop").hide();
-    }
-
-    const duplicateCheckId = () =>{
-
-    }
     const saveJoin = () =>{
         var branchName = $("#companyName").val();
         if(branchName == ""){
@@ -128,15 +167,12 @@ const fnLogin = () => {
         var acceptEmail = $("#email_y");
         var acceptSMS = $("#sms_y");
     }
-    function CheckEmail(str)
-    {                                                 
 
+
+    function CheckEmail(str) {      
      var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-
-     if(!reg_email.test(str)) {                            
-
+     if(!reg_email.test(str)) {             
           return false;         
-
      }                            
 
      else {                       
@@ -146,6 +182,25 @@ const fnLogin = () => {
      }                            
 
     };                  
+
+    const openJoinForm = () =>{
+        $(".modal_box.mb1").hide();
+        $(".modal_box.mb3").show(); // 기관선택 mb3
+    }
+    // 동의 - 다음으로
+    const openJoinForm2 = () =>{
+        $(".modal_box.mb3").hide(); // 기관선택 mb3
+        $(".modal_box.mb2").show(); // 내용입력 mb2
+    }
+
+
+    // 우편번호 검색창 띄우기 
+    const post_wrapper = () => {
+        $(".post_wrapper").show();
+    };
+    const closePostPop = (e) => {
+        $("#daumPostPop").hide();
+    }
 
     // 우편 검색후 선택시 event
     const daumPostComplete = (e) => {
@@ -314,7 +369,7 @@ return(
             </div>
 
             <div className="modal_bottom">
-                <form>
+                <form action="/Admin/AdminRegistration">
                     <fieldset>
                     <p className="title_label">기관정보 입력</p>
                             <p>
@@ -354,10 +409,20 @@ return(
                                 <input type="text" id="address" style={{ width:"221px", display:"block", height:"33px", marginLeft:"105px"}} placeholder="주소를 입력해 주세요."/>
                                 <input type="text" id="addressDetail" style={{ width:"221px",height:"38px", marginLeft:"105px"}} placeholder="상세주소를 입력해 주세요."/>
                             </p>
+                            {/* 기관급여일 id 머임 */}
+                            <p>
+                                <label className="required">기관 급여일</label>
+                                <select>
+                                    <option>익월</option>
+                                    <option>당월</option>
+                                </select>
+                                <input type="text" id="" maxLength="2" placeholder="01"/>
+                            </p>
+
                             <p>
                                 <label className="required">아이디</label>
                                 <input type="text" id="id" maxLength="10" placeholder="아이디를 입력해주세요"/>
-                                <button type="button" class="btn_addr" onClick={(duplicateCheckId())}>중복확인</button>
+                                <button type="button" class="btn_addr" onClick={duplicateCheckId}>중복확인</button>
                             </p>
                             <p class="pw_con">
                                 <label className="required">비밀번호</label>
@@ -382,17 +447,17 @@ return(
                                 <label className="">이메일주소</label>
                                 <input type="text" id = "idEmail" maxLength="20"/>@
                                 <select id ="domain" style={{borderRadius:"0px", width:"100px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
-                                    <option>직접입력</option>
-                                    <option>naver.com</option>
-                                    <option>gmail.com</option>
-                                    <option>daum.com</option>
+                                    <option value="0">직접입력</option>
+                                    <option value="1">naver.com</option>
+                                    <option value="2">gmail.com</option>
+                                    <option value="3">daum.com</option>
                                 </select>
                                 <button type="button" className="btn_addr">인증</button>
                             </p>
                             <p>
                                 <label className="">이메일인증</label>
                                 <input type="text" maxLength="10" style={{width:"100px"}}/>
-                                <button type="button" className="btn_addr">인증확인</button>
+                                <button type="button" className="btn_addr" onClick={SendCertification} >인증확인</button>
                             </p>
                             <p style={{display:"inline-block", float:"left"}}>
                                 <span>이메일수신</span>
@@ -421,8 +486,11 @@ return(
             <div className="modal_bg">
             </div>
         </div>
+
+
+
         {/* 우편번호 api */}
-        <div id="daumPostPop" class="post_wrapper" onClic={post_wrapper}>
+        <div id="daumPostPop" class="post_wrapper" onClick={post_wrapper}>
             <button class="post_close" onClick={closePostPop}></button>
             <DaumPostcode
                 onComplete={daumPostComplete}
