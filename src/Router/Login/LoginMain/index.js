@@ -48,29 +48,68 @@ const fnLogin = () => {
     }
     
 }
-
-    const openJoinForm = () =>{
-        $(".modal_box.mb1").hide();
-        $(".modal_box.mb3").show(); // 기관선택 mb3
+    // 아이디 중복체크
+    const duplicateCheckId = () => {
+        console.log("duplicateCheckId 시작==");
+        var idVal = $('#id').val();
+        async function init(params) {
+            try {
+                if(!params){
+                    const d = new Date();
+                    params = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);
+                }
+                params = {
+                    "id" : idVal       
+                }
+                await callApi.checkDuplicateAdmin(params).then(res=>{
+                    if(res.data.ErrorCode == 0){ 
+                        alert("가입 가능한 아이디입니다.");
+                    }
+                    else{
+                        console.log("중복된 아이디입니다.");
+                    }
+                })
+            }catch{
+                console.log("CATCH !! : " + error);
+            }        
+           };
+           init();
     }
-    // 동의 - 다음으로
-    const openJoinForm2 = () =>{
-        $(".modal_box.mb3").hide(); // 기관선택 mb3
-        $(".modal_box.mb2").show(); // 내용입력 mb2
+
+
+    // 이메일 인증번호 보내기 -- 수정
+    const SendCertification = () => {
+        console.log("SendCertification 시작==");
+
+        var idEmail = $('#idEmail').val();
+        var idDomain = $('#domain option:selected').val();
+
+        async function init(params) {
+            try {
+                if(!params){
+                    const d = new Date();
+                    params = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);
+                }
+                params = {
+                    "eamil" : idEmail,
+                    "domain" : idDomain        
+                }
+                await callApi.SendCertificationValue(params).then(res=>{
+                    if(res.data.ErrorCode == 0){ 
+                        alert("오는겨");
+                    }
+                    else{
+                        console.log("마는겨");
+                    }
+                })
+            }catch{
+                console.log("CATCH !! : " + error);
+            }        
+           };
+           init();
     }
+    
 
-
-    // 우편번호 검색창 띄우기 
-    const post_wrapper = () => {
-        $(".post_wrapper").show();
-    };
-    const closePostPop = (e) => {
-        $("#daumPostPop").hide();
-    }
-
-    const duplicateCheckId = () =>{
-
-    }
     const saveJoin = () =>{
         var branchName = $("#companyName").val();
         if(branchName == ""){
@@ -128,15 +167,12 @@ const fnLogin = () => {
         var acceptEmail = $("#email_y");
         var acceptSMS = $("#sms_y");
     }
-    function CheckEmail(str)
-    {                                                 
 
+
+    function CheckEmail(str) {      
      var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-
-     if(!reg_email.test(str)) {                            
-
+     if(!reg_email.test(str)) {             
           return false;         
-
      }                            
 
      else {                       
@@ -146,6 +182,25 @@ const fnLogin = () => {
      }                            
 
     };                  
+
+    const openJoinForm = () =>{
+        $(".modal_box.mb1").hide();
+        $(".modal_box.mb3").show(); // 기관선택 mb3
+    }
+    // 동의 - 다음으로
+    const openJoinForm2 = () =>{
+        $(".modal_box.mb3").hide(); // 기관선택 mb3
+        $(".modal_box.mb2").show(); // 내용입력 mb2
+    }
+
+
+    // 우편번호 검색창 띄우기 
+    const post_wrapper = () => {
+        $(".post_wrapper").show();
+    };
+    const closePostPop = (e) => {
+        $("#daumPostPop").hide();
+    }
 
     // 우편 검색후 선택시 event
     const daumPostComplete = (e) => {
@@ -225,18 +280,18 @@ return(
 
                         <label className="title_label" htmlFor="agreement1">서비스 이용약관</label>
                         <textarea id="agreement3" readOnly>
-■ 수집하는 개인정보 항목
-회사는 회원가입, 상담, 서비스 신청 등등을 위해 아래와 같은 개인정보를 수집하고 있습니다.
-ο 수집항목 : 이름 , 생년월일 , 성별 , 로그인ID , 비밀번호 , 비밀번호 질문과 답변 , 자택 전화번호 , 자택 주소 , 휴대전화번호 , 이메일 , 직업 , 회사명 , 부서 , 직책 , 회사전화번호 , 취미 , 결혼여부 , 기념일 , 법정대리인정보 , 서비스 이용기록 , 접속 로그 , 접속 IP 정보 , 결제기록
-ο 개인정보 수집방법 : 홈페이지(회원가입) , 서면양식
-■ 개인정보의 수집 및 이용목적
-회사는 수집한 개인정보를 다음의 목적을 위해 활용합니다.
-ο 서비스 제공에 관한 계약 이행 및 서비스 제공에 따른 요금정산 콘텐츠 제공 , 구매 및 요금 결제 , 물품배송 또는 청구지 등 발송
-ο 회원 관리
-회원제 서비스 이용에 따른 본인확인 , 개인 식별   , 연령확인 , 만14세 미만 아동 개인정보 수집 시 법정 대리인 동의여부 확인 , 고지사항 전달 ο 마케팅 및 광고에 활용
-접속 빈도 파악 또는 회원의 서비스 이용에 대한 통계
-■ 개인정보의 보유 및 이용기간
-회사는 개인정보 수집 및 이용목적이 달성된 후에는 예외 없이 해당 정보를 지체 없이 파기합니다.
+                            ■ 수집하는 개인정보 항목
+                            회사는 회원가입, 상담, 서비스 신청 등등을 위해 아래와 같은 개인정보를 수집하고 있습니다.
+                            ο 수집항목 : 이름 , 생년월일 , 성별 , 로그인ID , 비밀번호 , 비밀번호 질문과 답변 , 자택 전화번호 , 자택 주소 , 휴대전화번호 , 이메일 , 직업 , 회사명 , 부서 , 직책 , 회사전화번호 , 취미 , 결혼여부 , 기념일 , 법정대리인정보 , 서비스 이용기록 , 접속 로그 , 접속 IP 정보 , 결제기록
+                            ο 개인정보 수집방법 : 홈페이지(회원가입) , 서면양식
+                            ■ 개인정보의 수집 및 이용목적
+                            회사는 수집한 개인정보를 다음의 목적을 위해 활용합니다.
+                            ο 서비스 제공에 관한 계약 이행 및 서비스 제공에 따른 요금정산 콘텐츠 제공 , 구매 및 요금 결제 , 물품배송 또는 청구지 등 발송
+                            ο 회원 관리
+                            회원제 서비스 이용에 따른 본인확인 , 개인 식별   , 연령확인 , 만14세 미만 아동 개인정보 수집 시 법정 대리인 동의여부 확인 , 고지사항 전달 ο 마케팅 및 광고에 활용
+                            접속 빈도 파악 또는 회원의 서비스 이용에 대한 통계
+                            ■ 개인정보의 보유 및 이용기간
+                            회사는 개인정보 수집 및 이용목적이 달성된 후에는 예외 없이 해당 정보를 지체 없이 파기합니다.
                         </textarea>
                         <p className="radio_box">
                             <input type="radio" id="confirm3_y" name="confirm3"/>
@@ -272,16 +327,30 @@ return(
                         <h1 style={{marginTop:"-57px", fontWeight:"300"}}>운영하시는 <strong>기관의 종류</strong>를 선택해 주세요.</h1>
                         <p style={{fontSize:"22px", color:"#6abcc6", marginBottom:"45px"}}>*중복선택이 가능합니다.</p>
                     </div>
-                    <div>
+                    <div class="checkbox">
                         {/* 이미지넣기 */}
-                        <button type="button" class="choose num00 mg_le_0" value="0" style={{width:"311px", height:"460px"}}></button>
-                        <button type="button" class="choose num01" value="1"></button>
-                        <button type="button" class="choose num02" value="2"></button>
-                        <button type="button" class="choose num03" value="3"></button>
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="num00"/>
+                                <label for="num00" class="choose num00 mg_le_0"></label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="num01"/>
+                                <label for="num01" class="choose num01"></label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="num02"/>
+                                <label for="num02" class="choose num02"></label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="num03"/>
+                                <label for="num03" class="choose num03"></label>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <p className="btn_box_mb3">
-                    <button className="btn_next" style={{position:"absolute", top:"120%", left:"45%"}} onClick={()=>openJoinForm2()}>다음으로</button>
+                    <button className="btn_next" onClick={()=>openJoinForm2()}>다음으로</button>
                 </p>
             </div>
 
@@ -300,7 +369,7 @@ return(
             </div>
 
             <div className="modal_bottom">
-                <form>
+                <form action="/Admin/AdminRegistration">
                     <fieldset>
                     <p className="title_label">기관정보 입력</p>
                             <p>
@@ -340,10 +409,20 @@ return(
                                 <input type="text" id="address" style={{ width:"221px", display:"block", height:"33px", marginLeft:"105px"}} placeholder="주소를 입력해 주세요."/>
                                 <input type="text" id="addressDetail" style={{ width:"221px",height:"38px", marginLeft:"105px"}} placeholder="상세주소를 입력해 주세요."/>
                             </p>
+                            {/* 기관급여일 id 머임 */}
+                            <p>
+                                <label className="required">기관 급여일</label>
+                                <select>
+                                    <option>익월</option>
+                                    <option>당월</option>
+                                </select>
+                                <input type="text" id="" maxLength="2" placeholder="01"/>
+                            </p>
+
                             <p>
                                 <label className="required">아이디</label>
                                 <input type="text" id="id" maxLength="10" placeholder="아이디를 입력해주세요"/>
-                                <button type="button" class="btn_addr" onClick={(duplicateCheckId())}>중복확인</button>
+                                <button type="button" class="btn_addr" onClick={duplicateCheckId}>중복확인</button>
                             </p>
                             <p class="pw_con">
                                 <label className="required">비밀번호</label>
@@ -368,17 +447,17 @@ return(
                                 <label className="">이메일주소</label>
                                 <input type="text" id = "idEmail" maxLength="20"/>@
                                 <select id ="domain" style={{borderRadius:"0px", width:"100px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
-                                    <option>직접입력</option>
-                                    <option>naver.com</option>
-                                    <option>gmail.com</option>
-                                    <option>daum.com</option>
+                                    <option value="0">직접입력</option>
+                                    <option value="1">naver.com</option>
+                                    <option value="2">gmail.com</option>
+                                    <option value="3">daum.com</option>
                                 </select>
                                 <button type="button" className="btn_addr">인증</button>
                             </p>
                             <p>
                                 <label className="">이메일인증</label>
                                 <input type="text" maxLength="10" style={{width:"100px"}}/>
-                                <button type="button" className="btn_addr">인증확인</button>
+                                <button type="button" className="btn_addr" onClick={SendCertification} >인증확인</button>
                             </p>
                             <p style={{display:"inline-block", float:"left"}}>
                                 <span>이메일수신</span>
@@ -407,8 +486,11 @@ return(
             <div className="modal_bg">
             </div>
         </div>
+
+
+
         {/* 우편번호 api */}
-        <div id="daumPostPop" class="post_wrapper" onClic={post_wrapper}>
+        <div id="daumPostPop" class="post_wrapper" onClick={post_wrapper}>
             <button class="post_close" onClick={closePostPop}></button>
             <DaumPostcode
                 onComplete={daumPostComplete}

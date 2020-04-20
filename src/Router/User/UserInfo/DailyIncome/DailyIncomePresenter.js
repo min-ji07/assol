@@ -5,8 +5,9 @@ import gridCommon from '../../../../Utils/grid';
 import utils from '../../../../Utils/utils';
 
 const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, militaryDefs, curriculumDefs, rowData2, rowData3, rowData4, rowData5}) => {
-
     let params = {};
+    let frm = new FormData();
+    let checkUserImage = true;
 
     const fnValidation = () => {
         var tabDiv = ".div_bottom.tab_03";
@@ -123,7 +124,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             key = inputListLeft[i].id;
             value = inputListLeft[i].value;
             if(key.indexOf("userImage") != -1){
-                key = "imagePath";   
+                continue;
             }
             tempParams[key] = value; 
         }
@@ -174,7 +175,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     } else {
                         alert("저장이 완료되었습니다.");
                         saveImgFile(res.data.Data, res.data.Id);
-                        window.location.href = "/user/userManagement";
+                        // window.location.href = "/user/userManagement";
                     }
                 });
 
@@ -189,11 +190,11 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         frm = new FormData();
         frm.append("userNo",userNo);
         frm.append("employeeNumber",employeeNumber);
-        checkUserImage = $(".tab_01 #userImage")[0].value == "" ? true : false;
+        checkUserImage = $("#userImage3")[0].value == "" ? true : false;
         if(checkUserImage){
             frm.append("imageIsNull",1);
         } else {
-            frm.append("userImage",$(".tab_01 #userImage")[0].files[0]);
+            frm.append("userImage",$("#userImage3")[0].files[0]);
         }
         var imgFileArr = selectFileList();
         var i = 0;
@@ -206,15 +207,16 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                 await callApi.uploadFileToServer(frm).then(res=> {
                     console.log(res);
                     if(res.data.ErrorCode == 1){
-                        alert(res.data.Msg);
+                        // alert(res.data.Msg);
                     } else {
-                        alert("저장이 완료되었습니다.");
+                        // alert("저장이 완료되었습니다.");
                         // window.location.href = "/user/userManagement";
                         // location.reload();
                     }
+                    window.location.href = "/user/userManagement";
                 });
             } catch (e) {
-                alert("관리자에게 문의하세요.",e);
+                // alert("관리자에게 문의하세요.",e);
             }
         }
         saveImg();
@@ -295,8 +297,8 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         }
     }
 
-     // 팝업 띄우기, 닫기
-     const openJoinPop = () => {
+    // 팝업 띄우기, 닫기
+    const openJoinPop = () => {
         $(".modal_box").show();
     };
     const closePopup = () => {
@@ -383,6 +385,10 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         <ul>
                             <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="02-4555-6666"/></li>
                             <li>휴대폰 :<input type="tel" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-6666-7777"/></li>
+                            <li>
+                                <span>이메일 :</span>
+                                <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/>
+                            </li>
                             <li style={{position:"relative"}}>
                                 우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="서울시" style={{width:"152px"}}/>
                                 <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
@@ -441,7 +447,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </li>
                                         <li class="li_right">
                                             총예상월수령금액 :<input type="text" class="money_input" name="predictionMonth" id="predictionMonth" placeholder="2,100,500" defaultValue="1,000,000" 
-                                            tabindex="-1" style={{fontSize: "20px", border:"none", width: "105px", height:"30px"}} readOnly/>원
+                                            tabindex="-1" style={{fontSize: "20px", border:"none", width: "130px", height:"30px", marginBottom:"4px"}} readOnly/>원
                                         </li>
                                     </ul>
                                 </li>

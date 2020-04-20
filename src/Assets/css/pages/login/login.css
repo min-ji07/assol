@@ -289,9 +289,18 @@ body{
 }
 .modal_top_select .mg_le_0 { margin-left: 0px;}
 /* hover 시 변경 이미지 */
-.choose:hover {
+/* .choose:hover {
     transform: translateY(-35px);
+} */
+.modal_box.mb3 .checkbox input[type="checkbox"]{
+    width: 40px; height: 40px;
+    margin-top: 480px; margin-left: -305px;
 }
+.modal_box.mb3 .checkbox ul li {
+    float: left;
+}
+
+
 .modal_box .modal_bg_mb3 {
     position: fixed;
     top: 0px;
@@ -303,23 +312,27 @@ body{
     z-index: -1;
 }
 .login .num00 {
-    background: url("/images/wndirks.png") no-repeat;
+    display: block;
+    background: url('/images/wndirks.png') no-repeat;
     border-radius: 35px;
     /* box-shadow: 0px 6px 5px #d8d8d8; */
     box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
 }
 .login .num01 {
-    background: url("/images/shdlsdydid.png") no-repeat;
+    display: block;
+    background: url('/images/shdlsdydid.png') no-repeat;
     border-radius: 35px;
     box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
 }
 .login .num02 {
-    background: url("/images/shdlsdydidrhdehd.png") no-repeat;
+    display: block;
+    background: url('/images/shdlsdydidrhdehd.png') no-repeat;
     border-radius: 35px;
     box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
 }
 .login .num03 {
-    background: url("/images/rkwjdqkdans.png") no-repeat;
+    display: block;
+    background: url('/images/rkwjdqkdans.png') no-repeat;
     border-radius: 35px;
     box-shadow: 6px 6px 5px rgba(0,0,0,0.3);
 }
