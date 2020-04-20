@@ -142,25 +142,33 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
 
         i=0;
         tempParams = {
-            "otherContent" : ''
+            "otherContent" : [
+            ]
         };
+
+        let tempJson = {};
+        let tempTitle = "";
         for(i; i<inputListTab1.length; i++){
             var checkId = inputListTab1[i].id;
             // 급여항목 추가리스트
             if(checkId.indexOf("addSalary") != -1){
                 if(checkId == "addSalaryTitle"){
-                    tempParams.otherContent += '"'+inputListTab1[i].value+'":';
+                    // tempParams.otherContent += '"'+inputListTab1[i].value+'":';
+                    tempJson[inputListTab1[i].value] = "";
+                    tempTitle = inputListTab1[i].value;
                 } else if(checkId == "addSalaryPay"){
-                    tempParams.otherContent += '"'+inputListTab1[i].value+'"'+",";
+                    // tempParams.otherContent += '"'+inputListTab1[i].value+'"';
+                    tempJson[tempTitle] = inputListTab1[i].value;
+                    tempParams.otherContent.push(tempJson);
+                    tempJson = {};
                 }
             } else {
                 tempParams[inputListTab1[i].id] = inputListTab1[i].value;
             }
         }
 
+        // tempParams.otherContent = JSON.parse("{"+tempParams.otherContent.slice(0,-1)+"}");
         console.log(tempParams.otherContent);
-        tempParams.otherContent = JSON.parse("{"+tempParams.otherContent.slice(0,-1)+"}");
-        // tempParams.otherContent = tempParams.otherContent.slice(0,-1);
 
         params["detailData"] = tempParams;
 
@@ -211,7 +219,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     } else {
                         alert("저장이 완료되었습니다.");
                         saveImgFile(res.data.Data, res.data.Id);
-                        window.location.href = "/user/userManagement";
+                        // window.location.href = "/user/userManagement";
                         // location.reload();
                     }
                 });
