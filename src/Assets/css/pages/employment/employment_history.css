@@ -11,20 +11,41 @@
 /* 월 신청가능 지원금부터 전체 감싸는 디브 */
 .employment_history .employment_history_content { 
     position: relative;
-    width: 1689px; height: 627px; 
+    width: 1685px; height: 627px; 
     /* border: 1px solid blue; */
 }
  
 /* 신청접수 버튼 외 */
 /* 위에 메뉴 div */
 .employment_history .employment_history_content .button_set ul {
-    width: 1686px; height: 142px;
+    width: 100%; height: 150px;
     /* border: 1px solid pink; */
 }
 .employment_history .employment_history_content .button_set ul li {
     float: left;
-    width: 337px; 
+    width: 300px; 
+    margin-right: 46px;
     /* border: 3px solid orange; */
+}
+.employment_history .employment_history_content .button_set ul li:nth-child(5) {
+    margin-right: 0px;
+}
+
+/* 이미지로 넣을지 */
+/* .employment_history .employment_history_content .button_set ul li img {
+    width: 19px;
+    height: 51px;
+    margin: -162px 0 0 319px;
+} */
+/* after로 넣을지 */
+.employment_history .employment_history_content .button_set ul li::after {
+    display: block;
+    content:""; width: 27px; height: 51px;
+    background: url('/images/employment_apply_button07.png') no-repeat 8px center;
+    margin-left: 309px; margin-top: -96px;
+}
+.employment_history .employment_history_content .button_set ul li:nth-child(5)::after {
+    display: inline;
 }
 .employment_history .employment_history_content ul li a {
     display:block;
@@ -34,11 +55,7 @@
     font-weight: bold;
     font-size: 20px; text-align: center;
 }
-.employment_history .employment_history_content .button_set ul li img {
-    width: 19px;
-    height: 51px;
-    margin: -162px 0 0 324px;
-}
+
 
 /* 흰색바탕 */
 .employment_history .employment_history_inner {
