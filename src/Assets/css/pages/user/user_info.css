@@ -586,7 +586,11 @@ input:-webkit-autofill:active {
 .user_input .tab_002 .tab_01_grid ul li div:nth-child(2),
 .user_input .tab_007 .tab_01_grid ul li div:nth-child(2) {
     width: 35%;
- }
+}
+.user_input .tab_002 .tab_01_grid ul li div:nth-child(2) input,
+.user_input .tab_007 .tab_01_grid ul li div:nth-child(2) input{
+    width: 180px;
+}
 .user_input .tab_002 .tab_01_grid ul li div:nth-child(3) input,
 .user_input .tab_002 .tab_01_grid ul li div:nth-child(4) input,
 .user_input .tab_007 .tab_01_grid ul li div:nth-child(3) input,
@@ -603,16 +607,17 @@ input:-webkit-autofill:active {
  }
 
 
-
+/* 수정중 */
  
 /* 4대보험 부양가족 input */
 .user_input .tab_002 input[type="text"],
 .user_input .tab_007 input[type="text"]
 {
-    width: 160px;
+    width: 118px;
     height: 20px; margin: 0;
     font-size: 16px;
     border: 1px solid #c8c8c8;
+    text-align: center;
 }
 /* 부양가족 */
 .user_input .tab_002 .tab_02_grid,

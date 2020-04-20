@@ -11,10 +11,10 @@ const EmploymentHistoryPresenter = () => {
                     <div>
                         <h1>고용지원금 신청 내역확인</h1>
                     </div>
-                    <div>
+                    {/* <div>
                         <button type="button">전체보기</button>
                         <button type="button">일괄확인</button>
-                    </div>
+                    </div> */}
                     <p>기관에서 신청한 고용지원금의 내역을 확인할 수 있습니다.</p>
                 </div>
 
@@ -62,12 +62,17 @@ const EmploymentHistoryPresenter = () => {
 
 
 
-                                
-                                {/* <div class="content_bottom">
+
+                                <div class="content_bottom">
                                     <div class="body">
                                         <ul>
-                                            <li>박이삭</li>
-                                            <li>사회복지사</li>
+                                            <li>청년고용장려금</li>
+                                            <li>
+                                                <div>박이삭</div>
+                                                <div>사회복지사</div>
+                                                <div>2020.01.06</div>
+                                                <div>만 28세</div>
+                                            </li>
                                             <li>2020.01.06</li>
                                             <li>만 <span>28세</span></li>
                                             <li>
@@ -84,7 +89,7 @@ const EmploymentHistoryPresenter = () => {
                                             <li><a href="#">신청</a></li>
                                         </ul>
                                     </div>
-                                </div> */}
+                                </div>
 
 
                             </div>

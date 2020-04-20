@@ -246,8 +246,8 @@ return(
                         </p>
 
                         <p className="agreement_all">
-                            <input type="radio"/>
-                            <label>
+                            <input type="radio" id="agree"/>
+                            <label for="agree">
                                 회원약관, 개인정보 수집 및 이용, 서비스 이용약관에 <span className="txt_point">모두 동의</span> 합니다.
                             </label>
                         </p>
@@ -274,10 +274,10 @@ return(
                     </div>
                     <div>
                         {/* 이미지넣기 */}
-                        <button type="button" class="choose num00 mg_le_0" style={{width:"311px", height:"460px"}}></button>
-                        <button type="button" class="choose num01"></button>
-                        <button type="button" class="choose num02"></button>
-                        <button type="button" class="choose num03"></button>
+                        <button type="button" class="choose num00 mg_le_0" value="0" style={{width:"311px", height:"460px"}}></button>
+                        <button type="button" class="choose num01" value="1"></button>
+                        <button type="button" class="choose num02" value="2"></button>
+                        <button type="button" class="choose num03" value="3"></button>
                     </div>
                 </div>
                 <p className="btn_box_mb3">
