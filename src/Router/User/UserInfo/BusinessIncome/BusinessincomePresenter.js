@@ -207,7 +207,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                     } else {
                         alert("저장이 완료되었습니다.");
                         saveImgFile(res.data.Data, res.data.Id);
-                        window.location.href = "/user/userManagement";
+                        // window.location.href = "/user/userManagement";
                         // location.reload();
                     }
                 });

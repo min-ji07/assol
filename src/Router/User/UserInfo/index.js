@@ -41,7 +41,38 @@ const UserInfo = () => {
     }
 
     const userInfoEvent = (data) => {
+        let userType = data.userType;
+        let tab;
+        if(userType == "0"){
+            tab = "tab_01";
+        } else if(userType == "1"){
+            tab = "tab_02";
+        } else if(userType == "2"){
+            tab = "tab_03";
+        }
+        
+        $("#"+tab).click();
+        $(".user_type_label[for="+tab+"]").css("width","150px");
+        $("input[name=tab1]:not(#"+tab+")").remove();
+        $(".user_type_label:not([for="+tab+"])").remove();
+
+        // $(".user_type_label:not([for="+tab+"])").remove();
+
         $(".leave_li").show(); // 사원상세정보 일때만 퇴사정보 보이게
+        for(var key in data){
+            let elem = $("#"+key);
+            let val = data[key] == null ? "" : data[key];
+
+            if(elem.length != 0){
+                elem.val(val);
+            }
+
+            
+            console.log(key,"",data[key]);
+            // 에러체크하자
+            // 해당 아이디 element 있는지 체크
+            // null체크
+        }
     }
 
     async function initUserInfo(paramData) {
@@ -339,6 +370,7 @@ const UserInfo = () => {
                     }
                 }
                 ,{headerName: "근무기간", field: "exWorkPeriod", width:100,
+                    editable:false,
                     valueGetter: function(params){
                         var enterDate = utils.regExr.date(params.data.exEnterDate);
                         var leaveDate = utils.regExr.date(params.data.exLeaveDate);
@@ -902,11 +934,11 @@ const UserInfo = () => {
             </div>
             <div class="user_input_inner">
                 <input type="radio" id="tab_01" name="tab1" defaultChecked/>
-                <label for="tab_01">일반근로자</label>
+                <label class="user_type_label" for="tab_01">일반근로자</label>
                 <input type="radio" id="tab_02" name="tab1" />
-                <label for="tab_02">사업소득자</label>
+                <label class="user_type_label" for="tab_02">사업소득자</label>
                 <input type="radio" id="tab_03" name="tab1" />
-                <label for="tab_03">일용직근로자</label>
+                <label class="user_type_label" for="tab_03">일용직근로자</label>
                 <div class="white_board">
                     <EamedIncomeContainer rowData={rowData} euduDefs ={euduDefs} carrerDefs= {carrerDefs} dependDefs={dependDefs} militaryDefs={militaryDefs} curriculumDefs={curriculumDefs} rowData2={rowData2} rowData3={rowData3} rowData4={rowData4} rowData5={rowData5}/>
                     <BusinessIncomeContainer rowData={rowData} euduDefs ={euduDefs} carrerDefs= {carrerDefs} dependDefs={dependDefs} militaryDefs={militaryDefs} curriculumDefs={curriculumDefs} rowData2={rowData2} rowData3={rowData3} rowData4={rowData4} rowData5={rowData5}/>
