@@ -906,7 +906,7 @@ input:-webkit-autofill:active {
     
 } */
 .leave_li{
-    display:none !important;
+    display:none;
 }
 .img_file_box{
     display:none;

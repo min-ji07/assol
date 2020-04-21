@@ -24,7 +24,7 @@ const localTest = "http://localhost:5302"; // 김성일 ip
 
 //const testUrl_user = testUrl2 + "User/GetUserInfobyBranchNo?branchNo=";
 export const callApi = {
-
+    
 
     getUserInfo:(params) => axios.get(testUrl2+'/user/GetUserInfobyBranchNo',{params:params}), // 사원조회
     setInitSalary:(params) => axios.get(testUrl2+'/PayRoll/SetPayRollPage',{params:params}), // 급여입력 초기화면
@@ -57,7 +57,7 @@ export const callApi = {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
-    }), // 사원등록 - 일용직근로자
+    }), // 사원등록 - 이미지파일 업로드
     
     
 

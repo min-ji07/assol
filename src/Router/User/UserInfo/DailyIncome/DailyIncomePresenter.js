@@ -236,9 +236,17 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         return tempArr;
     }
 
-    /*
-        addRow 
-    */
+    /* row click event */
+   const addRow = (e) => {
+        var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        gridCommon.onAddRow();
+    }
+    const removeRow = (e) => {
+        var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        gridCommon.onRemoveRow();
+    }
 
     const openPostPop = (e) => {
         $("#daumPostPop").show();
@@ -383,8 +391,8 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     </div>
                     <div class="right_div_inner">
                         <ul>
-                            <li>전화번호 :<input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="02-4555-6666"/></li>
-                            <li>휴대폰 :<input type="tel" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-6666-7777"/></li>
+                            <li>전화번호 :<input type="text" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="02-4555-6666"/></li>
+                            <li>휴대폰 :<input type="text" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-6666-7777"/></li>
                             <li>
                                 <span>이메일 :</span>
                                 <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/>
