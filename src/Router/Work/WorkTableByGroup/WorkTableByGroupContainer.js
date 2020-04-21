@@ -76,7 +76,7 @@ function WorkTableByGroupContainer() {
          }
         ,{ headerName: "연장근무시간", field: "overTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
            ,valueGetter: function(params){ 
-                return params.overTime == 0 ? "" : params.overTime+'분'} 
+                return params.data.overTime == undefined ? "" : params.data.overTime+'분'} 
          }
        
         ,{ headerName: "권장근무시간", field: "recommTime", width:120, editable:false
@@ -196,9 +196,10 @@ function WorkTableByGroupContainer() {
             } 
             //근속연도 세팅 
             const target = document.querySelector('#month-picker')
+            console.log(target.value);
             params = {
                 "branchNo" : 1,
-                "yearsDate" : target.value
+                "yearsMonthDate" : target.value
             }
             await callApi.getGridData(params).then(res=>{
                 if(res.data && res.data.Data){
@@ -207,8 +208,9 @@ function WorkTableByGroupContainer() {
                     setGridDefs({columnDefs, defaultColDef, components, onRowEditingStopped});
                 }
             })
-        }catch{
-
+        }catch(error)
+        {
+            console.log("Catch :" + error);
         }
        };
        initGrid(); 

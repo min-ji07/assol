@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import "../../../Assets/css/pages/work/work_setting_01.css";
 import DataGrid from "../../../Components/DataGrid"
+import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
 import $ from 'jquery';
 
@@ -15,11 +16,29 @@ function saveRow (result) {
     var list = [];
     result.forEach(element => {
         if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
-            var convertCurrent = element.currentTime;
+            element.yearsMonthDate = $('#month-picker').val();
+            element.branchNo =1;
+            element.workDay = $("#select_01").val();
+            list.push(element);
         }
     });
     var params = result;
-    
+    async function init(params){
+        try {
+            await callApi.SaveGroupRow(params).then(res => {
+                console.log(params);
+                if(res.data.ErrorCode == 0){ 
+                    alert("근무조 설정이 완료되었습니다..");
+                }
+                else{
+                    alert("일부의 근무조 빼고 설정 실패하였습니다.");
+                }
+            })
+        }catch(error){
+            console.log("CATCH !! : " + error);
+        }
+    };
+    init(params);
 }
 return (
     <div className="wrapper">

@@ -134,6 +134,11 @@ export const callApi = {
         method: 'post',
         url: testUrl2 + '/Admin/CheckCertification',
         data: params
+    }),
+    SaveGroupRow :(params) => axios({
+        method: 'post',
+        url: localTest + '/Admin/AdminRegistration',
+        data: params
     })
     
 
