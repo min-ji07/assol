@@ -87,16 +87,39 @@ function LoginMain(){
 
         if(branchName == ""){
             alert("기관명을 입력해주세요");
+            $('#companyName').focus();
             return false;
         }
         var branchCode = $("#companyCode").val();
 
         if(branchCode == ""){
-            alert("기관 코드를 입력해 주세요");
+            alert("기관 기호를 입력해 주세요");
+            $('#companyCode').focus();
             return false;
         }
-        var tellNo = $("#mainNumber").val();
+        // 사업자번호 
+        var businessNum = $('#businessNum').val();
+        var businessNum2 = $('#businessNum2').val();
+        var businessNum3 = $('#businessNum3').val();
+        var businessNo = businessNum + businessNum2 + businessNum3;
+        if($('#businessNum').val().length < 3){
+            alert('사업자번호를 확인해주세요.');
+            $('#businessNum').focus();
+        }else if($('#businessNum2').val().length < 2){
+            alert('사업자번호를 확인해주세요.');
+            $('#businessNum2').focus();
+        }else if($('#businessNum3').val().length < 5) {
+            alert('사업자번호를 확인해주세요.');
+            $('#businessNum3').focus();
+        }
+
         // 대표전화번호
+        var tellNo = $("#mainNumber").val();
+        if(tellNo ==""){
+            alert('전화번호를 입력해주세요.');
+        }
+
+        // 핸드폰 번호
         var firstMobile = $("#firstNumber").val();
         var middleMobile = $("#middleNumber").val();
         var lastMobile = $("#lastNumber").val();
@@ -105,11 +128,21 @@ function LoginMain(){
             return false;
         }
         var mobile = firstMobile + middleMobile + lastMobile;
+
         var leeterNo = $("#postNo").val();
         if(leeterNo == ""){
             alert("기관 주소를 입력해주세요");
             return false;
         }
+        // 기관 급여일
+        var payDayMonth = $('#payDayMonth').val(); // select
+        var payDay = $('#payDay').val(); // input
+
+        if(payDay == ""){
+            alert('급여일을 입력해주세요.');
+            $('#payDay').focus();
+        }
+
         var address = $("#address").val();
         var addressDetail = $("#addressDetail").val();
         if(address == "" || addressDetail == ""){
@@ -153,22 +186,23 @@ function LoginMain(){
         var EmailCheck = $('#email_Check').val();
 
         var params = {
-            "branchName" : branchName,
-            "id" : id,
-            "password" : password,
-            "businessNo" : EmailCheck,
-            "tellNo" : tellNo,
-            "postNo" : leeterNo,
-            "address" : address,
-            "addressDetail" : addressDetail,
-            "email" : idEmail,
-            "acceptEmail" : acceptEmail,
-            "acceptSMS" : acceptSMS,
-            "branchCode" : branchCode,
-            "branchType" : checkBoxArr,
-            "mobile" : mobile
+            "branchName" : branchName,          // 요양기관
+            "id" : id,                          // 아이디
+            "password" : password,              // 비밀번호
+            "businessNo" : businessNo ,          // 사업자번호
+            "tellNo" : tellNo,                  // 전화번호
+            "postNo" : leeterNo,                // 우편번호
+            "address" : address,                // 기관주소
+            "addressDetail" : addressDetail,    // 상세주소
+            "payDayMonth" : payDayMonth,        // 해당월 
+            "payDay" : payDay,                  // 기관 급여일 
+            "email" : idEmail,                  // 이메일
+            "acceptEmail" : acceptEmail,        // 이메일 동의
+            "acceptSMS" : acceptSMS,            // 문자동의
+            "branchCode" : branchCode,          // 기관기호
+            "branchType" : checkBoxArr,         // 회원가입 전 기관선택 
+            "mobile" : mobile                   // 핸드폰번호
         };
-
         console.log(params);
 
         async function init(params){
@@ -463,8 +497,8 @@ return(
         {/* --기관종류선택 */}
 
         {/* 회원가입 */}
-        {/*  style={{display:"block"}}  */}
-        <div className="modal_box mb2" > 
+        {/*    */}
+        <div className="modal_box mb2" style={{display:"block"}} > 
             <div className="modal_top">
                 <div className="modal_title">회원가입</div>
                 <div className="modal_close"><a href="#" onClick={()=>closePopup()}></a></div>
@@ -495,9 +529,9 @@ return(
                             <p>
                                 <label for="">휴대전화</label>
                                 <select id ="firstNumber" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
-                                    <option>010</option>
-                                    <option>011</option>
-                                    <option>016</option>
+                                    <option value="010">010</option>
+                                    <option value="011">011</option>
+                                    <option value="016">016</option>
                                 </select>-
                                 <input type="text" id ="middleNumber" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>-
                                 <input type="text" id ="lastNumber" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>
@@ -514,11 +548,11 @@ return(
                             {/* 기관급여일 id 머임 */}
                             <p>
                                 <label className="required">기관 급여일</label>
-                                <select>
-                                    <option>익월</option>
-                                    <option>당월</option>
+                                <select id="payDayMonth">
+                                    <option value="익월">익월</option>
+                                    <option value="당월">당월</option>
                                 </select>
-                                <input type="text" id="" maxLength="2" placeholder="01" defaultValue="20"/>
+                                <input type="text" id="payDay" maxLength="2" placeholder="01" defaultValue="20"/>
                             </p>
 
                             <p>

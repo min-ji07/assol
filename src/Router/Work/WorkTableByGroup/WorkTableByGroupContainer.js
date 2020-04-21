@@ -9,11 +9,11 @@ function WorkTableByGroupContainer() {
      /* 그리드 설정 */ 
 
     //셀렉박스 맵핑영역
-    const workTypeMappings = {
-        "1" : "월 - 금"
-        ,"2" : "월 - 토" 
-        ,"3" : "월 - 일" 
-    }
+    // const workTypeMappings = {
+    //     "1" : "월 - 금"
+    //     ,"2" : "월 - 토" 
+    //     ,"3" : "월 - 일" 
+    // }
     const regEmployeeMappings = {
         "1" : "정규직"
         ,"2" : "계약직" 

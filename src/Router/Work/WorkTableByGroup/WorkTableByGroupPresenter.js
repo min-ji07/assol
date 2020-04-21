@@ -42,9 +42,9 @@ return (
                                 id="month-picker"
                                 className="datepicker-here"
                                 data-language='lang'
-                                data-min-view="years"
-                                data-view="years"
-                                data-date-format="yyyy"/>
+                                data-min-view="months"
+                                data-view="months"
+                                data-date-format="yyyy-mm"/>
                             근무일 설정
                             <input type="radio" id="select_01" value = "1" name="select" />
                             <label for="select_01">월 ~ 금</label>

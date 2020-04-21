@@ -132,7 +132,7 @@
 }
 /* 기본바탕 전체 div */
 .employment_apply .apply_bottom {
-    /* border: 1px solid black; */
+    border: 1px solid transparent;
     background:white; height:468px; 
     border-radius: 0 0 30px 30px;
 }
