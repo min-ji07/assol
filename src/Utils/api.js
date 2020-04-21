@@ -117,12 +117,11 @@ export const callApi = {
     /* 회원가입 */
     JoinUser:(params) => axios ({
         method: 'post',
-        url: testUfl2 + '/Admin/AdminRegistration',
+        url: testUrl2 + '/Admin/AdminRegistration',
         data: params
     }) ,  
-    checkDuplicateAdmin:(params) => axios.post(testUrl2+'/Admin/CheckDuplicateAdmin',{params:params}), // 아이디 중복체크
-
-    //SendCertificationValue:(params) => axios.post('http://de89cad8.ngrok.io'+'/SendMailer/SendCertificationValue',{params:params}), // 이메일 인증번호 보내기
+    // 아이디 중복체크
+    checkDuplicateAdmin:(params) => axios.post(testUrl2+'/Admin/CheckDuplicateAdmin',{params:params}), 
     // 이메일 인증번호 보내기
     SendCertificationValue:(params) => axios ({
         method: 'post',
@@ -132,8 +131,8 @@ export const callApi = {
     // 이메일 인증번호 체크
     //http://172.30.1.24:5302/Admin/CheckCertification
     CheckCertification:(params) => axios ({
-        method: 'get',
-        url: 'http://de89cad8.ngrok.io' + '/Admin/CheckCertification',
+        method: 'post',
+        url: testUrl2 + '/Admin/CheckCertification',
         data: params
     })
     

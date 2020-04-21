@@ -97,15 +97,14 @@ function LoginMain(){
         }
         var tellNo = $("#mainNumber").val();
         // 대표전화번호
-        
         var firstMobile = $("#firstNumber").val();
         var middleMobile = $("#middleNumber").val();
         var lastMobile = $("#lastNumber").val();
-
         if(firstMobile =="" || middleMobile =="" || lastMobile ==""){
             alert("휴대번호 형식이 맞지않습니다");
             return false;
         }
+        var mobile = firstMobile + middleMobile + lastMobile;
         var leeterNo = $("#postNo").val();
         if(leeterNo == ""){
             alert("기관 주소를 입력해주세요");
@@ -141,34 +140,53 @@ function LoginMain(){
             alert("이메일 형식이 정확하지 않습니다");
             return false;
         }
-        var acceptEmail = $("#email_y");
-        var acceptSMS = $("#sms_y");
 
-        // async function init(params){
-        //     try {
-        //         var params = {
-        //             "branchName" : dddd,
-        //             "id": dddd,
-        //             "password": dddd,
-        //             "businessNo": dddd,
-        //             "tellNo": dddd,
-        //             "postNo": dddd,
-        //             "address": dddd,
-        //             "addressDetail": dddd,
-        //             "email": dddd,
-        //             "acceptEmail": dddd,
-        //             "acceptSMS": dddd,
-        //             "branchCode": dddd,
-        //             "branchType": dddd,
-        //             "mobile": dddd,
-        //             };
-        //     }
-        //     await callApi.JoinUser(params).then(res => {
+        var acceptEmail = $('input[name="email"]:checked').val();
+        var acceptSMS = $('input[name="sms"]:checked').val();
 
-        //     })
-        // }
+        var checkBoxArr = [];
+        $('input[name=check_type]:checked').each(function(i){
+            checkBoxArr.push($(this).val());
+        });
+        // type 가져오기
+        console.log('branchType' + checkBoxArr);
+        var EmailCheck = $('#email_Check').val();
 
+        var params = {
+            "branchName" : branchName,
+            "id" : id,
+            "password" : password,
+            "businessNo" : EmailCheck,
+            "tellNo" : tellNo,
+            "postNo" : leeterNo,
+            "address" : address,
+            "addressDetail" : addressDetail,
+            "email" : idEmail,
+            "acceptEmail" : acceptEmail,
+            "acceptSMS" : acceptSMS,
+            "branchCode" : branchCode,
+            "branchType" : checkBoxArr,
+            "mobile" : mobile
+        };
 
+        console.log(params);
+
+        async function init(params){
+            try {
+                await callApi.JoinUser(params).then(res => {
+                    console.log(res);
+                    if(res.data.ErrorCode == 0){ 
+                        alert("회원가입이 완료 되었습니다.");
+                    }
+                    else{
+                        alert("가입에 실패하했얼먀ㅐㅈㄷㄹ.");
+                    }
+                })
+            }catch(error){
+                console.log("CATCH !! : " + error);
+            }
+        };
+        init(params);
     }
 
 
@@ -254,8 +272,8 @@ function LoginMain(){
             try {
                 params = {                    
                         "from" : "chrislee@assol.io",
-                        "to" : "86297534@naver.com",
-                        "subject" : "1차테스트",
+                        "to" : EmailAddress,
+                        "subject" : "assol 인증번호가 도착했습니다~!",
                         "body" : ""
                 }
                 await callApi.SendCertificationValue(params).then(res=>{
@@ -267,7 +285,6 @@ function LoginMain(){
                     }
                 })
             }catch(error){
-                // console.log(params, "애가이상해");
                 console.log("CATCH !! : " + error);
             }        
            };
@@ -277,22 +294,25 @@ function LoginMain(){
     // 이메일 인증번호체크
     const SendCertification = () => {
         async function init(params) {
+            var EmailCheck = $('#email_Check').val();
+            var idEmail = $('#idEmail').val();
+            var idDomain = $('#domain option:selected').val();
+            var EmailAddress = idEmail + '@' + idDomain;
             try {
                 params = {
-                    "certifyValue" : "pmf652%$",
-                    "email" : "shypay12@gmail.com"
+                    "certifyValue" : EmailCheck,
+                    "email" : EmailAddress
                 }
-                await callApi.CheckCertification(params).then(res =>{
+                await callApi.CheckCertification(params).then(res => {
                     console.log(res);
                     if(res.data.ErrorCode == 0){ 
                         alert("인증이 확인되었습니다.");
                     }
                     else{
-                        console.log("뭔가 잘못됐다");
+                        alert("인증에 실패하셨습니다.");
                     }
                 })
             }catch(error){
-                // console.log(params, "애가이상해");
                 console.log("CATCH !! : " + error);
             }        
            };
@@ -412,19 +432,19 @@ return(
                         {/* 이미지넣기 */}
                         <ul>
                             <li>
-                                <input type="checkbox" id="num00"/>
+                                <input type="checkbox" id="num00" name="check_type" value="1"/>
                                 <label for="num00" class="choose num00 mg_le_0"></label>
                             </li>
                             <li>
-                                <input type="checkbox" id="num01"/>
+                                <input type="checkbox" id="num01" name="check_type" value="2"/>
                                 <label for="num01" class="choose num01"></label>
                             </li>
                             <li>
-                                <input type="checkbox" id="num02"/>
+                                <input type="checkbox" id="num02" name="check_type" value="3"/>
                                 <label for="num02" class="choose num02"></label>
                             </li>
                             <li>
-                                <input type="checkbox" id="num03"/>
+                                <input type="checkbox" id="num03" name="check_type" value="4"/>
                                 <label for="num03" class="choose num03"></label>
                             </li>
                         </ul>
@@ -443,8 +463,8 @@ return(
         {/* --기관종류선택 */}
 
         {/* 회원가입 */}
-        {/* style={{display:"block"}} */}
-        <div className="modal_box mb2"> 
+        {/*  style={{display:"block"}}  */}
+        <div className="modal_box mb2" > 
             <div className="modal_top">
                 <div className="modal_title">회원가입</div>
                 <div className="modal_close"><a href="#" onClick={()=>closePopup()}></a></div>
@@ -456,21 +476,21 @@ return(
                     <p className="title_label">기관정보 입력</p>
                             <p>
                                 <label className="required">요양 기관명</label>
-                                <input type="text" id ="companyName" maxLength="15" placeholder="기관명을 입력해주세요."/>
+                                <input type="text" id ="companyName" maxLength="15" placeholder="기관명을 입력해주세요." defaultValue="에이솔"/>
                             </p>
                             <p style={{display:"inline-block", float:"left"}}>
                                 <label>기관기호</label>
-                                <input type="text" id ="companyCode" maxLength="10" placeholder="기관명을 입력해주세요."/>
+                                <input type="text" id ="companyCode" maxLength="10" placeholder="기관기호를 입력해주세요." defaultValue="12345"/>
                             </p>
                             <p style={{display:"inline-block", marginLeft:"-335px"}}>
                                 <label htmlFor="businessNum" className="required">사업자번호</label>
-                                <input id="businessNum" type="text" placeholder="000" maxLength="3" style={{width:"33px"}}/> - 
-                                <input id="businessNum2" type="text" placeholder="00" maxLength="2" style={{width:"25px"}}/> - 
-                                <input id="businessNum3" type="text" placeholder="00000" maxLength="5" style={{width:"50px"}}/>
+                                <input id="businessNum" type="text" placeholder="000" maxLength="3" style={{width:"33px"}} defaultValue="123"/> - 
+                                <input id="businessNum2" type="text" placeholder="00" maxLength="2" style={{width:"25px"}} defaultValue="12"/> - 
+                                <input id="businessNum3" type="text" placeholder="00000" maxLength="5" defaultValue="12345" style={{width:"50px"}}/>
                             </p>
                             <p>
                                 <label for="">대표전화번호</label>
-                                <input type="text" id="mainNumber" maxLength="13" placeholder="02-000-0000"/>
+                                <input type="text" id="mainNumber" maxLength="13" placeholder="02-000-0000" defaultValue="02-3291-0356"/>
                             </p>
                             <p>
                                 <label for="">휴대전화</label>
@@ -484,12 +504,12 @@ return(
                             </p>
                             <p style={{marginBottom:"13px"}}>
                                 <label className="required">기관주소</label>
-                                <input type="text" id="postNo" placeholder="우편번호"/>
+                                <input type="text" id="postNo" placeholder="우편번호" defaultValue="11611"/>
                                 <button type="button" className="btn_addr post_close" onClick={post_wrapper}>
                                     우편번호
                                 </button>
-                                <input type="text" id="address" style={{ width:"221px", display:"block", height:"33px", marginLeft:"105px"}} placeholder="주소를 입력해 주세요."/>
-                                <input type="text" id="addressDetail" style={{ width:"221px",height:"38px", marginLeft:"105px"}} placeholder="상세주소를 입력해 주세요."/>
+                                <input type="text" id="address" style={{ width:"221px", display:"block", height:"33px", marginLeft:"105px"}} placeholder="주소를 입력해 주세요." defaultValue="경기 의정부시 가금로 29"/>
+                                <input type="text" id="addressDetail" style={{ width:"221px",height:"38px", marginLeft:"105px"}} placeholder="상세주소를 입력해 주세요." defaultValue="상세주소"/>
                             </p>
                             {/* 기관급여일 id 머임 */}
                             <p>
@@ -498,21 +518,21 @@ return(
                                     <option>익월</option>
                                     <option>당월</option>
                                 </select>
-                                <input type="text" id="" maxLength="2" placeholder="01"/>
+                                <input type="text" id="" maxLength="2" placeholder="01" defaultValue="20"/>
                             </p>
 
                             <p>
                                 <label className="required">아이디</label>
-                                <input type="text" id="id" maxLength="10" placeholder="아이디를 입력해주세요"/>
+                                <input type="text" id="id" maxLength="10" placeholder="아이디를 입력해주세요" defaultValue="86297534"/>
                                 <button type="button" class="btn_addr" onClick={duplicateCheckId}>중복확인</button>
                             </p>
                             <p class="pw_con">
                                 <label className="required">비밀번호</label>
-                                <input type="password" id = "password" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요."/>
+                                <input type="password" id = "password" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요." defaultValue="123456"/>
                             </p>
                             <p>
                                 <label className="required">비밀번호확인</label>
-                                <input type="password" id = "passwordCheck" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요."/>
+                                <input type="password" id = "passwordCheck" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요." defaultValue="123456"/>
                             </p>
                             {/* <p>
                                 <span className="required">급여종류</span>
@@ -527,10 +547,10 @@ return(
                             </p> */}
                             <p>
                                 <label className="">이메일주소</label>
-                                <input type="text" id="idEmail" maxLength="20"/>@
+                                <input type="text" id="idEmail" maxLength="20" defaultValue="86297534"/>@
                                 <select id ="domain" style={{borderRadius:"0px", width:"100px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
-                                    <option value="etc">직접입력</option>
                                     <option value="naver.com">naver.com</option>
+                                    <option value="etc">직접입력</option>
                                     <option value="nate.com">nate.com</option>
                                     <option value="hanmail.net">hanmail.net</option>
                                     <option value="gmail.com">gmail.com</option>
@@ -539,22 +559,22 @@ return(
                             </p>
                             <p>
                                 <label className="">이메일인증</label>
-                                <input type="text" maxLength="10" style={{width:"100px"}}/>
+                                <input type="text" maxLength="10" style={{width:"100px"}} id="email_Check"/>
                                 <button type="button" className="btn_addr" onClick={SendCertification}>인증확인</button>
                             </p>
                             <p style={{display:"inline-block", float:"left"}}>
                                 <span>이메일수신</span>
                                 <input type="radio" id="email_y" name="email" value ="1" defaultChecked/>
                                 <label htmlFor="email_y">동의</label>
-                                <input type="radio" id="email_y" value ="0" name="email"/>
-                                <label htmlFor="email_y">동의하지않음</label>
+                                <input type="radio" id="email_n" value ="0" name="email"/>
+                                <label htmlFor="email_n">동의하지않음</label>
                             </p>
                             <p style={{display:"inline-block", marginLeft:"-335px"}}>
                                 <span>SMS문자수신</span>
                                 <input type="radio" id="sms_y" value ="1" name="sms" defaultChecked/>
                                 <label htmlFor="sms_y">동의</label>
-                                <input type="radio" id="sms_y" value ="0" name="sms"/>
-                                <label htmlFor="sms_y">동의하지않음</label>
+                                <input type="radio" id="sms_n" value ="0" name="sms"/>
+                                <label htmlFor="sms_n">동의하지않음</label>
                             </p>
                             <p>
                                 <span style={{display:"block", marginBottom:"10px"}}>공인인증서등록</span>
