@@ -105,18 +105,22 @@ function LoginMain(){
         if($('#businessNum').val().length < 3){
             alert('사업자번호를 확인해주세요.');
             $('#businessNum').focus();
+            return false;
         }else if($('#businessNum2').val().length < 2){
             alert('사업자번호를 확인해주세요.');
             $('#businessNum2').focus();
+            return false;
         }else if($('#businessNum3').val().length < 5) {
             alert('사업자번호를 확인해주세요.');
             $('#businessNum3').focus();
+            return false;
         }
 
         // 대표전화번호
         var tellNo = $("#mainNumber").val();
         if(tellNo ==""){
             alert('전화번호를 입력해주세요.');
+            return false;
         }
 
         // 핸드폰 번호
@@ -124,7 +128,7 @@ function LoginMain(){
         var middleMobile = $("#middleNumber").val();
         var lastMobile = $("#lastNumber").val();
         if(firstMobile =="" || middleMobile =="" || lastMobile ==""){
-            alert("휴대번호 형식이 맞지않습니다");
+            alert("휴대폰번호 형식이 맞지않습니다");
             return false;
         }
         var mobile = firstMobile + middleMobile + lastMobile;
@@ -497,8 +501,8 @@ return(
         {/* --기관종류선택 */}
 
         {/* 회원가입 */}
-        {/*    */}
-        <div className="modal_box mb2" style={{display:"block"}} > 
+        {/*   style={{display:"block"}}  */}
+        <div className="modal_box mb2" > 
             <div className="modal_top">
                 <div className="modal_title">회원가입</div>
                 <div className="modal_close"><a href="#" onClick={()=>closePopup()}></a></div>

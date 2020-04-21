@@ -7,10 +7,10 @@ import gridCommon from '../../../Utils/grid';
 function UserManagementContainer() {
     //컬럼 정의
     const regEmployeeMappings = {
-        "0" : "근로소득자"
-        ,"1" : "사업소득자" 
-        ,"2" : "일용근로자" 
-        // ,"3" : "시간직"
+        "0" : "정규직"
+        ,"1" : "계약직" 
+        ,"2" : "파견직" 
+        ,"3" : "위촉직"
     }
     const userTypeMappings = {
         "0" : "일반근로자"
@@ -94,10 +94,10 @@ function UserManagementContainer() {
     const onRowDoubleClicked = (e)=> {
         let employeeNumber = e.data.employeeNumber;
         let userType = e.data.userType;
-        let branchNo = "30"; // 나중에 바꿔
+        let branchNo = "29"; // 나중에 바꿔
         window.location.href = "/user/userInfo?employeeNumber="+employeeNumber+"&userType="+userType+"&branchNo="+branchNo;
     }
-    
+
     useEffect(()=>{
        async function initGrid(params) {
         try {

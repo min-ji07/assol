@@ -69,10 +69,10 @@ return (
                             근무일 설정
                             <input type="radio" id="select_01" value = "1" name="select" />
                             <label for="select_01">월 ~ 금</label>
-                            <input type="radio" id="select_01" value = "2" name="select" />
-                            <label for="select_01">월 ~ 토</label>
-                            <input type="radio" id="select_01" value = "3" name="select" />
-                            <label for="select_01">월 ~ 일</label>
+                            <input type="radio" id="select_02" value = "2" name="select" />
+                            <label for="select_02">월 ~ 토</label>
+                            <input type="radio" id="select_03" value = "3" name="select" />
+                            <label for="select_03">월 ~ 일</label>
                         </p>
 
 

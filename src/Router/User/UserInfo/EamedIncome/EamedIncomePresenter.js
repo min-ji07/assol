@@ -97,7 +97,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
        
         
          return true;
-       }
+    }
 
     const dateValidation = (date) =>{
         var date = utils.regExr.numOnly(date);
@@ -203,18 +203,6 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             "cuModels" : getCurriculumRow()
         };
 
-        let militaryRow = getMilitaryRow();
-        let curriculumRow = getCurriculumRow();
-        
-        i=0;
-        for(i; i<militaryRow.length; i++){
-            params["exData"]["exModels"].push(militaryRow[i]);
-        }
-        i=0;
-        for(i; i<curriculumRow.length; i++){
-            params["exData"]["exModels"].push(curriculumRow[i]);
-        }
-
         console.log(params);
         async function saveInit() {
             try {
@@ -264,7 +252,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         // window.location.href = "/user/userManagement";
                         // location.reload();
                     }
-                    window.location.href = "/user/userManagement";
+                    // window.location.href = "/user/userManagement";
                 });
             } catch (e) {
                 // alert("관리자에게 문의하세요.",e);
@@ -360,7 +348,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         const btn = $('<button type="button" tabindex="-1" style="color:#7d7d7d; background-color:transparent;">X</button>').on("click",function(e){
             $(e.target).parent().remove();  // 삭제이벤트
         });
-        li.append('<input type="text" id="addSalaryTitle" class="address" placeholder="추가수당"/>');
+        li.append('<input type="text" id="addSalaryTitle" name="addSalaryTitle" class="address" placeholder="추가수당"/>');
         li.append(' : <input class="money_input" type="text" name="addSalaryPay" id="addSalaryPay" class="address" placeholder="1,700,000" style="margin-right:5px;"/>');
         
         li.append(btn);
@@ -514,7 +502,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"40px"}}>
                                         <li>
                                             <span>월급 :</span>
-                                            <input type="text" id="salaryOfMonth" name="salaryOfMonth" />
+                                            <input type="text" class="money_input" id="salaryOfMonth" name="salaryOfMonth" />
                                             <span>원</span>
                                             {/* <input type="text" class="money_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" /> */}
                                         </li>
