@@ -27,7 +27,13 @@ export const callApi = {
     
 
     getUserInfo:(params) => axios.get(testUrl2+'/user/GetUserInfobyBranchNo',{params:params}), // 사원조회
-    setInitSalary:(params) => axios.get(testUrl2+'/PayRoll/SetPayRollPage',{params:params}), // 급여입력 초기화면
+    
+    setInitSalary:(params) => axios.get(testUrl2+'/PayRoll/InitPayRollPage',{params:params}), // 급여입력 초기화면
+    selectTargetUser:(params) => axios({
+        method: 'post',
+        url: testUrl2+'/PayRoll/SelectTargetUser',
+        data: params
+    }), // 급여입력 - 사원상세조회
 
     // saveUserInfo:(params) => axios.post('http://82230995.ngrok.io/User/UserRegistration',{params:params}), // 사원등록
     userRegistration:(params) => axios({

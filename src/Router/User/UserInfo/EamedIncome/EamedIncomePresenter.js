@@ -231,7 +231,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         frm.append("employeeNumber",employeeNumber);
         checkUserImage = $(".tab_01 #userImage")[0].value == "" ? true : false;
         if(checkUserImage){
-            frm.append("imageIsNull",1);
+            frm.append("imageIsNull","Y");
         } else {
             frm.append("userImage",$(".tab_01 #userImage")[0].files[0]);
         }

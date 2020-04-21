@@ -54,6 +54,8 @@ const UserInfo = () => {
         $(".user_type_label[for="+tab+"]").css("width","150px");
         $("input[name=tab1]:not(#"+tab+")").remove();
         $(".user_type_label:not([for="+tab+"])").remove();
+        $(".div_bottom:not(.right):not(."+tab+")").remove();
+        
 
         // $(".user_type_label:not([for="+tab+"])").remove();
 
@@ -61,9 +63,21 @@ const UserInfo = () => {
         for(var key in data){
             let elem = $("#"+key);
             let val = data[key] == null ? "" : data[key];
+            // let checkClass = elem.attr("class");
 
+            // if(checkClass.indexOf("money_input") != -1){
+            //     val = utils.regExr.comma(val);
+            // }
             if(elem.length != 0){
                 elem.val(val);
+            }
+            // 수습기간 on
+            if(key == "isProbation" && val == "0"){
+                elem.next().show();
+            }
+            // 비자타입 on
+            if(key == "national" && val == "외국인"){
+                $(".visa_li").show();
             }
 
 

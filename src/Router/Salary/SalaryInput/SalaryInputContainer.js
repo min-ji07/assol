@@ -85,14 +85,14 @@ function SalaryInputContainer() {
            const gridId = "userListGrid";
 
            //클릭 이벤트
-           const onRowDoubleClicked = (e)=> {
+           const onRowDoubleClicked = (e) => {
                 let employeeNumber = e.data.employeeNumber;
                 let userType = e.data.userType;
-                
-                userSelect(employeeNumber,userType);
+                console.log(e);
+                // userSelect(employeeNumber,userType);
             }
 
-           return {columnDefs, defaultColDef, components, gridId};
+           return {columnDefs, defaultColDef, components, gridId, onRowDoubleClicked};
     }
 
     const userSelect = (params) => {

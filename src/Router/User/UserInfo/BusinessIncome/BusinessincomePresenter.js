@@ -21,7 +21,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
             return false;
         }
 
-        if(!regEmail.test($(".div_bottom.tab_01 input[type='email']").val())){
+        if(!regEmail.test($(tabDiv+" input[type='email']").val())){
             alert("이메일이 올바르지 않습니다.");
             return false;
         }
@@ -64,7 +64,6 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
     }
 
     function personalValidaition(jumin) {
-        console.log(jumin);
         jumin = utils.regExr.numOnly(jumin);
        
         //주민등록 번호 13자리를 검사한다.
