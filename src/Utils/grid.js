@@ -98,12 +98,15 @@ var gridCommon = function() {
             cols.push(addCol);
             gridApi.api.setColumnDefs(cols);
         }
-        ,setGridApi : (targetApi) =>{
+        ,setGridApi : (targetApi) => {
             // 한페이지 grid 여러개일때 사용
             gridApi = {
                 api : targetApi,
                 columnApi : targetApi.columnController.columnApi
             };
+        }
+        ,setColumn : (columnDefs) => {
+            gridApi.api.setColumnDefs(columnDefs);
         }
     }
 }();

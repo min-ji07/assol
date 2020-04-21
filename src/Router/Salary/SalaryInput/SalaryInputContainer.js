@@ -31,31 +31,24 @@ function SalaryInputContainer() {
     }
     
     useEffect(()=>{
+        setGridDefs(gridSetting());
+        setGridDefs2(gridSetting2());
+        picker.setMonthPicker(('#month-picker'),function(value){
+            // initGrid(value);
+        });
        async function init() {
-        try {
+            try {
+                await callApi.setInitSalary(params).then(res=> {   
+                    /* 사원 리스트 */
+                    setRowData(res.data.Data);
 
-            await callApi.setInitSalary(params).then(res=> {
-
-                
-                console.log(res);    
-                /* 사원 리스트 */
-                setGridDefs(gridSetting());
-                setRowData(res.data.Data);
-                
-                
-                /* 선택사원 */
-                setGridDefs2(gridSetting2());
-                setRowData2(res.data.Data); 
-                                
-
-              
-                picker.setMonthPicker(('#month-picker'),function(value){
-                    // initGrid(value);
+                    picker.setMonthPicker(('#month-picker'),function(value){
+                        // initGrid(value);
+                    });
                 });
-            });
-        }catch{
+            }catch{
 
-        }
+            }
        };
        init();
     },[]); //init
@@ -83,51 +76,81 @@ function SalaryInputContainer() {
                ,editable : false
                ,cellStyle: {textAlign: 'center'}
                ,resizable : true
-           } 
+           }
    
            //컴포넌트 세팅 
            const components = {  };
-       
-           return {columnDefs, defaultColDef, components};
+
+           //그리드 id 세팅
+           const gridId = "userListGrid";
+
+           //클릭 이벤트
+           const onRowDoubleClicked = (e)=> {
+                let employeeNumber = e.data.employeeNumber;
+                let userType = e.data.userType;
+                
+                userSelect(employeeNumber,userType);
+            }
+
+           return {columnDefs, defaultColDef, components, gridId};
+    }
+
+    const userSelect = (params) => {
+        async function init() {
+            try {
+                await callApi.setInitSalary(params).then(res=> {   
+                    if(res.data.ErrorCode == 1){
+                        alert(res.data.Msg);
+                    } else {
+                        setOtherColumn();
+                        /* 사원 리스트 */
+                        setRowData(res.data.Data);
+                    }
+                });
+            }catch{
+
+            }
+       }
+       init();
     }
 
     const gridSetting2 =()=>{
         //컬럼 정의
-           const columnDefs= [  
-               { headerName: "rowId", field: "rowId", hide:true }
-               ,{headerName: "성명 ",field:"userName", width:75, editable:false}
-               ,{headerName: "직책", field: "position", width:110, editable:false,
-                    cellEditor: "select",
-                    cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
-                    refData: regEmployeeMappings
-                }
-               ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
-               ,{ headerName: "기본급", field: "baseSalary", width:120,
-                    valueFormatter: function(params) {
-                        return utils.regExr.comma(params.value);
+            const columnDefs= [  
+                { headerName: "rowId", field: "rowId", hide:true }
+                ,{headerName: "성명 ",field:"userName", width:75, editable:false}
+                ,{headerName: "직책", field: "position", width:110, editable:false,
+                        cellEditor: "select",
+                        cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
+                        refData: regEmployeeMappings
                     }
-                }
-                ,{ headerName: "식비", field: "foodSalary", width:120,
+                ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
+                ,{ headerName: "기본급", field: "baseSalary", width:120,
+                        valueFormatter: function(params) {
+                            return utils.regExr.comma(params.value);
+                        }
+                    }
+                    ,{ headerName: "식비", field: "foodSalary", width:120,
+                        valueFormatter: function(params) {
+                            return utils.regExr.comma(params.value);
+                        }    
+                    }
+                    ,{ headerName: "차량유지비", field: "carSalary", width:120,
+                        valueFormatter: function(params) {
+                            return utils.regExr.comma(params.value);
+                        }    
+                    }
+                    ,{ headerName: "성과금", field: "welfareSalary", width:120,
                     valueFormatter: function(params) {
-                        return utils.regExr.comma(params.value);
-                    }    
-                }
-                ,{ headerName: "차량유지비", field: "carSalary", width:120,
-                    valueFormatter: function(params) {
-                        return utils.regExr.comma(params.value);
-                    }    
-                }
-                ,{ headerName: "성과금", field: "welfareSalary", width:120,
-                  valueFormatter: function(params) {
-                        return utils.regExr.comma(params.value);
-                    }    
-                }
-                ,{ headerName: "직책수당", field: "positionSalary", width:120,
-                    valueFormatter: function(params) {
-                        return utils.regExr.comma(params.value);
-                    }    
-                }
-           ]
+                            return utils.regExr.comma(params.value);
+                        }    
+                    }
+                    ,{ headerName: "직책수당", field: "positionSalary", width:120,
+                        valueFormatter: function(params) {
+                            return utils.regExr.comma(params.value);
+                        }    
+                    }
+            ]
    
           
    
@@ -141,11 +164,77 @@ function SalaryInputContainer() {
    
            //컴포넌트 세팅 
            const components = {  };
+
+           const gridId = "salaryInputGrid";
        
-           return {columnDefs, defaultColDef, components};
+           return {columnDefs, defaultColDef, components, gridId};
     }
 
 
+    // 컬럼추가부분
+    let testOthercontent = [
+        {title:"t1",value:"v1"},
+        {title:"t2",value:"v2"},
+        {title:"t3",value:"v3"},
+        {title:"t4",value:"v4"},
+        {title:"t5",value:"v5"}
+    ];
+
+
+    const setOtherColumn = () => {
+        
+    }
+
+    const defaultColumnJson = () => {
+        const arr = [
+            { headerName: "rowId", field: "rowId", hide:true }
+            ,{headerName: "성명 ",field:"userName", width:75, editable:false}
+            ,{headerName: "직책", field: "position", width:110, editable:false,
+                cellEditor: "select",
+                cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
+                refData: regEmployeeMappings
+            }
+            ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
+            ,{ headerName: "기본급", field: "baseSalary", width:120,
+                valueFormatter: function(params) {
+                    return utils.regExr.comma(params.value);
+                }
+            }
+            ,{ headerName: "식비", field: "foodSalary", width:120,
+                valueFormatter: function(params) {
+                    return utils.regExr.comma(params.value);
+                }    
+            }
+            ,{ headerName: "차량유지비", field: "carSalary", width:120,
+                valueFormatter: function(params) {
+                    return utils.regExr.comma(params.value);
+                }    
+            }
+            ,{ headerName: "성과금", field: "welfareSalary", width:120,
+            valueFormatter: function(params) {
+                    return utils.regExr.comma(params.value);
+                }    
+            }
+            ,{ headerName: "직책수당", field: "positionSalary", width:120,
+                valueFormatter: function(params) {
+                    return utils.regExr.comma(params.value);
+                }    
+            }
+        ]
+        return arr;
+    }
+
+    const addColumnJson = () => {
+        var json = { 
+            headerName: "",
+            field: "",
+            width:120,
+             valueFormatter: function(params) {
+                 return utils.regExr.comma(params.value);
+             }    
+         }
+        return json;
+    }
 
 return (
    <SalaryInputPresenter rowData={rowData} gridDefs={gridDefs} rowData2={rowData2} gridDefs2={gridDefs2}/>
