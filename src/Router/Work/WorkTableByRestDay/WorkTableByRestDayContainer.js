@@ -54,7 +54,7 @@ const WorkTableByRestDayContainer = () => {
     const gridSetting =()=>{
         //컬럼 정의
            const columnDefs= [  
-               { headerName: "rowId", field: "rowId", hide:true }
+               { headerName: "rowId", field: "rowI2d", hide:true }
                ,{ headerName: "", field: "branchNo", width:30 ,resizable:false,editable : false
                    ,checkboxSelection:true,headerCheckboxSelection: true,
                     valueFormatter:function(params){ 
