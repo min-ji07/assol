@@ -16,7 +16,7 @@ function saveRow (result) {
     var list = [];
     result.forEach(element => {
         if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
-            element.yearsMonthDate = $('#month-picker').val();
+            element.yearsMonthDate = $('#month-picker').val().replace("-","");
             element.branchNo =1;
             element.workType = $("#select_01").val();
             list.push(element);

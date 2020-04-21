@@ -200,7 +200,7 @@ function WorkTableByGroupContainer() {
             console.log(target.value);
             params = {
                 "branchNo" : 1,
-                "yearsMonthDate" : target.value
+                "yearsMonthDate" : target.value.replace("-","")
             }
             try{
                 await callApi.getGridData(params).then(res=>{
