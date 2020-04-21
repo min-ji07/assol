@@ -134,7 +134,7 @@ function WorkTableByGroupContainer() {
                     }
                 let reststrTime = new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0);
                 let restendTime = new Date(0,0,0,restTimeArr[1].split(":")[0],restTimeArr[1].split(":")[1],0);
-                if(restendTime <= reststrTime){
+                if(restendTime < reststrTime){
                     alert("쉬는 마지막 시간이 시작 시간보다 큽니다.");
                     check = false;
                     return false; 
@@ -154,7 +154,7 @@ function WorkTableByGroupContainer() {
                 //휴게시간 총합
                 let subStrTime= new Date(0,0,0,subRestTimeArr[0].split(":")[0],subRestTimeArr[0].split(":")[1],0);
                 let subEndTime = new Date(0,0,0,subRestTimeArr[1].split(":")[0],subRestTimeArr[1].split(":")[1],0);
-                if(subEndTime <= subStrTime){
+                if(subEndTime < subStrTime){
                     alert("쉬는 마지막 시간이 시작 시간보다 큽니다.");
                     check = false;
                     return false; 
@@ -171,7 +171,8 @@ function WorkTableByGroupContainer() {
                alert("휴게시간은 근무시간을 초과할수없습니다.");
                return false;
            }
-           const overTime = allCurrentTime - (8 *60);
+           var overTime = allCurrentTime - (8 *60);
+           overTime = overTime < 0 ? 0 : overTime;
            e.node.setDataValue('overTime',overTime);
            e.node.setDataValue('currentTime',allCurrentTime)
            let pass = "Y"
@@ -201,13 +202,19 @@ function WorkTableByGroupContainer() {
                 "branchNo" : 1,
                 "yearsMonthDate" : target.value
             }
-            await callApi.getGridData(params).then(res=>{
-                if(res.data && res.data.Data){
-                      //공통 그리드 데이터 셋팅
-                    setRowData(res.data.Data);
-                    setGridDefs({columnDefs, defaultColDef, components, onRowEditingStopped});
-                }
-            })
+            try{
+                await callApi.getGridData(params).then(res=>{
+                    console.log(res.data.Data);
+                    if(res.data && res.data.Data){
+                          //공통 그리드 데이터 셋팅
+                        setRowData(res.data.Data);
+                        setGridDefs({columnDefs, defaultColDef, components, onRowEditingStopped});
+                    }
+                })
+            }
+            catch(error){
+                console.log("Catch :" + error);
+            }
         }catch(error)
         {
             console.log("Catch :" + error);

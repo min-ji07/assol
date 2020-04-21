@@ -18,15 +18,17 @@ function saveRow (result) {
         if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
             element.yearsMonthDate = $('#month-picker').val();
             element.branchNo =1;
-            element.workDay = $("#select_01").val();
+            element.workType = $("#select_01").val();
             list.push(element);
         }
     });
-    var params = result;
+    let params = {};
+    params.groupInfos = result;
     async function init(params){
         try {
+            console.log(params);
             await callApi.SaveGroupRow(params).then(res => {
-                console.log(params);
+            
                 if(res.data.ErrorCode == 0){ 
                     alert("근무조 설정이 완료되었습니다..");
                 }

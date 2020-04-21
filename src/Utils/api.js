@@ -137,8 +137,11 @@ export const callApi = {
     }),
     SaveGroupRow :(params) => axios({
         method: 'post',
-        url: localTest + '/Admin/AdminRegistration',
-        data: params
+        url: localTest + '/TimeTable/SetTimeTable',
+        data: params,
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
     
 
