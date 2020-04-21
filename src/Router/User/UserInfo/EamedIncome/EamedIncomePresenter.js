@@ -40,6 +40,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     || dateInput[i].id == "getOfIns3" || dateInput[i].id == "lostOfIns1"
                 ){
                     $(tabDiv).find("label[for='tab_002']").click();
+                } else {
+                    $(tabDiv).find("label[for='tab_001']").click();
                 }
                 dateInput[i].select();
                 dateInput[i].focus();
@@ -115,7 +117,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
     const fnSave = () => {
 
         if(!fnValidation()){
-            return;
+            // return;
         }
         
         let i=0;
@@ -136,7 +138,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         }
         params["userInfo"] = tempParams;
         params.userInfo.userType = 0; // 일반소득자
-        params.userInfo.branchNo = 30; // 임시 나중에 수정해야함
+        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
 
         i=0;
         tempParams = {
@@ -148,19 +150,24 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         let tempTitle = "";
         for(i; i<inputListTab1.length; i++){
             var checkId = inputListTab1[i].id;
+            var checkClass = inputListTab1[i].className;
+            var val = inputListTab1[i].value;
             // 급여항목 추가리스트
             if(checkId.indexOf("addSalary") != -1){
                 if(checkId == "addSalaryTitle"){
                     // tempParams.otherContent += '"'+inputListTab1[i].value+'":';
-                    tempJson.title = inputListTab1[i].value;
+                    tempJson.title = val;
                 } else if(checkId == "addSalaryPay"){
                     // tempParams.otherContent += '"'+inputListTab1[i].value+'"';
-                    tempJson.value = inputListTab1[i].value;
+                    tempJson.value = val;
                     tempParams.otherContent.push(tempJson);
                     tempJson = {};
                 }
             } else {
-                tempParams[inputListTab1[i].id] = inputListTab1[i].value;
+                if(checkClass.indexOf("money_input") != -1){
+                    val = utils.regExr.numOnly(val);
+                }
+                tempParams[inputListTab1[i].id] = val;
             }
         }
 
@@ -172,10 +179,12 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         i=0;
         tempParams = {};
         for(i; i<inputListTab2.length; i++){
+            console.log(inputListTab2[i].id);
             tempParams[inputListTab2[i].id] = inputListTab2[i].value; 
         }
 
         params["insData"] = tempParams;
+
         params.insData["sfModel"] = getDependRow();
 
         params["eduData"] = {
@@ -206,6 +215,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             params["exData"]["exModels"].push(curriculumRow[i]);
         }
 
+        console.log(params);
         async function saveInit() {
             try {
                 console.log(JSON.stringify(params));
@@ -224,7 +234,6 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                 alert("관리자에게 문의하세요.",e);
             }
         };
-        
         saveInit();
     }
 
@@ -382,10 +391,10 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         </div>
                     </div>
                     <ul class="userinfo_left_box">
-                        <li><span>성명 :</span><input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="테스트"/></li>
+                        <li><span>성명 :</span><input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." /></li>
                         <li>
                             <span>주민번호 :</span>
-                            <input type="text" class="personal_input" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" defaultValue="950527-1010101"/>
+                            <input type="text" class="personal_input" name="personalNumber" id="personalNumber" maxLength="14" placeholder="123456-1234567" />
                             <select name="national" id="national">
                                 <option value="내국인" selected>내국인</option>
                                 <option value="외국인">외국인</option>                                                
@@ -397,24 +406,24 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             </span>
                             <input type="text" id="visaType" name="visaType" placeholder="K-9011"/>
                         </li>
-                        <li><span>입사일 :</span><input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-04-05"/></li>
+                        <li><span>입사일 :</span><input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." /></li>
                         {/* <li>아이디 :<input type="text" name="id" id="joinId" placeholder="아이디를 입력해주세요."/></li> */}
                         <li><span>직무 :</span> 
-                            {/* <input type="text" name="position" id="position" placeholder="사회복지사" defaultValue="테스트"/> */}
+                            {/* <input type="text" name="position" id="position" placeholder="사회복지사" /> */}
                             <select name="position" id="position" style={{width:"182px"}}>
                                 <option value="0">사회복지사</option>
                                 <option value="1">요양보호사</option>
                                 <option value="2">사무원</option>
                                 <option value="3">시설장</option>
                                 <option value="4">조리원</option>
-                                <option value="5">운전사</option>2
+                                <option value="5">운전사</option>
                                 <option value="6">물리치료사</option>
                                 <option value="7">촉탁의</option>
                                 <option value="8">대표</option>
                             </select>
                         </li>
                         <li><span>직위 : </span>
-                            <input type="text" name="workLevel" id="workLevel" placeholder="부장" defaultValue="사원"/>
+                            <input type="text" name="workLevel" id="workLevel" placeholder="부장" />
                         </li>
                         </ul>
                     </div>
@@ -436,28 +445,28 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <option value="0">여</option>                                                
                                 </select>
                                 <span  style={{display:"none"}}>
-                                    수습만료일 :<input type="text" class="date_input" name="probation" id="probation" placeholder="2020-01-01"  defaultValue="2020-04-05" style={{ width:"89px"}}/>
+                                    수습만료일 :<input type="text" class="date_input" name="probation" id="probation" placeholder="2020-01-01"   style={{ width:"89px"}}/>
                                 </span>
                             </li>
                             <li>
                                 <span>계약기간 :</span>
-                                <input type="text" class="dateto_input" name="contractPeriod" id="contractPeriod" placeholder="2020-01-01 ~ 2021-01-01" defaultValue="2020-01-01~2020-01-16"/>
+                                <input type="text" class="dateto_input" name="contractPeriod" id="contractPeriod" placeholder="2020-01-01 ~ 2021-01-01" />
                             </li>
-                            <li>전화번호 :<input type="tel" maxLength="13" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="010-4412-8516"/></li>
-                            <li>휴대폰 :<input type="tel" maxLength="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-4412-8516"/></li>
+                            <li>전화번호 :<input type="tel" maxLength="13" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" /></li>
+                            <li>휴대폰 :<input type="tel" maxLength="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" /></li>
                             <li>
                                 <span>이메일 :</span>
-                                <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/>
+                                <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." />
                             </li>
                             <li style={{position:"relative"}}>
-                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="서울시" style={{width:"152px"}}/>
+                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호"  style={{width:"152px"}}/>
                                 <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
                             </li>
                             <li>
-                                <input type="text" name="address" id="address" placeholder="주소"  defaultValue="중랑구 답십리로" style={{width:"300px"}}/>
+                                <input type="text" name="address" id="address" placeholder="주소"   style={{width:"300px"}}/>
                             </li>
                             <li style={{height:"70px"}}>
-                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  defaultValue="77길45"></textarea>
+                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  ></textarea>
                             </li>
                             <li class="leave_li">  
                                 <span>퇴사여부 :</span>
@@ -505,31 +514,31 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"40px"}}>
                                         <li>
                                             <span>월급 :</span>
-                                            <input type="text" id="salaryOfMonth" name="salaryOfMonth" defaultValue="100,000,000"/>
+                                            <input type="text" id="salaryOfMonth" name="salaryOfMonth" />
                                             <span>원</span>
-                                            {/* <input type="text" class="money_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" defaultValue="1000000"/> */}
+                                            {/* <input type="text" class="money_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" /> */}
                                         </li>
                                     </ul>    
                                     <ul>
                                         <li class="li_left">
                                             <span>기본급 :</span>
-                                            <input type="text" name="baseSalary" id="baseSalary" class="address money_input big" placeholder="1,700,000" defaultValue="1000000"/>
+                                            <input type="text" name="baseSalary" id="baseSalary" class="address money_input big" placeholder="1,700,000" />
                                         </li>
                                         <li class="li_left small">
                                             <span>식대 :</span>
-                                           <input type="text" name="foodSalary" id="foodSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
+                                           <input type="text" name="foodSalary" id="foodSalary" class="address money_input" placeholder="1,700,000" />
                                         </li>
                                         <li class="li_left big">
                                             <span>차량유지비 :</span>
-                                            <input type="text" name="carSalary" id="carSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
+                                            <input type="text" name="carSalary" id="carSalary" class="address money_input" placeholder="1,700,000" />
                                         </li>
                                         <li class="li_left">
                                             <span>복리후생 :</span>
-                                            <input type="text" name="welfareSalary" id="welfareSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
+                                            <input type="text" name="welfareSalary" id="welfareSalary" class="address money_input" placeholder="1,700,000" />
                                         </li>
                                         <li class="li_left">
                                             <span>직책수당 :</span>
-                                            <input type="text" name="positionSalary" id="positionSalary" class="address money_input" placeholder="1,700,000" defaultValue="1000000"/>
+                                            <input type="text" name="positionSalary" id="positionSalary" class="address money_input" placeholder="1,700,000" />
                                         </li>     
                                     </ul>
                                 </li>
@@ -537,7 +546,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <strong style={{display:"block", marginTop:"20px"}}>성과금, 상여금</strong>
                                     <ul id="yearsSalryBox">
                                         <li class="in_block">
-                                            성과금 :<input type="text" class="money_input" name="insentive" id="insentive" placeholder="1,700,000" defaultValue="1000000"/>
+                                            성과금 :<input type="text" class="money_input" name="insentive" id="insentive" placeholder="1,700,000" />
                                             <select id="insentiveType" style={{width: "74px", textAling: "center"}}>
                                                 <option value="0">월간</option>
                                                 <option value="1">분기</option>
@@ -546,7 +555,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                             </select>
                                         </li>
                                         <li class="in_block" style={{marginLeft: "15px"}}>
-                                            상여금 :<input type="text" class="money_input" name="bonus" id="bonus" placeholder="1,700,000" defaultValue="1000000"/>
+                                            상여금 :<input type="text" class="money_input" name="bonus" id="bonus" placeholder="1,700,000" />
                                             <select id="bonusType" style={{width: "74px"}}>
                                                 <option value="0">월간</option>
                                                 <option value="1">분기</option>
@@ -556,7 +565,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </li>
                                         <li class="salary_years" style={{marginRight:"30px"}}>
                                             <span>연봉 :</span>
-                                            <input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500" defaultValue="1,000,000" 
+                                            <input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500"  
                                             tabindex="-1" style={{fontSize: "20px", border:"none", width: "130px", height:"30px"}} readOnly/>
                                             <span>원</span>
                                         </li>
@@ -566,7 +575,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <strong style={{display:"block", margknTop:"8px"}}>관리사항</strong>
                                     <ul>
                                         <li style={{marginLeft:"0px"}}>
-                                            예금주 :<input type="text" id="accountHolder" name="accountHolder" placeholder="박이삭" defaultValue="김경주"/>
+                                            예금주 :<input type="text" id="accountHolder" name="accountHolder" placeholder="박이삭" />
                                         </li>
                                         <li>
                                             급여이체은행 :
@@ -621,7 +630,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                 <option value='홍콩상하이은행'>홍콩상하이은행</option>
                                             </select>
                                         </li>
-                                        <li>계좌번호 :<input type="text" id="accountNo" placeholder="1000-100-1000000" style={{width:"178px"}} defaultValue="110-222-2222"/></li>
+                                        <li>계좌번호 :<input type="text" id="accountNo" placeholder="1000-100-1000000" style={{width:"178px"}} /></li>
                                         <br />
                                         <li style={{marginLeft:"0px"}}>
                                             중소기업취업감면 여부 :
@@ -630,9 +639,9 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                 <option value="0">여</option>
                                             </select>
                                         </li>
-                                        <li>기간 :<input type="text" class="dateto_input" id="reductDate" placeholder="2020.01-01~2025.01.01" style={{width: "213px"}}  defaultValue="2020-01-01~2020-05-05"/></li>
+                                        <li>기간 :<input type="text" class="dateto_input" id="reductDate" placeholder="2020.01-01~2025.01.01" style={{width: "213px"}}  /></li>
                                         <li>감면율 :
-                                            {/* <input type="text" id="reductPer" placeholder="90"  style={{width: "43px"}} defaultValue="80"/>% */}
+                                            {/* <input type="text" id="reductPer" placeholder="90"  style={{width: "43px"}} />% */}
                                             &nbsp;
                                             <select id="reductPer" style={{width: "58px",textIndent:"5px"}}>
                                                 <option value="0">0</option>
@@ -649,7 +658,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                             </select>
                                             &nbsp;%
                                         </li>
-                                        <li>감면대상 :<input type="text" id="reductTarget" placeholder="급여" style={{width: "53px"}} defaultValue="급여"/></li>
+                                        <li>감면대상 :<input type="text" id="reductTarget" placeholder="급여" style={{width: "53px"}} /></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -664,7 +673,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <strong>4대보험</strong>
                                     <button type="button" class="btn_gray" style={{marginLeft: "5px", marginTop: "-5px", marginLeft:"7px"}}>신청하기</button>
                                         <div class="tab_01_grid">
-                                            <ul>
+                                            <ul id="insurnaceTable">
                                                 <li>
                                                     <div>구분</div>
                                                     <div>기호번호</div>
@@ -673,90 +682,29 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                 </li>
                                                 <li>
                                                     <div>국민연금</div>
-                                                    <div><input type="text" id="fourIns0" defaultValue="" maxLength="10"/></div>
-                                                    <div><input type="text" class="date_input " id="getOfIns0"  defaultValue="2020-08-08" /></div>
-                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns0" defaultValue="2020-08-08"/></div>
+                                                    <div><input type="text" id="fourIns0"  maxLength="10"/></div>
+                                                    <div><input type="text" class="date_input " id="getOfIns0"   /></div>
+                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns0" /></div>
                                                 </li>
                                                 <li>
                                                     <div>건강보험</div>
-                                                    <div><input type="text" id="fourIns1"  defaultValue="" maxLength="10"/></div>
-                                                    <div><input type="text" class="date_input " id="getOfIns1"  defaultValue="2020-08-08"/></div>
-                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns1"  defaultValue="2020-08-08"/></div>
+                                                    <div><input type="text" id="fourIns1"   maxLength="10"/></div>
+                                                    <div><input type="text" class="date_input " id="getOfIns1"  /></div>
+                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns1"  /></div>
                                                 </li>
                                                 <li>
                                                     <div>고용보험</div>
-                                                    <div><input type="text" id="fourIns2" defaultValue="" maxLength="10"/></div>
-                                                    <div><input type="text" class="date_input " id="getOfIns2" defaultValue="2020-08-08"/></div>
-                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns2" defaultValue="2020-05-06"/></div>
+                                                    <div><input type="text" id="fourIns2"  maxLength="10"/></div>
+                                                    <div><input type="text" class="date_input " id="getOfIns2" /></div>
+                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns2" /></div>
                                                 </li>
                                                 <li>
                                                     <div class="bottom_border">산재보험</div>
-                                                    <div class="bottom_border"><input type="text" id="fourIns3" defaultValue="" maxLength="10"/></div>
-                                                    <div class="bottom_border"><input type="text" class="date_input " id="getOfIns3"  defaultValue="2020-05-06"/></div>
-                                                    <div class="bottom_border right_border"><input type="text" class="date_input " id="lostOfIns3"  defaultValue="2020-06-08"/></div>
+                                                    <div class="bottom_border"><input type="text" id="fourIns3"  maxLength="10"/></div>
+                                                    <div class="bottom_border"><input type="text" class="date_input " id="getOfIns3"  /></div>
+                                                    <div class="bottom_border right_border"><input type="text" class="date_input " id="lostOfIns3"  /></div>
                                                 </li>
                                             </ul>
-                                            {/* <DataGrid rowData={rowData} gridDefs={insDefs} gridCommon={gridCommon}/> */}
-                                            {/* <table id="insurnaceTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>구분</th>
-                                                        <th>기호번호</th>
-                                                        <th>취득일</th>
-                                                        <th>상실일</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <th>국민연금</th>
-                                                        <td>
-                                                            <input type="text" id="fourIns0" defaultValue=""/>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="date_input " id="getOfIns0"  defaultValue="2020-08-08"/>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="date_input " id="lostOfIns0" defaultValue="2020-08-08"/>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>건강보험</th>
-                                                        <td>
-                                                            <input type="text" id="fourIns1"  defaultValue=""/>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="date_input " id="getOfIns1"  defaultValue="2020-08-08"/>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="date_input " id="lostOfIns1"  defaultValue="2020-08-08"/>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>고용보험</th>
-                                                        <td>
-                                                            <input type="text" id="fourIns2" defaultValue=""/>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="date_input " id="getOfIns2" defaultValue="2020-08-08"/>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="date_input " id="lostOfIns2" defaultValue="2020-05-06"/>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <th>산재보험</th>
-                                                        <td>
-                                                            <input type="text" id="fourIns3" defaultValue=""/>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="date_input " id="getOfIns3"  defaultValue="2020-05-06"/>
-                                                        </td>
-                                                        <td>
-                                                            <input type="text" class="date_input " id="lostOfIns3"  defaultValue="2020-06-08"/>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table> */}
                                         </div>
                                     </li>
                                     {/* <li style={{marginLeft: "25px"}}>

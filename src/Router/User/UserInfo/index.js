@@ -40,9 +40,11 @@ const UserInfo = () => {
         // };
     }
 
-    const userInfoEvent = (data) => {
+    const userInfoEvent = (data,othercontent) => {
+        console.log(data);
         let userType = data.userType;
         let tab;
+        // userType = "2"; // 테스트용 삭제해!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         if(userType == "0"){
             tab = "tab_01";
         } else if(userType == "1"){
@@ -50,14 +52,13 @@ const UserInfo = () => {
         } else if(userType == "2"){
             tab = "tab_03";
         }
-        
         $("#"+tab).click();
         $(".user_type_label[for="+tab+"]").css("width","150px");
         $("input[name=tab1]:not(#"+tab+")").remove();
         $(".user_type_label:not([for="+tab+"])").remove();
 
         // $(".user_type_label:not([for="+tab+"])").remove();
-
+// othercontent
         $(".leave_li").show(); // 사원상세정보 일때만 퇴사정보 보이게
         for(var key in data){
             let elem = $("#"+key);
@@ -67,6 +68,9 @@ const UserInfo = () => {
                 elem.val(val);
             }
 
+
+            $(".visa_li").show();
+            $("#isProbation").next().show();
             
             console.log(key,"",data[key]);
             // 에러체크하자
@@ -83,7 +87,7 @@ const UserInfo = () => {
                     alert(res.data.Msg);
                 } else {
                     let data = res.data;
-                    userInfoEvent(data.baseData);
+                    userInfoEvent(data.baseData,data.othercontent);
                     setRowData(data.sfData);
                     setRowData2(data.eduData);
                     setRowData3(data.exData);

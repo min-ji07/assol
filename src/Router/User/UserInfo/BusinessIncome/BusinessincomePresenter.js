@@ -151,20 +151,28 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
         }
         params["userInfo"] = tempParams;
         params.userInfo.userType = 1; // 사업소득자
-        params.userInfo.branchNo = 30; // 임시 나중에 수정해야함
+        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
 
         i=0;
         tempParams = {};
         for(i; i<inputListTab1.length; i++){
-            if(inputListTab1[i].id.indexOf("businessNo") != -1){
-                if(inputListTab1[i].id == "businessNo1"){
-                    tempParams["businessNo"] = inputListTab1[i].value;
+            var checkId = inputListTab1[i].id;
+            var checkVal = inputListTab1[i].value;
+            var checkClass = inputListTab1[i].className;
+            
+            if(checkId.indexOf("businessNo") != -1){
+                if(checkId == "businessNo1"){
+                    tempParams["businessNo"] = checkVal;
                 } else {
-                    tempParams["businessNo"] += "-"+inputListTab1[i].value;
+                    tempParams["businessNo"] += "-" + checkVal;
                 }
                 continue;
             }
-            tempParams[inputListTab1[i].id] = inputListTab1[i].value; 
+
+            if(checkClass.indexOf("money_input") != -1){
+                checkVal = utils.regExr.numOnly(checkVal);
+            }
+            tempParams[checkId] = checkVal; 
         }
 
         params["detailData"] = tempParams;
@@ -314,11 +322,11 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                         <ul class="userinfo_left_box">
                         <li>
                             <span>성명 :</span>
-                            <input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="홍길동"/>
+                            <input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." />
                         </li>
                             <li>
                                 <span>주민번호 :</span>
-                                <input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  defaultValue="123456-1234567"/>
+                                <input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  />
                                 <select name="national" id="national">
                                     <option value="내국인" selected>내국인</option>
                                     <option value="외국인">외국인</option>                                                
@@ -332,7 +340,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                             </li>
                             <li>
                                 <span>입사일 :</span>
-                                <input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/>
+                                <input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." />
                             </li>
                             <li>
                                 <span>업무 :</span>
@@ -374,25 +382,25 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                         <ul class="userinfo_right_box">
                             <li>
                                 <span>전화번호 :</span>
-                                <input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000"  defaultValue="02-3223-2332"/>
+                                <input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000"  />
                             </li>
                             <li>
                                 <span>휴대폰 :</span>
-                                <input type="tel" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  defaultValue="010-2222-3333"/>
+                                <input type="tel" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  />
                             </li>
                             <li>
                                 <span>이메일 :</span>
-                                <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/>
+                                <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." />
                             </li>
                             <li style={{position:"relative"}}>
-                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="서울시" style={{width:"152px"}}/>
+                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호"  style={{width:"152px"}}/>
                                 <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
                             </li>
                             <li>
-                                <input type="text" name="address" id="address" placeholder="주소"  defaultValue="중랑구 답십리로" style={{width:"300px"}}/>
+                                <input type="text" name="address" id="address" placeholder="주소"   style={{width:"300px"}}/>
                             </li>
                             <li style={{height:"70px"}}>
-                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  defaultValue="77길45"></textarea>
+                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  ></textarea>
                             </li>
                             <li class="leave_li">  
                                 <span>퇴사여부 :</span>
@@ -431,7 +439,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                                 <li class="salary" style={{marginTop:"10px", height:"100px", listStyle:"none"}}>
                                     <ul>
                                         <li>총 연간 소득금액 :
-                                            <input type="text" class="money_input" name="totalPayOfYear" id="totalPayOfYear" placeholder="10,000,000" defaultValue="10,000,000"/> 원
+                                            <input type="text" class="money_input" name="totalPayOfYear" id="totalPayOfYear" placeholder="10,000,000" /> 원
                                         </li>
                                         <li style={{listStyle:"none", float:"left", display:"inline-block", marginLeft:"48px"}}>
                                             <select name="payQuarterType" id="payQuarterType" style={{width: "74px", textAling: "center"}}>
@@ -440,7 +448,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                                                 <option value="2">반기</option>
                                                 <option value="2">년간</option>
                                             </select>
-                                            <input type="text" class="money_input" name="payQuarter" id="payQuarter" placeholder="10,000,000" defaultValue="1,000,000"/> 원
+                                            <input type="text" class="money_input" name="payQuarter" id="payQuarter" placeholder="10,000,000" /> 원
                                         </li>
                                         <li style={{width:"325px", marginLeft:"280px"}}>기타부대수당 : 
                                             <select name="otherExtraPayType" id="otherExtraPayType" style={{marginLeft:"10px", width: "74px", textAling: "center"}}>
@@ -449,7 +457,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                                                 <option value="2">반기</option>
                                                 <option value="2">년간</option>
                                             </select>
-                                            <input type="text" class="money_input" name="otherExtraPay" id="otherExtraPay" placeholder="10,000,000" defaultValue="1,000,000"/>원
+                                            <input type="text" class="money_input" name="otherExtraPay" id="otherExtraPay" placeholder="10,000,000" />원
                                         </li>
                                     </ul>
                                 </li>
@@ -458,7 +466,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                                     <strong style={{display:"block", marginTop:"20px"}}>관리사항</strong>
                                     <ul>
                                         <li style={{listStyle:"none", float:"left", display:"inline-block", marginLeft:"0px"}}>
-                                            예금주 : <input type="text" name="accountHolder" id="accountHolder" placeholder="박이삭" defaultValue="박이삭"/>
+                                            예금주 : <input type="text" name="accountHolder" id="accountHolder" placeholder="박이삭" />
                                         </li>
                                         <li style={{listStyle:"none", display:"inline-block"}}>
                                             급여이체 은행 :
@@ -514,7 +522,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                                             </select>
                                         </li>
                                         <li style={{listStyle:"none", display:"inline-block"}}>
-                                            계좌번호 :<input type="text" id="accountNo" name="accountNo" placeholder="110-491-546205" defaultValue="110-491-546205" style={{width:"178px"}}/>
+                                            계좌번호 :<input type="text" id="accountNo" name="accountNo" placeholder="110-491-546205"  style={{width:"178px"}}/>
                                         </li>
                                     </ul>
                                 </li>
@@ -524,9 +532,9 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                                     <span style={{color:"#f38d8d", fontSize:"13px"}}> *소유자일 경우</span>
                                     <ul>
                                         <li style={{listStyle:"none", marginLeft:"0px"}}>
-                                            사업자등록번호 : <input class="num_input" type="text" maxLength="3" id="businessNo1" placeholder="00" defaultValue="11" style={{width:"40px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                            <input class="num_input" type="text" maxLength="2" id="businessNo2" placeholder="00" defaultValue="11" style={{width:"40px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
-                                            <input class="num_input" type="text" maxLength="5" id="businessNo3" placeholder="000"defaultValue="110" style={{width:"70px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
+                                            사업자등록번호 : <input class="num_input" type="text" maxLength="3" id="businessNo1" placeholder="00"  style={{width:"40px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input class="num_input" type="text" maxLength="2" id="businessNo2" placeholder="00"  style={{width:"40px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>-
+                                            <input class="num_input" type="text" maxLength="5" id="businessNo3" placeholder="000" style={{width:"70px", border:"none", borderBottom:"1px solid #8a8a8a"}}/>
                                         </li>
                                     </ul>
                                 </li>

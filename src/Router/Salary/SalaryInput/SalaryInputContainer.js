@@ -37,13 +37,13 @@ function SalaryInputContainer() {
             await callApi.setInitSalary(params).then(res=> {
 
                 
-                console.log(res, "  시발이게뭐야ㅕ")    
+                console.log(res);    
                 /* 사원 리스트 */
                 setGridDefs(gridSetting());
                 setRowData(res.data.Data);
                 
                 
-                    /* 선택사원 */
+                /* 선택사원 */
                 setGridDefs2(gridSetting2());
                 setRowData2(res.data.Data); 
                                 

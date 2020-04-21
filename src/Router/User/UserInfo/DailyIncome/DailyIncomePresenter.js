@@ -130,12 +130,18 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         }
         params["userInfo"] = tempParams;
         params.userInfo.userType = 2; // 일용직근로자
-        params.userInfo.branchNo = 30; // 임시 나중에 수정해야함
-
+        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
+        
         i=0;
         tempParams = {};
         for(i; i<inputListTab1.length; i++){
-            tempParams[inputListTab1[i].id] = inputListTab1[i].value; 
+            var checkId = inputListTab1[i].id;
+            var checkVal = inputListTab1[i].value;
+            var checkClass = inputListTab1[i].className;
+            if(checkClass.indexOf("money_input") != -1){
+                checkVal = utils.regExr.numOnly(checkVal);
+            }
+            tempParams[checkId] = checkVal;
         }
 
         params["detailData"] = tempParams;
@@ -333,11 +339,11 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     <ul class="userinfo_left_box">
                         <li>
                             <span>성명 :</span>
-                            <input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." defaultValue="홍길동"/>
+                            <input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." />
                         </li>
                             <li>
                                 <span>주민번호 :</span>
-                                <input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  defaultValue="123456-1234567"/>
+                                <input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  />
                                 <select name="national" id="national">
                                     <option value="내국인" selected>내국인</option>
                                     <option value="외국인">외국인</option>                                                
@@ -351,7 +357,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             </li>
                             <li>
                                 <span>등록일 :</span>
-                                <input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." defaultValue="2020-05-01"/>
+                                <input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." />
                             </li>
                             <li>
                                 <span>업무 :</span>
@@ -391,21 +397,21 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     </div>
                     <div class="right_div_inner">
                         <ul>
-                            <li>전화번호 :<input type="text" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" defaultValue="02-4555-6666"/></li>
-                            <li>휴대폰 :<input type="text" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" defaultValue="010-6666-7777"/></li>
+                            <li>전화번호 :<input type="text" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" /></li>
+                            <li>휴대폰 :<input type="text" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" /></li>
                             <li>
                                 <span>이메일 :</span>
-                                <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." defaultValue="kkj6670@naver.com"/>
+                                <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." />
                             </li>
                             <li style={{position:"relative"}}>
-                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" defaultValue="서울시" style={{width:"152px"}}/>
+                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호"  style={{width:"152px"}}/>
                                 <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
                             </li>
                             <li>
-                                <input type="text" name="address" id="address" placeholder="주소"  defaultValue="중랑구 답십리로" style={{width:"300px"}}/>
+                                <input type="text" name="address" id="address" placeholder="주소"   style={{width:"300px"}}/>
                             </li>
                             <li style={{height:"70px"}}>
-                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  defaultValue="77길45"></textarea>
+                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  ></textarea>
                             </li>
                             <li class="leave_li">  
                                 <span>퇴사여부 :</span>
@@ -448,13 +454,13 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <li class="salary" style={{marginTop:"10px", listStyle:"none", height:"70px"}}>
                                     <ul>
                                         <li class="li_left" style={{width:"200px"}}>
-                                            소정근로시간 :<input type="text" class="num_input" name="workTime" id="workTime" placeholder="1,700,000" defaultValue="1000000"/>
+                                            소정근로시간 :<input type="text" class="num_input" name="workTime" id="workTime" placeholder="1,700,000" />
                                         </li>
                                         <li style={{display:"inline-block"}}>
-                                            시급 : <input type="text" class="money_input" name="payOfHour" id="payOfHour" defaultValue="1,000,000"/>원
+                                            시급 : <input type="text" class="money_input" name="payOfHour" id="payOfHour" />원
                                         </li>
                                         <li class="li_right">
-                                            총예상월수령금액 :<input type="text" class="money_input" name="predictionMonth" id="predictionMonth" placeholder="2,100,500" defaultValue="1,000,000" 
+                                            총예상월수령금액 :<input type="text" class="money_input" name="predictionMonth" id="predictionMonth" placeholder="2,100,500"  
                                             tabindex="-1" style={{fontSize: "20px", border:"none", width: "130px", height:"30px", marginBottom:"4px"}} readOnly/>원
                                         </li>
                                     </ul>
@@ -463,7 +469,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <strong style={{display:"block", marginTop:"20px"}}>관리사항</strong>
                                     <ul>
                                         <li style={{marginLeft:"0px"}}>
-                                            예금주 : <input type="text" id="accountHolder" name="accountHolder" placeholder="박이삭" defaultValue="박이삭"/>
+                                            예금주 : <input type="text" id="accountHolder" name="accountHolder" placeholder="박이삭" />
                                         </li>
                                         <li>
                                         급여이체은행 :
@@ -519,7 +525,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                             </select>
                                         </li>
                                         <li>
-                                            계좌번호: <input type="text" placeholder="1002-122-113541" id="accountNo" name="accountNo" defaultValue="2220-22220-2222" style={{width:"178px"}}/>
+                                            계좌번호: <input type="text" placeholder="1002-122-113541" id="accountNo" name="accountNo"  style={{width:"178px"}}/>
                                         </li>
                                     </ul>
                                  </li>
@@ -544,27 +550,27 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                 </li>
                                                 <li>
                                                     <div>국민연금</div>
-                                                    <div><input type="text" id="fourIns0" defaultValue="" maxLength="10"/></div>
-                                                    <div><input type="text" class="date_input " id="getOfIns0"  defaultValue="2020-08-08" /></div>
-                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns0" defaultValue="2020-08-08"/></div>
+                                                    <div><input type="text" id="fourIns0"  maxLength="10"/></div>
+                                                    <div><input type="text" class="date_input " id="getOfIns0"   /></div>
+                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns0" /></div>
                                                 </li>
                                                 <li>
                                                     <div>건강보험</div>
-                                                    <div><input type="text" id="fourIns1"  defaultValue="" maxLength="10"/></div>
-                                                    <div><input type="text" class="date_input " id="getOfIns1"  defaultValue="2020-08-08"/></div>
-                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns1"  defaultValue="2020-08-08"/></div>
+                                                    <div><input type="text" id="fourIns1"   maxLength="10"/></div>
+                                                    <div><input type="text" class="date_input " id="getOfIns1"  /></div>
+                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns1"  /></div>
                                                 </li>
                                                 <li>
                                                     <div>고용보험</div>
-                                                    <div><input type="text" id="fourIns2" defaultValue="" maxLength="10"/></div>
-                                                    <div><input type="text" class="date_input " id="getOfIns2" defaultValue="2020-08-08"/></div>
-                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns2" defaultValue="2020-05-06"/></div>
+                                                    <div><input type="text" id="fourIns2"  maxLength="10"/></div>
+                                                    <div><input type="text" class="date_input " id="getOfIns2" /></div>
+                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns2" /></div>
                                                 </li>
                                                 <li>
                                                     <div class="bottom_border">산재보험</div>
-                                                    <div class="bottom_border"><input type="text" id="fourIns3" defaultValue="" maxLength="10"/></div>
-                                                    <div class="bottom_border"><input type="text" class="date_input " id="getOfIns3"  defaultValue="2020-05-06"/></div>
-                                                    <div class="bottom_border right_border"><input type="text" class="date_input " id="lostOfIns3"  defaultValue="2020-06-08"/></div>
+                                                    <div class="bottom_border"><input type="text" id="fourIns3"  maxLength="10"/></div>
+                                                    <div class="bottom_border"><input type="text" class="date_input " id="getOfIns3"  /></div>
+                                                    <div class="bottom_border right_border"><input type="text" class="date_input " id="lostOfIns3"  /></div>
                                                 </li>
                                             </ul>
                                             {/* <DataGrid rowData={rowData} gridDefs={insDefs} gridCommon={gridCommon}/> */}
@@ -581,49 +587,49 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                     <tr>
                                                         <th>국민연금</th>
                                                         <td>
-                                                            <input type="text" id="fourIns0" defaultValue=""/>
+                                                            <input type="text" id="fourIns0" />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="getOfIns0"  defaultValue=""/>
+                                                            <input type="text" class="date_input " id="getOfIns0"  />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="lostOfIns0" defaultValue=""/>
+                                                            <input type="text" class="date_input " id="lostOfIns0" />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>건강보험</th>
                                                         <td>
-                                                            <input type="text" id="fourIns1"  defaultValue=""/>
+                                                            <input type="text" id="fourIns1"  />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="getOfIns1"  defaultValue=""/>
+                                                            <input type="text" class="date_input " id="getOfIns1"  />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="lostOfIns1"  defaultValue=""/>
+                                                            <input type="text" class="date_input " id="lostOfIns1"  />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>고용보험</th>
                                                         <td>
-                                                            <input type="text" id="fourIns2"   defaultValue=""/>
+                                                            <input type="text" id="fourIns2"   />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="getOfIns2" defaultValue=""/>
+                                                            <input type="text" class="date_input " id="getOfIns2" />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="lostOfIns2" defaultValue=""/>
+                                                            <input type="text" class="date_input " id="lostOfIns2" />
                                                         </td>
                                                     </tr>
                                                     <tr>
                                                         <th>산재보험</th>
                                                         <td>
-                                                            <input type="text" id="fourIns3" defaultValue=""/>
+                                                            <input type="text" id="fourIns3" />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="getOfIns3"  defaultValue=""/>
+                                                            <input type="text" class="date_input " id="getOfIns3"  />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="lostOfIns3"  defaultValue=""/>
+                                                            <input type="text" class="date_input " id="lostOfIns3"  />
                                                         </td>
                                                     </tr>
                                                 </tbody>
