@@ -5,185 +5,15 @@ import DaumPostcode from 'react-daum-postcode';
 
 function LoginMain(){
 
-// 회원가입 클릭시
-const openJoinPop = () => {
-    $(".modal_box.mb1").show();
-};
-const closePopup = () => {
-    $(".modal_box").hide();
-   
-    return false;
-}
-
-const fnLogin = () => {
-    const idInput = $("#idInput");
-    const pwInput = $("#pwInput");
-
-    if(idInput.val().replace(/\s/g,"").length == 0){
-        alert("아이디를 입력해 주세요");
-        return false;
-    }
-    if(pwInput.val().replace(/\s/g,"").length == 0){
-        alert("비밀번호를 입력해 주세요");
-        return false;
-    }
-    
-    var params = {
-        "id" : idInput.val(),
-        "password" : pwInput.val()
+    // 회원가입 클릭시
+    const openJoinPop = () => {
+        $(".modal_box.mb1").show();
     };
-    init(params);
-    async function init(params) {
-        await callApi.joinLogin(params).then(res => 
-            {
-            console.log(res.headers);
-            if(res.data.ErrorCode == 1 ){
-                alert("아이디 또는 비밀번호가 틀렸습니다.");
-                $("#idInput").val('');
-                $("#pwInput").val('');
-                return false;
-            }
-            window.location.pathname = "/user/userInfo";
-            }).catch(err => alert(err));
-    }
+    const closePopup = () => {
+        $(".modal_box").hide();
     
-}
-    // 아이디 중복체크
-    const duplicateCheckId = () => {
-        console.log("duplicateCheckId 시작==");
-        var idVal = $('#id').val();
-        async function init(params) {
-            try {
-                if(!params){
-                    const d = new Date();
-                    params = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);
-                }
-                params = {
-                    "id" : idVal       
-                }
-                await callApi.checkDuplicateAdmin(params).then(res=>{
-                    if(res.data.ErrorCode == 0){ 
-                        alert("가입 가능한 아이디입니다.");
-                    }
-                    else{
-                        console.log("중복된 아이디입니다.");
-                    }
-                })
-            }catch{
-                console.log("CATCH !! : " + error);
-            }        
-           };
-           init();
+        return false;
     }
-
-
-    
-
-    // 이메일 인증번호 보내기 -- 수정
-    const SendCertification = () => {
-        console.log("SendCertification 시작==");
-
-        var idEmail = $('#idEmail').val();
-        var idDomain = $('#domain option:selected').val();
-
-        async function init(params) {
-            try {
-                if(!params){
-                    const d = new Date();
-                    params = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);
-                }
-                params = {
-                    "eamil" : idEmail,
-                    "domain" : idDomain        
-                }
-                await callApi.SendCertificationValue(params).then(res=>{
-                    if(res.data.ErrorCode == 0){ 
-                        alert("오는겨");
-                    }
-                    else{
-                        console.log("마는겨");
-                    }
-                })
-            }catch{
-                console.log("CATCH !! : " + error);
-            }        
-           };
-           init();
-    }
-    
-
-    const saveJoin = () =>{
-        var branchName = $("#companyName").val();
-        if(branchName == ""){
-            alert("기관명을 입력해주세요");
-            return false;
-        }
-        var branchCode = $("#companyCode").val();
-        if(branchCode == ""){
-            alert("기관 코드를 입력해 주세요");
-            return false;
-        }
-        var tellNo = $("#mainNumber").val();
-        
-        var firstMobile = $("#firstNumber").val();
-        var middleMobile = $("#middleNumber").val();
-        var lastMobile = $("#lastNumber").val();
-        if(firstMobile =="" || middleMobile =="" || lastMobile ==""){
-            alert("휴대번호 형식이 맞지않습니다");
-            return false;
-        }
-        var leeterNo = $("#postNo").val();
-        if(leeterNo == ""){
-            alert("기관 주소를 입력해주세요");
-            return false;
-        }
-        var address = $("#address").val();
-        var addressDetail = $("#addressDetail").val();
-        if(address == "" || addressDetail == ""){
-            alert("상세 주소를 입력해주세요");
-            return false;
-        }
-        var id = $("#id").val();
-        var password = $("#password").val();
-        if(id == "" || password == ""){
-            alert("아이디 또는 비밀번호를 입력해주세요");
-            return false;
-        }
-        var passwordCheck = $("#passwordCheck").val();
-        if(passwordCheck != password){
-            alert("비밀 번호를 다시 확인해주세요");
-            return false;
-        }
-        var idEmail = $("#idEmail").val();
-        var domain = $("#domain").val();
-        if(idEmail == "" || domain== ""){
-            alert("이메일을 확인해주세요");
-            return false;
-        }
-        var email = idEmail + "@" + domain;
-        var invaildEmailType = CheckEmail(email);
-        if(invaildEmailType == false){
-            alert("이메일 형식이 정확하지 않습니다");
-            return false;
-        }
-        var acceptEmail = $("#email_y");
-        var acceptSMS = $("#sms_y");
-    }
-
-
-    function CheckEmail(str) {      
-     var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
-     if(!reg_email.test(str)) {             
-          return false;         
-     }                            
-
-     else {                       
-
-          return true;         
-
-     }                            
-
-    };                  
 
     const openJoinForm = () =>{
         $(".modal_box.mb1").hide();
@@ -219,7 +49,257 @@ const fnLogin = () => {
 
         $("#daumPostPop").hide();
     }
+    const fnLogin = () => {
+    const idInput = $("#idInput");
+    const pwInput = $("#pwInput");
 
+    if(idInput.val().replace(/\s/g,"").length == 0){
+        alert("아이디를 입력해 주세요");
+        return false;
+    }
+    if(pwInput.val().replace(/\s/g,"").length == 0){
+        alert("비밀번호를 입력해 주세요");
+        return false;
+    }
+    
+    var params = {
+        "id" : idInput.val(),
+        "password" : pwInput.val()
+        };
+    init(params);
+    async function init(params) {
+        await callApi.joinLogin(params).then(res => 
+            {
+            console.log(res.headers);
+            if(res.data.ErrorCode == 1 ){
+                alert("아이디 또는 비밀번호가 틀렸습니다.");
+                $("#idInput").val('');
+                $("#pwInput").val('');
+                return false;
+            }
+            window.location.pathname = "/user/userInfo";
+            }).catch(err => alert(err));
+        }
+    }
+
+    const saveJoin = () =>{
+        var branchName = $("#companyName").val();
+
+        if(branchName == ""){
+            alert("기관명을 입력해주세요");
+            return false;
+        }
+        var branchCode = $("#companyCode").val();
+
+        if(branchCode == ""){
+            alert("기관 코드를 입력해 주세요");
+            return false;
+        }
+        var tellNo = $("#mainNumber").val();
+        // 대표전화번호
+        
+        var firstMobile = $("#firstNumber").val();
+        var middleMobile = $("#middleNumber").val();
+        var lastMobile = $("#lastNumber").val();
+
+        if(firstMobile =="" || middleMobile =="" || lastMobile ==""){
+            alert("휴대번호 형식이 맞지않습니다");
+            return false;
+        }
+        var leeterNo = $("#postNo").val();
+        if(leeterNo == ""){
+            alert("기관 주소를 입력해주세요");
+            return false;
+        }
+        var address = $("#address").val();
+        var addressDetail = $("#addressDetail").val();
+        if(address == "" || addressDetail == ""){
+            alert("상세 주소를 입력해주세요");
+            return false;
+        }
+        var id = $("#id").val();
+        var password = $("#password").val();
+        if(id == "" || password == ""){
+            alert("아이디 또는 비밀번호를 입력해주세요");
+            return false;
+        }
+        var passwordCheck = $("#passwordCheck").val();
+        if(passwordCheck != password){
+            alert("비밀 번호를 다시 확인해주세요");
+            return false;
+        }
+        var idEmail = $("#idEmail").val();
+        var domain = $("#domain").val();
+        if(idEmail == "" || domain== ""){
+            alert("이메일을 확인해주세요");
+            return false;
+        }
+        var email = idEmail + "@" + domain;
+        var invaildEmailType = CheckEmail(email);
+
+        if(invaildEmailType == false){
+            alert("이메일 형식이 정확하지 않습니다");
+            return false;
+        }
+        var acceptEmail = $("#email_y");
+        var acceptSMS = $("#sms_y");
+
+        // async function init(params){
+        //     try {
+        //         var params = {
+        //             "branchName" : dddd,
+        //             "id": dddd,
+        //             "password": dddd,
+        //             "businessNo": dddd,
+        //             "tellNo": dddd,
+        //             "postNo": dddd,
+        //             "address": dddd,
+        //             "addressDetail": dddd,
+        //             "email": dddd,
+        //             "acceptEmail": dddd,
+        //             "acceptSMS": dddd,
+        //             "branchCode": dddd,
+        //             "branchType": dddd,
+        //             "mobile": dddd,
+        //             };
+        //     }
+        //     await callApi.JoinUser(params).then(res => {
+
+        //     })
+        // }
+
+
+    }
+
+
+
+    function CheckEmail(str) {      
+        var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+        if(!reg_email.test(str)) {             
+            return false;         
+        }      
+        else {                       
+
+            return true;     
+        }                            
+
+    };          
+    
+
+    // 모두 동의
+    $(document).ready(function(){
+        $('#check_all').on("click",function(){
+            $('#confirm_y').prop('checked', true);
+            $('#confirm2_y').prop('checked', true);
+            $('#confirm3_y').prop('checked', true);
+        })
+        // $('#check_all').off();
+    });
+
+    // 모두 동의시 다음으로
+    $(document).ready(function(){
+        $('#btn_next').click(function(){
+            if($('#confirm_y').is(':checked') == false){
+                alert('모든 약관에 동의하셔야 다음 단계로 진행 가능합니다.');
+                return false;
+            } else if($('#confirm2_y').is(':checked') == false){
+                alert('모든 약관에 동의하셔야 다음 단계로 진행 가능합니다.');
+                return false;
+            } else if($('#confirm3_y').is(':checked') == false){
+                alert('모든 약관에 동의하셔야 다음 단계로 진행 가능합니다.');
+                return false;
+            } else { 
+                // alert('됨!')
+            }
+        });
+    });
+
+    // 아이디 중복체크
+    const duplicateCheckId = () => {
+        var idVal = $('#id').val();
+        async function init(params) {
+            try {
+                params = {
+                    "id" : idVal       
+                }
+                await callApi.checkDuplicateAdmin(params).then(res=>{
+                    if(idVal == ""){
+                        alert('아이디를 입력해주세요.');
+                    }
+                    else if(res.data.ErrorCode == 0){ 
+                        alert("가입 가능한 아이디입니다.");
+                    }
+                    else{
+                        console.log("중복된 아이디입니다.");
+                    }
+                });
+            }catch(error){
+                console.log("CATCH !! : " + error);
+            }        
+           };
+           init();
+    }
+
+    // 이메일 인증번호 보내기
+    const CheckCertification = () => {
+
+        var idEmail = $('#idEmail').val();
+        var idDomain = $('#domain option:selected').val();
+        var EmailAddress = idEmail + '@' + idDomain;
+
+        // alert(idEmail + idDomain); 
+        // alert(EmailAddress); 
+
+        async function init(params) {
+            try {
+                params = {                    
+                        "from" : "chrislee@assol.io",
+                        "to" : "86297534@naver.com",
+                        "subject" : "1차테스트",
+                        "body" : ""
+                }
+                await callApi.SendCertificationValue(params).then(res=>{
+                    if(res.data.ErrorCode == 0){ 
+                        alert("이메일로 인증번호가 전송되었습니다.");
+                    }
+                    else{
+                        console.log("인증번호 전송 실패~!");
+                    }
+                })
+            }catch(error){
+                // console.log(params, "애가이상해");
+                console.log("CATCH !! : " + error);
+            }        
+           };
+           init();
+    }
+
+    // 이메일 인증번호체크
+    const SendCertification = () => {
+        async function init(params) {
+            try {
+                params = {
+                    "certifyValue" : "pmf652%$",
+                    "email" : "shypay12@gmail.com"
+                }
+                await callApi.CheckCertification(params).then(res =>{
+                    console.log(res);
+                    if(res.data.ErrorCode == 0){ 
+                        alert("인증이 확인되었습니다.");
+                    }
+                    else{
+                        console.log("뭔가 잘못됐다");
+                    }
+                })
+            }catch(error){
+                // console.log(params, "애가이상해");
+                console.log("CATCH !! : " + error);
+            }        
+           };
+           init();
+    }
+
+    
 
 
 
@@ -301,15 +381,14 @@ return(
                             <input type="radio" id="confirm3_n" name="confirm3"/>
                             <label htmlFor="confirm3_n">동의하지않습니다.</label>
                         </p>
-
                         <p className="agreement_all">
-                            <input type="radio" id="agree"/>
-                            <label for="agree">
-                                회원약관, 개인정보 수집 및 이용, 서비스 이용약관에 <span className="txt_point">모두 동의</span> 합니다.
+                            <input type="radio" id="check_all"/>
+                            <label for="check_all">
+                                회원 약관, 개인정보 수집 및 이용, 서비스 이용약관에 <span className="txt_point">모두 동의</span> 합니다.
                             </label>
                         </p>
                         <p className="btn_box">
-                            <button type="button" className="btn_next" onClick={()=>openJoinForm()}>다음으로</button>
+                            <button type="button" className="btn_next" id="btn_next" onClick={()=>openJoinForm()}>다음으로</button>
                         </p>
                     </fieldset>
                 </form>
@@ -364,6 +443,7 @@ return(
         {/* --기관종류선택 */}
 
         {/* 회원가입 */}
+        {/* style={{display:"block"}} */}
         <div className="modal_box mb2"> 
             <div className="modal_top">
                 <div className="modal_title">회원가입</div>
@@ -447,19 +527,20 @@ return(
                             </p> */}
                             <p>
                                 <label className="">이메일주소</label>
-                                <input type="text" id = "idEmail" maxLength="20"/>@
+                                <input type="text" id="idEmail" maxLength="20"/>@
                                 <select id ="domain" style={{borderRadius:"0px", width:"100px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
-                                    <option value="0">직접입력</option>
-                                    <option value="1">naver.com</option>
-                                    <option value="2">gmail.com</option>
-                                    <option value="3">daum.com</option>
+                                    <option value="etc">직접입력</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="nate.com">nate.com</option>
+                                    <option value="hanmail.net">hanmail.net</option>
+                                    <option value="gmail.com">gmail.com</option>
                                 </select>
-                                <button type="button" className="btn_addr">인증</button>
+                                <button type="button" className="btn_addr" onClick={CheckCertification}>인증</button>
                             </p>
                             <p>
                                 <label className="">이메일인증</label>
                                 <input type="text" maxLength="10" style={{width:"100px"}}/>
-                                <button type="button" className="btn_addr" onClick={SendCertification} >인증확인</button>
+                                <button type="button" className="btn_addr" onClick={SendCertification}>인증확인</button>
                             </p>
                             <p style={{display:"inline-block", float:"left"}}>
                                 <span>이메일수신</span>
@@ -480,7 +561,7 @@ return(
                                 <button type="button" className="certificate" style={{textIndent:"-999px"}}>공인인증서등록</button>
                             </p>
                             <p className="btn_box_join">
-                                <button className="btn_next" onClick ={() =>saveJoin()}>회원가입</button>
+                                <button type="button" className="btn_next" onClick ={() =>saveJoin()}>회원가입</button>
                             </p>
                         </fieldset>
                 </form>

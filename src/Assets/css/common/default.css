@@ -62,7 +62,9 @@ textarea[disabled]{padding:11px; font-size:16px; color:#666; font-weight:normal;
 button{cursor:pointer;}
 
 
-
+select:focus{
+    border:1px solid #1E90FF !important;
+}
 
 
 /**********************************************

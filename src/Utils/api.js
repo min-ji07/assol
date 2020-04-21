@@ -20,6 +20,8 @@ const testUrl3 = "http://150f7585.ngrok.io"; //
 const local = "http://172.30.1.24:5302"; // 김성일 ip
 const localTest = "http://localhost:5302"; // 김성일 ip
 
+// const test = "http://172.30.1.24:5302/SendMailer/SendCertificationValue";
+
 //const testUrl_user = testUrl2 + "User/GetUserInfobyBranchNo?branchNo=";
 export const callApi = {
 
@@ -120,9 +122,20 @@ export const callApi = {
     }) ,  
     checkDuplicateAdmin:(params) => axios.post(testUrl2+'/Admin/CheckDuplicateAdmin',{params:params}), // 아이디 중복체크
 
-    SendCertificationValue:(params) => axios.get(testUrl2+'/SendMailer/SendCertificationValue',{params:params}), // 이메일 인증번호 보내기
-
-
-
+    //SendCertificationValue:(params) => axios.post('http://de89cad8.ngrok.io'+'/SendMailer/SendCertificationValue',{params:params}), // 이메일 인증번호 보내기
+    // 이메일 인증번호 보내기
+    SendCertificationValue:(params) => axios ({
+        method: 'post',
+        url: 'http://de89cad8.ngrok.io' + '/SendMailer/SendCertificationValue',
+        data: params
+    }),
+    // 이메일 인증번호 체크
+    //http://172.30.1.24:5302/Admin/CheckCertification
+    CheckCertification:(params) => axios ({
+        method: 'get',
+        url: 'http://de89cad8.ngrok.io' + '/Admin/CheckCertification',
+        data: params
+    })
+    
 
 };
