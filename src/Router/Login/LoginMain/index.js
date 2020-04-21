@@ -549,8 +549,8 @@ return(
                             <p>
                                 <label className="required">기관 급여일</label>
                                 <select id="payDayMonth">
-                                    <option value="익월">익월</option>
-                                    <option value="당월">당월</option>
+                                    <option value="1">익월</option>
+                                    <option value="2">당월</option>
                                 </select>
                                 <input type="text" id="payDay" maxLength="2" placeholder="01" defaultValue="20"/>
                             </p>
@@ -568,17 +568,6 @@ return(
                                 <label className="required">비밀번호확인</label>
                                 <input type="password" id = "passwordCheck" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요." defaultValue="123456"/>
                             </p>
-                            {/* <p>
-                                <span className="required">급여종류</span>
-                                <input id="radioPay" type="radio" name="pay" defaultChecked/>
-                                <label htmlFor="radioPay">주야간보호센터</label>
-                                <input id="radioPay2" type="radio" name="pay"/>
-                                <label htmlFor="radioPay2">노인요양시설</label>
-                                <input id="radioPay3" type="radio" name="pay"/>
-                                <label htmlFor="radioPay3">노인요양공동생활가정</label>
-                                <input id="radioPay4" type="radio" name="pay"/>
-                                <label htmlFor="radioPay4">가정방문급여</label>
-                            </p> */}
                             <p>
                                 <label className="">이메일주소</label>
                                 <input type="text" id="idEmail" maxLength="20" defaultValue="86297534"/>@
