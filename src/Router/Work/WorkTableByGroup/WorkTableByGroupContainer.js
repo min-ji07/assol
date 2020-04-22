@@ -53,16 +53,14 @@ function WorkTableByGroupContainer() {
                     return list;
                 }()
              }, valueFormatter:function(params) { return (!params.value)?'':params.value+'명'}} 
-        ,{ headerName: "근무시간",field:"workTime", editable:true
+        ,{ headerName: "정규근무시간",field:"workTime", editable:true
             ,cellEditor: picker.getTimePicker(), width:200}
-        ,{ headerName: "야간근무시간", field: "yaguenTime",width:120, editable:true
-            ,cellEditor: picker.getTimePicker(), width:200}    
-        ,
-        ,{ headerName: "휴게시간", field: "restTime", editable:true
+        
+        ,{ headerName: "휴게시간1", field: "restTime", editable:true
             ,cellEditor: picker.getTimePicker(), width:200}
-        ,{ headerName: "두번째휴게시간", field: "subRestTime", editable:true
+        ,{ headerName: "휴게시간2", field: "subRestTime", editable:true
             ,cellEditor: picker.getTimePicker(), width:200}
-        ,{ headerName: "현재근무시간", field: "currentTime", width:120,  editable:false,
+        ,{ headerName: "정규근무시간", field: "currentTime", width:120,  editable:false,
          valueGetter:function(params){
             if(!params.data.currentTime){
                 return "";
@@ -74,9 +72,29 @@ function WorkTableByGroupContainer() {
             return resultHour+"시간"+min+"분";
         }
          }
+         ,{ headerName: "야간근무시간", field: "nightTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
+            ,valueGetter: function(params){ 
+                if(!params.data.nightTime){
+                    return "";
+                }
+                let current = params.data.nightTime;
+                var hour = current/60;
+                var resultHour = Math.floor(hour);
+                var min = current - (resultHour * 60);
+                return resultHour+"시간"+min+"분";
+            }
+        }
         ,{ headerName: "연장근무시간", field: "overTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
-           ,valueGetter: function(params){ 
-                return params.data.overTime == undefined ? "" : params.data.overTime+'분'} 
+                ,valueGetter: function(params){ 
+                    if(!params.data.overTime){
+                        return "";
+                    }
+                    let current = params.data.overTime;
+                    var hour = current/60;
+                    var resultHour = Math.floor(hour);
+                    var min = current - (resultHour * 60);
+                    return resultHour+"시간"+min+"분";
+                }
          }
        
         ,{ headerName: "권장근무시간", field: "recommTime", width:120, editable:false
@@ -104,6 +122,7 @@ function WorkTableByGroupContainer() {
     
     //현 페이지에서 정의된 함수 호출
     const onRowEditingStopped = function(e) { 
+        
         if(e.data && e.data.workTime ) {//&& e.data.workTime!=='~'
            let workTimeArr  = e.data.workTime.split("~");
            if(!workTimeArr[0] || !workTimeArr[1]){
@@ -112,69 +131,204 @@ function WorkTableByGroupContainer() {
             return false;    
             }
            //근무시간
-           const strTime= new Date(0,0,0,workTimeArr[0].split(":")[0],workTimeArr[0].split(":")[1],0);
+           const strTime = new Date(0,0,0,workTimeArr[0].split(":")[0],workTimeArr[0].split(":")[1],0);
            const endTime = new Date(0,0,0,workTimeArr[1].split(":")[0],workTimeArr[1].split(":")[1],0);
-           if(endTime <= strTime){
-            alert("근무 마지막 시간이 시작 시간보다 큽니다.");
-            check = false;
-            return false; 
-           }
-           const diffTime = endTime.getTime() - strTime.getTime();
-           const resultHour = (diffTime/1000)/3600;
-           var diffHour = Math.floor(resultHour);
-           const diffMin = ((diffTime/1000)%3600)/60;
-           let allrestTime = 0;
-           if(e.data.restTime)
-           {
-                let restTimeArr  = e.data.restTime.split("~");
-                if(!restTimeArr[0] || !restTimeArr[1]){
-                    alert("쉬는시간을 입력해주세요.");
-                    check = false;
-                    return false;    
+           var allStrTimeMin = (strTime.getHours() * 60) + strTime.getMinutes();  
+           var allEndTimeMin = (endTime.getHours() * 60) + endTime.getMinutes();
+           let nightTime = 0;
+           let nightStartLimit = 22 * 60;
+           let nightLastLimit = 6 * 60;
+           let allWorkTime = 0;
+           let overTime = 0;
+           if(allStrTimeMin > allEndTimeMin){
+                if(nightStartLimit <= allStrTimeMin){
+                    
+                    if(allEndTimeMin >= 0 && allEndTimeMin<=nightLastLimit){
+                        nightTime += ((24* 60) - allStrTimeMin);
+                        nightTime +=  allEndTimeMin;
                     }
-                let reststrTime = new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0);
-                let restendTime = new Date(0,0,0,restTimeArr[1].split(":")[0],restTimeArr[1].split(":")[1],0);
-                if(restendTime < reststrTime){
-                    alert("쉬는 마지막 시간이 시작 시간보다 큽니다.");
-                    check = false;
-                    return false; 
-                   }
-                let diffTime = restendTime.getTime() - reststrTime.getTime();
-                const restTimeHour = (diffTime/1000)/3600;
-                var resultFirstRestTime = Math.floor(restTimeHour);
-                const restTimeMin = ((diffTime/1000)%3600)/60;
-                allrestTime = (resultFirstRestTime * 60) + restTimeMin;
-             if(e.data.subRestTime){
-                let subRestTimeArr  = e.data.subRestTime.split("~");
-                if(!subRestTimeArr[0] || !subRestTimeArr[1]){
-                    alert("서브쉬는시간을 입력해주세요.");
-                    check = false;
-                    return false;    
+                    else {
+                        nightTime += ((24* 60) - allStrTimeMin);
+                        nightTime +=  nightLastLimit;
+                        if(nightStartLimit < allEndTimeMin){
+                            nightTime += allEndTimeMin - nightStartLimit;
+                            allWorkTime = nightStartLimit - nightLastLimit;
+                        }
+                        else {
+                            allWorkTime = allEndTimeMin - nightLastLimit;
+                        }
+                    }
+                    
                 }
-                //휴게시간 총합
-                let subStrTime= new Date(0,0,0,subRestTimeArr[0].split(":")[0],subRestTimeArr[0].split(":")[1],0);
-                let subEndTime = new Date(0,0,0,subRestTimeArr[1].split(":")[0],subRestTimeArr[1].split(":")[1],0);
-                if(subEndTime < subStrTime){
-                    alert("쉬는 마지막 시간이 시작 시간보다 큽니다.");
-                    check = false;
-                    return false; 
-                   }
-                let subDiffTime = subEndTime.getTime() - subStrTime.getTime();
-                const restTimeHour = (diffTime/1000)/3600;
-                var resultFirstRestTime = Math.floor(restTimeHour);
-                const restTimeMin = ((subDiffTime/1000)%3600)/60;
-                allrestTime += (resultFirstRestTime * 60) + restTimeMin; 
+                else{
+                 
+                    if(allEndTimeMin >=0 && allEndTimeMin <= nightLastLimit){
+                        allWorkTime = nightStartLimit - allStrTimeMin;
+                        nightTime = ((24* 60) - nightStartLimit)  + allEndTimeMin;
+                    }
+                    else if (allEndTimeMin > nightLastLimit){
+                        
+                        allWorkTime = (nightStartLimit - allStrTimeMin) + (allEndTimeMin - nightLastLimit);
+                        nightTime = ((24* 60) - nightStartLimit)  + nightLastLimit;
+                    }
+                    
+                }
+            
+           }
+           else if(allStrTimeMin < allEndTimeMin){
+                if(allStrTimeMin >= 0 && allStrTimeMin <= nightLastLimit){
+                    if(allEndTimeMin <= nightLastLimit){
+                        nightTime = allEndTimeMin - allStrTimeMin; 
+                    }
+                    else{
+                        if(allStrTimeMin == nightLastLimit){
+                            allWorkTime = allEndTimeMin - allStrTimeMin;
+                            if(allEndTimeMin > nightStartLimit){
+                                nightTime = nightStartLimit -allEndTimeMin;
+                            } 
+                        }
+                        else{
+                            nightTime = nightLastLimit - allStrTimeMin;
+                            if(allEndTimeMin <= nightStartLimit){
+                                allWorkTime = allEndTimeMin - nightLastLimit;
+                            }
+                            else{
+                                nightTime +=  allEndTimeMin - nightStartLimit 
+                                allWorkTime = nightStartLimit - nightLastLimit;
+                            }
+                        }
+                        
+                    }
+                }
+                else if(allStrTimeMin > nightLastLimit){
+                    if(allEndTimeMin <= nightStartLimit){
+                        allWorkTime = allEndTimeMin - allStrTimeMin;  
+                    }
+                    else {
+                        allWorkTime = nightStartLimit - allStrTimeMin;
+                        nightTime = allEndTimeMin - nightStartLimit;
+                    }
+                }
+               
+           }
+           else {
+                var allTimeMin = 24 * 60;
+                nightTime = 8 * 60;
+                allWorkTime = allTimeMin - nightTime;
+           }
+           if(e.restTime)
+           {
+            let restTimeArr  = e.data.restTime.split("~");
+            if(!restTimeArr[0] || !restTimeArr[1]){
+             alert("근무시간을 입력해주세요.");
+             check = false;
+             return false;    
              }
+             const strRestTime = new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0);
+             const endRestTime = new Date(0,0,0,restTimeArr[1].split(":")[0],restTimeArr[1].split(":")[1],0);
+             var allStrRestMin = (strRestTime.getHours() * 60) + strRestTime.getMinutes();
+             var allEndRestMin = (endRestTime.getHours() * 60) + endRestTime.getMinutes();
+             var restMin = 0;
+             if(allStrRestMin > allEndRestMin)
+             {
+                 console.log("restMin" + restMin);
+                restMin = (24 * 60) - (allStrRestMin - allEndRestMin);
+             }
+             else {
+                if(allStrRestMin == allEndRestMin){
+                    alert("쉬는시간 범위를 다시 지정해 주세요");
+                    return false;
+                }
+                restMin = allEndRestMin - allStrRestMin;
+                console.log("restMin" + restMin);
+             }
+             if(nightTime > 0){
+                var result = nightTime - restMin;
+                if(result < 0 ){
+                    restMin -= nightTime;
+                    nightTime = 0;
+                    if(allWorkTime > 0){
+                        result = allWorkTime - restMin;
+                        if(result <= 0){
+                            alert("휴게 시간은 총 근무시간보다 많을수 없습니다.");
+                            return false;
+                        }
+                    }
+                }
+                else{
+                    nightTime -= restMin;
+                }
+             }
+             if(restMin > 0)
+             {
+                var result = allWorkTime - restMin;
+                if(result <= 0){
+                    if(result <= 0){
+                        alert("휴게 시간은 총 근무시간보다 많을수 없습니다.");
+                        return false;
+                    }
+                }
+                allWorkTime -= restMin;
+             }
+             
            }
-           const allCurrentTime = ((diffHour* 60) + diffMin) - allrestTime;
-           if(allCurrentTime < 0){
-               alert("휴게시간은 근무시간을 초과할수없습니다.");
-               return false;
+           if(e.subRestTime)
+           {
+                if(!e.restTime){
+                    alert ("휴게시간1을 먼저 입력해주세요");
+                    return false;
+                }
+                else{
+                   let restTimeArr  = e.data.subRestTime.split("~");
+                   if(!restTimeArr[0] || !restTimeArr[1]){
+                   alert("근무시간을 입력해주세요.");
+                      check = false;
+                      return false;    
+                   }
+                   const strRestTime = new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0);
+                   const endRestTime = new Date(0,0,0,restTimeArr[1].split(":")[0],restTimeArr[1].split(":")[1],0);
+                   var allStrRestMin = (strRestTime.getHours() * 60) + strRestTime.getMinutes();
+                   var allEndRestMin = (endRestTime.getHours() * 60) + endRestTime.getMinutes();
+                   var restMin = 0;
+                   if(allStrRestMin > allEndRestMin)
+                   {
+                      restMin = (24 * 60) - (allStrRestMin - allEndRestMin);
+                   }
+                   else {
+                      if(allStrRestMin == allEndRestMin){
+                          alert("쉬는시간 범위를 다시 지정해 주세요");
+                          return false;
+                      }
+                      restMin = allEndRestMin - allStrRestMin;
+                   }
+                   if(nightTime > 0){
+                      var result = nightTime - restMin;
+                      if(result < 0 ){
+                          restMin -= nightTime;
+                          nightTime = 0;
+                          if(allWorkTime > 0){
+                              result = allWorkTime - restMin;
+                              if(result <= 0){
+                                  alert("휴게 시간은 총 근무시간보다 많을수 없습니다.");
+                                  return false;
+                              }
+                          }
+                      }
+                      else{
+                          nightTime -= restMin;
+                      }
+                }
+              }
+            }
+           
+
+           overTime = (allWorkTime + nightTime) - (8 * 60);
+           if(overTime < 0 ){
+               overTime = 0;
            }
-           var overTime = allCurrentTime - (8 *60);
-           overTime = overTime < 0 ? 0 : overTime;
+           e.node.setDataValue('nightTime',nightTime)
+           e.node.setDataValue('currentTime',allWorkTime)
            e.node.setDataValue('overTime',overTime);
-           e.node.setDataValue('currentTime',allCurrentTime)
            let pass = "Y"
            if(allrestTime < 8 * 60 || allrestTime > 8 * 60){
             pass = "N";
@@ -228,12 +382,12 @@ function WorkTableByGroupContainer() {
     },[]); //init
 
 
-    const nextPage = () => {
+    const nextPage = (callback) => {
         let value = document.getElementById('month-picker').value;
         if(!value||value=="") return alert("선택된 연월이 없습니다.");
         
         //저장후 페이지 이동 
-        gridCommon.onSaveRow(()=>{
+        gridCommon.onSaveRow((callback)=>{
             value = value.replace(/-/gi,'');
             window.location.href="/work/workTableByPersonal/"+value;            
         });

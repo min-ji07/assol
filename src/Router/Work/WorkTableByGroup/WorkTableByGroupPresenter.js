@@ -14,19 +14,28 @@ const WorkTableByGroupPresenter=({rowData,  gridDefs, nextPage }) => {
     }
 function saveRow (result) {
     var list = [];
+    
     result.forEach(element => {
         if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
+            if(element.workTime == null ||element.workTime == "")
+            {
+                alert("근무시간을 입력 하세요");
+                return false;
+            }
             element.yearsMonthDate = $('#month-picker').val().replace("-","");
             element.branchNo =1;
-            element.workType = $("#select_01").val();
+            element.workType = $('input[name=select]').val();
+            console.log(element);
             list.push(element);
         }
     });
+    if(list == null || list.length < 1){
+        return true;
+    }
     let params = {};
-    params.groupInfos = result;
+    params.groupInfos = list;
     async function init(params){
         try {
-            console.log(params);
             await callApi.SaveGroupRow(params).then(res => {
             
                 if(res.data.ErrorCode == 0){ 
@@ -97,7 +106,7 @@ return (
                     </div>
                     <div className="backnext">
                         <button type="button" className="back" onClick="">이전으로</button>
-                        <button type="button" className="next" onClick={nextPage}>다음으로</button>
+                        <button type="button" className="next" onClick={() =>nextPage(saveRow)}>다음으로</button>
                     </div>
                 </div>
             </div>
