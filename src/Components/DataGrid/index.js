@@ -16,8 +16,9 @@ function DataGrid({rowData:rowData,gridDefs}){
                 onGridReady={gridCommon.onGridReady}
                 components={gridDefs.components}
                 // editType="fullRow"
-                onRowEditingStopped={(e)=>gridCommon.onCellEditingStopped(e,gridDefs.onRowEditingStopped)}
+                onRowEditingStopped={(e)=>gridCommon.onCellEditingStopped(e,gridDefs.onRowEditingStopped)} // 근무조
                 onCellEditingStopped={(e)=>gridCommon.onCellEditingStopped(e,gridDefs.onRowEditingStopped)}
+                
                 onCellClicked={(e)=>gridCommon.onCellClicked(e,gridDefs.onCellClicked)}
                 onRowDoubleClicked={(e)=>gridCommon.onRowDoubleClicked(e,gridDefs.onRowDoubleClicked)}
                 rowSelection="multiple"

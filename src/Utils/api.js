@@ -20,44 +20,47 @@ const testUrl3 = "http://150f7585.ngrok.io"; //
 const local = "http://172.30.1.24:5302"; // 김성일 ip
 const localTest = "http://localhost:5302"; // 김성일 ip
 
+const noJustin = "http://211.251.238.215:5302";
+
+
 // const test = "http://172.30.1.24:5302/SendMailer/SendCertificationValue";
 
 //const testUrl_user = testUrl2 + "User/GetUserInfobyBranchNo?branchNo=";
 export const callApi = {
     
 
-    getUserInfo:(params) => axios.get(testUrl2+'/user/GetUserInfobyBranchNo',{params:params}), // 사원조회
-    setInitSalary:(params) => axios.get(testUrl2+'/PayRoll/InitPayRollPage',{params:params}), // 급여입력 - 사원 전체명부 조회
+    getUserInfo:(params) => axios.get(noJustin+'/user/GetUserInfobyBranchNo',{params:params}), // 사원조회
+    setInitSalary:(params) => axios.get(noJustin+'/PayRoll/InitPayRollPage',{params:params}), // 급여입력 - 사원 전체명부 조회
     selectTargetUser:(params) => axios({
         method: 'post',
-        url: testUrl2+'/PayRoll/SelectTargetUser',
+        url: noJustin+'/PayRoll/SelectTargetUser',
         data: params
     }), // 급여입력 - 지급 항목상세 조회
 
     // saveUserInfo:(params) => axios.post('http://82230995.ngrok.io/User/UserRegistration',{params:params}), // 사원등록
     userRegistration:(params) => axios({
         method: 'post',
-        url: testUrl2+'/User/UserRegistration',
+        url: noJustin+'/User/UserRegistration',
         data: params
     }), // 사원등록 - 일반근로자
     businessUserRegistration:(params) => axios({
         method: 'post',
-        url: testUrl2+'/User/BusinessUserRegistration',
+        url: noJustin+'/User/BusinessUserRegistration',
         data: params
     }), // 사원등록 - 사업소득자
     dayilyUserRegistration:(params) => axios({
         method: 'post',
-        url: testUrl2+'/User/DailyUserRegistration',
+        url: noJustin+'/User/DailyUserRegistration',
         data: params
     }), // 사원등록 - 일용직근로자
     getUserInformation:(params) => axios({
         method: 'post',
-        url: testUrl2+'/user/GetUserInformation',
+        url: noJustin+'/user/GetUserInformation',
         data: params
     }), // 사원상세 조회
     uploadFileToServer:(params) => axios({
         method: 'post',
-        url: testUrl2+'/Save/UploadFileToServer',
+        url: noJustin+'/Save/UploadFileToServer',
         data : params,
         headers: {
             'Content-Type': 'multipart/form-data'
@@ -71,78 +74,86 @@ export const callApi = {
         /work/workTableByGroup
         근무조 설정 페이지
     */
-    getGridData:(params) => axios.get(localTest+'/TimeTable/SelectTimeTable',{params:params}), //근무조설정
+    getGridData:(params) => axios.get(noJustin+'/TimeTable/SelectTimeTable',{params:params}), //근무조설정
     /* 
         /work/workTableByPersonal/202001 
         근무자 설정 페이지 
     */
-    getWorkerList:(params) => axios.get(testUrl2+'/Worker/GetWorkerTable',{params:params}), //근무자설정 - 사원
-    getSearchList:(params) => axios.get(testUrl2+'/Worker/SerchWorker',{params:params}), //근무자설정 - 사원
+    getWorkerList:(params) => axios.get(noJustin+'/Worker/GetWorkerTable',{params:params}), //근무자설정 - 사원
+    getSearchList:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), //근무자설정 - 사원
 
-    getCurrentStatusWorkerTable:(params) => axios.get(testUrl2+'/Worker/GetCurrentStatusWorkerTable',{params:params}), //근무자설정 - 그룹 최소인원수
-    getWorkTableBypersonal:(params) => axios.get(testUrl2+'/Worker/SerchWorker',{params:params}), //근무자설정 - 2020-04-03 어디에 사용하는지 확인 필요함.
-    getSubWorkerByGroup:(subWorker)=> axios.get(testUrl2+'/Worker/GetReplaceWorkerInfo',{params:subWorker}),//데체근무
-    getSubWorkerList:(params)=> axios.get(testUrl2+'/Worker/SerchReplaceWorker',{params:params}),//대체근무 - 근무자들 조회
+    getCurrentStatusWorkerTable:(params) => axios.get(noJustin+'/Worker/GetCurrentStatusWorkerTable',{params:params}), //근무자설정 - 그룹 최소인원수
+    getWorkTableBypersonal:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), //근무자설정 - 2020-04-03 어디에 사용하는지 확인 필요함.
+    getSubWorkerByGroup:(subWorker)=> axios.get(noJustin+'/Worker/GetReplaceWorkerInfo',{params:subWorker}),//데체근무
+    getSubWorkerList:(params)=> axios.get(noJustin+'/Worker/SerchReplaceWorker',{params:params}),//대체근무 - 근무자들 조회
     /*
         /work/workTableByRestDay
         연차설정 페이지
     */
-    getWorkerListByRestDay:(params)=> axios.get(testUrl2+'/Worker/GetAnnalWorker',{params:params}), // 연차설정 - 조회
-    getWorkerListByRestDayView:(params)=> axios.get(testUrl2+'/AdminManager/GetAnnualManager',{params:params}), // 연차대장 - 조회
+    getWorkerInfos:(params) => axios.get(noJustin +'/Worker/GetWorkerByBranchNo',{params:params}),
+    getWorkerListByRestDay:(params)=> axios.get(noJustin+'/Worker/GetAnnualWorker',{params:params}), // 연차설정 - 조회
+    getWorkerListByRestDayView:(params)=> axios.get(noJustin+'/AdminManager/GetAnnualManager',{params:params}), // 연차대장 - 조회
     /*
         /work/workTableResult
         근무표, 연차관리현황 페이지
     */
-    getAllWorkTableByResult:(params)=> axios.get(testUrl2+'/Worker/SelectAllWorkerTable',{params:params}), //근무표 - 그래프타입
-    getAllWorkTableByResultColor:(params)=> axios.get(testUrl2+'/TimeTable/GetGroupNameInfo',{params:params}), // 근무표 - 근무조 color
-    getPersonalRestDayMontly:(params)=> axios.get(testUrl2+'/Worker/GetAnnualInfosYearsMonthDate',{params:params}), //연차관리현황 - 사원리스트
-    getPersonalRestDayMontlyCalendar:(params)=> axios.get(testUrl2+'/Worker/GetMonthAnnualBaseStatue',{params:params}),  // 연차관리현황 - 달력조회
+    getAllWorkTableByResult:(params)=> axios.get(noJustin+'/Worker/SelectAllWorkerTable',{params:params}), //근무표 - 그래프타입
+    getAllWorkTableByResultColor:(params)=> axios.get(noJustin+'/TimeTable/GetGroupNameInfo',{params:params}), // 근무표 - 근무조 color
+    getPersonalRestDayMontly:(params)=> axios.get(noJustin+'/Worker/GetAnnualInfosYearsMonthDate',{params:params}), //연차관리현황 - 사원리스트
+    getPersonalRestDayMontlyCalendar:(params)=> axios.get(noJustin+'/Worker/GetMonthAnnualBaseStatue',{params:params}),  // 연차관리현황 - 달력조회
 
     
     getWithholdingTax:(params)=> axios.get('/Withholding/dummy/getWithholdingTax.json',{params:params}), //원천세신고조회
-    setWorkerListByRestDay:(params)=>axios.post('/test/test',{wokerAnnalInfos:params}), //연차사용 - 저장
-
-    get :(params) => axios.get(testUrl2 + 'Admin/CheckDuplicateAdmin', ),
-
+    
     /*
         로그인 콜 
     */
    joinLogin:(params) => axios({
     method: 'post',
-    url: testUrl+'/Admin/Login',
+    url: noJustin+'/Admin/Login',
     data: params
     }), // 로그인
     
-    setWorkerListByRestDay:(params)=>axios ({
+    //연차사용 - 저장
+    setWorkerListByRestDay:(params)=> axios ({
         method: 'post',
-        url: testUrl2+'/Worker/SetAnnualWorker',
+        url: testUrl + '/Worker/SetAnnualWorker',
         data: params
-    }), //연차사용 - 저장
+    }), 
 
     /* 회원가입 */
     JoinUser:(params) => axios ({
         method: 'post',
-        url: localTest + '/Admin/AdminRegistration',
+        url: noJustin + '/Admin/AdminRegistration',
         data: params
     }) ,  
     // 아이디 중복체크
-    checkDuplicateAdmin:(params) => axios.post(localTest+'/Admin/CheckDuplicateAdmin',{params:params}), 
+    // checkDuplicateAdmin:(params) => axios.post(noJustin+'/Admin/CheckDuplicateAdmin',{params:params}), 
+    checkDuplicateAdmin:(params) => axios ({
+        method: 'post',
+        url: noJustin + '/Admin/CheckDuplicateAdmin',
+        data: params
+    }),
+
+
     // 이메일 인증번호 보내기
     SendCertificationValue:(params) => axios ({
         method: 'post',
-        url: localTest + '/SendMailer/SendCertificationValue',
+        url: noJustin + '/SendMailer/SendCertificationValue',
         data: params
     }),
     // 이메일 인증번호 체크
     //http://172.30.1.24:5302/Admin/CheckCertification
     CheckCertification:(params) => axios ({
         method: 'post',
-        url: testUrl2 + '/Admin/CheckCertification',
+        url: noJustin + '/Admin/CheckCertification',
         data: params
     }),
+    
+    // 근무조 저장 
     SaveGroupRow :(params) => axios({
         method: 'post',
-        url: localTest+'/TimeTable/SetTimeTable',
+        url: noJustin+'/TimeTable/SetTimeTable',
         data: params,
         headers: {
             'Content-Type': 'application/json'

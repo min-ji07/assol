@@ -98,6 +98,7 @@ function UserManagementContainer() {
 
     useEffect(()=>{
        async function initGrid(params) {
+           console.log(params);
         try {
             setGridDefs(gridSetting());
             if(!params){
@@ -109,6 +110,7 @@ function UserManagementContainer() {
             params = {
                 "branchNo" : 29
             }
+            
             await callApi.getUserInfo(params).then(res=>{
                 console.log(res);
                 if(res.data && res.data.ListData && res.data.CountData){

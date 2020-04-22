@@ -72,7 +72,10 @@ function LoginMain(){
             {
             console.log(res.headers);
             if(res.data.ErrorCode == 1 ){
-                alert("아이디 또는 비밀번호가 틀렸습니다.");
+                console.log(res.data);
+                alert("아이디 또는 비밀번호가 틀렸습니다."); 
+                alert(res.data.Msg);
+
                 $("#idInput").val('');
                 $("#pwInput").val('');
                 return false;
@@ -145,6 +148,7 @@ function LoginMain(){
         if(payDay == ""){
             alert('급여일을 입력해주세요.');
             $('#payDay').focus();
+            return false;
         }
 
         var address = $("#address").val();
@@ -167,14 +171,20 @@ function LoginMain(){
         var idEmail = $("#idEmail").val();
         var domain = $("#domain").val();
         if(idEmail == "" || domain== ""){
-            alert("이메일을 확인해주세요");
+            alert("이메일을 입력해주세요.");
             return false;
         }
         var email = idEmail + "@" + domain;
         var invaildEmailType = CheckEmail(email);
 
         if(invaildEmailType == false){
-            alert("이메일 형식이 정확하지 않습니다");
+            alert("이메일 형식이 정확하지 않습니다.");
+            return false;
+        }
+        // 이메일체크
+        var EmailCheck = $('#email_Check').val();
+        if(EmailCheck == "" ){
+            alert('이메일 인증번호를 입력하세요.');
             return false;
         }
 
@@ -187,7 +197,6 @@ function LoginMain(){
         });
         // type 가져오기
         console.log('branchType' + checkBoxArr);
-        var EmailCheck = $('#email_Check').val();
 
         var params = {
             "branchName" : branchName,          // 요양기관
@@ -207,7 +216,7 @@ function LoginMain(){
             "branchType" : checkBoxArr,         // 회원가입 전 기관선택 
             "mobile" : mobile                   // 핸드폰번호
         };
-        console.log(params);
+        console.log(JSON.stringify(params));
 
         async function init(params){
             try {
@@ -217,7 +226,7 @@ function LoginMain(){
                         alert("회원가입이 완료 되었습니다.");
                     }
                     else{
-                        alert("가입에 실패하했얼먀ㅐㅈㄷㄹ.");
+                        alert(res.data.Msg);
                     }
                 })
             }catch(error){
@@ -278,7 +287,9 @@ function LoginMain(){
                 params = {
                     "id" : idVal       
                 }
+                console.log(params);
                 await callApi.checkDuplicateAdmin(params).then(res=>{
+                    console.log(res);
                     if(idVal == ""){
                         alert('아이디를 입력해주세요.');
                     }
@@ -302,10 +313,6 @@ function LoginMain(){
         var idEmail = $('#idEmail').val();
         var idDomain = $('#domain option:selected').val();
         var EmailAddress = idEmail + '@' + idDomain;
-
-        // alert(idEmail + idDomain); 
-        // alert(EmailAddress); 
-
         async function init(params) {
             try {
                 params = {                    
@@ -314,6 +321,7 @@ function LoginMain(){
                         "subject" : "assol 인증번호가 도착했습니다~!",
                         "body" : ""
                 }
+                console.log(params);
                 await callApi.SendCertificationValue(params).then(res=>{
                     if(res.data.ErrorCode == 0){ 
                         alert("이메일로 인증번호가 전송되었습니다.");
@@ -410,6 +418,45 @@ return(
 
                         <label className="title_label" htmlFor="agreement2">개인정보 수집 · 이용에 대한 안내</label>
                         <textarea id="agreement2" readOnly>
+                            1. 수집하는 개인정보항목
+                            에이쏠 (이하 ‘회사’라고 함)은 서비스 이용 시 이용자로부터 아래와 같은 개인정보를 수집하고 있습니다.
+                            이용자는 본 개인정보 수집활용 동의서에 따른 동의 시, ‘필요한 최소한의 정보 외의 개인정보’ 수집 – 이용에 동의하지 아니할 권리가 있습니다.
+
+                            2. 개인정보의 수집 및 이용목적
+                            - 귀하 업체의 직원 인력풀 관리 및 급여 및 수당 지급
+                            - 세무 신고 및 정책자금 신청
+
+                            3. 개인정보의 보유 및 이용 기간
+                            - 당사와의 거래 종료 시까지
+                            - 개인정보 주체자의 삭제 요청 시 즉시 삭제
+                            다만, 회사는 관련 법령의 규정에 의하여 개인정보를 보유할 필요가 있는 경우, 해당 법령에서 정한 바에 의하여 아래와 같이 개인정보를 보유할 수 있습니다.
+                            ① 계약 또는 청약철회 등에 관련 기록(5년)
+                            ② 대금결제 및 재화 등의 공급에 관한 기록(5년)
+                            ③ 소비자의 불만 또는 분쟁처리에 관한 기록(3년)
+                            ④ 신용정보의 수집/처리 및 이용 등에 관한 기록(3년)
+                            ⑤ 표시/광고에 관한 기록(6개월)
+                            - 법적근거 : 전자상거래 등에서의 소비자보호에 관한 법률, 신용정보의 이용 및 보호에 관한 법률
+
+                            4. 기본 개인정보 수집 • 활용
+                            ① 수집하는 기본 개인정보 항목 : 성명, 주소, 직업, 전화번호(유선,핸드폰), 자격사항, 이메일 주소, 주민번호, 학력, 경력, 계좌번호
+                            ② 개인정보 제공 동의 거부 권리 및 동의 거부 따른 불이익 내용 또는 제한사항 : 귀하는 개인정보 제공 동의를 거부할 권리가 있으며, 동의 거부에 따른 불이익은 없음, 다만, 주민번호, 계좌번호가 없을 시 급여 및 수당 지급 등이 불편할 수 있음.
+
+                            5. 고유식별정보 수집 • 활용
+                            ① 수집하는 고유식별정보 항목 : 주민등록번호
+                            ② 개인정보 제공 동의 거부 권리 및 동의 거부 따른 불이익 내용 또는 제한사항 : 귀하는 개인정보 제공 동의를 거부할 권리가 있으며, 동의 거부에 따른 불이익은 없음, 다만, 주민번호, 계좌번호가 없을 시 급여 및 수당 지급 등이 불편할 수 있음.
+
+                            6. 개인정보 제 3자 제공
+                            ① 개인정보를 제공받는 자 : 에이쏠, 넥스트세무법인, 노무사무소 인우
+                            ② 개인정보를 제공받는 자의 개인정보 이용목적 : 근로 직원의 급여 및 수당 지급,
+                            세무신고 및 정책지원금 활용
+                            ③ 제공되는 개인정보 항목 : 성명, 주민등록번호, 계좌번호, 직업, 전화번호, 경력
+                            ④ 개인정보를 제공받는 자의 개인정보 보유 및 이용기간 : 5년
+                            ⑥  개인정보 제공 동의 거부 권리 및 동의 거부 따른 불이익 내용 또는 제한사항 : 귀하는 개인정보 제공 동의를 거부할 권리가 있으며 동의 거부에 따른 불이익은 없음, 다만, 성명, 주민번호, 계좌번호가 없을 시 급여 및 수당 지급 등이 불편할 수 있음.
+
+                            ※ 개인정보 제공자가 동의한 내용 외의 다른 목적으로 활용하지 않으며, 제공된 개인정보의 이용을 거부 하고자 할 때에는 개인정보보호책임자를 통해 열람, 정정, 삭제를 요구할 수 있음
+
+                            「개인정보보호법」등 관련 법규에 의거하여 상기 본인은 위와 같이 개인정보 수집 및 활용에 동의함.
+
                         </textarea>
                         <p className="radio_box">
                             <input type="radio" id="confirm2_y" name="confirm2"/>
@@ -501,7 +548,6 @@ return(
         {/* --기관종류선택 */}
 
         {/* 회원가입 */}
-        {/*   style={{display:"block"}}  */}
         <div className="modal_box mb2" > 
             <div className="modal_top">
                 <div className="modal_title">회원가입</div>
@@ -514,21 +560,21 @@ return(
                     <p className="title_label">기관정보 입력</p>
                             <p>
                                 <label className="required">요양 기관명</label>
-                                <input type="text" id ="companyName" maxLength="15" placeholder="기관명을 입력해주세요." defaultValue="에이솔"/>
+                                <input type="text" id ="companyName" maxLength="15" placeholder="기관명을 입력해주세요." />
                             </p>
                             <p style={{display:"inline-block", float:"left"}}>
                                 <label>기관기호</label>
-                                <input type="text" id ="companyCode" maxLength="10" placeholder="기관기호를 입력해주세요." defaultValue="12345"/>
+                                <input type="text" id ="companyCode" maxLength="10" placeholder="기관기호를 입력해주세요."/>
                             </p>
                             <p style={{display:"inline-block", marginLeft:"-335px"}}>
                                 <label htmlFor="businessNum" className="required">사업자번호</label>
-                                <input id="businessNum" type="text" placeholder="000" maxLength="3" style={{width:"33px"}} defaultValue="123"/> - 
-                                <input id="businessNum2" type="text" placeholder="00" maxLength="2" style={{width:"25px"}} defaultValue="12"/> - 
-                                <input id="businessNum3" type="text" placeholder="00000" maxLength="5" defaultValue="12345" style={{width:"50px"}}/>
+                                <input id="businessNum" type="text" placeholder="000" maxLength="3" style={{width:"33px"}} /> - 
+                                <input id="businessNum2" type="text" placeholder="00" maxLength="2" style={{width:"25px"}} /> - 
+                                <input id="businessNum3" type="text" placeholder="00000" maxLength="5" style={{width:"50px"}}/>
                             </p>
                             <p>
                                 <label for="">대표전화번호</label>
-                                <input type="text" id="mainNumber" maxLength="13" placeholder="02-000-0000" defaultValue="02-3291-0356"/>
+                                <input type="text" id="mainNumber" maxLength="13" placeholder="02-000-0000"/>
                             </p>
                             <p>
                                 <label for="">휴대전화</label>
@@ -537,17 +583,17 @@ return(
                                     <option value="011">011</option>
                                     <option value="016">016</option>
                                 </select>-
-                                <input type="text" id ="middleNumber" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>-
-                                <input type="text" id ="lastNumber" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} defaultValue="1234"/>
+                                <input type="text" id ="middleNumber" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}}/>-
+                                <input type="text" id ="lastNumber" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} />
                             </p>
                             <p style={{marginBottom:"13px"}}>
                                 <label className="required">기관주소</label>
-                                <input type="text" id="postNo" placeholder="우편번호" defaultValue="11611"/>
+                                <input type="text" id="postNo" placeholder="우편번호"/>
                                 <button type="button" className="btn_addr post_close" onClick={post_wrapper}>
                                     우편번호
                                 </button>
-                                <input type="text" id="address" style={{ width:"221px", display:"block", height:"33px", marginLeft:"105px"}} placeholder="주소를 입력해 주세요." defaultValue="경기 의정부시 가금로 29"/>
-                                <input type="text" id="addressDetail" style={{ width:"221px",height:"38px", marginLeft:"105px"}} placeholder="상세주소를 입력해 주세요." defaultValue="상세주소"/>
+                                <input type="text" id="address" style={{ width:"221px", display:"block", height:"33px", marginLeft:"105px"}} placeholder="주소를 입력해 주세요." />
+                                <input type="text" id="addressDetail" style={{ width:"221px",height:"38px", marginLeft:"105px"}} placeholder="상세주소를 입력해 주세요." />
                             </p>
                             {/* 기관급여일 id 머임 */}
                             <p>
@@ -556,25 +602,25 @@ return(
                                     <option value="1">익월</option>
                                     <option value="2">당월</option>
                                 </select>
-                                <input type="text" id="payDay" maxLength="2" placeholder="01" defaultValue="20"/>
+                                <input type="text" id="payDay" maxLength="2" placeholder="01"/>
                             </p>
 
                             <p>
                                 <label className="required">아이디</label>
-                                <input type="text" id="id" maxLength="10" placeholder="아이디를 입력해주세요" defaultValue="86297534"/>
+                                <input type="text" id="id" maxLength="10" placeholder="아이디를 입력해주세요" />
                                 <button type="button" class="btn_addr" onClick={duplicateCheckId}>중복확인</button>
                             </p>
                             <p class="pw_con">
                                 <label className="required">비밀번호</label>
-                                <input type="password" id = "password" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요." defaultValue="123456"/>
+                                <input type="password" id = "password" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요." />
                             </p>
                             <p>
                                 <label className="required">비밀번호확인</label>
-                                <input type="password" id = "passwordCheck" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요." defaultValue="123456"/>
+                                <input type="password" id = "passwordCheck" maxLength="16" style={{width:"185px"}} placeholder="비밀번호를 입력해주세요." />
                             </p>
                             <p>
                                 <label className="">이메일주소</label>
-                                <input type="text" id="idEmail" maxLength="20" defaultValue="86297534"/>@
+                                <input type="text" id="idEmail" maxLength="20" />@
                                 <select id ="domain" style={{borderRadius:"0px", width:"100px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
                                     <option value="naver.com">naver.com</option>
                                     <option value="etc">직접입력</option>

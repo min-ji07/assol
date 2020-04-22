@@ -56,9 +56,6 @@ const picker = {
       timepicker: true,
       onlyTimepicker: true
       ,minutesStep: 5
-      ,onSelect: function(rd,date){
-        endPicker.update('minDate', date)
-      }
      }).data('datepicker');
 
     
