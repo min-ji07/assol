@@ -87,7 +87,7 @@ function UserManagementContainer() {
     //그리드 정의
     const [gridDefs, setGridDefs] = useState({}); 
     const [rowData, setRowData] = useState([]);
-    const [countData, setCountData] = useState([]);
+    const [countData, setCountData] = useState({});
 
     const onRowDoubleClicked = (e)=> {
         let employeeNumber = e.data.employeeNumber;
@@ -110,12 +110,12 @@ function UserManagementContainer() {
             params = {
                 "branchNo" : 29
             }
-            
+
             await callApi.getUserInfo(params).then(res=>{
                 console.log(res);
                 if(res.data && res.data.ListData && res.data.CountData){
                     //공통 그리드 데이터 셋팅
-                    setCountData(res.data.CountData[0]);
+                    setCountData(res.data.CountData);
                     setRowData(res.data.ListData);
                 }
                 else{
