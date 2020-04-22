@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import "../../../Assets/css/pages/work/work_setting_01.css";
 import DataGrid from "../../../Components/DataGrid"
+import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
 import $ from 'jquery';
 
@@ -15,11 +16,31 @@ function saveRow (result) {
     var list = [];
     result.forEach(element => {
         if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
-            var convertCurrent = element.currentTime;
+            element.yearsMonthDate = $('#month-picker').val().replace("-","");
+            element.branchNo =1;
+            element.workType = $("#select_01").val();
+            list.push(element);
         }
     });
-    var params = result;
-    
+    let params = {};
+    params.groupInfos = result;
+    async function init(params){
+        try {
+            console.log(params);
+            await callApi.SaveGroupRow(params).then(res => {
+            
+                if(res.data.ErrorCode == 0){ 
+                    alert("근무조 설정이 완료되었습니다..");
+                }
+                else{
+                    alert("일부의 근무조 빼고 설정 실패하였습니다.");
+                }
+            })
+        }catch(error){
+            console.log("CATCH !! : " + error);
+        }
+    };
+    init(params);
 }
 return (
     <div className="wrapper">
@@ -42,16 +63,16 @@ return (
                                 id="month-picker"
                                 className="datepicker-here"
                                 data-language='lang'
-                                data-min-view="years"
-                                data-view="years"
-                                data-date-format="yyyy"/>
+                                data-min-view="months"
+                                data-view="months"
+                                data-date-format="yyyy-mm"/>
                             근무일 설정
                             <input type="radio" id="select_01" value = "1" name="select" />
                             <label for="select_01">월 ~ 금</label>
-                            <input type="radio" id="select_01" value = "2" name="select" />
-                            <label for="select_01">월 ~ 토</label>
-                            <input type="radio" id="select_01" value = "3" name="select" />
-                            <label for="select_01">월 ~ 일</label>
+                            <input type="radio" id="select_02" value = "2" name="select" />
+                            <label for="select_02">월 ~ 토</label>
+                            <input type="radio" id="select_03" value = "3" name="select" />
+                            <label for="select_03">월 ~ 일</label>
                         </p>
 
 

@@ -221,3 +221,7 @@ div[col-id="remainAnnual"]{
     text-align-last: center !important; /* select 가운데정렬 */
     line-height: normal !important;
 }
+
+.header_radius_none .ag-header{
+    border-radius:0px !important;
+}

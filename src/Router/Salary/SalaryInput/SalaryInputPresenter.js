@@ -5,24 +5,18 @@ import DataGrid from '../../../Components/DataGrid';
 import $ from 'jquery';
 import gridCommon from '../../../Utils/grid';
 
-const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => { 
+const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
     const { addBranch }=useHook();
     useEffect(()=>{
         //add branchInfo in redux store , but login page not found currently 
         addBranch('1');
     },[]);
 
-    const id1 = "grid1";
-    const id2 = "grid2";
-
-
-    const fnAddColumn = (colDefs) =>{
-        const gridApi = $("#grid1").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        gridCommon.onAddColumn(colDefs);
-    }
-
-    let test = {headerName: "성명333 ", field: "userName", width: 75, editable: true};
+    // const fnAddColumn = (colDefs) =>{
+    //     const gridApi = $("#grid1").find(".ag-root")[0]["__agComponent"].gridApi;
+    //     gridCommon.setGridApi(gridApi);
+    //     gridCommon.onAddColumn(colDefs);
+    // }
 
     return(
         <div class="wrapper">
@@ -46,9 +40,9 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                         </li>
                         <li>급수차수
                             <select id="salary">
-                                <option value='1'>1차</option>
-                                <option value='2'>2차</option>
-                                <option value='3'>3차</option>
+                                <option value='0'>1차</option>
+                                <option value='1'>2차</option>
+                                <option value='2'>3차</option>
                             </select>
                         </li>
                     </ul>
@@ -66,7 +60,7 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                             <div class="left_div_inner_inner">
                                 <div class="div_top01">사원 전체명부</div>
                                 <div class="div_bottom">
-                                <DataGrid rowData={rowData} gridDefs={gridDefs} idTest={id1}/>
+                                    <DataGrid rowData={rowData} gridDefs={gridDefs}/>
                                 </div>
                             </div>
                         </div>
@@ -74,10 +68,10 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                             <div class="right_div_inner_inner">
                                 <div class="div_top02">지급 항목상세
                                     <button class="plus" onClick={gridCommon.onAddRow} >추가</button>
-                                    <button class="delete" onClick={fnAddColumn}>삭제</button>
+                                    <button class="delete" onClick={gridCommon.onRemoveRow}>삭제</button>
                                 </div>
                                 <div class="div_bottom">
-                                <DataGrid rowData={rowData2} gridDefs={gridDefs2} idTest={id2}/>
+                                    <DataGrid rowData={rowData2} gridDefs={gridDefs2}/>
                                 </div>
                             </div>
                         </div>
@@ -85,23 +79,23 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                     <div class="right_div">
                         <div class="right_inner_left">
                             <div class="div_top">인건비 총액</div>
-                            <div class="div_bottom">122,200,000</div>
+                            <div class="div_bottom" id="totalPay1">122,200,000</div>
                         </div>
                         <div class="right_inner_left">
                             <div class="div_top bg_pink02">4대보험 총액</div>
-                            <div class="div_bottom txt_pink01">2,400,000</div>
+                            <div class="div_bottom txt_pink01" id="totalPay2">2,400,000</div>
                         </div>
                         <div class="right_inner_left">
                             <div class="div_top bg_pink02">소득세 총액</div>
-                            <div class="div_bottom txt_pink01">845,000</div>
+                            <div class="div_bottom txt_pink01" id="totalPay3">845,000</div>
                         </div>
                         <div class="right_inner_left">
                             <div class="div_top bg_blue02">실지급 총액</div>
-                            <div class="div_bottom txt_blue01">111,845,000</div>
+                            <div class="div_bottom txt_blue01" id="totalPay4">111,845,000</div>
                         </div>
                         <div class="right_inner_left">
                             <div class="div_top">인건비 비율</div>
-                            <div class="div_bottom02"></div>
+                            <div class="div_bottom02" id="totalPay5"></div>
                         </div>
                     </div>
                 </div>

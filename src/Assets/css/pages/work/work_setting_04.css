@@ -192,11 +192,11 @@
     height: 300px;
 }
 
-.btn_box{
+.work_chart .btn_box{
     margin-top:10px;
     text-align: right;
 }
-.btn_box button{
+.work_chart .btn_box button{
     font-size:18px;
     border-radius: 20px;
     padding:0 25px;
@@ -205,14 +205,14 @@
     background-color:#a8a8a8;
     padding-bottom:1px;
 }
-.btn_box button.btn_excel{
+.work_chart .btn_box button.btn_excel{
     padding-left:45px;
     padding-right:10px;
     background:url("/images/icon_excel.png") no-repeat 15px center;
     background-size:22px;
     background-color:#4e926f;
 }
-.btn_box button.btn_pdf{
+.work_chart .btn_box button.btn_pdf{
     padding-left:45px;
     padding-right:10px;
     background:url("/images/icon_pdf.png") no-repeat 15px center;

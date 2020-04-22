@@ -7,10 +7,10 @@ import gridCommon from '../../../Utils/grid';
 function UserManagementContainer() {
     //컬럼 정의
     const regEmployeeMappings = {
-        "0" : "근로소득자"
-        ,"1" : "사업소득자" 
-        ,"2" : "일용근로자" 
-        ,"3" : "시간직"
+        "0" : "정규직"
+        ,"1" : "계약직" 
+        ,"2" : "파견직" 
+        ,"3" : "위촉직"
     }
     const userTypeMappings = {
         "0" : "일반근로자"
@@ -56,9 +56,9 @@ function UserManagementContainer() {
                 cellEditorParams: { values : gridCommon.extractValues(regPositionMappings)},refData: regPositionMappings}         
             ,{ headerName: "직위", field: "workLevel", width:100 }
             ,{ headerName: "사원번호", field: "employeeNumber", cellEditor : "richSelect" , width:100}
-            ,{ headerName: "고용형태", field: "userType",  width:130,
+            ,{ headerName: "고용형태", field: "regularEmployee",  width:130,
                 cellEditor : "richSelect", 
-                cellEditorParams: { values : gridCommon.extractValues(userTypeMappings)},refData: userTypeMappings}
+                cellEditorParams: { values : gridCommon.extractValues(regEmployeeMappings)},refData: regEmployeeMappings}
             ,{ headerName: '전화번호', field: "mobile", cellEditor : "richSelect", width:150}
             ,{ headerName: '이메일', field: "email", cellEditor : "richSelect", width:180}
             ,{ headerName: '주소', field: "address", cellEditor : "richSelect", width:180}
@@ -94,10 +94,10 @@ function UserManagementContainer() {
     const onRowDoubleClicked = (e)=> {
         let employeeNumber = e.data.employeeNumber;
         let userType = e.data.userType;
-        let branchNo = e.data.branchNo;
+        let branchNo = "29"; // 나중에 바꿔
         window.location.href = "/user/userInfo?employeeNumber="+employeeNumber+"&userType="+userType+"&branchNo="+branchNo;
     }
-    
+
     useEffect(()=>{
        async function initGrid(params) {
         try {
@@ -111,7 +111,7 @@ function UserManagementContainer() {
             params = {
                 "branchNo" : 29
             }
-            await callApi.getUserInfo(params).then(res=>{
+            await callApi.getUserInfo(req).then(res=>{
                 console.log(res);
                 if(res.data && res.data.ListData && res.data.CountData){
                     //공통 그리드 데이터 셋팅

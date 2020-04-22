@@ -12,7 +12,7 @@ const api = axios.create({
 )
 
 const testUrl = "http://172.30.1.29:5302"; // 이석민 ip
-const testUrl2 = "http://172.30.1.24:5302"; // 김성일 ip
+const testUrl2 = "http://58442818.ngrok.io"; // 김성일 ip
 
 //http://172.30.1.24:5302/Admin/CheckDuplicateAdmin
 const testUrl3 = "http://150f7585.ngrok.io"; //
@@ -117,16 +117,15 @@ export const callApi = {
     /* 회원가입 */
     JoinUser:(params) => axios ({
         method: 'post',
-        url: testUfl2 + '/Admin/AdminRegistration',
+        url: localTest + '/Admin/AdminRegistration',
         data: params
     }) ,  
-    checkDuplicateAdmin:(params) => axios.post(testUrl2+'/Admin/CheckDuplicateAdmin',{params:params}), // 아이디 중복체크
-
-    //SendCertificationValue:(params) => axios.post('http://de89cad8.ngrok.io'+'/SendMailer/SendCertificationValue',{params:params}), // 이메일 인증번호 보내기
+    // 아이디 중복체크
+    checkDuplicateAdmin:(params) => axios.post(localTest+'/Admin/CheckDuplicateAdmin',{params:params}), 
     // 이메일 인증번호 보내기
     SendCertificationValue:(params) => axios ({
         method: 'post',
-        url: 'http://de89cad8.ngrok.io' + '/SendMailer/SendCertificationValue',
+        url: localTest + '/SendMailer/SendCertificationValue',
         data: params
     }),
     // 이메일 인증번호 체크
@@ -135,6 +134,14 @@ export const callApi = {
         method: 'post',
         url: testUrl2 + '/Admin/CheckCertification',
         data: params
+    }),
+    SaveGroupRow :(params) => axios({
+        method: 'post',
+        url: localTest+'/TimeTable/SetTimeTable',
+        data: params,
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
     
 

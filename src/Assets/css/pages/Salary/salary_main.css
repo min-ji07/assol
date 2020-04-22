@@ -63,18 +63,18 @@
 }
 .salary_main .left_div_inner{
     float: left;
-    width: 308px; height: 573px;
+    width: 358px; height: 573px;
     border-radius: 20px;
     background: white;
     box-shadow: 0px 6px 5px #d8d8d8;
 }
 .salary_main .left_div_inner_inner {
     margin: 25px auto;
-    width: 265px; height: 523px;
+    width: 315px; height: 523px;
 }
 .salary_main .left_div_inner .div_top01 {
     float: left;
-    width: 265px; height: 31px; line-height: 31px;
+    width: 315px; height: 31px; line-height: 31px;
     border-radius: 10px 10px 0 0; text-indent: 10px;
     background: #b2b2b2; color: white; font-size: 15px;
     border: 1px solid #b2b2b2;
@@ -83,7 +83,7 @@
 .salary_main .left_div_inner .div_bottom {
     position: absolute;
     margin-top: 32px;
-    width: 265px; height: 484px; line-height: 20px; text-align: center;
+    width: 315px; height: 484px; line-height: 20px; text-align: center;
     border: 1px solid #b2b2b2; 
 }
 .salary_main .left_inner_right{
@@ -104,7 +104,7 @@
 /* 지급항목상세*/
 .salary_main .right_div_inner {
     float: left;
-    width: 1140px; height: 573px;
+    width: 1090px; height: 573px;
     background: white;
     border-radius: 20px;
     margin-left: 18px;
@@ -112,18 +112,18 @@
 }
 .salary_main .right_div_inner_inner {
     margin: 25px auto;
-    width: 1087px; height: 523px;
+    width: 1037px; height: 523px;
 }
 .salary_main .right_div_inner .div_bottom{
     position: absolute;
     margin-top: 32px;
-    width: 1087px; height: 484px;
+    width: 1037px; height: 484px;
     border: 1px solid #b2b2b2; 
     text-align: center;
 }
 .salary_main .right_div_inner .div_top02 {
     float: left;
-    width: 1087px; height: 31px; line-height: 31px;
+    width: 1037px; height: 31px; line-height: 31px;
     border-radius: 10px 10px 0 0; text-indent: 10px;
     background: #b2b2b2; color: white; font-size: 15px;
     border: 1px solid #b2b2b2;
@@ -131,6 +131,7 @@
 .salary_main .right_div_inner .div_top02 .plus {
     background: url('/images/salary_main_puls.png') no-repeat;
     color: transparent;
+    margin-left:7px;
 }
 .salary_main .right_div_inner .div_top02 .delete {
     width: 60px; height: 22px; line-height: 22px;

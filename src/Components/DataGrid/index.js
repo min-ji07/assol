@@ -5,10 +5,10 @@ import gridCommon from '../../Utils/grid.js';
 import '../../Assets/css/grid/grid.css';
 
 
-function DataGrid({rowData:rowData,gridDefs,idTest}){
+function DataGrid({rowData:rowData,gridDefs}){
 
     return(
-        <div id={idTest} className="ag-theme-balham" style={{height:"100%", width:"100%"}}>
+        <div id={gridDefs.gridId} className="ag-theme-balham" style={{height:"100%", width:"100%"}}>
             <AgGridReact
                 rowData={rowData}
                 columnDefs={gridDefs.columnDefs}

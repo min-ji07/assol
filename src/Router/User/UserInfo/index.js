@@ -2,12 +2,10 @@ import React, { useState, useEffect } from 'react';
 import '../../../Assets/css/pages/user/user_info.css';
 import EamedIncomeContainer from './EamedIncome/EamedIncomeContainer';
 import BusinessIncomeContainer from './BusinessIncome/BusinessIncomeContainer';
-import BusinessincomePresenter from './BusinessIncome/BusinessincomePresenter';
 import DailyIncomeContainer from './DailyIncome/DailyIncomeContainer';
 import DaumPostcode from 'react-daum-postcode';
 import Utils from '../../../Utils/utils';
 import { callApi } from '../../../Utils/api';
-import { post } from 'axios';
 import $ from 'jquery';
 import utils from '../../../Utils/utils';
 import gridCommon from '../../../Utils/grid';
@@ -21,6 +19,7 @@ const UserInfo = () => {
     let userInfoData;
     let paramData = {};
 
+    console.log(pramsString);
     if(pramsString.length != 0){
         let paramArr = pramsString.split("&");
         let paramArrLen = paramArr.length;
@@ -40,7 +39,9 @@ const UserInfo = () => {
         // };
     }
 
-    const userInfoEvent = (data) => {
+    const userInfoEvent = (data,othercontent) => {
+        console.log(data);
+        console.log(othercontent);
         let userType = data.userType;
         let tab;
         if(userType == "0"){
@@ -50,11 +51,12 @@ const UserInfo = () => {
         } else if(userType == "2"){
             tab = "tab_03";
         }
-        
         $("#"+tab).click();
         $(".user_type_label[for="+tab+"]").css("width","150px");
         $("input[name=tab1]:not(#"+tab+")").remove();
         $(".user_type_label:not([for="+tab+"])").remove();
+        $(".div_bottom:not(.right):not(."+tab+")").remove();
+        
 
         // $(".user_type_label:not([for="+tab+"])").remove();
 
@@ -62,16 +64,65 @@ const UserInfo = () => {
         for(var key in data){
             let elem = $("#"+key);
             let val = data[key] == null ? "" : data[key];
+            // let checkClass = elem.attr("class");
 
+            // if(checkClass.indexOf("money_input") != -1){
+            //     val = utils.regExr.comma(val);
+            // }
             if(elem.length != 0){
                 elem.val(val);
             }
+            // 수습기간 on
+            if(key == "isProbation" && val == "0"){
+                elem.next().show();
+            }
+            // 비자타입 on
+            if(key == "national" && val == "외국인"){
+                $(".visa_li").show();
+            }
 
+            // $(".visa_li").show();
+            // $("#isProbation").next().show();
             
             console.log(key,"",data[key]);
             // 에러체크하자
             // 해당 아이디 element 있는지 체크
             // null체크
+        }
+        // othercontent = [
+        //     {title:"t1",value:"v1"},
+        //     {title:"t2",value:"v2"},
+        //     {title:"t3",value:"v3"},
+        //     {title:"t4",value:"v4"},
+        //     {title:"t5",value:"v5"}
+        // ];
+        addSalaryList(othercontent);
+    }
+
+    const userImgInit = (url) => {
+        if(url.length != 0 || url != null || url != undefined){
+            $("#userImgView").attr("src",url);
+            $("#userImgText").hide();
+        }
+    }
+
+    const insaImgInit = (data) => {
+        // 인사서류 기존 데이터는 upload아님
+        // 기존 데이터 삭제시 어떻게 처리?
+        
+    }
+
+    const addSalaryList = (othercontent) => {
+        for(var index in othercontent){
+            console.log(othercontent[index]);
+            var title = othercontent[index].title;
+            var value = othercontent[index].value;
+            var checkLen = $("input[name=addSalaryTitle]").length;
+            $("#addSalary").click();
+            var addTitleList = $("input[name=addSalaryTitle]");
+            var addPayList = $("input[name=addSalaryPay]");
+            addTitleList[checkLen].value = title;
+            addPayList[checkLen].value = value;
         }
     }
 
@@ -83,7 +134,7 @@ const UserInfo = () => {
                     alert(res.data.Msg);
                 } else {
                     let data = res.data;
-                    userInfoEvent(data.baseData);
+                    userInfoEvent(data.baseData,data.othercontent);
                     setRowData(data.sfData);
                     setRowData2(data.eduData);
                     setRowData3(data.exData);
@@ -274,6 +325,9 @@ const UserInfo = () => {
             }
             ,{ headerName: '주민(외국인)번호', field: "sfPersnoalNumber", editable:true, width:160
                 ,valueGetter: function(params){
+                    if(!personalValidaition(params.data.sfPersnoalNumber)){
+                        return "";
+                    }
                     return utils.regExr.personalNum(params.data.sfPersnoalNumber);
             }}
             ,{ headerName: "연말정산관계", field: "sfRelation", width:120,
@@ -281,7 +335,7 @@ const UserInfo = () => {
                 cellEditorParams: { values : gridCommon.extractValues(regtaxAdjustmentMappings)},refData: regtaxAdjustmentMappings}
             ,{ headerName: '세대주', field: "sfHouseHolder" , width:120
                 ,valueGetter: function(params){
-                    return utils.regExr.koreanOnly(params.data.sfName);
+                    return utils.regExr.koreanOnly(params.data.sfHouseHolder);
                 }
             }
             ,{ headerName: "부녀자", field: "sfWomenDeduction", width:70,
@@ -396,6 +450,33 @@ const UserInfo = () => {
            //컴포넌트 세팅 
            const components = {  };
            return {columnDefs, defaultColDef, components};
+    }
+
+
+    function personalValidaition(jumin) {
+        jumin = utils.regExr.numOnly(jumin);
+       
+        //주민등록 번호 13자리를 검사한다.
+         var fmt = /^\d{6}[123456]\d{6}$/;  //포멧 설정
+         if (!fmt.test(jumin)) {
+          return false;
+         }
+       
+         // 생년월일 검사
+         var birthYear = (jumin.charAt(6) <= "2") ? "19" : "20";
+         birthYear += jumin.substr(0, 2);
+         var birthMonth = jumin.substr(2, 2) - 1;
+         var birthDate = jumin.substr(4, 2);
+         var birth = new Date(birthYear, birthMonth, birthDate);
+       
+         if ( birth.getYear() % 100 != jumin.substr(0, 2) ||
+              birth.getMonth() != birthMonth ||
+              birth.getDate() != birthDate) {
+            return false;
+         }
+       
+        
+         return true;
     }
 
     const dateValidation = (date) =>{
@@ -627,7 +708,7 @@ const UserInfo = () => {
             e.target.nextSibling.children[0].value = "";
         });
 
-        $("select[name=isActive]").on("change",function(){
+        $("select[name=isActive]").on("change",function(e){
             let dateInput = e.target.nextSibling;
             let resonBox = e.target.parentElement.nextSibling;
             let checkVal = e.target.value;
@@ -760,7 +841,6 @@ const UserInfo = () => {
             e.target.value = Utils.regExr.koreanOnly(targetVal);
         });
 
-        // default데이터 계산용 나중에 삭제
         $("input").trigger("keyup");
         $("input").trigger("change");
 
