@@ -51,13 +51,13 @@ var gridCommon = function() {
         ,onSaveRow : (callback)=>{ //저장 
             //1 : insert, 2 : update, 3: delete, 4 : select
             gridApi.api.stopEditing();
+            
             var rowData = gridCommon.getRowData();
             rowData.push(...removeData); //삭제 데이터 추가
-            var qs = '';
-            rowData.forEach(row=>{
-                console.log(row);
-                var str = JSON.stringify(row);
-            });
+            // var qs = '';
+            // rowData.forEach(row=>{
+            //     var str = JSON.stringify(row);
+            // });
             if(callback && callback instanceof Function) callback(rowData);
         },onRowEditingStopped : (e, func) =>{ //페이지내에서 미리 콜백정의, 이후 그리드 호출후 콜백으로 전달 
             if( !e.data ) return;
