@@ -72,12 +72,12 @@ function WorkTableByGroupContainer() {
             return resultHour+"시간"+min+"분";
         }
          }
-         ,{ headerName: "야간근무시간", field: "nightTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
+         ,{ headerName: "야간근무시간", field: "lightTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
             ,valueGetter: function(params){ 
-                if(!params.data.nightTime){
+                if(!params.data.lightTime){
                     return "";
                 }
-                let current = params.data.nightTime;
+                let current = params.data.lightTime;
                 var hour = current/60;
                 var resultHour = Math.floor(hour);
                 var min = current - (resultHour * 60);
@@ -216,7 +216,7 @@ function WorkTableByGroupContainer() {
                 nightTime = 8 * 60;
                 allWorkTime = allTimeMin - nightTime;
            }
-           if(e.restTime)
+           if(e.data.restTime)
            {
             let restTimeArr  = e.data.restTime.split("~");
             if(!restTimeArr[0] || !restTimeArr[1]){
@@ -229,6 +229,7 @@ function WorkTableByGroupContainer() {
              var allStrRestMin = (strRestTime.getHours() * 60) + strRestTime.getMinutes();
              var allEndRestMin = (endRestTime.getHours() * 60) + endRestTime.getMinutes();
              var restMin = 0;
+
              if(allStrRestMin > allEndRestMin)
              {
                  console.log("restMin" + restMin);
@@ -240,7 +241,6 @@ function WorkTableByGroupContainer() {
                     return false;
                 }
                 restMin = allEndRestMin - allStrRestMin;
-                console.log("restMin" + restMin);
              }
              if(nightTime > 0){
                 var result = nightTime - restMin;
@@ -257,6 +257,7 @@ function WorkTableByGroupContainer() {
                 }
                 else{
                     nightTime -= restMin;
+                    restMin = 0;
                 }
              }
              if(restMin > 0)
@@ -272,9 +273,9 @@ function WorkTableByGroupContainer() {
              }
              
            }
-           if(e.subRestTime)
+           if(e.data.subRestTime)
            {
-                if(!e.restTime){
+                if(!e.data.restTime){
                     alert ("휴게시간1을 먼저 입력해주세요");
                     return false;
                 }
@@ -290,6 +291,7 @@ function WorkTableByGroupContainer() {
                    var allStrRestMin = (strRestTime.getHours() * 60) + strRestTime.getMinutes();
                    var allEndRestMin = (endRestTime.getHours() * 60) + endRestTime.getMinutes();
                    var restMin = 0;
+                   
                    if(allStrRestMin > allEndRestMin)
                    {
                       restMin = (24 * 60) - (allStrRestMin - allEndRestMin);
@@ -316,23 +318,34 @@ function WorkTableByGroupContainer() {
                       }
                       else{
                           nightTime -= restMin;
+                          restMin =0;
                       }
-                }
+                    }
+                    if(restMin > 0)
+                    {
+                       var result = allWorkTime - restMin;
+                       if(result <= 0){
+                           if(result <= 0){
+                               alert("휴게 시간은 총 근무시간보다 많을수 없습니다.");
+                               return false;
+                           }
+                       }
+                       allWorkTime -= restMin;
+                    }
               }
             }
            
 
            overTime = (allWorkTime + nightTime) - (8 * 60);
+           let pass = overTime != 0 ? "N" : "Y";
            if(overTime < 0 ){
                overTime = 0;
            }
-           e.node.setDataValue('nightTime',nightTime)
+           e.node.setDataValue('lightTime',nightTime)
            e.node.setDataValue('currentTime',allWorkTime)
            e.node.setDataValue('overTime',overTime);
-           let pass = "Y"
-           if(allrestTime < 8 * 60 || allrestTime > 8 * 60){
-            pass = "N";
-           }
+           
+          
            e.node.setDataValue('passYn',pass)
        }
      

@@ -8,34 +8,39 @@ const WorkTableByRestDay=({ rowData, gridDefs })=>{
     
     function saveRow (result) {
         var list = [];
-        // console.log('list'+ list);
         console.log(result);
         
         result.forEach(element => {
             if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
                 element.branchNo = 1;
-                console.log(element);
                 list.push(element);
             }
         });
-        let params = {};
-        params.wokerAnnualInfos = result;
+        if(list == null || list.length < 1){
+            return true;
+        }
+        let params = {}
+        params.workerScheduleInfos = list;
+        
+        
 
         async function init(params){
             try {
                 await callApi.setWorkerListByRestDay(params).then(res => {
-                    if(res.data.ErrorCode == 0){ 
-                        alert("연차설정이 완료되었습니다.");
-                    }
-                    else{
-                        alert("실패");
+                    if(res.data){
+                        if(res.data.ErrorCode == 0){ 
+                            alert("연차설정이 완료되었습니다.");
+                        }
+                        else{
+                            alert("실패");
+                        }
                     }
                 })
             }catch(error){
                 console.log("CATCH !! : " + error);
             }
         };
-        init();
+        init(params);
     }
 
     return (
@@ -56,8 +61,7 @@ const WorkTableByRestDay=({ rowData, gridDefs })=>{
                         <div class="buttonset">
                         <button type="button" className="insert"  onClick={gridCommon.onAddRow}>추가</button>
                         <button type="button" className="delete1" onClick={gridCommon.onRemoveRow}>삭제</button>
-                        <button type="button" className="save"    onClick={() => gridCommon.onSaveRow(saveRow)}
-                            >저장</button>
+                        <button type="button" className="save"    onClick={() => gridCommon.onSaveRow(saveRow)}>저장</button>
 
                         
                         </div>

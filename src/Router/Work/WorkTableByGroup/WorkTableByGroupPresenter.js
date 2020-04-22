@@ -15,7 +15,7 @@ const WorkTableByGroupPresenter=({rowData,  gridDefs, nextPage }) => {
 
 function saveRow (result) {
     var list = [];
-    
+    console.log(result);
     result.forEach(element => {
         if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
             if(element.workTime == null ||element.workTime == "")

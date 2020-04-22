@@ -22,18 +22,6 @@ const WorkRestDay = () => {
     const [rowData, setRowData] = useState([]); //그리드 데이터 
     const [gridDefs, setGridDefs] = useState({}); //그리드 정의
    
-    const regPositionMappings = {
-        "0" : "사회복지사"
-        ,"1" : "요양보호사" 
-        ,"2" : "사무원" 
-        ,"3" : "시설자" 
-        ,"4" : "조리원" 
-        ,"5" : "운전사" 
-        ,"6" : "물리치료사" 
-        ,"7" : "촉탁의" 
-        ,"8" : "대표"         
-    }
-
 
     // 사원정보 불러오기
     useEffect(()=>{
@@ -55,7 +43,8 @@ const WorkRestDay = () => {
                             console.log(user);
                             workersMap[user.userNo] =user.userName;
                             workersNumber[user.userNo] = user.employeeNumber;
-                            workersPosition[user.userNo] = regPositionMappings[user.position];
+                            workersPosition[user.userNo] = user.position;
+                                                
                         }
                     }
 

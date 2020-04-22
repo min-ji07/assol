@@ -74,7 +74,7 @@ export const callApi = {
         /work/workTableByGroup
         근무조 설정 페이지
     */
-    getGridData:(params) => axios.get(noJustin+'/TimeTable/SelectTimeTable',{params:params}), //근무조설정
+    getGridData:(params) => axios.get(localTest+'/TimeTable/SelectTimeTable',{params:params}), //근무조설정
     /* 
         /work/workTableByPersonal/202001 
         근무자 설정 페이지 
@@ -91,7 +91,7 @@ export const callApi = {
         연차설정 페이지
     */
     getWorkerInfos:(params) => axios.get(noJustin +'/Worker/GetWorkerByBranchNo',{params:params}),
-    getWorkerListByRestDay:(params)=> axios.get(noJustin+'/Worker/GetAnnualWorker',{params:params}), // 연차설정 - 조회
+    getWorkerListByRestDay:(params)=> axios.get(localTest+'/Worker/GetAnnualWorker',{params:params}), // 연차설정 - 조회
     getWorkerListByRestDayView:(params)=> axios.get(noJustin+'/AdminManager/GetAnnualManager',{params:params}), // 연차대장 - 조회
     /*
         /work/workTableResult
@@ -117,8 +117,11 @@ export const callApi = {
     //연차사용 - 저장
     setWorkerListByRestDay:(params)=> axios ({
         method: 'post',
-        url: testUrl + '/Worker/SetAnnualWorker',
-        data: params
+        url: localTest + '/Worker/SetAnnualWorker',
+        data: params,
+        headers: {
+            'Content-Type': 'application/json'
+        }
     }), 
 
     /* 회원가입 */
@@ -153,7 +156,7 @@ export const callApi = {
     // 근무조 저장 
     SaveGroupRow :(params) => axios({
         method: 'post',
-        url: noJustin+'/TimeTable/SetTimeTable',
+        url: localTest+'/TimeTable/SetTimeTable',
         data: params,
         headers: {
             'Content-Type': 'application/json'
