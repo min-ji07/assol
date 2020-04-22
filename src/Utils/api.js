@@ -12,7 +12,7 @@ const api = axios.create({
 )
 
 const testUrl = "http://172.30.1.29:5302"; // 이석민 ip
-const testUrl2 = "http://58442818.ngrok.io"; // 김성일 ip
+const testUrl2 = "http://172.30.1.24:5302"; // 김성일 ip
 
 //http://172.30.1.24:5302/Admin/CheckDuplicateAdmin
 const testUrl3 = "http://150f7585.ngrok.io"; //
@@ -27,13 +27,12 @@ export const callApi = {
     
 
     getUserInfo:(params) => axios.get(testUrl2+'/user/GetUserInfobyBranchNo',{params:params}), // 사원조회
-    
-    setInitSalary:(params) => axios.get(testUrl2+'/PayRoll/InitPayRollPage',{params:params}), // 급여입력 초기화면
+    setInitSalary:(params) => axios.get(testUrl2+'/PayRoll/InitPayRollPage',{params:params}), // 급여입력 - 사원 전체명부 조회
     selectTargetUser:(params) => axios({
         method: 'post',
         url: testUrl2+'/PayRoll/SelectTargetUser',
         data: params
-    }), // 급여입력 - 사원상세조회
+    }), // 급여입력 - 지급 항목상세 조회
 
     // saveUserInfo:(params) => axios.post('http://82230995.ngrok.io/User/UserRegistration',{params:params}), // 사원등록
     userRegistration:(params) => axios({
@@ -138,7 +137,7 @@ export const callApi = {
     //http://172.30.1.24:5302/Admin/CheckCertification
     CheckCertification:(params) => axios ({
         method: 'post',
-        url: localTest + '/Admin/CheckCertification',
+        url: testUrl2 + '/Admin/CheckCertification',
         data: params
     }),
     SaveGroupRow :(params) => axios({

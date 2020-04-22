@@ -4,13 +4,19 @@ import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
 import picker from '../../../Utils/datepicker';
 import utils from '../../../Utils/utils';
+import useHook from '../../../GlobalState/Hooks/useHook';
 
 function SalaryInputContainer() {
+    const { state } = useHook();
+    console.log(state.branchNo);
+
     const [rowData, setRowData] = useState([]); //그리드 데이터 
     const [gridDefs, setGridDefs] = useState({}); //그리드 정의
 
     const [rowData2, setRowData2] = useState([]); //그리드 데이터 
     const [gridDefs2, setGridDefs2] = useState({}); //그리드 정의
+
+    let addRowJson = {};
 
     const regEmployeeMappings = {
         "0" : "사회복지사"
@@ -39,21 +45,23 @@ function SalaryInputContainer() {
        async function init() {
             try {
                 await callApi.setInitSalary(params).then(res=> {
-                    console.log(res);
                     /* 사원 리스트 */
                     setRowData(res.data.Data);
-
-                    picker.setMonthPicker(('#month-picker'),function(value){
-                        // initGrid(value);
-                    });
                 });
             }catch{
 
             }
        };
        init(params);
+
+       bindEvent();
     },[]); //init
 
+    const bindEvent = () => {
+        $("#btnAddRow").on("click",function(){
+            gridCommon.onAddRow(addRowJson);
+        });
+    }
 
     const gridSetting =()=>{
         //컬럼 정의
@@ -91,7 +99,7 @@ function SalaryInputContainer() {
                 let employeeNumber = e.data.employeeNumber;
                 let userNo = e.data.userNo;
                 let userType = e.data.userType;
-                let payDegree = $("#salary").val();
+                let payDegree = $("#payDegree").val();
                 let yearMonthDate = $("#month-picker").val();
                 let params = {
                     // "yearMonthDate" : yearMonthDate,
@@ -100,7 +108,6 @@ function SalaryInputContainer() {
                     "userType": userType,
                     "userNo" : userNo
                  }
-                console.log(params);
                 userSelect(params);
             }
 
@@ -121,7 +128,8 @@ function SalaryInputContainer() {
                         } else{
                             // setRowData(res.data.Data);
                         }
-                        setOtherColumn(res.data.OtherData);
+                        setOtherColumn(res.data.Data[0],res.data.OtherData);
+                        setAddRow(res.data.Data[0],res.data.OtherData);
                     }
                 });
             }catch{
@@ -133,42 +141,7 @@ function SalaryInputContainer() {
 
     const gridSetting2 =()=>{
         //컬럼 정의
-            const columnDefs= [  
-                { headerName: "rowId", field: "rowId", hide:true }
-                ,{headerName: "성명 ",field:"userName", width:75, editable:false}
-                ,{headerName: "직책", field: "position", width:110, editable:false,
-                        cellEditor: "select",
-                        cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
-                        refData: regEmployeeMappings
-                    }
-                ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
-                ,{ headerName: "기본급", field: "baseSalary", width:120,
-                        valueFormatter: function(params) {
-                            return utils.regExr.comma(params.value);
-                        }
-                    }
-                    ,{ headerName: "식비", field: "foodSalary", width:120,
-                        valueFormatter: function(params) {
-                            return utils.regExr.comma(params.value);
-                        }    
-                    }
-                    ,{ headerName: "차량유지비", field: "carSalary", width:120,
-                        valueFormatter: function(params) {
-                            return utils.regExr.comma(params.value);
-                        }    
-                    }
-                    ,{ headerName: "성과금", field: "welfareSalary", width:120,
-                    valueFormatter: function(params) {
-                            return utils.regExr.comma(params.value);
-                        }    
-                    }
-                    ,{ headerName: "직책수당", field: "positionSalary", width:120,
-                        valueFormatter: function(params) {
-                            return utils.regExr.comma(params.value);
-                        }    
-                    }
-            ]
-   
+            const columnDefs = defaultColumnJson();
           
    
            //기본컬럼 정의
@@ -187,27 +160,29 @@ function SalaryInputContainer() {
            return {columnDefs, defaultColDef, components, gridId};
     }
 
+    const setAddRow = (baseData,otherData) => {
+        console.log("addrow 셋팅 !");
+        console.log(baseData);
+        console.log(otherData);
+        addRowJson = baseData;
+        var i = 0;
+        for(i in otherData){
+            console.log(otherData);
+            addRowJson["addColumn"+i] = utils.regExr.numOnly(otherData[i].value);
+        }
+    }
 
-    // 컬럼추가부분
-    let testOthercontent = [
-        {title:"t1",value:"v1"},
-        {title:"t2",value:"v2"},
-        {title:"t3",value:"v3"},
-        {title:"t4",value:"v4"},
-        {title:"t5",value:"v5"}
-    ];
-
-
-    const setOtherColumn = (otherData) => {
-        let columnDefs = defaultColumnJson();
+    const setOtherColumn = (baseData,otherData) => {
+        let columnDefs = defaultColumnJson(baseData);
         var i = 0;
         console.log()
         for(i in otherData){
             const title = otherData[i].title;
-            const value = otherData[i].value;
-            let addColumn = addColumnJson(title,value);
+            const filedVal = "addColumn"+i;
+            let addColumn = addColumnJson(title,filedVal);
             columnDefs.push(addColumn);
         }
+
         console.log(columnDefs);
         gridCommon.setColumn(columnDefs);
     }
@@ -215,7 +190,7 @@ function SalaryInputContainer() {
     const defaultColumnJson = (data) => {
         const arr = [
             { headerName: "rowId", field: "rowId", hide:true }
-            ,{headerName: "성명 ",field:"userName", width:75, editable:false
+            ,{headerName: "성명 ",field:"userName", width:95, editable:false,
             }
             ,{headerName: "직책", field: "position", width:110, editable:false,
                 cellEditor: "select",
@@ -223,8 +198,8 @@ function SalaryInputContainer() {
                 refData: regEmployeeMappings
             }
             ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
-            ,{ headerName: "기본급", field: "baseSalary", width:120,
-                valueFormatter: function(params) {
+            ,{ headerName: "기본급", field: "baseSalary", width:120
+                ,valueFormatter: function(params) {
                     return utils.regExr.comma(params.value);
                 }
             }
@@ -252,12 +227,11 @@ function SalaryInputContainer() {
         return arr;
     }
 
-    const addColumnJson = (title,value) => {
+    const addColumnJson = (title,fieldVal) => {
         var json = { 
             headerName: title,
-            field: title,
+            field: fieldVal,
             width:120
-            ,defaultTextValue : value
             ,valueFormatter: function(params) {
                  return utils.regExr.comma(params.value);
              }    

@@ -108,7 +108,7 @@ function UserManagementContainer() {
             } 
             // //근속연도 세팅 
             // const target = document.querySelector('#month-picker')
-            var req = {
+            params = {
                 "branchNo" : 29
             }
             await callApi.getUserInfo(req).then(res=>{
