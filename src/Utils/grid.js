@@ -27,8 +27,13 @@ var gridCommon = function() {
             });
             return rowData;
         }
-        ,onAddRow : () => {
-            const newRow = { processType: 1 }
+        ,onAddRow : (rowData) => {
+            let newRow = { processType: 1 };
+            if(rowData != undefined){
+                console.log(rowData);
+                rowData.processType = 1;
+                newRow = rowData;
+            }
             //추가 기입 
             gridApi.api.updateRowData({add: [newRow]});
         }
