@@ -119,12 +119,6 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
         $("#userImgText2").addClass("txt_hide");
     }
 
-    const userImgDelete2 = (e) => {
-        $("#userImgView2").attr("src","/images/user02.png");
-        $("#userImage2").val("");
-        $("#userImgText2").removeClass("txt_hide");
-    }
-
     const fnSave2 = () => {
 
         if(!fnValidation()){
@@ -220,7 +214,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
         frm.append("employeeNumber",employeeNumber);
         checkUserImage = $("#userImage2")[0].value == "" ? true : false;
         if(checkUserImage){
-            frm.append("imageIsNull",1);
+            frm.append("imageIsNull","Y");
         } else {
             frm.append("userImage",$("#userImage2")[0].files[0]);
         }
@@ -300,10 +294,10 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                     <div class="left_div_inner">
                     <div class="imgload">
                         <img id="userImgView2" class="userImgView" src='/images/user02.png' alt="유저사진"/>
-                        <span id="userImgText2" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
+                        <span id="userImgText2" class="userImgText" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"5px"}}>
-                            <label for="userImage2" class="userImg">수정</label><input type="file" id="userImage2" accept="image/*" onChange={imgUpload2}/>
-                            <label for="imgDelete2">삭제</label><button type="button" id="imgDelete2" onClick={userImgDelete2}/>
+                            <label for="userImage2" class="userImg">수정</label><input type="file" id="userImage2" class="userImage" accept="image/*" onChange={imgUpload2}/>
+                            <label for="imgDelete2">삭제</label><button type="button" id="imgDelete2" name="imgDelete"/>
                         </div>
                     </div>
                         <ul class="userinfo_left_box">
@@ -367,14 +361,17 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                             <li class="leave_li">  
                                 <span>퇴사여부 :</span>
                                 <select name="isActive" id="isActive" style={{width:"50px"}}>
-                                    <option value="0" selected>여</option>
-                                    <option value="1">부</option>                                      
+                                    <option value="1">여</option>
+                                    <option value="0" selected>부</option>                                      
                                 </select>
-                                <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04"/>
+                                <span>
+                                    <span style={{marginLeft:"5px"}}>퇴사일자 :</span>
+                                    <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04" style={{width:"110px"}}/>
+                                </span>
                             </li>
                             <li class="leave_li">
                                 <span>퇴사사유 :</span>
-                                <input type="text" name="leaveReason" id="leaveReason"/>
+                                <input type="text" name="leaveReason" id="leaveReason" placeholder="개인사유"/>
                             </li>
                         </ul>
                     </div>

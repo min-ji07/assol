@@ -20,7 +20,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             return false;
         }
 
-        if(!regEmail.test($(".div_bottom.tab_01 input[type='email']").val())){
+        if(!regEmail.test($(tabDiv+" input[type='email']").val())){
             alert("이메일이 올바르지 않습니다.");
             return false;
         }
@@ -128,12 +128,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             }
             tempParams[key] = value; 
         }
-        params["userInfo"] = tempParams;
-        params.userInfo.userType = 2; // 일용직근로자
-        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
-        
         i=0;
-        tempParams = {};
         for(i; i<inputListTab1.length; i++){
             var checkId = inputListTab1[i].id;
             var checkVal = inputListTab1[i].value;
@@ -141,19 +136,19 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             if(checkClass.indexOf("money_input") != -1){
                 checkVal = utils.regExr.numOnly(checkVal);
             }
+            console.log(checkId,checkVal);
             tempParams[checkId] = checkVal;
         }
-
-        params["detailData"] = tempParams;
-
         i=0;
-        tempParams = {};
         for(i; i<inputListTab2.length; i++){
             tempParams[inputListTab2[i].id] = inputListTab2[i].value; 
         }
 
-        params["insData"] = tempParams;
-        params.insData["sfModel"] = getDependRow();
+        params["userInfo"] = tempParams;
+        params.userInfo.userType = 2; // 일용직근로자
+        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
+
+        params.userInfo["sfData"] = getDependRow();
 
         params["eduData"] = {
             "eduModels" : getEduRow()
@@ -187,7 +182,9 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                 alert(e);
             }
         };
-        saveInit();
+        console.log(params);
+        console.log(JSON.stringify(params));
+        // saveInit();
     }
 
     const saveImgFile = (userNo,employeeNumber) => {
@@ -196,7 +193,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         frm.append("employeeNumber",employeeNumber);
         checkUserImage = $("#userImage3")[0].value == "" ? true : false;
         if(checkUserImage){
-            frm.append("imageIsNull",1);
+            frm.append("imageIsNull","Y");
         } else {
             frm.append("userImage",$("#userImage3")[0].files[0]);
         }
@@ -217,7 +214,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         // window.location.href = "/user/userManagement";
                         // location.reload();
                     }
-                    window.location.href = "/user/userManagement";
+                    // window.location.href = "/user/userManagement";
                 });
             } catch (e) {
                 // alert("관리자에게 문의하세요.",e);
@@ -293,12 +290,6 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         $("#userImgText3").addClass("txt_hide");
     }
 
-    const userImgDelete3 = (e) => {
-        $("#userImgView3").attr("src","/images/user02.png");
-        $("#userImage3").val("");
-        $("#userImgText3").removeClass("txt_hide");
-    }
-
     const nationalChange = (e) => {
         if(e.target.value == "내국인"){
             $(e.target).next().hide();
@@ -328,10 +319,12 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     <div class="left_div_inner">
                     <div class="imgload">
                         <img id="userImgView3" class="userImgView" src='/images/user02.png' alt="유저사진"/>
-                        <span id="userImgText3" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
+                        <span id="userImgText3" class="userImgText" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"5px"}}>
-                            <label for="userImage3" class="userImg">수정</label><input type="file" id="userImage3" accept="image/*" onChange={imgUpload3}/>
-                            <label for="imgDelete3">삭제</label><button type="button" id="imgDelete3" onClick={userImgDelete3}/>
+                            <label for="userImage3" class="userImg">수정</label>
+                            <input type="file" class="userImage" id="userImage3" accept="image/*" onChange={imgUpload3}/>
+                            <label for="imgDelete3">삭제</label>
+                            <button type="button" id="imgDelete3" name="imgDelete"/>
                         </div>
                     </div>
                     <ul class="userinfo_left_box">
@@ -389,14 +382,17 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <li class="leave_li">  
                                 <span>퇴사여부 :</span>
                                 <select name="isActive" id="isActive" style={{width:"50px"}}>
-                                    <option value="0" selected>여</option>
-                                    <option value="1">부</option>                                      
+                                    <option value="1">여</option>
+                                    <option value="0" selected>부</option>                                      
                                 </select>
-                                <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04"/>
+                                <span>
+                                    <span style={{marginLeft:"5px"}}>퇴사일자 :</span>
+                                    <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04" style={{width:"110px"}}/>
+                                </span>
                             </li>
                             <li class="leave_li">
                                 <span>퇴사사유 :</span>
-                                <input type="text" name="leaveReason" id="leaveReason"/>
+                                <input type="text" name="leaveReason" id="leaveReason" placeholder="개인사유"/>
                             </li>
                         </ul>
                     </div>
@@ -427,10 +423,10 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <li class="salary" style={{marginTop:"10px", listStyle:"none", height:"70px"}}>
                                     <ul>
                                         <li class="li_left" style={{width:"200px"}}>
-                                            소정근로시간 :<input type="text" class="num_input" name="workTime" id="workTime" placeholder="1,700,000" />
+                                            소정근로시간 :<input type="text" class="num_input" name="workTime" id="workTime" placeholder="1,700,000" maxLength="3" />
                                         </li>
                                         <li style={{display:"inline-block"}}>
-                                            시급 : <input type="text" class="money_input" name="payOfHour" id="payOfHour" />원
+                                            시급 : <input type="text" class="money_input" name="payOfHour" id="payOfHour" maxLength="10"/>원
                                         </li>
                                         <li class="li_right">
                                             총예상월수령금액 :<input type="text" class="money_input" name="predictionMonth" id="predictionMonth" placeholder="2,100,500"  
@@ -514,7 +510,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <strong>4대보험</strong>
                                     <button type="button" class="btn_gray" style={{marginLeft: "5px", marginTop: "-5px", marginLeft:"7px"}}>신청하기</button>
                                         <div class="tab_01_grid">
-                                            <ul>
+                                            <ul id="insurnaceTable2">
                                                 <li>
                                                     <div>구분</div>
                                                     <div>기호번호</div>

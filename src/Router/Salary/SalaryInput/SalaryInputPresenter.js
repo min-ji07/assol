@@ -6,15 +6,14 @@ import $ from 'jquery';
 import gridCommon from '../../../Utils/grid';
 
 const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
-    const { addBranch }=useHook();
     useEffect(()=>{
-        //add branchInfo in redux store , but login page not found currently 
-        addBranch('1');
     },[]);
 
     const saveRow = (result) => {
         let yearMonthDate = $("#month-picker").val();
         let payDegree = $("#payDegree").val();
+        let totalSalary = $("#totalPay1").text();
+        let branchNo = 29;
 
         // {
         //     "yearMonthDate": null,
@@ -38,21 +37,42 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
         //         }
         //     }
         // }
-        result.othercontent = {
-            
-        }
+        
         let params = {
+            "branchNo"  : branchNo,
             "yearMonthDate" : yearMonthDate,
             "payDegree" : payDegree,
+            "totalSalary" : totalSalary,
             "userList" : result
         }
 
+        // "othercontent" : []
+
+        
+        
         console.log(params);
+
+        const columnList = gridCommon.getGridAllColumns();
+        let i = 0;
+        for(i in columnList){
+            const colDef = columnList[i].colDef;
+            console.log(colDef);
+            if(colDef.field.indexOf("addColumnSalary") != -1){
+                othercontent[i] = {
+                    title : colDef.headerName
+                }
+            }
+        }
+
+        // othercontent title
+        
+
+        
         async function init(params){
             try {
                 console.log(params);
-                await callApi.SaveGroupRow(params).then(res => {
-                
+                await callApi.savePayRoll(params).then(res => {
+                    console.log(res);
                     if(res.data.ErrorCode == 1){ 
                         alert(res.data.Msg);
                     }
@@ -109,14 +129,14 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                     <button type="button" class="btn_gray salary_button card">급여대장미리보기</button>
                     <button type="button" class="btn_gray salary_button excel">Excel 내보내기</button>
                     <button type="button" class="btn_gray salary_button send">급여대장으로이동</button>
-                    <button type="button" class="btn_gray salary_button save" onClick={saveRow}>저장</button>
+                    <button type="button" class="btn_gray salary_button save" onClick={() => gridCommon.onSaveRow(saveRow)}>저장</button>
                 </div>
                 <div class="white_board">
                     <div class="left_div">
                         <div class="left_div_inner">
                             <div class="left_div_inner_inner">
                                 <div class="div_top01">사원 전체명부</div>
-                                <div class="div_bottom">
+                                <div class="div_bottom header_radius_none view_border_none">
                                     <DataGrid rowData={rowData} gridDefs={gridDefs}/>
                                 </div>
                             </div>
@@ -127,7 +147,7 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                                     <button class="plus" id="btnAddRow">추가</button>
                                     <button class="delete" onClick={gridCommon.onRemoveRow}>삭제</button>
                                 </div>
-                                <div class="div_bottom">
+                                <div class="div_bottom header_radius_none view_border_none">
                                     <DataGrid rowData={rowData2} gridDefs={gridDefs2}/>
                                 </div>
                             </div>
@@ -136,19 +156,19 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                     <div class="right_div">
                         <div class="right_inner_left">
                             <div class="div_top">인건비 총액</div>
-                            <div class="div_bottom" id="totalPay1">122,200,000</div>
+                            <div class="div_bottom" id="totalPay1">0</div>
                         </div>
                         <div class="right_inner_left">
                             <div class="div_top bg_pink02">4대보험 총액</div>
-                            <div class="div_bottom txt_pink01" id="totalPay2">2,400,000</div>
+                            <div class="div_bottom txt_pink01" id="totalPay2">0</div>
                         </div>
                         <div class="right_inner_left">
                             <div class="div_top bg_pink02">소득세 총액</div>
-                            <div class="div_bottom txt_pink01" id="totalPay3">845,000</div>
+                            <div class="div_bottom txt_pink01" id="totalPay3">0</div>
                         </div>
                         <div class="right_inner_left">
                             <div class="div_top bg_blue02">실지급 총액</div>
-                            <div class="div_bottom txt_blue01" id="totalPay4">111,845,000</div>
+                            <div class="div_bottom txt_blue01" id="totalPay4">0</div>
                         </div>
                         <div class="right_inner_left">
                             <div class="div_top">인건비 비율</div>

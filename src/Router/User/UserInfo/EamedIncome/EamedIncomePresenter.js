@@ -73,7 +73,6 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
     }
 
     function personalValidaition(jumin) {
-        console.log(jumin);
         jumin = utils.regExr.numOnly(jumin);
        
         //주민등록 번호 13자리를 검사한다.
@@ -332,12 +331,6 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         $("#userImgText").addClass("txt_hide");
     }
 
-    const userImgDelete = (e) => {
-        $("#userImgView").attr("src","/images/user02.png");
-        $("#userImage").val("");
-        $("#userImgText").removeClass("txt_hide");
-    }
-
     const openPostPop = (e) => {
         $("#daumPostPop").show();
     }
@@ -372,10 +365,10 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     <div class="left_div_inner">
                     <div class="imgload">
                         <img id="userImgView" class="userImgView" src='/images/user02.png' alt="유저사진"/>
-                        <span id="userImgText" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
+                        <span id="userImgText" class="userImgText" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"5px"}}>
-                            <label for="userImage" class="userImg">수정</label><input type="file" id="userImage" accept="image/*" onChange={imgUpload}/>
-                            <label for="imgDelete">삭제</label><button type="button" id="imgDelete" onClick={userImgDelete}/>
+                            <label for="userImage" class="userImg">수정</label><input type="file" class="userImage" id="userImage" accept="image/*" onChange={imgUpload}/>
+                            <label for="imgDelete">삭제</label><button type="button" id="imgDelete" name="imgDelete"/>
                         </div>
                     </div>
                     <ul class="userinfo_left_box">
@@ -399,15 +392,15 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         <li><span>직무 :</span> 
                             {/* <input type="text" name="position" id="position" placeholder="사회복지사" /> */}
                             <select name="position" id="position" style={{width:"182px"}}>
-                                <option value="0">사회복지사</option>
-                                <option value="1">요양보호사</option>
-                                <option value="2">사무원</option>
-                                <option value="3">시설장</option>
-                                <option value="4">조리원</option>
-                                <option value="5">운전사</option>
-                                <option value="6">물리치료사</option>
-                                <option value="7">촉탁의</option>
-                                <option value="8">대표</option>
+                                <option value="사회복지사">사회복지사</option>
+                                <option value="요양보호사">요양보호사</option>
+                                <option value="사무원">사무원</option>
+                                <option value="시설장">시설장</option>
+                                <option value="조리원">조리원</option>
+                                <option value="운전사">운전사</option>
+                                <option value="물리치료사">물리치료사</option>
+                                <option value="촉탁의">촉탁의</option>
+                                <option value="대표">대표</option>
                             </select>
                         </li>
                         <li><span>직위 : </span>
@@ -462,11 +455,14 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <option value="1">여</option>
                                     <option value="0" selected>부</option>                                      
                                 </select>
-                                <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04"/>
+                                <span>
+                                    <span style={{marginLeft:"5px"}}>퇴사일자 :</span>
+                                    <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04" style={{width:"110px"}}/>
+                                </span>
                             </li>
                             <li class="leave_li">
                                 <span>퇴사사유 :</span>
-                                <input type="text" name="leaveReason" id="leaveReason"/>
+                                <input type="text" name="leaveReason" id="leaveReason" placeholder="개인사유"/>
                             </li>
                         </ul>
                     </div>
@@ -627,8 +623,8 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                 <option value="0">여</option>
                                             </select>
                                         </li>
-                                        <li>기간 :<input type="text" class="dateto_input" id="reductDate" placeholder="2020.01-01~2025.01.01" style={{width: "213px"}}  /></li>
-                                        <li>감면율 :
+                                        <li class="job_reduct_li">기간 :<input type="text" class="dateto_input" id="reductDate" placeholder="2020.01-01~2025.01.01" style={{width: "213px"}}  /></li>
+                                        <li class="job_reduct_li">감면율 :
                                             {/* <input type="text" id="reductPer" placeholder="90"  style={{width: "43px"}} />% */}
                                             &nbsp;
                                             <select id="reductPer" style={{width: "58px",textIndent:"5px"}}>
@@ -646,7 +642,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                             </select>
                                             &nbsp;%
                                         </li>
-                                        <li>감면대상 :<input type="text" id="reductTarget" placeholder="급여" style={{width: "53px"}} /></li>
+                                        <li class="job_reduct_li">감면대상 :<input type="text" id="reductTarget" placeholder="급여" style={{width: "53px"}} /></li>
                                     </ul>
                                 </li>
                             </ul>

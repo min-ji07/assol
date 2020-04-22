@@ -51,9 +51,7 @@ function UserManagementContainer() {
             ,{ headerName: "성명", field: "userName", editable: false, width:100 }
             ,{ headerName: '입사일', field: "joinDate", cellEditor : "richSelect", width:150}
             ,{ headerName: '주민번호', field: "personalNumber", cellEditor : "richSelect", width:170}
-            ,{ headerName: '직책', field: "position", cellEditor : "richSelect" , width:100,
-                cellEditor : "richSelect", 
-                cellEditorParams: { values : gridCommon.extractValues(regPositionMappings)},refData: regPositionMappings}         
+            ,{ headerName: '직책', field: "position", width:100 }
             ,{ headerName: "직위", field: "workLevel", width:100 }
             ,{ headerName: "사원번호", field: "employeeNumber", cellEditor : "richSelect" , width:100}
             ,{ headerName: "고용형태", field: "regularEmployee",  width:130,
@@ -111,7 +109,7 @@ function UserManagementContainer() {
             params = {
                 "branchNo" : 29
             }
-            await callApi.getUserInfo(req).then(res=>{
+            await callApi.getUserInfo(params).then(res=>{
                 console.log(res);
                 if(res.data && res.data.ListData && res.data.CountData){
                     //공통 그리드 데이터 셋팅

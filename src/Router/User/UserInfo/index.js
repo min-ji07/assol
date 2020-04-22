@@ -39,7 +39,7 @@ const UserInfo = () => {
         // };
     }
 
-    const userInfoEvent = (data,othercontent) => {
+    const userInfoEvent = (data,othercontent,imgData) => {
         console.log(data);
         console.log(othercontent);
         let userType = data.userType;
@@ -60,7 +60,7 @@ const UserInfo = () => {
 
         // $(".user_type_label:not([for="+tab+"])").remove();
 
-        $(".leave_li").show(); // 사원상세정보 일때만 퇴사정보 보이게
+        $(".leave_li").show();
         for(var key in data){
             let elem = $("#"+key);
             let val = data[key] == null ? "" : data[key];
@@ -80,6 +80,13 @@ const UserInfo = () => {
             if(key == "national" && val == "외국인"){
                 $(".visa_li").show();
             }
+            if(key == "isActive" && val == "0"){
+                elem.next().hide();
+                elem.parent().next().hide();
+            }
+            if(key == "jobReductActive" && val == "1"){
+                $(".job_reduct_li").hide();
+            }
 
             // $(".visa_li").show();
             // $("#isProbation").next().show();
@@ -89,6 +96,23 @@ const UserInfo = () => {
             // 해당 아이디 element 있는지 체크
             // null체크
         }
+
+        // 이미지 체크
+        let i = 0;
+        for(i in imgData){
+            // "D:\AdminSite\Save\c249bf54-c7e1-4bea-bd5c-eb7ab87aa13f_2004221.jpg"
+            let path = imgData[i].fileName.match(/(\\)(Save)(\\)(.*)/g)[0];
+            let type = imgData[i].imageType;
+            let url = "http://211.251.238.215:5302/";
+
+            // 유저사진
+            if(type == "1"){
+                $(".userImgView").prop("src",url+path);
+                $(".userImgText").addClass("txt_hide");
+            } else { // 인사서류
+                addFileList("파일"+i,url);
+            }
+        }
         // othercontent = [
         //     {title:"t1",value:"v1"},
         //     {title:"t2",value:"v2"},
@@ -96,14 +120,11 @@ const UserInfo = () => {
         //     {title:"t4",value:"v4"},
         //     {title:"t5",value:"v5"}
         // ];
-        addSalaryList(othercontent);
-    }
 
-    const userImgInit = (url) => {
-        if(url.length != 0 || url != null || url != undefined){
-            $("#userImgView").attr("src",url);
-            $("#userImgText").hide();
-        }
+        $("input").trigger("keyup");
+        $("input").trigger("change");
+        
+        addSalaryList(othercontent);
     }
 
     const insaImgInit = (data) => {
@@ -134,7 +155,7 @@ const UserInfo = () => {
                     alert(res.data.Msg);
                 } else {
                     let data = res.data;
-                    userInfoEvent(data.baseData,data.othercontent);
+                    userInfoEvent(data.baseData,data.othercontent,data.imageData);
                     setRowData(data.sfData);
                     setRowData2(data.eduData);
                     setRowData3(data.exData);
@@ -633,11 +654,11 @@ const UserInfo = () => {
                if(checkUserInfo){
                     initUserInfo(paramData);
                } else {
-                    setRowData(rowData);
-                    setRowData2(rowData2);
-                    setRowData3(rowData3);
-                    setRowData4(rowData4);
-                    setRowData5(rowData5);
+                    // setRowData(rowData);
+                    // setRowData2(rowData2);
+                    // setRowData3(rowData3);
+                    // setRowData4(rowData4);
+                    // setRowData5(rowData5);
                }
             }catch(e){
                 alert(e);
@@ -681,6 +702,7 @@ const UserInfo = () => {
             } else {
                 e.target.parentElement.nextSibling.style.display = "none";
                 e.target.nextSibling.value = "내국인";
+                $("input[name=visaType]").val("");
             }
         });
         $("input.num_input").on("keyup",function(e){
@@ -712,6 +734,7 @@ const UserInfo = () => {
             let dateInput = e.target.nextSibling;
             let resonBox = e.target.parentElement.nextSibling;
             let checkVal = e.target.value;
+            console.log(dateInput);
             if(checkVal == "1"){
                 $(dateInput).show();
                 $(resonBox).show();
@@ -720,46 +743,6 @@ const UserInfo = () => {
                 $(resonBox).hide();
             }
         });
-
-        const monthSalaryEvent = () =>{
-            var inputList = $("#monthSalary input");
-            var i = 0;
-            var monthSalary = 0;
-
-            for(i; i<inputList.length; i++){
-                if(inputList[i].id == "salaryOfMonth" 
-                || inputList[i].id == "addSalaryTitle"){
-                    continue;
-                }
-                monthSalary += Number(utils.regExr.numOnly(inputList[i].value));
-            }
-            $("#salaryOfMonth").val(utils.regExr.comma(monthSalary)).click();
-        }
-
-        const yearSalaryEvent = () => {
-            var monthSalary = Number(utils.regExr.numOnly($("#salaryOfMonth").val())) * 12;
-            var inputList = $("#insentive, #bonus");
-            var yearsSalary = 0;
-            var i=0;
-            for(i; i<inputList.length; i++){
-                var type = inputList[i].nextSibling.value;
-                var baseVal = Number(utils.regExr.numOnly(inputList[i].value));
-                var typeVal = 0;
-                switch(type){
-                    case "0" : typeVal = 12;
-                    break;
-                    case "1" : typeVal = 4;
-                    break;
-                    case "2" : typeVal = 2;
-                    break;
-                    case "3" : typeVal = 1;
-                    break;
-                }
-                yearsSalary += baseVal * typeVal;
-            }
-            yearsSalary += monthSalary;
-            $("#salaryOfYears").val(utils.regExr.comma(yearsSalary));
-        }
 
         // 연봉변경 이벤트
         $("#salaryOfMonth").on("click",function(){
@@ -787,11 +770,6 @@ const UserInfo = () => {
             imgInputLastIndex = $("input[name=imgFileInput]").length - 1;
             $("input[name=imgFileInput]")[imgInputLastIndex].click();
             return false;
-        });
-
-        // 퇴사 여부
-        $("input[name=isActive]").on("change",function(){
-
         });
 
         $(document).on("click","#fileBox li a",function(e){
@@ -841,11 +819,68 @@ const UserInfo = () => {
             e.target.value = Utils.regExr.koreanOnly(targetVal);
         });
 
-        $("input").trigger("keyup");
-        $("input").trigger("change");
+        $("#jobReductActive").on("change",function(e){
+            var targetVal = e.target.value;
+            if(targetVal == "0"){
+                $(".job_reduct_li").show();
+            } else {
+                $(".job_reduct_li").hide();
+            }
+        });
+
+        $("button[name=imgDelete]").on("click",function(e){
+            let img = $(e.target).parent().siblings(".userImgView");
+            let text = $(e.target).parent().siblings(".userImgText");
+
+            img.attr("src","/images/user02.png");
+            text.removeClass("txt_hide");
+            $(e.target).siblings(".userImage").val("");
+        });
+        
 
         fileDropDown();
     },[]); //init
+
+
+    const monthSalaryEvent = () =>{
+        var inputList = $("#monthSalary input");
+        var i = 0;
+        var monthSalary = 0;
+
+        for(i; i<inputList.length; i++){
+            if(inputList[i].id == "salaryOfMonth" 
+            || inputList[i].id == "addSalaryTitle"){
+                continue;
+            }
+            monthSalary += Number(utils.regExr.numOnly(inputList[i].value));
+        }
+        $("#salaryOfMonth").val(utils.regExr.comma(monthSalary)).click();
+    }
+
+    const yearSalaryEvent = () => {
+        var monthSalary = Number(utils.regExr.numOnly($("#salaryOfMonth").val())) * 12;
+        var inputList = $("#insentive, #bonus");
+        var yearsSalary = 0;
+        var i=0;
+        for(i; i<inputList.length; i++){
+            var type = inputList[i].nextSibling.value;
+            var baseVal = Number(utils.regExr.numOnly(inputList[i].value));
+            var typeVal = 0;
+            switch(type){
+                case "0" : typeVal = 12;
+                break;
+                case "1" : typeVal = 4;
+                break;
+                case "2" : typeVal = 2;
+                break;
+                case "3" : typeVal = 1;
+                break;
+            }
+            yearsSalary += baseVal * typeVal;
+        }
+        yearsSalary += monthSalary;
+        $("#salaryOfYears").val(utils.regExr.comma(yearsSalary));
+    }
 
     /***************************************
      * 파일 드래그앤 드롭
@@ -1064,8 +1099,8 @@ const UserInfo = () => {
                     </div>
                 </div>
                 <p className="btn_box">
-                    <button className="btn_next" onClick={removeFileList}>삭제하기</button>
-                    <button className="btn_next" style={{ background:"#87c395"}} onClick={hideFileList}>완료하기</button>
+                    <button className="btn_next btn_backnext" onClick={removeFileList}>삭제하기</button>
+                    <button className="btn_next btn_backnext" style={{ background:"#87c395"}} onClick={hideFileList}>완료하기</button>
                 </p>
             </div>
             {/* </div> */}

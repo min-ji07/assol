@@ -211,6 +211,7 @@ div[col-id="remainAnnual"]{
     text-indent: 0 !important;
     line-height: normal !important;
     font-size: 15px !important;
+    text-align:center !important;
 }
 .ag-root select {
     font-size:15px !important;
@@ -224,4 +225,8 @@ div[col-id="remainAnnual"]{
 
 .header_radius_none .ag-header{
     border-radius:0px !important;
+}
+.view_border_none .ag-body-viewport,
+.view_border_none .ag-center-cols-viewport{
+    border:0 none !important;
 }

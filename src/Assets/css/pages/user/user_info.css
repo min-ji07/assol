@@ -708,7 +708,14 @@ input:-webkit-autofill:active {
 }
 .modal_box.imgupload .btn_box{
     margin-top:-50px;
-    padding-right: 65px;
+    padding-right: 45px;
+    text-align: right;
+}
+.modal_box.imgupload .btn_box .btn_next{
+    margin-right:20px;
+}
+.modal_box.imgupload .btn_box .btn_next:first-child{
+    background-color:#B4B4B4;
 }
 .file_upload_board {
     width: 760px;

@@ -118,7 +118,7 @@ function SalaryInputContainer() {
         async function init(params) {
             try {
                 await callApi.selectTargetUser(params).then(res=> {   
-                    console.log(res);
+                    console.log(res,"타겟유저");
 
                     if(res.data.ErrorCode == 1){
                         alert(res.data.Msg);
@@ -161,14 +161,11 @@ function SalaryInputContainer() {
     }
 
     const setAddRow = (baseData,otherData) => {
-        console.log("addrow 셋팅 !");
-        console.log(baseData);
-        console.log(otherData);
         addRowJson = baseData;
         var i = 0;
         for(i in otherData){
             console.log(otherData);
-            addRowJson["addColumn"+i] = utils.regExr.numOnly(otherData[i].value);
+            addRowJson["addColumnSalary"+i] = utils.regExr.numOnly(otherData[i].value);
         }
     }
 
@@ -178,21 +175,19 @@ function SalaryInputContainer() {
         console.log()
         for(i in otherData){
             const title = otherData[i].title;
-            const filedVal = "addColumn"+i;
+            const filedVal = "addColumnSalary"+i;
             let addColumn = addColumnJson(title,filedVal);
             columnDefs.push(addColumn);
         }
 
-        console.log(columnDefs);
         gridCommon.setColumn(columnDefs);
     }
 
     const defaultColumnJson = (data) => {
         const arr = [
             { headerName: "rowId", field: "rowId", hide:true }
-            ,{headerName: "성명 ",field:"userName", width:95, editable:false,
-            }
-            ,{headerName: "직책", field: "position", width:110, editable:false,
+            ,{headerName: "성명 ",field:"userName", width:120, editable:false}
+            ,{headerName: "직책", field: "position", width:140, editable:false,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
                 refData: regEmployeeMappings
@@ -200,6 +195,7 @@ function SalaryInputContainer() {
             ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
             ,{ headerName: "기본급", field: "baseSalary", width:120
                 ,valueFormatter: function(params) {
+                    console.log(params,"기본급");
                     return utils.regExr.comma(params.value);
                 }
             }
