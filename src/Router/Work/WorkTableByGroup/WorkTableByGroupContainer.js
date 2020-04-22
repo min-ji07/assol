@@ -72,12 +72,12 @@ function WorkTableByGroupContainer() {
             return resultHour+"시간"+min+"분";
         }
          }
-         ,{ headerName: "야간근무시간", field: "lightTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
+         ,{ headerName: "야간근무시간", field: "nightTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
             ,valueGetter: function(params){ 
-                if(!params.data.lightTime){
+                if(!params.data.nightTime){
                     return "";
                 }
-                let current = params.data.lightTime;
+                let current = params.data.nightTime;
                 var hour = current/60;
                 var resultHour = Math.floor(hour);
                 var min = current - (resultHour * 60);
@@ -341,7 +341,7 @@ function WorkTableByGroupContainer() {
            if(overTime < 0 ){
                overTime = 0;
            }
-           e.node.setDataValue('lightTime',nightTime)
+           e.node.setDataValue('nightTime',nightTime)
            e.node.setDataValue('currentTime',allWorkTime)
            e.node.setDataValue('overTime',overTime);
            
