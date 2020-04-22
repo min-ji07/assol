@@ -27,7 +27,7 @@ export const callApi = {
     
 
     getUserInfo:(params) => axios.get(testUrl2+'/user/GetUserInfobyBranchNo',{params:params}), // 사원조회
-    setInitSalary:(params) => axios.get(testUrl2+'/PayRoll/SetPayRollPage',{params:params}), // 급여입력 초기화면
+    setInitSalary:(params) => axios.get(testUrl2+'/PayRoll/InitPayRollPage',{params:params}), // 급여입력 초기화면
 
     // saveUserInfo:(params) => axios.post('http://82230995.ngrok.io/User/UserRegistration',{params:params}), // 사원등록
     userRegistration:(params) => axios({
@@ -132,8 +132,8 @@ export const callApi = {
     // 이메일 인증번호 체크
     //http://172.30.1.24:5302/Admin/CheckCertification
     CheckCertification:(params) => axios ({
-        method: 'get',
-        url: 'http://de89cad8.ngrok.io' + '/Admin/CheckCertification',
+        method: 'post',
+        url: testUrl2 + '/Admin/CheckCertification',
         data: params
     })
     
