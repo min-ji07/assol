@@ -357,7 +357,7 @@ function WorkTableByGroupContainer() {
     useEffect(()=>{
        async function initGrid(params) {
         try {
-
+            console.log("HI");
             if(!params){
                 const d = new Date();
                 params = d.getFullYear();

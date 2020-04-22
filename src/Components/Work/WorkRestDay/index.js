@@ -102,15 +102,28 @@ const WorkRestDay = () => {
                         return "2020-04"
                     }
                 } //상단에서 가져와 픽스 
-               ,{ headerName: "휴가시작일", field: "startDate", width:200 , cellEditor: picker.setBreakTimePicker()}
-               ,{ headerName: "휴가종료일", field: "endDate", width:200, cellEditor: picker.setBreakTimePicker()}
+               ,{ headerName: "휴가시작일", field: "startDate", width:200 , cellEditor: picker.setBreakTimePicker(),
+                }
+               ,{ headerName: "휴가종료일", field: "endDate", width:200, cellEditor: picker.setBreakTimePicker()
+                    ,valueGetter : function(params){
+                        if(params.data.annualType == 3){
+                               return params.data.startDate; 
+                        }
+                        return params.data.endDate; 
+                    }
+                }
                ,{ headerName: "휴가구분", field: "annualType", width:150  ,
                     cellEditor: "select",
                     cellEditorParams: { values : gridCommon.extractValues(annalMaps)},refData: annalMaps}
 
-                ,{ headerName: "상세구분", field: "detailType", width:150  ,
+                ,{ headerName: "상세구분", field: "detailType", width:150 , editable : function (params){
+                    return params.data.annualType == 3 ? true : false;
+                },
                     cellEditor: "select",
-                    cellEditorParams: { values: gridCommon.extractValues(afterMaps)}, refData: afterMaps 
+                    cellEditorParams: { values: gridCommon.extractValues(afterMaps)}, refData: afterMaps,
+                    valueGetter : function(params){
+                        return params.data.annualType != 3 ? 0 : params.data.annualType;  
+                    } 
                     // ,
                     // valueGetter:function(params){
                     //     console.log(params,"밸류게터!!! 왜 값을 두개 가져오는겨");
@@ -128,7 +141,7 @@ const WorkRestDay = () => {
                         var temp_date = startDate;
 
                         // 반차일때 무조건 0.5로...?
-                        if(params.data.annalType == "3"){
+                        if(params.data.annualType == "3"){
                             return 0.5;
                         }
                         while(params.data.endDate != undefined && params.data.startDate != undefined) {                              
@@ -137,20 +150,12 @@ const WorkRestDay = () => {
                                 // console.log("count : " + count);
                                 break;
                             }
-                            // } else if(temp_date.getTime() == endDate.getTime()){
-                            //     count = 0.5;
-                            // }
                              else {
                                 var tmp = temp_date.getDay();
-                                // console.log("tmp : " + tmp);
+                  
                                 if(tmp == 0 || tmp == 6) {
-                                    // 주말
-                                    // console.log("주말");
+                  
                                 } else {
-                                    // 평일
-                                    // console.log("평일");
-                                    // console.log(count + "ㅋㅇㅌ ^^ㅣ발");
-                                    // console.log("else else count : " + count);
                                     count++;         
                                 }
                                 temp_date.setDate(temp_date.getDate() + 1); 

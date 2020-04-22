@@ -8,7 +8,6 @@ const WorkTableByRestDay=({ rowData, gridDefs })=>{
     
     function saveRow (result) {
         var list = [];
-        console.log(result);
         
         result.forEach(element => {
             if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
@@ -19,11 +18,9 @@ const WorkTableByRestDay=({ rowData, gridDefs })=>{
         if(list == null || list.length < 1){
             return true;
         }
-        let params = {}
-        params.workerScheduleInfos = list;
-        
-        
-
+        let params = {};
+        params.wokerAnnualInfos = list;
+        init(params);
         async function init(params){
             try {
                 await callApi.setWorkerListByRestDay(params).then(res => {
@@ -40,7 +37,7 @@ const WorkTableByRestDay=({ rowData, gridDefs })=>{
                 console.log("CATCH !! : " + error);
             }
         };
-        init(params);
+        
     }
 
     return (
