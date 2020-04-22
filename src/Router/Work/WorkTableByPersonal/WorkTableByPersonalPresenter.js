@@ -7,13 +7,47 @@ import SetSubWorker from './SetSubWorker';
 
 
 function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
+
+
+    function saveRow (result) {
+        var list = [];
+        // console.log('list'+ list);
+        console.log(result);
+        
+        result.forEach(element => {
+            if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
+                element.branchNo = 1;
+                console.log(element);
+                list.push(element);
+            }
+        });
+        let params = {};
+        params.wokerAnnualInfos = result;
+
+        async function init(params){
+            try {
+                await callApi.getWorkerList(params).then(res => {
+                    console.log(params);
+                    if(res.data.ErrorCode == 0){ 
+                        alert("근무자설정이 완료되었습니다.");
+                    }
+                    else{
+                        alert("실패");
+                    }
+                })
+            }catch(error){
+                console.log("CATCH !! : " + error);
+            }
+        };
+        init();
+    }
    
    return(
     <>
         <div className="wrapper">
         <div className="work_setting_02">
             <div className="title">
-                <h1>근무설정</h1>
+                <h1>근무자설정</h1>
                 <p>설정하신 데이터기반으로 근무 현황을 확인 할 수 있습니다.</p>
             </div>
             <div className="emTable">
@@ -35,12 +69,13 @@ function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
                         <div className="buttonset">
                         <button type="button" className="insert"  onClick={gridCommon.onAddRow}>추가</button>
                             <button type="button" className="delete1" onClick={gridCommon.onRemoveRow}>삭제</button>
-                            <button type="button" className="save" onClick={gridCommon.onSaveRow}>저장</button>
+                            <button type="button" className="save" >저장</button>
+                            {/* onClick={gridCommon.onSaveRow(saveRow)} */}
                         </div>
                         <div className="right_border">
                             <div className="table">
                                 
-                                <DataGrid rowData={rowData} gridDefs={gridDefs}/>
+                                <DataGrid rowData={rowData} gridDefs={gridDefs}  />
                             </div>
                         </div>
                     </div>
