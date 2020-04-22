@@ -18,18 +18,18 @@ function SalaryInputContainer() {
 
     let addRowJson = {};
 
-    const regEmployeeMappings = {
-        "0" : "사회복지사"
-        ,"1" : "요양보호사" 
-        ,"2" : "시간제" 
-        ,"3" : "사무원" 
-        ,"4" : "시설장" 
-        ,"5" : "조리원" 
-        ,"6" : "운전사" 
-        ,"7" : "물리치료사" 
-        ,"8" : "촉탁의" 
-        ,"9" : "대표" 
-    }
+    // const regEmployeeMappings = {
+    //     "0" : "사회복지사"
+    //     ,"1" : "요양보호사" 
+    //     ,"2" : "시간제" 
+    //     ,"3" : "사무원" 
+    //     ,"4" : "시설장" 
+    //     ,"5" : "조리원" 
+    //     ,"6" : "운전사" 
+    //     ,"7" : "물리치료사" 
+    //     ,"8" : "촉탁의" 
+    //     ,"9" : "대표" 
+    // }
 
     let params = {
         "branchNo" : 29,
@@ -59,7 +59,7 @@ function SalaryInputContainer() {
 
     const bindEvent = () => {
         $("#btnAddRow").on("click",function(){
-            gridCommon.onAddRow(addRowJson);
+            gridCommon.onAddRow("",addRowJson);
         });
     }
 
@@ -70,9 +70,6 @@ function SalaryInputContainer() {
                ,{headerName: "유저타입", field: "userType", hide:true }
                ,{headerName: "성명 ",field:"userName", width:95}
                ,{headerName: "직책", field: "position", width:117,
-                    cellEditor: "select",
-                    cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
-                    refData: regEmployeeMappings
                 }
             //    ,{headerName: "직책", field: "position", width:80}
                ,{ headerName: "사원번호", field: "employeeNumber", width:101}
@@ -108,6 +105,7 @@ function SalaryInputContainer() {
                     "userType": userType,
                     "userNo" : userNo
                  }
+                 console.log(params);
                 userSelect(params);
             }
 
@@ -123,8 +121,8 @@ function SalaryInputContainer() {
                     if(res.data.ErrorCode == 1){
                         alert(res.data.Msg);
                     } else {
-                        if(res.data.Data.length == 0){
-                            alert("급여정보가 없습니다.");
+                        if(res.data.Data.length <= 1){
+                            alert("급여입력 정보가 없습니다.");
                         } else{
                             // setRowData(res.data.Data);
                         }
@@ -186,12 +184,9 @@ function SalaryInputContainer() {
     const defaultColumnJson = (data) => {
         const arr = [
             { headerName: "rowId", field: "rowId", hide:true }
+            ,{headerName: "성명 ",field:"userNo", width:120, hide:true}
             ,{headerName: "성명 ",field:"userName", width:120, editable:false}
-            ,{headerName: "직책", field: "position", width:140, editable:false,
-                cellEditor: "select",
-                cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
-                refData: regEmployeeMappings
-            }
+            ,{headerName: "직책", field: "position", width:140, editable:false}
             ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
             ,{ headerName: "기본급", field: "baseSalary", width:120
                 ,valueFormatter: function(params) {

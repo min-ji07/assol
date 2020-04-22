@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { callApi } from '../../../Utils/api';
 import '../../../Assets/css/pages/Salary/salary_main.css';
 import useHook from'../../../GlobalState/Hooks/useHook';
 import DataGrid from '../../../Components/DataGrid';
@@ -37,7 +38,8 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
         //         }
         //     }
         // }
-        
+        result.othercontent = [];
+
         let params = {
             "branchNo"  : branchNo,
             "yearMonthDate" : yearMonthDate,
@@ -51,18 +53,19 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
         
         
         console.log(params);
+        console.log(JSON.stringify(params));
 
-        const columnList = gridCommon.getGridAllColumns();
-        let i = 0;
-        for(i in columnList){
-            const colDef = columnList[i].colDef;
-            console.log(colDef);
-            if(colDef.field.indexOf("addColumnSalary") != -1){
-                othercontent[i] = {
-                    title : colDef.headerName
-                }
-            }
-        }
+        // const columnList = gridCommon.getGridAllColumns();
+        // let i = 0;
+        // for(i in columnList){
+        //     const colDef = columnList[i].colDef;
+        //     console.log(colDef);
+        //     if(colDef.field.indexOf("addColumnSalary") != -1){
+        //         othercontent[i] = {
+        //             title : colDef.headerName
+        //         }
+        //     }
+        // }
 
         // othercontent title
         
@@ -84,8 +87,19 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                 console.log("CATCH !! : " + error);
             }
         };
-        // init(params);
+        init(params);
     }
+
+    // gridCommon.onAddRow = (e) => {
+    //     let newRow = { processType: 1 };
+    //     if(rowData != undefined){
+    //         console.log(rowData);
+    //         rowData.processType = 1;
+    //         newRow = rowData;
+    //     }
+    //     //추가 기입 
+    //     gridApi.api.updateRowData({add: [newRow]});
+    // }
 
     // const fnAddColumn = (colDefs) =>{
     //     const gridApi = $("#grid1").find(".ag-root")[0]["__agComponent"].gridApi;
@@ -115,11 +129,11 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                         </li>
                         <li>급수차수
                             <select id="payDegree">
-                                <option value='0'>1차</option>
-                                <option value='1'>2차</option>
-                                <option value='2'>3차</option>
-                                <option value='3'>4차</option>
-                                <option value='4'>5차</option>
+                                <option value='1'>1차</option>
+                                <option value='2'>2차</option>
+                                <option value='3'>3차</option>
+                                <option value='4'>4차</option>
+                                <option value='5'>5차</option>
                             </select>
                         </li>
                     </ul>
