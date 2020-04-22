@@ -338,11 +338,11 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                         <ul class="userinfo_right_box">
                             <li>
                                 <span>전화번호 :</span>
-                                <input type="tel" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000"  />
+                                <input type="text" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000"  />
                             </li>
                             <li>
                                 <span>휴대폰 :</span>
-                                <input type="tel" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  />
+                                <input type="text" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000"  />
                             </li>
                             <li>
                                 <span>이메일 :</span>
