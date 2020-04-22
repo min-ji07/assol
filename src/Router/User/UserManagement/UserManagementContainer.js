@@ -100,6 +100,7 @@ function UserManagementContainer() {
 
     useEffect(()=>{
        async function initGrid(params) {
+           console.log(params);
         try {
             setGridDefs(gridSetting());
             if(!params){
@@ -111,7 +112,7 @@ function UserManagementContainer() {
             params = {
                 "branchNo" : 29
             }
-            await callApi.getUserInfo(req).then(res=>{
+            await callApi.getUserInfo(res).then(res=>{
                 console.log(res);
                 if(res.data && res.data.ListData && res.data.CountData){
                     //공통 그리드 데이터 셋팅

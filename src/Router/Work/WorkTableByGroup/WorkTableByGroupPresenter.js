@@ -12,18 +12,21 @@ const WorkTableByGroupPresenter=({rowData,  gridDefs, nextPage }) => {
     }, closePopup=()=>{
         $('.modal').hide();
     }
+
 function saveRow (result) {
     var list = [];
     result.forEach(element => {
         if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
             element.yearsMonthDate = $('#month-picker').val().replace("-","");
             element.branchNo =1;
-            element.workType = $("#select_01").val();
+            // element.workType = $("#select_01").val(); // 수정 
+            element.workType = $('input[name="select"]').val(); // 수정 
             list.push(element);
         }
     });
     let params = {};
     params.groupInfos = result;
+
     async function init(params){
         try {
             console.log(params);
@@ -42,6 +45,9 @@ function saveRow (result) {
     };
     init(params);
 }
+
+
+
 return (
     <div className="wrapper">
         <div className="work_setting_01">

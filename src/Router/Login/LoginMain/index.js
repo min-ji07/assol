@@ -72,7 +72,10 @@ function LoginMain(){
             {
             console.log(res.headers);
             if(res.data.ErrorCode == 1 ){
-                alert("아이디 또는 비밀번호가 틀렸습니다.");
+                console.log(res.data);
+                alert("아이디 또는 비밀번호가 틀렸습니다."); 
+                alert(res.data.Msg);
+
                 $("#idInput").val('');
                 $("#pwInput").val('');
                 return false;
@@ -213,7 +216,7 @@ function LoginMain(){
             "branchType" : checkBoxArr,         // 회원가입 전 기관선택 
             "mobile" : mobile                   // 핸드폰번호
         };
-        console.log(params);
+        console.log(JSON.stringify(params));
 
         async function init(params){
             try {
@@ -223,7 +226,7 @@ function LoginMain(){
                         alert("회원가입이 완료 되었습니다.");
                     }
                     else{
-                        alert("가입에 실패하했얼먀ㅐㅈㄷㄹ.");
+                        alert(res.data.Msg);
                     }
                 })
             }catch(error){
@@ -284,7 +287,9 @@ function LoginMain(){
                 params = {
                     "id" : idVal       
                 }
+                console.log(params);
                 await callApi.checkDuplicateAdmin(params).then(res=>{
+                    console.log(res);
                     if(idVal == ""){
                         alert('아이디를 입력해주세요.');
                     }
