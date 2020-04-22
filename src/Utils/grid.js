@@ -27,13 +27,13 @@ var gridCommon = function() {
             });
             return rowData;
         }
-        ,onAddRow : (rowData) => {
+        ,onAddRow : (classObj,customRow) => {
             let newRow = { processType: 1 };
-            // if(rowData != undefined){
-            //     console.log(rowData);
-            //     rowData.processType = 1;
-            //     newRow = rowData;
-            // }
+            if(customRow != undefined){
+                console.log(customRow);
+                customRow.processType = 1;
+                newRow = customRow;
+            }
             //추가 기입 
             gridApi.api.updateRowData({add: [newRow]});
         }
@@ -113,6 +113,9 @@ var gridCommon = function() {
         }
         ,setColumn : (columnDefs) => {
             gridApi.api.setColumnDefs(columnDefs);
+        }
+        ,getGridAllColumns : () => {
+            return gridApi.columnApi.getAllGridColumns();
         }
     }
 }();

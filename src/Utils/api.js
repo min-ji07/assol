@@ -36,6 +36,11 @@ export const callApi = {
         url: noJustin+'/PayRoll/SelectTargetUser',
         data: params
     }), // 급여입력 - 지급 항목상세 조회
+    savePayRoll:(params) => axios({
+        method: 'post',
+        url: noJustin+'/PayRoll/SavePayRoll',
+        data: params
+    }), // 급여입력 - 지급 항목상세 저장
 
     // saveUserInfo:(params) => axios.post('http://82230995.ngrok.io/User/UserRegistration',{params:params}), // 사원등록
     userRegistration:(params) => axios({

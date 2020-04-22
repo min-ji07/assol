@@ -45,20 +45,25 @@ function WorkTableByPersonalContainer({yearMonth}) {
 
     useEffect(()=>{
        async function initGrid(params) {
+        //    console.log('값뭐임'+params);
         try {
+            // console.log('params안'+params);
             params = {
-                "branchNo" : 1,
-                "yearsMonthDate": 202004
+                "branchNo" : 29,
+                "yearsMonthDate": "202004"
             }
-            await callApi.getWorkerList(params).then(res=> {
+            await callApi.getWorkerInfos(params).then(res => {
+                // console.log('들와씀'+params);
                 //사원데이터 선호출
                 setRowData(res.data.Data);
+
                     for(var i=0;i<res.data.Data.length;i++){
                         let user = res.data.Data[i];
                         workersMap[user.userNo] =user.userName;
                         workersNumber[user.userNo] = user.employeeNumber;
                         workersPosition[user.userNo] = user.workPosition; 
                     }
+
                     const target = document.querySelector('#month-picker')
                     params = {
                         "branchNo" : 1,
@@ -74,9 +79,10 @@ function WorkTableByPersonalContainer({yearMonth}) {
                         setMinCount(res.data.Data);
                         
                         //공통 그리드 데이터 셋팅
-                        setGridDefs(gridSetting());
+                       setGridDefs(gridSetting());
                     });
                 /* 2020-04-03 어디에 사용하는지 확인 필요함.  */
+
                 callApi.getWorkTableBypersonal(params).then(res=>{
                         console.log(params);
                         if(res.data && res.data.Data){
@@ -126,29 +132,29 @@ function WorkTableByPersonalContainer({yearMonth}) {
             }
             ,{ headerName: "귀속연월", field: "yearsMonthDate", hide:true,
                   valueSetter:function(params){ params.data.yearsMonthDate = yearMonth } }
-            ,{ headerName: "성명 ",field:"userNo", editable:true, width:100,
+            ,{ headerName: "성명 ",field:"userNo", editable:true, width:155,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(workersMap) },
                 refData: workersMap
             }
-            ,{ headerName: "사원", field: "userNo", editable:false, width:130,
+            ,{ headerName: "사원번호", field: "userNo", editable:false, width:155,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(workersNumber) },
                 refData: workersNumber
             }
-            ,{ headerName: "직책", field: "userNo", editable:false, width:130,
+            ,{ headerName: "직책", field: "userNo", editable:false, width:150,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(workersPosition) },
                 refData: workersPosition
             }
-            ,{ headerName: "근무조", field: "groupName", editable:true
+            ,{ headerName: "근무조", field: "groupName", editable:true, width:170
                 ,cellEditor: "select",
                 cellEditorParams: { values: Object.keys(groupInfoMap) } } //api 전달받아야함
             ,{ headerName: "근무타입", field: "groupName", editable:false, hide:true,
                 cellEditor: "text",
                 cellEditorParams: { values: gridCommon.extractValues(groupInfoMap) },
                 refData: groupInfoMap}
-            ,{ headerName: "휴무일1", field: "firstRestDay", editable:true,
+            ,{ headerName: "휴무일1", field: "firstRestDay", editable:true, width:190,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(dayMap) },
                 refData: dayMap
@@ -162,7 +168,7 @@ function WorkTableByPersonalContainer({yearMonth}) {
                     return params.valueFormatted;
                  }
                 }
-            ,{ headerName: "휴무일2", field: "twoRestDay", editable:true,
+            ,{ headerName: "휴무일2", field: "twoRestDay", editable:true, width:190,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(dayMap) },
                 refData: dayMap
@@ -213,7 +219,9 @@ function WorkTableByPersonalContainer({yearMonth}) {
                     rowData={rowData} 
                     minCount={minCount}
                     subWorker={subWorker}
-                    gridDefs={gridDefs}    
+                    gridDefs={gridDefs}  
+                    gridCommon={gridCommon}
+
                 />
              }
         </>
