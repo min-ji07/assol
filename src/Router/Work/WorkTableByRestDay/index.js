@@ -11,6 +11,13 @@ const WorkTableByRestDay=({ rowData, gridDefs })=>{
         
         result.forEach(element => {
             if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
+                if( (!element.startDate || element.startDate =="") && (element.endDate|| element.endDate == "")){
+                    alert("휴가 일정을 다시 입력하세요");
+                }
+                if(element.annualType == 3){
+                    element.endDate = element.startDate;
+                    element.useAnnual = 0.5;
+                }
                 element.branchNo = 1;
                 list.push(element);
             }
