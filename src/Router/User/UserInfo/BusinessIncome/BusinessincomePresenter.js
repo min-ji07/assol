@@ -21,7 +21,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
             return false;
         }
 
-        if(!regEmail.test($(".div_bottom.tab_01 input[type='email']").val())){
+        if(!regEmail.test($(tabDiv+" input[type='email']").val())){
             alert("이메일이 올바르지 않습니다.");
             return false;
         }
@@ -64,7 +64,6 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
     }
 
     function personalValidaition(jumin) {
-        console.log(jumin);
         jumin = utils.regExr.numOnly(jumin);
        
         //주민등록 번호 13자리를 검사한다.
@@ -192,18 +191,6 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
         params["cuData"] = {
             "cuModels" : getCurriculumRow()
         };
-
-        let militaryRow = getMilitaryRow();
-        let curriculumRow = getCurriculumRow();
-        
-        i=0;
-        for(i; i<militaryRow.length; i++){
-            params["exData"]["exModels"].push(militaryRow[i]);
-        }
-        i=0;
-        for(i; i<curriculumRow.length; i++){
-            params["exData"]["exModels"].push(curriculumRow[i]);
-        }
 
         async function saveInit() {
             try {
@@ -345,35 +332,10 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                             <li>
                                 <span>업무 :</span>
                                 <select id="position" name="position" style={{borderRadius:"0px", marginLeft:"20px", width:"172px", marginTop:"-4px"}}>
-                                    <option value="940100">940100 | 저술가</option>
-                                    <option value="940200">940200 | 화가관련</option>
-                                    <option value="940301">940301 | 작곡가</option>
-                                    <option value="940302">940302 | 배우</option>
-                                    <option value="940303">940303 | 모델</option>
-                                    <option value="940304">940304 | 가수</option>
-                                    <option value="940305">940305 | 성악가</option>
-                                    <option value="940500">940500 | 연예보조</option>
-                                    <option value="940600">940600 | 자문,고문</option>
-                                    <option value="940901">940901 | 바둑기사</option>
-                                    <option value="940902">940902 | 꽃꽃이교사</option>
-                                    <option value="940903">940903 | 학원강사</option>
-                                    <option value="940904">940904 | 직업운동가</option>
-                                    <option value="940905">940905 | 봉사료수취자</option>
-                                    <option value="940906">940906 | 보험설계</option>
-                                    <option value="940907">940907 | 음료배달</option>
-                                    <option value="940908">940908 | 방판,외판</option>
-                                    <option value="940909">940909 | 기타자영업</option>
-                                    <option value="940910">940910 | 다단계판매</option>
-                                    <option value="940911">940911 | 기타모집수당</option>
-                                    <option value="940912">940912 | 간병인</option>
-                                    <option value="940913">940913 | 대리운전</option>
-                                    <option value="940914">940914 | 캐디</option>
-                                    <option value="940915">940915 | 목욕관리사</option>
-                                    <option value="940916">940916 | 행사도우미</option>
-                                    <option value="940917">940917 | 심부름용역</option>
-                                    <option value="940918">940918 | 퀵서비스</option>
-                                    <option value="940919">940919 | 물품배달</option>
-                                    <option value="851101">851101 | 병의원</option>
+                                    <option value="저술가">저술가</option>
+                                    <option value="화가관련">화가관련</option>
+                                    <option value="작곡가">작곡가</option>
+                                    <option value="배우">배우</option>
                                 </select>
                             </li>
                         </ul>

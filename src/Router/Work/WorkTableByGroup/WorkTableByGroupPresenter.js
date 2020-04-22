@@ -12,6 +12,7 @@ const WorkTableByGroupPresenter=({rowData,  gridDefs, nextPage }) => {
     }, closePopup=()=>{
         $('.modal').hide();
     }
+
 function saveRow (result) {
     var list = [];
     
@@ -24,8 +25,9 @@ function saveRow (result) {
             }
             element.yearsMonthDate = $('#month-picker').val().replace("-","");
             element.branchNo =1;
-            element.workType = $('input[name=select]').val();
-            console.log(element);
+            // element.workType = $("#select_01").val(); // 수정 
+            element.workType = $('input[name="select"]').val(); // 수정 
+
             list.push(element);
         }
     });
@@ -34,6 +36,9 @@ function saveRow (result) {
     }
     let params = {};
     params.groupInfos = list;
+
+
+
     async function init(params){
         try {
             await callApi.SaveGroupRow(params).then(res => {
@@ -51,6 +56,9 @@ function saveRow (result) {
     };
     init(params);
 }
+
+
+
 return (
     <div className="wrapper">
         <div className="work_setting_01">

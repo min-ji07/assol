@@ -27,8 +27,13 @@ var gridCommon = function() {
             });
             return rowData;
         }
-        ,onAddRow : () => {
-            const newRow = { processType: 1 }
+        ,onAddRow : (rowData) => {
+            let newRow = { processType: 1 };
+            if(rowData != undefined){
+                console.log(rowData);
+                rowData.processType = 1;
+                newRow = rowData;
+            }
             //추가 기입 
             gridApi.api.updateRowData({add: [newRow]});
         }
@@ -46,11 +51,11 @@ var gridCommon = function() {
         ,onSaveRow : (callback)=>{ //저장 
             //1 : insert, 2 : update, 3: delete, 4 : select
             gridApi.api.stopEditing();
-            
             var rowData = gridCommon.getRowData();
             rowData.push(...removeData); //삭제 데이터 추가
             var qs = '';
             rowData.forEach(row=>{
+                console.log(row);
                 var str = JSON.stringify(row);
             });
             if(callback && callback instanceof Function) callback(rowData);

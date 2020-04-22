@@ -12,6 +12,61 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
         addBranch('1');
     },[]);
 
+    const saveRow = (result) => {
+        let yearMonthDate = $("#month-picker").val();
+        let payDegree = $("#payDegree").val();
+
+        // {
+        //     "yearMonthDate": null,
+        //     "payDegree": 0,
+        //     "totalSalary": 0,
+        //     "branchNo": 0,
+        //     "userList": {
+        //         "userNo": 0,
+        //         "userName": null,
+        //         "position": null,
+        //         "employeeNumber": null,
+        //         "userType" : 0,
+        //         "baseSalary": null,
+        //         "foodSalary": 0,
+        //         "carSalary": 0,
+        //         "insentive": 0,
+        //         "positionSalary": 0,
+        //         "othercontent": {
+        //             "title": "1212",
+        //             "value": 10000
+        //         }
+        //     }
+        // }
+        result.othercontent = {
+            
+        }
+        let params = {
+            "yearMonthDate" : yearMonthDate,
+            "payDegree" : payDegree,
+            "userList" : result
+        }
+
+        console.log(params);
+        async function init(params){
+            try {
+                console.log(params);
+                await callApi.SaveGroupRow(params).then(res => {
+                
+                    if(res.data.ErrorCode == 1){ 
+                        alert(res.data.Msg);
+                    }
+                    else{
+
+                    }
+                })
+            }catch(error){
+                console.log("CATCH !! : " + error);
+            }
+        };
+        // init(params);
+    }
+
     // const fnAddColumn = (colDefs) =>{
     //     const gridApi = $("#grid1").find(".ag-root")[0]["__agComponent"].gridApi;
     //     gridCommon.setGridApi(gridApi);
@@ -39,10 +94,12 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                             data-date-format="yyyy-mm"/>
                         </li>
                         <li>급수차수
-                            <select id="salary">
-                                <option value='1'>1차</option>
-                                <option value='2'>2차</option>
-                                <option value='3'>3차</option>
+                            <select id="payDegree">
+                                <option value='0'>1차</option>
+                                <option value='1'>2차</option>
+                                <option value='2'>3차</option>
+                                <option value='3'>4차</option>
+                                <option value='4'>5차</option>
                             </select>
                         </li>
                     </ul>
@@ -52,7 +109,7 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                     <button type="button" class="btn_gray salary_button card">급여대장미리보기</button>
                     <button type="button" class="btn_gray salary_button excel">Excel 내보내기</button>
                     <button type="button" class="btn_gray salary_button send">급여대장으로이동</button>
-                    <button type="button" class="btn_gray salary_button save">저장</button>
+                    <button type="button" class="btn_gray salary_button save" onClick={saveRow}>저장</button>
                 </div>
                 <div class="white_board">
                     <div class="left_div">
@@ -67,7 +124,7 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                         <div class="right_div_inner">
                             <div class="right_div_inner_inner">
                                 <div class="div_top02">지급 항목상세
-                                    <button class="plus" onClick={gridCommon.onAddRow} >추가</button>
+                                    <button class="plus" id="btnAddRow">추가</button>
                                     <button class="delete" onClick={gridCommon.onRemoveRow}>삭제</button>
                                 </div>
                                 <div class="div_bottom">

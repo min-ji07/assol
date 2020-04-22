@@ -5,7 +5,7 @@ import useHook from '../../GlobalState/Hooks/useHook';
 function HeaderPresenter() {
     const { state } = useHook();
     useEffect(()=>{
-       console.log(state,'test')
+       console.log(state,'test');
     },[]);
 
     return(
