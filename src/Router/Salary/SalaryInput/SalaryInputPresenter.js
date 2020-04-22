@@ -40,9 +40,9 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                         </li>
                         <li>급수차수
                             <select id="salary">
-                                <option value='1'>1차</option>
-                                <option value='2'>2차</option>
-                                <option value='3'>3차</option>
+                                <option value='0'>1차</option>
+                                <option value='1'>2차</option>
+                                <option value='2'>3차</option>
                             </select>
                         </li>
                     </ul>

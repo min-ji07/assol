@@ -26,7 +26,7 @@ function SalaryInputContainer() {
     }
 
     let params = {
-        "branchNo" : 30,
+        "branchNo" : 29,
         "userType" : 0
     }
     
@@ -38,7 +38,8 @@ function SalaryInputContainer() {
         });
        async function init() {
             try {
-                await callApi.setInitSalary(params).then(res=> {   
+                await callApi.setInitSalary(params).then(res=> {
+                    console.log(res);
                     /* 사원 리스트 */
                     setRowData(res.data.Data);
 
@@ -50,7 +51,7 @@ function SalaryInputContainer() {
 
             }
        };
-       init();
+       init(params);
     },[]); //init
 
 
@@ -58,14 +59,15 @@ function SalaryInputContainer() {
         //컬럼 정의
            const columnDefs= [  
                { headerName: "rowId", field: "rowId", hide:true }
-               ,{headerName: "성명 ",field:"userName", width:75}
-               ,{headerName: "직책", field: "position", width:110,
+               ,{headerName: "유저타입", field: "userType", hide:true }
+               ,{headerName: "성명 ",field:"userName", width:95}
+               ,{headerName: "직책", field: "position", width:117,
                     cellEditor: "select",
                     cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
                     refData: regEmployeeMappings
                 }
             //    ,{headerName: "직책", field: "position", width:80}
-               ,{ headerName: "사원번호", field: "employeeNumber", width:75}
+               ,{ headerName: "사원번호", field: "employeeNumber", width:101}
            ]
    
           
@@ -87,31 +89,46 @@ function SalaryInputContainer() {
            //클릭 이벤트
            const onRowDoubleClicked = (e) => {
                 let employeeNumber = e.data.employeeNumber;
+                let userNo = e.data.userNo;
                 let userType = e.data.userType;
-                console.log(e);
-                // userSelect(employeeNumber,userType);
+                let payDegree = $("#salary").val();
+                let yearMonthDate = $("#month-picker").val();
+                let params = {
+                    // "yearMonthDate" : yearMonthDate,
+                    // "payDegree" : payDegree,
+                    "branchNo": "29",
+                    "userType": userType,
+                    "userNo" : userNo
+                 }
+                console.log(params);
+                userSelect(params);
             }
 
            return {columnDefs, defaultColDef, components, gridId, onRowDoubleClicked};
     }
 
     const userSelect = (params) => {
-        async function init() {
+        async function init(params) {
             try {
-                await callApi.setInitSalary(params).then(res=> {   
+                await callApi.selectTargetUser(params).then(res=> {   
+                    console.log(res);
+
                     if(res.data.ErrorCode == 1){
                         alert(res.data.Msg);
                     } else {
-                        setOtherColumn();
-                        /* 사원 리스트 */
-                        setRowData(res.data.Data);
+                        if(res.data.Data.length == 0){
+                            alert("급여정보가 없습니다.");
+                        } else{
+                            // setRowData(res.data.Data);
+                        }
+                        setOtherColumn(res.data.OtherData);
                     }
                 });
             }catch{
 
             }
        }
-       init();
+       init(params);
     }
 
     const gridSetting2 =()=>{
@@ -181,14 +198,25 @@ function SalaryInputContainer() {
     ];
 
 
-    const setOtherColumn = () => {
-        
+    const setOtherColumn = (otherData) => {
+        let columnDefs = defaultColumnJson();
+        var i = 0;
+        console.log()
+        for(i in otherData){
+            const title = otherData[i].title;
+            const value = otherData[i].value;
+            let addColumn = addColumnJson(title,value);
+            columnDefs.push(addColumn);
+        }
+        console.log(columnDefs);
+        gridCommon.setColumn(columnDefs);
     }
 
-    const defaultColumnJson = () => {
+    const defaultColumnJson = (data) => {
         const arr = [
             { headerName: "rowId", field: "rowId", hide:true }
-            ,{headerName: "성명 ",field:"userName", width:75, editable:false}
+            ,{headerName: "성명 ",field:"userName", width:75, editable:false
+            }
             ,{headerName: "직책", field: "position", width:110, editable:false,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
@@ -224,12 +252,13 @@ function SalaryInputContainer() {
         return arr;
     }
 
-    const addColumnJson = () => {
+    const addColumnJson = (title,value) => {
         var json = { 
-            headerName: "",
-            field: "",
-            width:120,
-             valueFormatter: function(params) {
+            headerName: title,
+            field: title,
+            width:120
+            ,defaultTextValue : value
+            ,valueFormatter: function(params) {
                  return utils.regExr.comma(params.value);
              }    
          }

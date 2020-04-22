@@ -19,6 +19,7 @@ const UserInfo = () => {
     let userInfoData;
     let paramData = {};
 
+    console.log(pramsString);
     if(pramsString.length != 0){
         let paramArr = pramsString.split("&");
         let paramArrLen = paramArr.length;
@@ -79,7 +80,6 @@ const UserInfo = () => {
             if(key == "national" && val == "외국인"){
                 $(".visa_li").show();
             }
-
 
             // $(".visa_li").show();
             // $("#isProbation").next().show();
