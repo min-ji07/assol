@@ -106,7 +106,7 @@ export const callApi = {
         연차설정 페이지
     */
     getWorkerInfos:(params) => axios.get(noJustin +'/Worker/GetWorkerByBranchNo',{params:params}),
-    getWorkerListByRestDay:(params)=> axios.get(localTest+'/Worker/GetAnnualWorker',{params:params}), // 연차설정 - 조회
+    getWorkerListByRestDay:(params)=> axios.get(noJustin+'/Worker/GetAnnualWorker',{params:params}), // 연차설정 - 조회
     getWorkerListByRestDayView:(params)=> axios.get(noJustin+'/AdminManager/GetAnnualManager',{params:params}), // 연차대장 - 조회
     /*
         /work/workTableResult

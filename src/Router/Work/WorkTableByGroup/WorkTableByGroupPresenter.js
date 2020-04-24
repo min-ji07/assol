@@ -17,28 +17,29 @@ function saveRow (result) {
     var list = [];
     console.log(result);
     result.forEach(element => {
-        if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
-            if(element.workTime == null ||element.workTime == "")
-            {
-                alert("근무시간을 입력 하세요");
-                return false;
+        if(element.processType){
+            if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
+                if(element.workTime == null ||element.workTime == "")
+                {
+                    alert("근무시간을 입력 하세요");
+                    return false;
+                }
+                element.yearsMonthDate = $('#month-picker').val().replace("-","");
+                element.branchNo =1;
+                // element.workType = $("#select_01").val(); // 수정 
+                element.workType = $('input[name="select"]').val(); // 수정 
+    
+                list.push(element);
             }
-            element.yearsMonthDate = $('#month-picker').val().replace("-","");
-            element.branchNo =1;
-            // element.workType = $("#select_01").val(); // 수정 
-            element.workType = $('input[name="select"]').val(); // 수정 
-
-            list.push(element);
         }
+      
     });
     if(list == null || list.length < 1){
         return true;
     }
     let params = {};
     params.groupInfos = list;
-
-
-
+    
     async function init(params){
         try {
             await callApi.SaveGroupRow(params).then(res => {

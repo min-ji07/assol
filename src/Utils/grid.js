@@ -53,6 +53,7 @@ var gridCommon = function() {
             gridApi.api.stopEditing();
             
             var rowData = gridCommon.getRowData();
+            console.log(rowData);
             rowData.push(...removeData); //삭제 데이터 추가
             // var qs = '';
             // rowData.forEach(row=>{
