@@ -55,7 +55,7 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
             for(key in result[i]){
                 console.log(key,"이중포문 가즈아");
                 if(key.indexOf("addColumnSalary") != -1){
-                    addColVal = numOnly(result[i][key]);
+                    addColVal = utils.regExr.numOnly(result[i][key]);
                     if(addColVal.length == 0){
                         continue;
                     }
