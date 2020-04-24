@@ -30,14 +30,14 @@ function SalaryContainer() {
         ,cellStyle: {textAlign: 'center'}
         ,resizable : true
     } 
-    const gridSalarySetting =()=>{
+    const gridSalarySetting = () => {
         //컬럼 정의
         const columnDefs= [  
             {headerName: "userId", field: "id", hide :true}
             ,{headerName: "processType", field: "processType", hide:true}
             ,{headerName: "branchNo", field: "branchNo", hide:true }
             ,{headerName: "급여차수", field: "payDegree", width:100}
-            ,{headerName: "급여선정기간",field:"rmqdutjswjdrlrks", width:120}
+            ,{headerName: "급여선정기간",field:"payDayMonth", width:120}
             ,{headerName: "급여총원", field: "totalUser", width:90}
             ,{headerName: "인건비총액", field: "totalSalary", width:130
             }
@@ -47,23 +47,49 @@ function SalaryContainer() {
             }
             ,{ headerName: "실지급 총액", field: "actualPay", width:130
             }
-        ]
+        ];
         
-        // "payDegree": "1",
-        // "payDayMonth": "2",
-        // "payDay": "10",
-        // "": "10",
-        // "": 0,
-        // "": 0,
-        // "": 0,
-        // "": 0
+        //클릭 이벤트
+        const onRowDoubleClicked = (e) => {
+            let employeeNumber = e.data.employeeNumber;
+            let userNo = e.data.userNo;
+            let userType = e.data.userType;
+            let payDegree = $("#payDegree").val();
+            let yearMonthDate = $("#month-picker").val();
+            let params = {
+                "yearMonthDate" : utils.regExr.numOnly(yearMonthDate),
+                "payDegree" : payDegree,
+                "branchNo": branchNo,
+                "userType": userType,
+                "userNo" : userNo
+             }
+            console.log(params);
+            userSelect(params);
+        }
 
         //컴포넌트 세팅
         const components = {  };
-        return {columnDefs, defaultColDef, components};
+        return {columnDefs, defaultColDef, components, onRowDoubleClicked};
     }
-    // 급여대장 조회시 기본 데이터
+
+    const selectContent = (data) => {
+        const contentBox = $(".table_left_content");
+        let liList;
+        let ulBox;
+        let liContent;
+        let span;
+
+        data.forEach(function(info) {
+            liList = $("<li>");
+            ulBox = $("<li>");
+            liContent = $("<li>");
+            span = $("<li>");
+        });
+        // contentBox
+    }
+
     useEffect(()=>{
+        bindEvent();
         // 왜오류남
         // picker.setMonthPicker(('#month-picker'),function(value){
         //     // initGrid(value);
@@ -74,12 +100,15 @@ function SalaryContainer() {
         let month = $("#month-picker").val();
         let params = {
             branchNo : branchNo,
-            month : utils.regExr.numOnly(month)
+            // month : utils.regExr.numOnly(month)
+            month : "202004"
         };
+        console.log(params);
         setGridDefs(gridSalarySetting());
         async function init(params) {
             try{
                 await callApi.getPayRollListOfBranch(params).then(res=> {
+                    console.log(res);
                     if(res.data.ErrorCode == 1){
                         alert(res.data.Msg);
                     } else {
@@ -90,9 +119,31 @@ function SalaryContainer() {
                 alert(error);
             }
         }
-        // init(params);
-     },[]); //init
+        init(params);
+        gridInit();
+    },[]); //init
 
+    const gridInit = () => {
+        const girdContent = $("#salaryDesc");
+        const liList = girdContent.children("li");
+        let gridWidth = 0;
+        let i = 0;
+        for(i; i<liList.length; i++){
+            gridWidth += liList[i].offsetWidth;
+        }
+        girdContent.width(gridWidth);
+        // liList.forEach(elem => {
+        //     console.log(elem);
+        // });
+    }
+
+    const bindEvent = () => {
+        $(".table_left_wrap").on("scroll",(e)=>{
+            const scrollTop = e.target.scrollTop;
+            console.log(scrollTop," - ",$(".table_left_header_overflow").scrollTop());
+            $(".table_left_header_overflow").scrollTop(scrollTop);
+        });
+    }
     return(
         <SalaryPresenter rowData={rowData} gridDefs={gridDefs} 
         // rowData2={rowData2} gridDefs2={gridDefs2}

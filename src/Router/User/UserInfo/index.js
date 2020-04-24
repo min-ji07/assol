@@ -529,21 +529,6 @@ const UserInfo = () => {
         if(addrType == "J"){    // 지번
             address = e.jibunAddress;
         }
-
-        switch(checkType){
-            case "tab_01" :
-                $(".div_bottom.tab_01").find("#postNo").val(postNo).attr("readonly",true);
-                $(".div_bottom.tab_01").find("#address").val(address).attr("readonly",true);
-                break;
-            case "tab_02" :
-                $(".div_bottom.tab_02").find("#postNo").val(postNo).attr("readonly",true);
-                $(".div_bottom.tab_02").find("#address").val(address).attr("readonly",true);
-                break;
-            case "tab_03" :
-                $(".div_bottom.tab_03").find("#postNo").val(postNo).attr("readonly",true);
-                $(".div_bottom.tab_03").find("#address").val(address).attr("readonly",true);
-                break;
-        }
         $("#daumPostPop").hide();
     }
 
