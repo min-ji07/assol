@@ -3,6 +3,7 @@ import picker from '../../../Utils/datepicker'
 import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
 import WorkTableByGroupPresenter from './WorkTableByGroupPresenter'
+/* 근무조 설정 */ 
 
 
 function WorkTableByGroupContainer() {
@@ -357,17 +358,17 @@ function WorkTableByGroupContainer() {
     useEffect(()=>{
        async function initGrid(params) {
         try {
-            console.log("HI");
+            // console.log("HI");
             if(!params){
                 const d = new Date();
                 params = d.getFullYear();
             } 
             //근속연도 세팅 
-            const target = document.querySelector('#month-picker')
-            console.log(target.value);
+            const target = $('#month-picker');
+            console.log(target.val());
             params = {
-                "branchNo" : 1,
-                "yearsMonthDate" : target.value.replace("-","")
+                "branchNo" : 29,
+                "yearsMonthDate" : target.val().replace("-","")
             }
             try{
                 await callApi.getGridData(params).then(res=>{
@@ -387,11 +388,12 @@ function WorkTableByGroupContainer() {
             console.log("Catch :" + error);
         }
        };
-       initGrid(); 
-       //날짜 피커 변경시 콜백으로 리로드 
-       picker.setMonthPicker(('#month-picker'),function(value){
+        picker.setMonthPicker(('#month-picker'),function(value){
             initGrid(value); 
         });
+       initGrid(); 
+       //날짜 피커 변경시 콜백으로 리로드 
+       
     },[]); //init
 
 

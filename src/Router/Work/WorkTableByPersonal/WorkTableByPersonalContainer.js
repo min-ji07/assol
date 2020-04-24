@@ -1,16 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import picker from '../../../Utils/datepicker'
 import WorkTableByPersonalPresenter from './WorkTableByPersonalPresenter'
-
 import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
 import useHook from '../../../GlobalState/Hooks/useHook';
+/* 근무자 설정*/
 
 
 function WorkTableByPersonalContainer({yearMonth}) {    
     const {state} = useHook();
 
-    /* 근무자 설정*/
     const workersMap={}, workersPosition={}, workersNumber={};
    
     const groupInfoMap={};
@@ -50,26 +49,22 @@ function WorkTableByPersonalContainer({yearMonth}) {
             params = {
                 "branchNo" : 29,
                 "yearsMonthDate": "202004"
-                //"yearsMonthDate": target.value.replace("-","")
+                // "yearsMonthDate": target.value.replace("-","")
             }
-            console.log(params);
             await callApi.getWorkerInfos(params).then(res => {
                 // 사원데이터 선호출 
-                console.log(res);
+                // console.log(res);
                 setRowData(res.data.Data);
                     for(var i=0;i<res.data.Data.length;i++){
                         let user = res.data.Data[i];
                         workersMap[user.userNo] =user.userName;
                         workersNumber[user.userNo] = user.employeeNumber;
                         workersPosition[user.userNo] = user.position;
-                        console.log(user); 
+                        console.log(user);
                     }
 
-                    // 그룹 최소인원수? 
+                    // 그룹 근무조별 최소 인원현황 color 
                 callApi.getCurrentStatusWorkerTable(params).then(res=> { 
-                    console.log("근무조");
-                    console.log(res);
-
                     if(res.data.Data)
                         for(var i=0;i<res.data.Data.length;i++){
                             let map = res.data.Data[i];
@@ -82,29 +77,17 @@ function WorkTableByPersonalContainer({yearMonth}) {
                         //공통 그리드 데이터 셋팅
                        setGridDefs(gridSetting());
                     });
-                /* 2020-04-03 어디에 사용하는지 확인 필요함.  */
 
+                // 이게 근무자 등록인가?
                 callApi.getWorkTableBypersonal(params).then(res=>{
-                        // console.log(params);
+                        console.log(res);
                         if(res.data && res.data.Data){
                             setRowData(res.data.Data);
+                            console.log(setRowData);
                         }
                 })
             });
 
-            // 근무조 저장 내역 불러오기 
-            await callApi.SaveGroupRow(params).then(res => {
-                console.log(res);
-                for(var i=0;i<res.data.Data.length; i++){
-                    console.log('나옴?');
-                    let workTeam = res.data.Data[i];
-                    // groupInfoMap[]
-                    groupName = params.data.groupName;
-                    console.log('workTeam'+workTeam);
-                    console.log('groupName'+groupName);
-                }
-            });
-            console.log(params);
             
           
         }catch{

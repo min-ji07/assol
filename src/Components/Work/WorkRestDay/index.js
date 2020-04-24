@@ -4,6 +4,7 @@ import gridCommon from '../../../Utils/grid';
 import picker from '../../../Utils/datepicker';
 import DataGrid from '../../DataGrid';
 import useHook from '../../../GlobalState/Hooks/useHook';
+/* 연차 설정 */
 
 const WorkRestDay = () => {
     const { state } = useHook();
@@ -21,17 +22,23 @@ const WorkRestDay = () => {
 
     const [rowData, setRowData] = useState([]); //그리드 데이터 
     const [gridDefs, setGridDefs] = useState({}); //그리드 정의
+
+
+    // 전체사원 그리드 데이터, 정의
+    // const [rowData2, setRowData2] = useState([]);
+    // const [gridDefs2, setGridDefs2] = useState({}); 
    
 
     // 사원정보 불러오기
     useEffect(()=>{
-        
+        setGridDefs(gridSetting());
+        // setGridDefs2(gridSetting2());
         async function init() {
             try {
                 let params = {
                     "branchNo" : 29
                 }
-            await callApi.getWorkerInfos(params).then(res => {
+                await callApi.getWorkerInfos(params).then(res => {
                     if(res.data.ErrorCode == 1){
                         alert(res.data.Msg);
                         return;
@@ -44,16 +51,15 @@ const WorkRestDay = () => {
                             workersMap[user.userNo] =user.userName;
                             workersNumber[user.userNo] = user.employeeNumber;
                             workersPosition[user.userNo] = user.position;
-                                                
+                            
                         }
                     }
-
-                //연차설정 데이터 저장내용 가져오기
-                try{
-                    callApi.getWorkerListByRestDay(params).then(res=>{
-                        setGridDefs(gridSetting());
-                        if(res.data && res.data.Data){
-                            setRowData(res.data.Data);
+                    //연차설정 데이터 저장내용 가져오기
+                    try{
+                        callApi.getWorkerListByRestDay(params).then(res=>{
+                            if(res.data && res.data.Data){
+                                setRowData(res.data.Data);
+                                // setRowData2(res.data.Data);
                         }
                     });
                 }
@@ -70,6 +76,27 @@ const WorkRestDay = () => {
     },[]); //init
 
     
+    // 사원 전체명부 그리드 설정
+    // const gridsetting2 = () => {
+    //     const components = {  };
+
+    //     const columnDefs= [  
+    //         { headerName: "rowId", field: "rowId", hide:true }
+    //         ,{headerName: "유저타입", field: "userType", hide:true }
+    //         ,{headerName: "성명 ",field:"userName", width:95}
+    //         ,{headerName: "직책", field: "position", width:117}
+    //         ,{ headerName: "사원번호", field: "employeeNumber", width:101}
+    //     ]
+    //     const defaultColDef ={
+    //         editable : true
+    //         ,cellStyle: {textAlign: 'center'}
+    //         ,resizable : true
+    //     } 
+    //     //컴포넌트 세팅 
+    //     return {columnDefs, defaultColDef, components};
+    // }
+
+    // 개인연차추가 그리드 설정 
     const gridSetting = () => {
         //컬럼 정의
            const columnDefs= [  
@@ -82,7 +109,7 @@ const WorkRestDay = () => {
                     return state.branchNo
                 }
                }
-               ,{ headerName: "성명 ",field:"userNo", cellEditor : "richSelect", width:110,
+               ,{ headerName: "성명 ",field:"userNo", cellEditor : "richSelect", width:100,
                 cellEditor: "select",
                cellEditorParams: { values: gridCommon.extractValues(workersMap) },
                refData: workersMap,
@@ -92,20 +119,46 @@ const WorkRestDay = () => {
                     }
                  }
                 }
-                ,{ headerName: "사원번호", field: "userNo", width:150, editable : false,
-                    cellEditorParams: { values: gridCommon.extractValues(workersNumber) },
-                    refData: workersNumber
-                }
-                ,{ headerName: "직책", field: "userNo", width:150, editable:false,
+                ,{ headerName: "직책", field: "userNo", width:100, editable:false,
                     cellEditorParams: {  values: gridCommon.extractValues(workersPosition) },
                     refData: workersPosition
                 }
-               ,{ headerName: "근무연월", field: "yearsMonthDate",editable:false, width:150,
-                    valueFormatter:function(){
-                        //근무자설정에서 url을 통해서 가져오듯이 가져오셈
-                        return "2020-04"
-                    }
-                } //상단에서 가져와 픽스 
+                ,{ headerName: "사원번호", field: "userNo", width:100, editable : false,
+                    cellEditorParams: { values: gridCommon.extractValues(workersNumber) },
+                    refData: workersNumber
+                }
+                ,{ headerName: "휴가구분", field: "annualType", width:100  ,
+                     cellEditor: "select",
+                     cellEditorParams: { values : gridCommon.extractValues(annalMaps)},
+                     refData: annalMaps,
+                     editable : function(params) {
+                         if(params.data.processType || params.data.processType ==4){
+                             return false;
+                         }
+                      }
+                         
+                 }
+ 
+                 ,{ headerName: "상세구분", field: "detailType", width:100 , editable : function (params){
+                     return params.data.annualType == 3 ? true : false;
+                 },
+                     cellEditor: "select",
+                     cellEditorParams: { values: gridCommon.extractValues(afterMaps)}, refData: afterMaps,
+                     valueGetter : function(params){
+                         return params.data.annualType != 3 ? 0 : params.data.annualType;  
+                     },
+                     editable : function(params) {
+                         if(params.data.processType || params.data.processType ==4){
+                             return false;
+                         }
+                      }
+                 }
+                    //    ,{ headerName: "근무연월", field: "yearsMonthDate",editable:false, width:150,
+                    //         valueFormatter:function(){
+                    //             //근무자설정에서 url을 통해서 가져오듯이 가져오셈
+                    //             return "2020-04"
+                    //         }
+                    //     } //상단에서 가져와 픽스 
                ,{ headerName: "휴가시작일", field: "startDate", width:200 , cellEditor: picker.setBreakTimePicker(),
                     editable : function(params) {
                         if(params.data.processType || params.data.processType ==4){
@@ -119,32 +172,6 @@ const WorkRestDay = () => {
                                return params.data.startDate; 
                         }
                         return params.data.endDate; 
-                    },
-                    editable : function(params) {
-                        if(params.data.processType || params.data.processType ==4){
-                            return false;
-                        }
-                     }
-                }
-               ,{ headerName: "휴가구분", field: "annualType", width:150  ,
-                    cellEditor: "select",
-                    cellEditorParams: { values : gridCommon.extractValues(annalMaps)},
-                    refData: annalMaps,
-                    editable : function(params) {
-                        if(params.data.processType || params.data.processType ==4){
-                            return false;
-                        }
-                     }
-                        
-                }
-
-                ,{ headerName: "상세구분", field: "detailType", width:150 , editable : function (params){
-                    return params.data.annualType == 3 ? true : false;
-                },
-                    cellEditor: "select",
-                    cellEditorParams: { values: gridCommon.extractValues(afterMaps)}, refData: afterMaps,
-                    valueGetter : function(params){
-                        return params.data.annualType != 3 ? 0 : params.data.annualType;  
                     },
                     editable : function(params) {
                         if(params.data.processType || params.data.processType ==4){
@@ -183,16 +210,14 @@ const WorkRestDay = () => {
                         return count;
                     }
                 }
-               ,{ headerName: "휴가사유", field: "reason", width:168 ,
+               ,{ headerName: "휴가사유", field: "reason", width:235 ,
                       editable : function(params) {
                 if(params.data.processType || params.data.processType ==4){
                     return false;
+                        }
+                    }
                 }
-             }
-            }
-           ]
-   
-           
+            ]
            //기본컬럼 정의
            const defaultColDef ={
                editable : true
@@ -205,7 +230,11 @@ const WorkRestDay = () => {
     }
 
     return (
-        <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon}/>
+        <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon} 
+        // rowData={rowData2} gridDefs={gridDefs2}
+         />
+        
+        
     )
 }
 

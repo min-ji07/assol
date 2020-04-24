@@ -93,13 +93,9 @@ function SalaryInputContainer() {
                { headerName: "rowId", field: "rowId", hide:true }
                ,{headerName: "유저타입", field: "userType", hide:true }
                ,{headerName: "성명 ",field:"userName", width:95}
-               ,{headerName: "직책", field: "position", width:117,
-                }
-            //    ,{headerName: "직책", field: "position", width:80}
+               ,{headerName: "직책", field: "position", width:117}
                ,{ headerName: "사원번호", field: "employeeNumber", width:101}
            ]
-   
-          
    
            //기본컬럼 정의
            const defaultColDef ={

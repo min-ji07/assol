@@ -1,11 +1,15 @@
 import React from 'react';
 import '../../../Assets/css/pages/work/work_setting_03.css';
 import WorkRestDay from '../../../Components/Work/WorkRestDay';
+import DataGrid from '../../../Components/DataGrid';
 import gridCommon from '../../../Utils/grid';
 import { callApi } from '../../../Utils/api';
-const WorkTableByRestDay=({ rowData, gridDefs })=>{
+// import $ from 'jquery';
+// import utils from '../../../Utils/utils';
 
-    
+const WorkTableByRestDay=({ rowData, gridDefs})=>{
+/* 개인연차설정 */
+    // , rowData2,  gridDefs2
     function saveRow (result) {
         var list = [];
         
@@ -49,39 +53,52 @@ const WorkTableByRestDay=({ rowData, gridDefs })=>{
 
     return (
         <div class="wrapper">
-        <div class="work_setting_03">
-            <div class="title">
-                <h1>개인연차설정으로 바뀔 예정</h1>
-                <p>전체 사원 불러와서 한명씩 연차 설정해줌</p>
-            </div>
-            <div class="emTable">
-                <div class="leftDiv">
-                    
-                    <div class="left_inner">
-                        <div class="option">
-                            <p>연차설정</p>
-                        </div>
-
-                        <div class="buttonset">
-                        <button type="button" className="insert"  onClick={gridCommon.onAddRow}>추가</button>
-                        <button type="button" className="delete1" onClick={gridCommon.onRemoveRow}>삭제</button>
-                        <button type="button" className="save"    onClick={() => gridCommon.onSaveRow(saveRow)}>저장</button>
-
+            <div class="work_setting_03">
+                <div class="title">
+                    <h1>개인연차설정</h1>
+                    <p>사원의 연차를 설정할 수 있습니다.</p>
+                </div>
+                <div class="emTable">
+                    <div class="leftDiv"> 
+                    {/* 전체div */}
                         
-                        </div>
-                    </div>
+                        <div class="left_inner">
+                            {/* <div class="option">
+                                <p>연차설정</p>
+                            </div> */}
 
-                    <div class="table">
-                    <WorkRestDay />
+                            <div className="left_div_inner">
+                                <div className="left_div_inner_inner">
+                                    <div className="div_top01">사원 전체명부</div>
+                                    <div className="div_bottom">
+                                        {/* <DataGrid rowData={rowData2} gridDefs={gridDefs2} /> */}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="buttonset">
+                                <button type="button" className="insert"  onClick={gridCommon.onAddRow}>추가</button>
+                                <button type="button" className="delete1" onClick={gridCommon.onRemoveRow}>삭제</button>
+                                <button type="button" className="save"    onClick={() => gridCommon.onSaveRow(saveRow)}>저장</button>
+                            </div>
+                            <div className="right_div_inner">
+                                <div className="right_div_inner_inner">
+                                    <div className="div_top02">개인연차 추가</div>
+                                    <div class="table">
+                                        <WorkRestDay />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* <div class="backnext">
+                            <button type="button" class="back" onclick="back();">이전으로</button>
+                            <button type="button" class="next" onclick="next();">다음으로</button>
+                        </div> */}
                     </div>
-                    <div class="backnext">
-                        <button type="button" class="back" onclick="back();">이전으로</button>
-                        <button type="button" class="next" onclick="next();">다음으로</button>
-                    </div>
-                   </div>
+                </div>
             </div>
-         </div>
-    </div> 
+        </div> 
     )
 };
 export default WorkTableByRestDay;

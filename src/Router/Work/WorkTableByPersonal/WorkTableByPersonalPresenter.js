@@ -5,11 +5,11 @@ import DataGrid from '../../../Components/DataGrid';
 import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
 import $ from 'jquery';
+/* 근무자 설정 */ 
 
 
 
 function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
-    /* 근무자 설정 */ 
 
     function saveRow (params) {
         console.log('param : ' + params);
@@ -48,9 +48,9 @@ function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
         async function init(params){
             console.log(params);
             try {
-                // 근무자 저장 url 어딨음..
-                await callApi.getWorkTableBypersonal(params).then(res => {
-                    console.log('저장'+res);
+                await callApi.setWorkerList(params).then(res => {
+                    console.log('저장');
+                    console.log(res);
                     if(res.data.ErrorCode == 0){ 
                         alert("근무자 설정이 완료되었습니다..");
                     }
@@ -120,7 +120,7 @@ function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
                                 minCount.map((obj, key)=>{
                                     const className = "num bg_c"+obj.groupColor;
                                     return <div key={key} className={className}>
-                                        <div>{obj.groupName} </div> 
+                                        <div class="none">{obj.groupName} </div> 
                                         <div>{obj.requireCount} </div> 
                                         <div>{obj.setWorkerCount}  </div> 
                                     </div>
