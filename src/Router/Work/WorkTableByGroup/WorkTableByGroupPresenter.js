@@ -43,7 +43,8 @@ function saveRow (result) {
     async function init(params){
         try {
             await callApi.SaveGroupRow(params).then(res => {
-            
+                console.log('saveGroupRow 저장내용 : ' + params);
+                console.log('저장'+res);
                 if(res.data.ErrorCode == 0){ 
                     alert("근무조 설정이 완료되었습니다..");
                 }
