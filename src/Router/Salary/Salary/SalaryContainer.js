@@ -64,6 +64,12 @@ function SalaryContainer() {
     }
     // 급여대장 조회시 기본 데이터
     useEffect(()=>{
+        // 왜오류남
+        // picker.setMonthPicker(('#month-picker'),function(value){
+        //     // initGrid(value);
+        // });
+
+
         let branchNo = 29;
         let month = $("#month-picker").val();
         let params = {
@@ -71,11 +77,6 @@ function SalaryContainer() {
             month : utils.regExr.numOnly(month)
         };
         setGridDefs(gridSalarySetting());
-
-        // picker.setMonthPicker(('#month-picker'),function(value){
-        //     // initGrid(value);
-        // });
-
         async function init(params) {
             try{
                 await callApi.getPayRollListOfBranch(params).then(res=> {

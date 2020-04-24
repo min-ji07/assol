@@ -215,7 +215,6 @@ function SalaryInputContainer() {
             ,{ headerName: "사원번호", field: "employeeNumber", width:120}
             ,{ headerName: "기본급", field: "baseSalary", width:120
                 ,valueFormatter: function(params) {
-                    console.log(params,"기본급");
                     return utils.regExr.comma(params.value);
                 }
             }

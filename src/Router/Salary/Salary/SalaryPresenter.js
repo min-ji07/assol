@@ -448,40 +448,6 @@ const SalaryPresenter=({rowData,  gridDefs }) => {
                                                     </li>
                                                 </ul>
                                             </li>
-                                            <li>
-                                                <ul>
-                                                    <li>
-                                                        <span>사회복지사</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>박이삭</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>A00001</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>2020-04-05</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>-</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>100,000,000</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>100,000,000</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>100,000,000</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>100,000,000</span>
-                                                    </li>
-                                                    <li>
-                                                        <span>100,000,000</span>
-                                                    </li>
-                                                </ul>
-                                            </li>
                                         </ul>
                                     </div>
                                 </div>
