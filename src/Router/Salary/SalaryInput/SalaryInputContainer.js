@@ -8,13 +8,20 @@ import useHook from '../../../GlobalState/Hooks/useHook';
 
 function SalaryInputContainer() {
     const { state } = useHook();
-    console.log(state.branchNo);
 
     const [rowData, setRowData] = useState([]); //그리드 데이터 
     const [gridDefs, setGridDefs] = useState({}); //그리드 정의
 
     const [rowData2, setRowData2] = useState([]); //그리드 데이터 
     const [gridDefs2, setGridDefs2] = useState({}); //그리드 정의
+
+    const branchNo = 29;
+
+    const selectInit = () => {
+        
+    }
+
+    
 
     let addRowJson = {};
 
@@ -31,28 +38,45 @@ function SalaryInputContainer() {
     //     ,"9" : "대표" 
     // }
 
-    let params = {
-        "branchNo" : 29,
-        "userType" : 0
-    }
+    
     
     useEffect(()=>{
         setGridDefs(gridSetting());
         setGridDefs2(gridSetting2());
         picker.setMonthPicker(('#month-picker'),function(value){
-            // initGrid(value);
+            // selectInit();
         });
-       async function init() {
+        const payDegree = $("#payDegree").val();
+        const yearMonthDate = $("#month-picker").val();
+        
+        console.log(yearMonthDate);
+
+        let params = {
+            branchNo : branchNo,
+            payDegree : payDegree,
+            yearMonthDate : utils.regExr.numOnly(yearMonthDate),
+            userType : 0
+        }
+        console.log(params);
+        async function init(params) {
             try {
-                await callApi.setInitSalary(params).then(res=> {
+                await callApi.initPayRollPage(params).then(res=> {
+                    res.data.PayData[0].position = "사회복지사";
+
+                    console.log(res);
+
                     /* 사원 리스트 */
-                    setRowData(res.data.Data);
+                    setRowData(res.data.UserData);
+                    setOtherColumn(res.data.OtherData);
+                    setRowData2(res.data.PayData);
                 });
             }catch{
 
             }
-       };
+       }
        init(params);
+
+        // selectInit();
 
        bindEvent();
     },[]); //init
@@ -99,16 +123,16 @@ function SalaryInputContainer() {
                 let payDegree = $("#payDegree").val();
                 let yearMonthDate = $("#month-picker").val();
                 let params = {
-                    // "yearMonthDate" : yearMonthDate,
-                    // "payDegree" : payDegree,
-                    "branchNo": "29",
+                    "yearMonthDate" : utils.regExr.numOnly(yearMonthDate),
+                    "payDegree" : payDegree,
+                    "branchNo": branchNo,
                     "userType": userType,
                     "userNo" : userNo
                  }
-                 console.log(params);
+                console.log(params);
                 userSelect(params);
             }
-
+            
            return {columnDefs, defaultColDef, components, gridId, onRowDoubleClicked};
     }
 
@@ -126,7 +150,7 @@ function SalaryInputContainer() {
                         } else{
                             // setRowData(res.data.Data);
                         }
-                        setOtherColumn(res.data.Data[0],res.data.OtherData);
+                        // setOtherColumn(res.data.Data[0],res.data.OtherData);
                         setAddRow(res.data.Data[0],res.data.OtherData);
                     }
                 });
@@ -163,31 +187,32 @@ function SalaryInputContainer() {
         var i = 0;
         for(i in otherData){
             console.log(otherData);
-            addRowJson["addColumnSalary"+i] = utils.regExr.numOnly(otherData[i].value);
+            addRowJson["addColumnSalary"+otherData[i].title] = utils.regExr.numOnly(otherData[i].value);
         }
     }
 
-    const setOtherColumn = (baseData,otherData) => {
-        let columnDefs = defaultColumnJson(baseData);
+    const setOtherColumn = (otherData) => {
+        let columnDefs = defaultColumnJson();
         var i = 0;
-        console.log()
+        
         for(i in otherData){
             const title = otherData[i].title;
-            const filedVal = "addColumnSalary"+i;
+            const filedVal = "addColumnSalary"+title;
+            console.log(title);
             let addColumn = addColumnJson(title,filedVal);
             columnDefs.push(addColumn);
         }
 
-        gridCommon.setColumn(columnDefs);
+        gridCommon.setColumnDefs(columnDefs);
     }
 
-    const defaultColumnJson = (data) => {
+    const defaultColumnJson = () => {
         const arr = [
             { headerName: "rowId", field: "rowId", hide:true }
             ,{headerName: "성명 ",field:"userNo", width:120, hide:true}
-            ,{headerName: "성명 ",field:"userName", width:120, editable:false}
-            ,{headerName: "직책", field: "position", width:140, editable:false}
-            ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
+            ,{headerName: "성명 ",field:"userName", width:120}
+            ,{headerName: "직책", field: "position", width:140}
+            ,{ headerName: "사원번호", field: "employeeNumber", width:120}
             ,{ headerName: "기본급", field: "baseSalary", width:120
                 ,valueFormatter: function(params) {
                     console.log(params,"기본급");

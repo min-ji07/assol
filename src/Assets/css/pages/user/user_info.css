@@ -698,6 +698,7 @@ input:-webkit-autofill:active {
 .modal_box.imgupload{
     width:800px;
     display:block;
+    left:calc((100% - 700px) / 2);
 }
 .modal_box.imgupload .btn_close{
     position:absolute;

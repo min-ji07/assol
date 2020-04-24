@@ -17,10 +17,11 @@ const testUrl2 = "http://172.30.1.24:5302"; // 김성일 ip
 //http://172.30.1.24:5302/Admin/CheckDuplicateAdmin
 const testUrl3 = "http://150f7585.ngrok.io"; //
 
-const local = "http://172.30.1.24:5302"; // 김성일 ip
+const Justin2 = "http://172.30.1.24:5302"; // 김성일 ip
 const localTest = "http://localhost:5302"; // 김성일 ip
-
 const noJustin = "http://211.251.238.215:5302";
+const Justin = "http://1f29da47.ngrok.io";
+
 
 
 // const test = "http://172.30.1.24:5302/SendMailer/SendCertificationValue";
@@ -30,7 +31,11 @@ export const callApi = {
     
 
     getUserInfo:(params) => axios.get(noJustin+'/user/GetUserInfobyBranchNo',{params:params}), // 사원조회
-    setInitSalary:(params) => axios.get(noJustin+'/PayRoll/InitPayRollPage',{params:params}), // 급여입력 - 사원 전체명부 조회
+    initPayRollPage:(params) => axios({
+        method: 'post',
+        url: noJustin+'/PayRoll/InitPayRollPage',
+        data: params
+    }), // 급여입력 - 사원 전체명부 조회
     selectTargetUser:(params) => axios({
         method: 'post',
         url: noJustin+'/PayRoll/SelectTargetUser',
@@ -41,6 +46,11 @@ export const callApi = {
         url: noJustin+'/PayRoll/SavePayRoll',
         data: params
     }), // 급여입력 - 지급 항목상세 저장
+    getPayRollListOfBranch:(params) => axios({
+        method: 'post',
+        url: noJustin+'/PayRoll/GetPayRollListOfBranch',
+        data: params
+    }), // 급여대장 - 조회
 
     // saveUserInfo:(params) => axios.post('http://82230995.ngrok.io/User/UserRegistration',{params:params}), // 사원등록
     userRegistration:(params) => axios({

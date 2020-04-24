@@ -23,7 +23,7 @@ var gridCommon = function() {
         ,getRowData : ()=> { //전체로우 탐색
             var rowData = [];
             gridApi.api.forEachNode(function(node) {
-            rowData.push(node.data);
+                rowData.push(node.data);
             });
             return rowData;
         }
@@ -110,11 +110,17 @@ var gridCommon = function() {
                 columnApi : targetApi.columnController.columnApi
             };
         }
-        ,setColumn : (columnDefs) => {
+        ,setColumnDefs : (columnDefs) => {
             gridApi.api.setColumnDefs(columnDefs);
         }
         ,getGridAllColumns : () => {
             return gridApi.columnApi.getAllGridColumns();
+        }
+        ,refreshCells : (params) => {
+            gridApi.refreshCells(params);
+        }
+        ,setRowData : (rowArr) => {
+            gridApi.setRowData(rowArr);
         }
     }
 }();
