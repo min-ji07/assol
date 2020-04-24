@@ -66,6 +66,7 @@
     margin-top: 52px;
     width: 945px; height: 490px; 
     text-align: center;
+    overflow:hidden;
 }
 .salary .left_div_inner .div_top01 {
     float: left; position: relative;
@@ -112,13 +113,31 @@
     height:100%;
     overflow:auto;
     font-size:16px;
+    position: relative;
+}
+.table_left_header_overflow{
+    width: 18%;
+    height: 481px;
+    margin-bottom: 5%;
+    overflow: hidden;
+    position: absolute;
+    overflow-y: auto;
+    left: 0;
+    top: 0;
+    font-size:16px;
+}
+.table_left_header_overflow::-webkit-scrollbar {
+    display:none;
 }
 .salary .table_left_header{
-    width:18%;
+    width:100%;
     overflow:hidden;
     position:absolute;
     background-color:#F5F3F4;
-    border-radius:20px 0 0 0;
+    border-radius:20px 0 0 20px;
+    left:0;
+    top:0;
+    z-index:1;
 }
 .salary .table_left_header_group{
     width:98%;
@@ -127,6 +146,12 @@
     box-sizing: border-box;
     border-bottom:1px solid #B7B7B7;
     margin-left:2%;
+}
+.salary .table_left_header_group:last-child{
+    border-bottom:0 none;
+}
+.salary .table_left_header_group:not(:first-child) .table_left_header_title > li:first-child{
+    height:39px;
 }
 .salary .table_left_header_rowspan{
     width:30%;
@@ -163,7 +188,6 @@
     border-top:0 none;
 }
 .salary .table_left_content{
-    min-width:1200px;
     margin-left:18%;
     overflow:hidden;
 }
@@ -191,4 +215,9 @@
     height:100%;
     border-top:1px dotted #B7B7B7;
     box-sizing: border-box;
+}
+.salary .table_left_wrap_overflow{
+    width:100%;
+    height:100%;
+    overflow:hidden;
 }

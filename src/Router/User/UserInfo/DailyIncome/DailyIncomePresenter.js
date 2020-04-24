@@ -370,14 +370,14 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." />
                             </li>
                             <li style={{position:"relative"}}>
-                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호"  style={{width:"152px"}}/>
+                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호"  style={{width:"152px"}} readOnly/>
                                 <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
                             </li>
                             <li>
-                                <input type="text" name="address" id="address" placeholder="주소"   style={{width:"300px"}}/>
+                                <input type="text" name="address" id="address" placeholder="주소"   style={{width:"300px"}} readOnly/>
                             </li>
                             <li style={{height:"70px"}}>
-                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"  ></textarea>
+                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소" readOnly></textarea>
                             </li>
                             <li class="leave_li">  
                                 <span>퇴사여부 :</span>
