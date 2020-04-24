@@ -49,20 +49,23 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
         let i = 0;
         i = 0;
         let key;
+        let addColVal;
         for(i in result){
             result[i]["othercontent"] = [];
             for(key in result[i]){
                 console.log(key,"이중포문 가즈아");
                 if(key.indexOf("addColumnSalary") != -1){
+                    addColVal = numOnly(result[i][key]);
+                    if(addColVal.length == 0){
+                        continue;
+                    }
                     result[i].othercontent.push({
                         title : key.replace("addColumnSalary",""),
-                        value : result[i][key]
+                        value : addColVal
                     });
                 }
             }
         }
-
-        console.log(result,"리졸트");
 
         let params = {
             "branchNo"  : branchNo,

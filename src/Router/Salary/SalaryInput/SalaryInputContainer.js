@@ -61,16 +61,16 @@ function SalaryInputContainer() {
         async function init(params) {
             try {
                 await callApi.initPayRollPage(params).then(res=> {
-                    res.data.PayData[0].position = "사회복지사";
+                    // res.data.PayData[0].position = "사회복지사";
 
                     console.log(res);
 
                     /* 사원 리스트 */
                     setRowData(res.data.UserData);
                     setOtherColumn(res.data.OtherData);
-                    setRowData2(res.data.PayData);
+                    // setRowData2(res.data.PayData);
                 });
-            }catch{
+            }catch(error){
 
             }
        }
@@ -82,9 +82,9 @@ function SalaryInputContainer() {
     },[]); //init
 
     const bindEvent = () => {
-        $("#btnAddRow").on("click",function(){
-            gridCommon.onAddRow("",addRowJson);
-        });
+        // $("#btnAddRow").on("click",function(){
+            
+        // });
     }
 
     const gridSetting =()=>{
@@ -146,7 +146,7 @@ function SalaryInputContainer() {
                         alert(res.data.Msg);
                     } else {
                         if(res.data.Data.length <= 1){
-                            alert("급여입력 정보가 없습니다.");
+                            // alert("급여입력 정보가 없습니다.");
                         } else{
                             // setRowData(res.data.Data);
                         }
@@ -186,9 +186,9 @@ function SalaryInputContainer() {
         addRowJson = baseData;
         var i = 0;
         for(i in otherData){
-            console.log(otherData);
             addRowJson["addColumnSalary"+otherData[i].title] = utils.regExr.numOnly(otherData[i].value);
         }
+        gridCommon.onAddRow("",addRowJson);
     }
 
     const setOtherColumn = (otherData) => {
@@ -230,7 +230,7 @@ function SalaryInputContainer() {
                 }    
             }
             ,{ headerName: "성과금", field: "welfareSalary", width:120,
-            valueFormatter: function(params) {
+                valueFormatter: function(params) {
                     return utils.regExr.comma(params.value);
                 }    
             }
