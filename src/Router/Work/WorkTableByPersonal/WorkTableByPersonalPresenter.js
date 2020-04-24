@@ -1,53 +1,77 @@
 import React from 'react';
-import DataGrid from '../../../Components/DataGrid';
 import  '../../../Assets/css/pages/work/work_setting_02.css';
-import gridCommon from '../../../Utils/grid';
 import SetSubWorker from './SetSubWorker';
+import DataGrid from '../../../Components/DataGrid';
+import { callApi } from '../../../Utils/api';
+import gridCommon from '../../../Utils/grid';
+import $ from 'jquery';
 
 
 
 function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
+    /* 근무자 설정 */ 
 
+    function saveRow (params) {
+        console.log('param : ' + params);
+        params.forEach(element => {
+            if(element.processType){
+                // if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
+                    // if(element.groupName == null ||element.groupName == ""){
+                    if(element.Object.keys(groupInfoMap) == null || element.Object.keys(groupInfoMap) == ""){
+                        alert("근무조를 선택해주세요.");
+                        return false;
+                    }
+                    if(element.firstRestDay == null || element.firstRestDay =="") {
+                        alert("휴무일을 선택해주세요.");
+                        return false;
+                    }
+                    element.yearsMonthDate = $('#month-picker').val().replace("-","");
+                    element.branchNo = 1;
+                    list.push(element);
 
-    function saveRow (result) {
-        var list = [];
-        // console.log('list'+ list);
-        console.log(result);
-        
-        result.forEach(element => {
-            if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
-                element.branchNo = 1;
-                console.log(element);
-                list.push(element);
+                    console.log("근무조"+element.groupName);
+                    console.log("휴무일"+element.firstRestDay);
+                    console.log("element:"+element);
+                // }
             }
         });
-        let params = {};
-        params.wokerAnnualInfos = result;
+
+        if(params == null || params.length < 1){
+            alert('params X');
+            return true;
+        }
+        // let params = {};
+        // params.groupInfos = list;
+        // init(params);
+        // console.log(params);
 
         async function init(params){
+            console.log(params);
             try {
-                await callApi.getWorkerList(params).then(res => {
-                    console.log(params);
+                // 근무자 저장 url 어딨음..
+                await callApi.getWorkTableBypersonal(params).then(res => {
+                    console.log('저장'+res);
                     if(res.data.ErrorCode == 0){ 
-                        alert("근무자설정이 완료되었습니다.");
+                        alert("근무자 설정이 완료되었습니다..");
                     }
                     else{
-                        alert("실패");
+                        alert("안~~~돼~~");
                     }
                 })
             }catch(error){
                 console.log("CATCH !! : " + error);
             }
         };
-        init();
+        init(params);
     }
+    
    
    return(
     <>
         <div className="wrapper">
         <div className="work_setting_02">
             <div className="title">
-                <h1>근무자설정</h1>
+                <h1>근무자 설정</h1>
                 <p>설정하신 데이터기반으로 근무 현황을 확인 할 수 있습니다.</p>
             </div>
             <div className="emTable">
@@ -69,8 +93,8 @@ function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
                         <div className="buttonset">
                         <button type="button" className="insert"  onClick={gridCommon.onAddRow}>추가</button>
                             <button type="button" className="delete1" onClick={gridCommon.onRemoveRow}>삭제</button>
-                            <button type="button" className="save" >저장</button>
-                            {/* onClick={gridCommon.onSaveRow(saveRow)} */}
+                            <button type="button" className="save" onClick={() => gridCommon.onSaveRow(saveRow)}>저장</button>
+                            {/* onClick={gridCommon.onSaveRow(saveRow)}  */}
                         </div>
                         <div className="right_border">
                             <div className="table">
@@ -96,9 +120,9 @@ function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
                                 minCount.map((obj, key)=>{
                                     const className = "num bg_c"+obj.groupColor;
                                     return <div key={key} className={className}>
-                                        <div> {obj.groupName} </div> 
-                                        <div> {obj.requireCount} </div> 
-                                        <div> {obj.setWorkerCount}  </div> 
+                                        <div>{obj.groupName} </div> 
+                                        <div>{obj.requireCount} </div> 
+                                        <div>{obj.setWorkerCount}  </div> 
                                     </div>
                                 })
                              }   

@@ -16,13 +16,13 @@ function WorkTableByPersonalContainer({yearMonth}) {
     const groupInfoMap={};
     //mappings
     const dayMap = {
-        "0":"일"
-        ,"1":"월"
-        ,"2":"화"
-        ,"3":"수"
-        ,"4":"목"
-        ,"5":"금"
-        ,"6":"토"
+        "0":"월"
+        ,"1":"화"
+        ,"2":"수"
+        ,"3":"목"
+        ,"4":"금"
+        ,"5":"토"
+        ,"6":"일"
     }
 
     const [subWorker, setSubWorker] = useState(false); //조별 설정 
@@ -45,35 +45,36 @@ function WorkTableByPersonalContainer({yearMonth}) {
 
     useEffect(()=>{
        async function initGrid(params) {
-        //    console.log('값뭐임'+params);
         try {
-            // console.log('params안'+params);
+            const target = document.querySelector('#month-picker')
             params = {
                 "branchNo" : 29,
                 "yearsMonthDate": "202004"
+                //"yearsMonthDate": target.value.replace("-","")
             }
+            console.log(params);
             await callApi.getWorkerInfos(params).then(res => {
-                // console.log('들와씀'+params);
-                //사원데이터 선호출
+                // 사원데이터 선호출 
+                console.log(res);
                 setRowData(res.data.Data);
-
                     for(var i=0;i<res.data.Data.length;i++){
                         let user = res.data.Data[i];
                         workersMap[user.userNo] =user.userName;
                         workersNumber[user.userNo] = user.employeeNumber;
-                        workersPosition[user.userNo] = user.workPosition; 
+                        workersPosition[user.userNo] = user.position;
+                        console.log(user); 
                     }
 
-                    const target = document.querySelector('#month-picker')
-                    params = {
-                        "branchNo" : 1,
-                        "yearsMonthDate" : target.value.replace("-","")
-                    }
+                    // 그룹 최소인원수? 
                 callApi.getCurrentStatusWorkerTable(params).then(res=> { 
+                    console.log("근무조");
+                    console.log(res);
+
                     if(res.data.Data)
                         for(var i=0;i<res.data.Data.length;i++){
                             let map = res.data.Data[i];
-                            groupInfoMap[map.groupName] =map.workType;
+                            // 근무조 매핑
+                            groupInfoMap[map.groupName] = map.workType;
                         }
                         //그룹별 최소인원 설정
                         setMinCount(res.data.Data);
@@ -84,12 +85,27 @@ function WorkTableByPersonalContainer({yearMonth}) {
                 /* 2020-04-03 어디에 사용하는지 확인 필요함.  */
 
                 callApi.getWorkTableBypersonal(params).then(res=>{
-                        console.log(params);
+                        // console.log(params);
                         if(res.data && res.data.Data){
                             setRowData(res.data.Data);
                         }
                 })
             });
+
+            // 근무조 저장 내역 불러오기 
+            await callApi.SaveGroupRow(params).then(res => {
+                console.log(res);
+                for(var i=0;i<res.data.Data.length; i++){
+                    console.log('나옴?');
+                    let workTeam = res.data.Data[i];
+                    // groupInfoMap[]
+                    groupName = params.data.groupName;
+                    console.log('workTeam'+workTeam);
+                    console.log('groupName'+groupName);
+                }
+            });
+            console.log(params);
+            
           
         }catch{
 
@@ -107,7 +123,6 @@ function WorkTableByPersonalContainer({yearMonth}) {
         
      //대체근무자 팝업 셀렌더링 
      const settingSubWorker =(params)=> {
-         //console.log
         if(!params.data || !params.data.userNo ) return null;
 
        const ui = document.createElement("div");
@@ -130,8 +145,8 @@ function WorkTableByPersonalContainer({yearMonth}) {
                     return state.branchNo
                 }
             }
-            ,{ headerName: "귀속연월", field: "yearsMonthDate", hide:true,
-                  valueSetter:function(params){ params.data.yearsMonthDate = yearMonth } }
+            // ,{ headerName: "귀속연월", field: "yearsMonthDate", hide:true,
+            //       valueSetter:function(params){ params.data.yearsMonthDate = yearMonth } }
             ,{ headerName: "성명 ",field:"userNo", editable:true, width:155,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(workersMap) },
@@ -150,10 +165,12 @@ function WorkTableByPersonalContainer({yearMonth}) {
             ,{ headerName: "근무조", field: "groupName", editable:true, width:170
                 ,cellEditor: "select",
                 cellEditorParams: { values: Object.keys(groupInfoMap) } } //api 전달받아야함
-            ,{ headerName: "근무타입", field: "groupName", editable:false, hide:true,
-                cellEditor: "text",
-                cellEditorParams: { values: gridCommon.extractValues(groupInfoMap) },
-                refData: groupInfoMap}
+            
+
+            // ,{ headerName: "근무타입", field: "groupName", editable:false, hide:true,
+            //     cellEditor: "text",
+            //     cellEditorParams: { values: gridCommon.extractValues(groupInfoMap) },
+            //     refData: groupInfoMap}
             ,{ headerName: "휴무일1", field: "firstRestDay", editable:true, width:190,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(dayMap) },
@@ -218,7 +235,7 @@ function WorkTableByPersonalContainer({yearMonth}) {
                 <WorkTableByPersonalPresenter 
                     rowData={rowData} 
                     minCount={minCount}
-                    subWorker={subWorker}
+                    subWorker={subWorker} // 대체 근무
                     gridDefs={gridDefs}  
                     gridCommon={gridCommon}
 
