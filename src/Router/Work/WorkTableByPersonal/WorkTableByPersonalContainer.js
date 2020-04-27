@@ -80,8 +80,8 @@ function WorkTableByPersonalContainer({yearMonth}) {
                     });
 
                 // 이게 근무자 등록
-                // callApi.getWorkTableBypersonal(params).then(res=>{
-                //         console.log(res);
+                // callApi.getWorkerList(params).then(res=>{
+                //         console.log("get", res.data.Data);
                 //         if(res.data && res.data.Data){
                 //             setRowData(res.data.Data);
                 //             // console.log(setRowData);

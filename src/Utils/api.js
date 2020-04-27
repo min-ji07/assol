@@ -100,7 +100,7 @@ export const callApi = {
         data: params
         }), 
 
-    getWorkTableBypersonal:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), //근무자설정 - 2020-04-03 어디에 사용하는지 확인 필요함.
+    // getWorkTableBypersonal:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), //근무자 설정 - 2020-04-03 어디에 사용하는지 확인 필요함.
     getAllWorkTableByResultColor:(params)=> axios.get(noJustin+'/TimeTable/GetGroupNameInfo',{params:params}), // 근무표 - 근무조 color
     getCurrentStatusWorkerTable:(params) => axios.get(noJustin+'/Worker/GetCurrentStatusWorkerTable',{params:params}), //근무자설정 - 그룹 최소인원수
 

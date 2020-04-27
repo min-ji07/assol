@@ -18,13 +18,13 @@ function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
             if(element.processType){
                 if(element.processType == 1 || element.processType == 2){ // 1. insert 2. update
                         if(element.userName == null || element.userName == ""){
-                            alert('사원을 선택해주세요.')
+                            alert('사원을 선택해주세요.');
+                            return false;
                         }
                         if(element.groupName == null ||element.groupName == ""){
                         // if(element.Object.keys(groupInfoMap) == null || element.Object.keys(groupInfoMap) == ""){
                             alert("근무조를 선택해주세요.");
                             return false;
-                            
                         }
                         if(element.firstRestDay == null || element.firstRestDay == "") {
                             alert("휴무일을 선택해주세요.");
@@ -67,7 +67,7 @@ function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
                 await callApi.setWorkerList(params2).then(res => {
                     console.log(res);
                     if(res.data.ErrorCode == 0){ 
-                        alert("근무자 설정이 완료되었습니다..");
+                        alert("근무자 설정이 완료되었습니다!");
                     }
                     else{
                         alert("안~~~돼~~");
