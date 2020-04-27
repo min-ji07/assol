@@ -175,7 +175,7 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                         <div className="right_div_inner">
                             <div className="right_div_inner_inner">
                                 <div className="div_top02">지급 항목상세
-                                    <button className="plus" id="btnAddRow">추가</button>
+                                    {/* <button className="plus" id="btnAddRow">추가</button> */}
                                     <button className="delete" onClick={gridCommon.onRemoveRow}>삭제</button>
                                 </div>
                                 <div className="div_bottom header_radius_none view_border_none">

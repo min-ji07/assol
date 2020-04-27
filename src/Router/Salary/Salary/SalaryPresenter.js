@@ -20,7 +20,9 @@ const SalaryPresenter=({rowData,  gridDefs, leftGridInit}) => {
                 <div class="salary_inner">
                     <div class="sal_date_left">
                         <ul>
-                            <li>귀속연월 <input type="text" 
+                            <li>
+                            <span>귀속연월</span>
+                            <input type="text" 
                                 readOnly
                                 id="month-picker"
                                 className="datepicker-here"
