@@ -28,11 +28,11 @@ function WorkTableByReplaceUserContainer({yearMonth}) {
         ,{ headerName: "processType", field: "processType", hide:true}
         ,{ headerName: "branchNo", field: "branchNo", hide:true }
         ,{ headerName: "성명", field: "userName", editable: false}
-        ,{ headerName: "사원번호", field: "regularEmployee"}
-        ,{ headerName: '직책', field: "workPosition", cellEditor : "richSelect"}
-        ,{ headerName: "근무조", field: "workLevel", cellEditor : "richSelect"}
-        ,{ headerName: "휴무일(1)", field: "employeeNumber", cellEditor : "richSelect" }
-        ,{ headerName: '휴무일(2)', field: "joinDate", cellEditor : "richSelect"}
+        ,{ headerName: "사원번호", field: "employeeNumber",editable: false}
+        ,{ headerName: '직책', field: "position", cellEditor : "richSelect"}
+        ,{ headerName: "근무조", field: "groupName", cellEditor : "richSelect"}
+        ,{ headerName: "휴무일(1)", field: "firstRestday", cellEditor : "richSelect" }
+        ,{ headerName: '휴무일(2)', field: "twoRestday", cellEditor : "richSelect"}
         ,{ headerName: '대체근무자', field: "personalNumber", cellEditor : "richSelect"}
     ]
 
@@ -47,29 +47,48 @@ function WorkTableByReplaceUserContainer({yearMonth}) {
     //그리드 정의
     const [gridDefs, setGridDefs] = useState({}); 
     const [rowData, setRowData] = useState([]);
-
     useEffect(()=>{
         async function initGrid(params) {
          try {
-             if(!params){
-                 const d = new Date();
-                 params = d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2);
-             } 
-             // //근속연도 세팅 
-             // const target = document.querySelector('#month-picker')
              params = {
-                 "branchNo" : 1
+                "branchNo" : 29,
+                "yearsMonthDate" : "202004",
              }
-             await callApi.getUserInfo(params).then(res=>{
-                 if(res.data && res.data.Data){ 
-                     console.log(res, 'Data');                   
-                       //공통 그리드 데이터 셋팅
+            let groupName = null; 
+            await callApi.getAllWorkTableByResultColor(params).then(res =>{
+                console.log(res.data);
+                if(res.data && res.data.Data){
+                    if(res.data.ErrorCode == 1){
+                        alert(res.data.Msg);
+                        return false;
+                    }
+                    var groupOptionList = [];
+                    var getOption = document.getElementById("groupNameId");
+                    for (var i = 0 ; i < res.data.Data.length; ++i ){
+                        var opt = document.createElement('option');
+                        opt.text = res.data.Data[i].groupName;
+                        opt.value = res.data.Data[i].groupName;
+                        getOption.appendChild(opt);
+                    }
+                    groupName = res.data.Data[0].groupName;
+                }
+            });
+            
+             params = {
+                 "branchNo" : 29,
+                 "yearsMonthDate" : "202004",
+                 "groupName" : groupName
+             }
+             
+             await callApi.getSetSceduleInfo(params).then(res=>{
+                console.log(res.data); 
+                if(res.data && res.data.Data){ 
                      setRowData(res.data.Data);
                      setGridDefs({columnDefs, defaultColDef});
                  }
              })
-         }catch{
-             //console.log(error.me)
+         }catch (ex){
+             console.log(ex);
          }
         };
         initGrid(); 

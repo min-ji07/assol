@@ -77,7 +77,8 @@ export const callApi = {
             'Content-Type': 'multipart/form-data'
         }
     }), // 사원등록 - 이미지파일 업로드
-    
+    // 대체근무자 설정 할 근무자 조회
+    getSetSceduleInfo:(params) => axios.get(localTest+'/Worker/AlReadySetWorker',{params:params}), // 급여대장 - 조회
     
 
     // getUserInfo:(params) => axios.get('/Work/dummy/User/UserInfoTable.json',{params:params}), // 사원등록
@@ -90,8 +91,6 @@ export const callApi = {
         /work/workTableByPersonal/202001 
         근무자 설정 페이지 
     */
-    getWorkerList:(params) => axios.get(noJustin+'/Worker/GetWorkerTable',{params:params}), //근무자설정 - 사원
-
     getSearchList:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), // 근무자 저장 불러오기
 
     // 근무자 설정 저장 
@@ -101,7 +100,6 @@ export const callApi = {
         data: params
         }), 
 
-    // getWorkTableBypersonal:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), //근무자 설정 - 2020-04-03 어디에 사용하는지 확인 필요함.
     getAllWorkTableByResultColor:(params)=> axios.get(noJustin+'/TimeTable/GetGroupNameInfo',{params:params}), // 근무표 - 근무조 color
     getCurrentStatusWorkerTable:(params) => axios.get(noJustin+'/Worker/GetCurrentStatusWorkerTable',{params:params}), //근무자설정 - 그룹 최소인원수
 

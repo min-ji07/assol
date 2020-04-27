@@ -22,11 +22,7 @@ function WorkTableByReplaceUserPresenter({rowData ,gridDefs, nextPage}) {
                     <div class="User_inner">
                         <div class="option">
                             <p>사원 대체근무자 입력</p>
-                            <select>
-                                <option>A조</option>
-                                <option>B조</option>
-                                <option>C조</option>
-                                <option>D조</option>
+                            <select id ="groupNameId">
                             </select>
                         </div>
                     </div>
