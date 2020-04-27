@@ -71,7 +71,7 @@ function HeaderPresenter() {
                             </ul>
                         </li>
                         <li>
-                            <a href="#" className="answer04">수입지출관리</a>
+                            <a href="/work/workTableByRestDay" className="answer04">개인연차관리</a>
                             <ul className="submenu">
                                 <li><a href="#">주간식단표</a></li>
                                 <li><a href="#">식단표제공협약</a></li>

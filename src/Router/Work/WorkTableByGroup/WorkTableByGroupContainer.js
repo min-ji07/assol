@@ -411,10 +411,15 @@ function WorkTableByGroupContainer() {
         });
     };
 
+    const backPage = () => {
+        window.location.href="/work/workTableMain"
+    }
+
 return (
     <WorkTableByGroupPresenter 
         rowData={rowData}
         gridDefs={gridDefs}
+        backPage={backPage}
         nextPage={nextPage}/>
   );
 }

@@ -59,7 +59,6 @@ function WorkTableByPersonalContainer({yearMonth}) {
                         workersNumber[user.userNo] = user.employeeNumber;
                         workersPosition[user.userNo] = user.position;
                     }
-
                     // 그룹 근무조별 최소인원수 불러오기
                 callApi.getCurrentStatusWorkerTable(params).then(res=> { 
                     if(res.data.Data)
@@ -70,13 +69,10 @@ function WorkTableByPersonalContainer({yearMonth}) {
                         }
                         //그룹별 최소인원 설정
                         setMinCount(res.data.Data);
-
-                       
                     });
 
-                // 이게 근무자 저장 불러오기
+                // 근무자 저장 불러오기
                 callApi.getSearchList(params).then(res=>{
-                    // console.log("근무자저장불러오기", res);
                     if(res.data && res.data.Data){
                         setRowData(res.data.Data);
                         setGridDefs(gridSetting());
