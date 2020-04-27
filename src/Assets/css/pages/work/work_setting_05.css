@@ -40,7 +40,7 @@
     border-radius: 50px; color: white; font-size: 16px; line-height: 50%; 
     margin-right: 6px; cursor:pointer;
 }
-.work_setting_05 .backnext { position: absolute; bottom: 17px; right: 52px; float: right;}
+.work_setting_05 .backnext { position: absolute; bottom: 3px; right: 39px; float: right;}
 .work_setting_05 .back, .next {  width: 118px; height: 27px; border-radius: 30px; font-size: 19.5px; color: white; cursor:pointer;} 
 .work_setting_05 .back { background: #bfbfbf; margin-right: 12px; line-height: 50%;}
 .work_setting_05 .next { background: #87c395; line-height: 50%;} 
