@@ -371,6 +371,9 @@ function WorkTableByGroupContainer() {
                 "yearsMonthDate" : target.val().replace("-","")
             }
             try{
+                console.log('dddd');
+                
+                console.log(params);
                 await callApi.getGridData(params).then(res=>{
                     console.log(res.data.Data);
                     if(res.data && res.data.Data){

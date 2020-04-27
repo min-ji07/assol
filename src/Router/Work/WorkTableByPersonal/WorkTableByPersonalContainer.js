@@ -48,22 +48,21 @@ function WorkTableByPersonalContainer({yearMonth}) {
             const target = document.querySelector('#month-picker')
             params = {
                 "branchNo" : 29,
-                "yearsMonthDate": "202004"
-                // "yearsMonthDate": target.value.replace("-","")
+                // "yearsMonthDate": "202004"
+                "yearsMonthDate": target.value.replace("-","")
             }
             await callApi.getWorkerInfos(params).then(res => {
-                // 사원데이터 선호출 
-                // console.log(res);
+                console.log("사원데이터선호출",res);
                 setRowData(res.data.Data);
                     for(var i=0;i<res.data.Data.length;i++){
                         let user = res.data.Data[i];
                         workersMap[user.userNo] =user.userName;
                         workersNumber[user.userNo] = user.employeeNumber;
                         workersPosition[user.userNo] = user.position;
-                        console.log(user);
+                        // console.log(user);
                     }
 
-                    // 그룹 근무조별 최소 인원현황 color 
+                    // 그룹 근무조별 최소인원수 불러오기
                 callApi.getCurrentStatusWorkerTable(params).then(res=> { 
                     if(res.data.Data)
                         for(var i=0;i<res.data.Data.length;i++){
@@ -73,19 +72,21 @@ function WorkTableByPersonalContainer({yearMonth}) {
                         }
                         //그룹별 최소인원 설정
                         setMinCount(res.data.Data);
+                        // console.log('지정인원수불러오고싶은디,,setWorkerCount: 저장을먼저해야되는겨');
+                        console.log(res.data.Data)
                         
                         //공통 그리드 데이터 셋팅
                        setGridDefs(gridSetting());
                     });
 
-                // 이게 근무자 등록인가?
-                callApi.getWorkTableBypersonal(params).then(res=>{
-                        console.log(res);
-                        if(res.data && res.data.Data){
-                            setRowData(res.data.Data);
-                            console.log(setRowData);
-                        }
-                })
+                // 이게 근무자 등록
+                // callApi.getWorkTableBypersonal(params).then(res=>{
+                //         console.log(res);
+                //         if(res.data && res.data.Data){
+                //             setRowData(res.data.Data);
+                //             // console.log(setRowData);
+                //         }
+                // })
             });
 
             

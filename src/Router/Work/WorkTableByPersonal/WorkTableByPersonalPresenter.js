@@ -12,44 +12,59 @@ import $ from 'jquery';
 function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
 
     function saveRow (params) {
-        console.log('param : ' + params);
-        params.forEach(element => {
-            if(element.processType){
-                // if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
-                    // if(element.groupName == null ||element.groupName == ""){
-                    if(element.Object.keys(groupInfoMap) == null || element.Object.keys(groupInfoMap) == ""){
-                        alert("근무조를 선택해주세요.");
-                        return false;
-                    }
-                    if(element.firstRestDay == null || element.firstRestDay =="") {
-                        alert("휴무일을 선택해주세요.");
-                        return false;
-                    }
-                    element.yearsMonthDate = $('#month-picker').val().replace("-","");
-                    element.branchNo = 1;
-                    list.push(element);
 
-                    console.log("근무조"+element.groupName);
-                    console.log("휴무일"+element.firstRestDay);
-                    console.log("element:"+element);
-                // }
-            }
+        params.forEach(element => {
+            //branchNo, employeeNumber, firstRestDay, groupName, position, processType, twoRestDay, userName, userNo,yearsMonthDate 가져옴
+            if(element.processType){
+                if(element.processType == 1 || element.processType == 2){ // 1. insert 2. update
+                        if(element.userName == null || element.userName == ""){
+                            alert('사원을 선택해주세요.')
+                        }
+                        if(element.groupName == null ||element.groupName == ""){
+                        // if(element.Object.keys(groupInfoMap) == null || element.Object.keys(groupInfoMap) == ""){
+                            alert("근무조를 선택해주세요.");
+                            return false;
+                            
+                        }
+                        if(element.firstRestDay == null || element.firstRestDay == "") {
+                            alert("휴무일을 선택해주세요.");
+                            return false;
+                        }
+                        // if(element.firstRestDay == null || element.firstRestDay =="") {
+                        //     alert("휴무일을 선택해주세요.");
+                        //     return false;
+                        // }
+                        element.yearsMonthDate = $('#month-picker').val().replace("-","");
+                        element.branchNo = 29;
+                        // list.push(element);
+          
+                    }
+                }
+            // }
         });
 
-        if(params == null || params.length < 1){
-            alert('params X');
+        var i = 0;
+        for(i; i<params.length; i++){
+            params[i].branchNo = 29;
+        }
+
+
+        console.log(params);
+
+        let params2 = {
+            "workerScheduleInfos":params
+        };
+        console.log("params2",params2);
+        // ["workerScheduleInfos"]
+
+        if(params2 == null || params2.length < 1){
+            alert('저장할 근무자가 없습니다.');
             return true;
         }
-        // let params = {};
-        // params.groupInfos = list;
-        // init(params);
-        // console.log(params);
 
-        async function init(params){
-            console.log(params);
+        async function init(params2){
             try {
-                await callApi.setWorkerList(params).then(res => {
-                    console.log('저장');
+                await callApi.setWorkerList(params2).then(res => {
                     console.log(res);
                     if(res.data.ErrorCode == 0){ 
                         alert("근무자 설정이 완료되었습니다..");
@@ -62,7 +77,7 @@ function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
                 console.log("CATCH !! : " + error);
             }
         };
-        init(params);
+        init(params2);
     }
     
    
@@ -94,7 +109,6 @@ function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
                         <button type="button" className="insert"  onClick={gridCommon.onAddRow}>추가</button>
                             <button type="button" className="delete1" onClick={gridCommon.onRemoveRow}>삭제</button>
                             <button type="button" className="save" onClick={() => gridCommon.onSaveRow(saveRow)}>저장</button>
-                            {/* onClick={gridCommon.onSaveRow(saveRow)}  */}
                         </div>
                         <div className="right_border">
                             <div className="table">

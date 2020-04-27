@@ -48,7 +48,6 @@ export const callApi = {
     }), // 급여입력 - 지급 항목상세 저장
     getPayRollListOfBranch:(params) => axios.get(noJustin+'/PayRoll/GetPayRollListOfBranch',{params:params}), // 급여대장 - 조회
 
-
     // saveUserInfo:(params) => axios.post('http://82230995.ngrok.io/User/UserRegistration',{params:params}), // 사원등록
     userRegistration:(params) => axios({
         method: 'post',
@@ -86,23 +85,32 @@ export const callApi = {
         /work/workTableByGroup
         근무조 설정 페이지
     */
-    getGridData:(params) => axios.get(localTest+'/TimeTable/SelectTimeTable',{params:params}), //근무조설정
+    getGridData:(params) => axios.get(noJustin+'/TimeTable/SelectTimeTable',{params:params}), //근무조설정
     /* 
         /work/workTableByPersonal/202001 
         근무자 설정 페이지 
     */
     getWorkerList:(params) => axios.get(noJustin+'/Worker/GetWorkerTable',{params:params}), //근무자설정 - 사원
-    getSearchList:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), //근무자설정 - 사원
+    // getSearchList:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), //근무자설정 - 사원
 
-    getCurrentStatusWorkerTable:(params) => axios.get(noJustin+'/Worker/GetCurrentStatusWorkerTable',{params:params}), //근무자설정 - 그룹 최소인원수
+    // 근무자 설정 저장 
+    setWorkerList:(params) => axios({ 
+        method: 'post',
+        url: testUrl+'/Worker/SetWorkerTable',
+        data: params
+        }), 
+
     getWorkTableBypersonal:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), //근무자설정 - 2020-04-03 어디에 사용하는지 확인 필요함.
-    getSubWorkerByGroup:(subWorker)=> axios.get(noJustin+'/Worker/GetReplaceWorkerInfo',{params:subWorker}),//데체근무
+    getAllWorkTableByResultColor:(params)=> axios.get(noJustin+'/TimeTable/GetGroupNameInfo',{params:params}), // 근무표 - 근무조 color
+    getCurrentStatusWorkerTable:(params) => axios.get(noJustin+'/Worker/GetCurrentStatusWorkerTable',{params:params}), //근무자설정 - 그룹 최소인원수
+
+    getSubWorkerByGroup:(subWorker)=> axios.get(noJustin+'/Worker/GetReplaceWorkerInfo',{params:subWorker}),//대체근무
     getSubWorkerList:(params)=> axios.get(noJustin+'/Worker/SerchReplaceWorker',{params:params}),//대체근무 - 근무자들 조회
     /*
         /work/workTableByRestDay
         연차설정 페이지
     */
-    getWorkerInfos:(params) => axios.get(noJustin +'/Worker/GetWorkerByBranchNo',{params:params}),
+    getWorkerInfos:(params) => axios.get(noJustin +'/Worker/GetWorkerByBranchNo',{params:params}),  // 사원내역 불러오기
     getWorkerListByRestDay:(params)=> axios.get(noJustin+'/Worker/GetAnnualWorker',{params:params}), // 연차설정 - 조회
     getWorkerListByRestDayView:(params)=> axios.get(noJustin+'/AdminManager/GetAnnualManager',{params:params}), // 연차대장 - 조회
     /*
@@ -110,7 +118,6 @@ export const callApi = {
         근무표, 연차관리현황 페이지
     */
     getAllWorkTableByResult:(params)=> axios.get(noJustin+'/Worker/SelectAllWorkerTable',{params:params}), //근무표 - 그래프타입
-    getAllWorkTableByResultColor:(params)=> axios.get(noJustin+'/TimeTable/GetGroupNameInfo',{params:params}), // 근무표 - 근무조 color
     getPersonalRestDayMontly:(params)=> axios.get(noJustin+'/Worker/GetAnnualInfosYearsMonthDate',{params:params}), //연차관리현황 - 사원리스트
     getPersonalRestDayMontlyCalendar:(params)=> axios.get(noJustin+'/Worker/GetMonthAnnualBaseStatue',{params:params}),  // 연차관리현황 - 달력조회
 
@@ -129,13 +136,12 @@ export const callApi = {
     //연차사용 - 저장
     setWorkerListByRestDay:(params)=> axios ({
         method: 'post',
-        url: localTest + '/Worker/SetAnnualWorker',
+        url: noJustin + '/Worker/SetAnnualWorker',
         data: params,
         headers: {
             'Content-Type': 'application/json'
         }
     }), 
-
     /* 회원가입 */
     JoinUser:(params) => axios ({
         method: 'post',
@@ -168,7 +174,7 @@ export const callApi = {
     // 근무조 저장 
     SaveGroupRow :(params) => axios({
         method: 'post',
-        url: localTest+'/TimeTable/SetTimeTable',
+        url: noJustin+'/TimeTable/SetTimeTable',
         data: params,
         headers: {
             'Content-Type': 'application/json'

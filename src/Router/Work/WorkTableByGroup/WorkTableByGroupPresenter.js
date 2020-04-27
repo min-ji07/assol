@@ -25,7 +25,7 @@ function saveRow (result) {
                     return false;
                 }
                 element.yearsMonthDate = $('#month-picker').val().replace("-","");
-                element.branchNo =1;
+                element.branchNo =29;
                 // element.workType = $("#select_01").val(); // 수정 
                 element.workType = $('input[name="select"]').val(); // 수정 
     
@@ -41,6 +41,7 @@ function saveRow (result) {
     params.groupInfos = list;
     
     async function init(params){
+        console.log("너누구야!!!", params);
         try {
             await callApi.SaveGroupRow(params).then(res => {
                 // console.log('saveGroupRow 저장내용 : ' + params);
