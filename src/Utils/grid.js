@@ -45,7 +45,6 @@ var gridCommon = function() {
                 removeData.push({...selectedRow,processType:3})
                 }
             });
-            console.log(removeData)
             var res = gridApi.api.updateRowData({ remove: selectedData });
         }
         ,onSaveRow : (callback)=>{ //저장 
@@ -122,6 +121,9 @@ var gridCommon = function() {
         }
         ,setRowData : (rowArr) => {
             gridApi.setRowData(rowArr);
+        }
+        ,setFocusedCell : (row,colid) => {
+            gridApi.api.setFocusedCell(row,colid);
         }
     }
 }();
