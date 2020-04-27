@@ -58,7 +58,6 @@ function WorkTableByPersonalContainer({yearMonth}) {
                         workersMap[user.userNo] =user.userName;
                         workersNumber[user.userNo] = user.employeeNumber;
                         workersPosition[user.userNo] = user.position;
-                        // console.log(user);
                     }
 
                     // 그룹 근무조별 최소인원수 불러오기
@@ -72,9 +71,6 @@ function WorkTableByPersonalContainer({yearMonth}) {
                         //그룹별 최소인원 설정
                         setMinCount(res.data.Data);
 
-                        // console.log('지정인원수불러오고싶은디,,setWorkerCount: 저장을먼저해야되는겨');
-                        
-                        //공통 그리드 데이터 셋팅
                        
                     });
 
@@ -82,10 +78,6 @@ function WorkTableByPersonalContainer({yearMonth}) {
                 callApi.getSearchList(params).then(res=>{
                     // console.log("근무자저장불러오기", res);
                     if(res.data && res.data.Data){
-                        for(var i = 0 ; i< res.data.Data.length; ++i ){
-                            console.log(res.data.Data[i]);
-                            
-                        }
                         setRowData(res.data.Data);
                         setGridDefs(gridSetting());
                     }
@@ -163,8 +155,8 @@ function WorkTableByPersonalContainer({yearMonth}) {
                 cellEditorParams: { values: gridCommon.extractValues(dayMap) },
                 refData: dayMap,
                 valueFormatter:function(params)
-                {
-                    return lookupValue(dayMap,params.data.firstRestDay);
+                {   
+                    return dayMap[params.data.firstRestday];
                 }
                 
                 }
@@ -174,8 +166,7 @@ function WorkTableByPersonalContainer({yearMonth}) {
                 refData: dayMap
                 ,cellRenderer:function(params)
                 {
-                    console.log("day" + params)
-                    //return this.dayMap[params.data.data.firstRestday];
+                    return dayMap[params.data.firstRestday];
                 }
             }
             
