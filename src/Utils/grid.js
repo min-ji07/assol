@@ -125,6 +125,9 @@ var gridCommon = function() {
         ,setFocusedCell : (row,colid) => {
             gridApi.api.setFocusedCell(row,colid);
         }
+        ,startEditingCell : (params) => {
+            gridApi.api.startEditingCell(params);
+        }
     }
 }();
 
