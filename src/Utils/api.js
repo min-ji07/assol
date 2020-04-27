@@ -91,12 +91,13 @@ export const callApi = {
         근무자 설정 페이지 
     */
     getWorkerList:(params) => axios.get(noJustin+'/Worker/GetWorkerTable',{params:params}), //근무자설정 - 사원
-    // getSearchList:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), //근무자설정 - 사원
+
+    getSearchList:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), // 근무자 저장 불러오기
 
     // 근무자 설정 저장 
     setWorkerList:(params) => axios({ 
         method: 'post',
-        url: testUrl+'/Worker/SetWorkerTable',
+        url: noJustin+'/Worker/SetWorkerTable',
         data: params
         }), 
 

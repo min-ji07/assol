@@ -53,7 +53,6 @@ function WorkTableByPersonalContainer({yearMonth}) {
             }
             await callApi.getWorkerInfos(params).then(res => {
                 console.log("사원데이터선호출",res);
-                setRowData(res.data.Data);
                     for(var i=0;i<res.data.Data.length;i++){
                         let user = res.data.Data[i];
                         workersMap[user.userNo] =user.userName;
@@ -72,21 +71,25 @@ function WorkTableByPersonalContainer({yearMonth}) {
                         }
                         //그룹별 최소인원 설정
                         setMinCount(res.data.Data);
+
                         // console.log('지정인원수불러오고싶은디,,setWorkerCount: 저장을먼저해야되는겨');
-                        console.log(res.data.Data)
                         
                         //공통 그리드 데이터 셋팅
-                       setGridDefs(gridSetting());
+                       
                     });
 
-                // 이게 근무자 등록
-                // callApi.getWorkerList(params).then(res=>{
-                //         console.log("get", res.data.Data);
-                //         if(res.data && res.data.Data){
-                //             setRowData(res.data.Data);
-                //             // console.log(setRowData);
-                //         }
-                // })
+                // 이게 근무자 저장 불러오기
+                callApi.getSearchList(params).then(res=>{
+                    // console.log("근무자저장불러오기", res);
+                    if(res.data && res.data.Data){
+                        for(var i = 0 ; i< res.data.Data.length; ++i ){
+                            console.log(res.data.Data[i]);
+                            
+                        }
+                        setRowData(res.data.Data);
+                        setGridDefs(gridSetting());
+                    }
+                })
             });
 
             
@@ -158,29 +161,21 @@ function WorkTableByPersonalContainer({yearMonth}) {
             ,{ headerName: "휴무일1", field: "firstRestDay", editable:true, width:190,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(dayMap) },
-                refData: dayMap
-                ,cellRenderer:function(params){
-                    const workType = groupInfoMap[params.data.groupName];
-                    if(workType==3){
-                         params.colDef.editable=false
-                    }else{
-                         params.colDef.editable=true
-                    }
-                    return params.valueFormatted;
-                 }
+                refData: dayMap,
+                valueFormatter:function(params)
+                {
+                    return lookupValue(dayMap,params.data.firstRestDay);
+                }
+                
                 }
             ,{ headerName: "휴무일2", field: "twoRestDay", editable:true, width:190,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(dayMap) },
                 refData: dayMap
-                ,cellRenderer:function(params){
-                   const workType = groupInfoMap[params.data.groupName];
-                   if(workType==2 || workType==3){
-                        params.colDef.editable=false
-                   }else{
-                        params.colDef.editable=true
-                   }
-                   return params.valueFormatted;
+                ,cellRenderer:function(params)
+                {
+                    console.log("day" + params)
+                    //return this.dayMap[params.data.data.firstRestday];
                 }
             }
             
