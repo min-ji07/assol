@@ -29,10 +29,10 @@ function WorkTableByReplaceUserContainer({yearMonth}) {
         ,{ headerName: "branchNo", field: "branchNo", hide:true }
         ,{ headerName: "성명", field: "userName", editable: false}
         ,{ headerName: "사원번호", field: "employeeNumber",editable: false}
-        ,{ headerName: '직책', field: "position", cellEditor : "richSelect"}
-        ,{ headerName: "근무조", field: "groupName", cellEditor : "richSelect"}
-        ,{ headerName: "휴무일(1)", field: "firstRestday", cellEditor : "richSelect" }
-        ,{ headerName: '휴무일(2)', field: "twoRestday", cellEditor : "richSelect"}
+        ,{ headerName: '직책', field: "position", cellEditor : "richSelect" ,editable: false}
+        ,{ headerName: "근무조", field: "groupName", cellEditor : "richSelect", editable: false}
+        ,{ headerName: "휴무일(1)", field: "firstRestday", cellEditor : "richSelect" ,editable: false}
+        ,{ headerName: '휴무일(2)', field: "twoRestday", cellEditor : "richSelect",editable: false}
         ,{ headerName: '대체근무자', field: "personalNumber", cellEditor : "richSelect"}
     ]
 
@@ -48,50 +48,62 @@ function WorkTableByReplaceUserContainer({yearMonth}) {
     const [gridDefs, setGridDefs] = useState({}); 
     const [rowData, setRowData] = useState([]);
     useEffect(()=>{
-        async function initGrid(params) {
+        async function initGrid(paramsGroupName) {
          try {
-             params = {
-                "branchNo" : 29,
-                "yearsMonthDate" : "202004",
-             }
-            let groupName = null; 
-            await callApi.getAllWorkTableByResultColor(params).then(res =>{
-                console.log(res.data);
-                if(res.data && res.data.Data){
-                    if(res.data.ErrorCode == 1){
-                        alert(res.data.Msg);
-                        return false;
-                    }
-                    var groupOptionList = [];
-                    var getOption = document.getElementById("groupNameId");
-                    for (var i = 0 ; i < res.data.Data.length; ++i ){
-                        var opt = document.createElement('option');
-                        opt.text = res.data.Data[i].groupName;
-                        opt.value = res.data.Data[i].groupName;
-                        getOption.appendChild(opt);
-                    }
-                    groupName = res.data.Data[0].groupName;
-                }
-            });
             
-             params = {
+            let groupName = paramsGroupName != null ? paramsGroupName : null;
+            if(groupName== null){
+                let params = {
+                    "branchNo" : 29,
+                    "yearsMonthDate" : "202004",
+                 }
+                
+                await callApi.getAllWorkTableByResultColor(params).then(res =>{
+                    if(res.data && res.data.Data){
+                        if(res.data.ErrorCode == 1){
+                            alert(res.data.Msg);
+                            return false;
+                        }
+                        var getOption = document.getElementById("groupNameId");
+                        for (var i = 0 ; i < res.data.Data.length; ++i ){
+                            var opt = document.createElement('option');
+                            opt.text = res.data.Data[i].groupName;
+                            opt.value = res.data.Data[i].groupName;
+                            getOption.appendChild(opt);
+                        }
+                        groupName = res.data.Data[0].groupName;
+                    }
+                });
+            }
+            let params = {
                  "branchNo" : 29,
                  "yearsMonthDate" : "202004",
                  "groupName" : groupName
              }
              
              await callApi.getSetSceduleInfo(params).then(res=>{
-                console.log(res.data); 
-                if(res.data && res.data.Data){ 
-                     setRowData(res.data.Data);
-                     setGridDefs({columnDefs, defaultColDef});
+                console.log(res.data);
+                if(res.data){
+                     if(res.data.ErrorCode == 1){
+                         setRowData(null);
+                         alert(res.data.Msg);
+                         return false;
+                     } 
+                     if(res.data.Data){
+                        setRowData(res.data.Data);
+                        setGridDefs({columnDefs, defaultColDef});
+                     }
+                     
                  }
              })
          }catch (ex){
              console.log(ex);
          }
         };
-        initGrid(); 
+        $("#groupNameId").on("change",function(e){
+            initGrid($("#groupNameId").val());
+        });
+        initGrid(null); 
      },[]); //init
 
     // 사원등록 페이지로 이동

@@ -71,6 +71,7 @@ module.exports = {
     contentBase: ["./src", "./public"],
     compress: true,
     open: true,
+    host : "127.0.0.1",
     noInfo: true,
     port: 3000,
     hot: true,
