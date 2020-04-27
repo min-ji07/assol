@@ -78,6 +78,10 @@ var gridCommon = function() {
             //콜백이 있을경우 전달
             if(func && func instanceof Function) func(e);
         }
+        ,onCellEditingStarted : (e,func) =>{
+            if( !e.data ) return;
+            if(func && func instanceof Function) func(e);
+        }
         ,onCellClicked : (e,func) => {
             //콜백이 있을경우 전달
             if(func && func instanceof Function) func(e);
@@ -127,6 +131,11 @@ var gridCommon = function() {
         }
         ,startEditingCell : (params) => {
             gridApi.api.startEditingCell(params);
+
+        }
+        ,stopEditing : () => {
+            gridApi.api.stopEditing(true);
+
         }
     }
 }();

@@ -18,7 +18,7 @@ function DataGrid({rowData:rowData,gridDefs}){
                 // editType="fullRow"
                 onRowEditingStopped={(e)=>gridCommon.onCellEditingStopped(e,gridDefs.onRowEditingStopped)} // 근무조
                 onCellEditingStopped={(e)=>gridCommon.onCellEditingStopped(e,gridDefs.onRowEditingStopped)}
-                
+                onCellEditingStarted={(e) =>gridCommon.onCellEditingStarted(e,gridDefs.onCellEditingStarted)}
                 onCellClicked={(e)=>gridCommon.onCellClicked(e,gridDefs.onCellClicked)}
                 onRowDoubleClicked={(e)=>gridCommon.onRowDoubleClicked(e,gridDefs.onRowDoubleClicked)}
                 rowSelection="multiple"

@@ -3,6 +3,7 @@ import picker from '../../../Utils/datepicker'
 import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
 import WorkTableByGroupPresenter from './WorkTableByGroupPresenter'
+import { SelectCellEditor } from 'ag-grid-community';
 /* 근무조 설정 */ 
 
 
@@ -20,7 +21,9 @@ function WorkTableByGroupContainer() {
         ,"2" : "계약직" 
         ,"3" : "시간제" 
     }
+    let groupNameInfos = {};
     let check = true;
+    let isEdit = true;
     //컬럼 정의
     const columnDefs= [  
         { headerName: "rowId", field: "rowId", hide:true }
@@ -29,22 +32,17 @@ function WorkTableByGroupContainer() {
         ,{ headerName: "", field: "", width:50 ,  align:'center', resizable:false,editable : false
             ,checkboxSelection:true,headerCheckboxSelection: true,
          }
-        //  ,{ headerName: "근무타입", field: "workType",
-        //     cellEditor: "select",
-        //     cellEditorParams: { values: gridCommon.extractValues(workTypeMappings) },
-        //     refData: workTypeMappings
-        //     }
-        ,{ headerName: "근무팀명", field: "groupName" , width:150
-           , valueFormatter:function(params){
-               if(!params || !params.value || params.value=='') return;
-                return params.value.slice(0,6);
-           }}
+        ,{ headerName: "근무팀명", field: "groupName" , width:150, editable : true
+           , valueGetter:function(params){
+               return params.data.groupName;
+          }
+        }
          ,{ headerName: "근무형태", field: "regularEmployee",  width:120,
             cellEditor: "select",
             cellEditorParams: { values: gridCommon.extractValues(regEmployeeMappings) },
             filter: "agSetColumnFilter",  //-- 필터 사용가능 ! 
             refData: regEmployeeMappings
-            }
+          }
          ,{ headerName: "최소인원수", field: "workerCount",width:120, align:'center',
              cellEditor:'select', cellEditorParams:{values: function(){
                  const list=[];
@@ -54,12 +52,14 @@ function WorkTableByGroupContainer() {
                     return list;
                 }()
              }, valueFormatter:function(params) { return (!params.value)?'':params.value+'명'}} 
-        ,{ headerName: "정규근무시간",field:"workTime", editable:true
-            ,cellEditor: picker.getTimePicker(), width:200}
+        ,{ headerName: "정규근무시간",field:"workTime", 
+            cellEditor: picker.getTimePicker(), width:200}
         
-        ,{ headerName: "휴게시간1", field: "restTime", editable:true
-            ,cellEditor: picker.getTimePicker(), width:200}
-        ,{ headerName: "휴게시간2", field: "subRestTime", editable:true
+        ,{ headerName: "휴게시간1", field: "restTime"
+            ,cellEditor: picker.getTimePicker(), width:200,
+            
+        }
+        ,{ headerName: "휴게시간2", field: "subRestTime"
             ,cellEditor: picker.getTimePicker(), width:200}
         ,{ headerName: "정규근무시간", field: "currentTime", width:120,  editable:false,
          valueGetter:function(params){
@@ -73,7 +73,7 @@ function WorkTableByGroupContainer() {
             return resultHour+"시간"+min+"분";
         }
          }
-         ,{ headerName: "야간근무시간", field: "nightTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
+         ,{ headerName: "야간근무시간", field: "nightTime", width: 120, cellStyle: {color: '#D96D6D'}, editable : false
             ,valueGetter: function(params){ 
                 if(!params.data.nightTime){
                     return "";
@@ -85,7 +85,7 @@ function WorkTableByGroupContainer() {
                 return resultHour+"시간"+min+"분";
             }
         }
-        ,{ headerName: "연장근무시간", field: "overTime", cellEditor:'select',width: 120, cellStyle: {color: '#D96D6D'}
+        ,{ headerName: "연장근무시간", field: "overTime", width: 120, cellStyle: {color: '#D96D6D'}, editable : false
                 ,valueGetter: function(params){ 
                     if(!params.data.overTime){
                         return "";
@@ -117,13 +117,39 @@ function WorkTableByGroupContainer() {
         ,cellStyle: {textAlign: 'center'}
         ,resizable : true
     } 
-
+    let preGroupName = '';
     //컴포넌트 세팅
     const components =  { }
-    
+    const onCellEditingStarted = function(e){
+        if(e.data){
+            if(e.data.groupName)
+            console.log(e.data.groupName)
+            preGroupName = e.data.groupName;
+            return true;
+        }
+    }
     //현 페이지에서 정의된 함수 호출
-    const onRowEditingStopped = function(e) { 
-        
+    const onRowEditingStopped = function(e) {
+        if(e.data){
+           for (var key in groupNameInfos){
+                if(key == e.data.rowId){
+                    continue;
+                }
+                else{
+                    if(groupNameInfos[key] == e.data.groupName){
+                        alert("동일한 그룹 이름이 있습니다 다시 확인해주세요");
+                        isEdit = false;
+                        e.node.setDataValue('groupName',preGroupName)
+                        var params = {
+                            rowIndex : e.rowIndex,
+                            colKey : 'groupName'
+                        }
+                        gridCommon.startEditingCell(params);
+                        return false;
+                    }
+                }
+           } 
+        }
         if(e.data && e.data.workTime ) {//&& e.data.workTime!=='~'
            let workTimeArr  = e.data.workTime.split("~");
            if(!workTimeArr[0] || !workTimeArr[1]){
@@ -348,36 +374,33 @@ function WorkTableByGroupContainer() {
            
           
            e.node.setDataValue('passYn',pass)
+           isEdit  = true;
        }
      
     }
     
     const [gridDefs, setGridDefs] = useState({}); //그리드 정의
     const [rowData, setRowData] = useState([]);
-
+    
     useEffect(()=>{
-        console.log("effect");
        async function initGrid(params) {
         try {
-            // console.log("HI");
-            if(!params){
-                const d = new Date();
-                params = d.getFullYear();
-            } 
             //근속연도 세팅 
             const target = $('#month-picker');
-            console.log(target.val());
             params = {
                 "branchNo" : 29,
                 "yearsMonthDate" : target.val().replace("-","")
             }
             try{
                 await callApi.getGridData(params).then(res=>{
-                    console.log(res.data.Data);
                     if(res.data && res.data.Data){
-                          //공통 그리드 데이터 셋팅
+                        for(var i = 0 ; i <res.data.Data.length; ++ i){
+                            let groupNameInfo = res.data.Data[i];
+                            groupNameInfos[groupNameInfo.rowId] = groupNameInfo.groupName;
+                        }
+                        //공통 그리드 데이터 셋팅
                         setRowData(res.data.Data);
-                        setGridDefs({columnDefs, defaultColDef, components, onRowEditingStopped});
+                        setGridDefs({columnDefs, defaultColDef, components, onRowEditingStopped,onCellEditingStarted});
                     }
                 })
             }
@@ -392,7 +415,6 @@ function WorkTableByGroupContainer() {
         picker.setMonthPicker(('#month-picker'),function(value){
             initGrid(value); 
         });
-       initGrid(); 
        //날짜 피커 변경시 콜백으로 리로드 
        
     },[]); //init
@@ -401,12 +423,14 @@ function WorkTableByGroupContainer() {
     const nextPage = (callback) => {
         let value = document.getElementById('month-picker').value;
         if(!value||value=="") return alert("선택된 연월이 없습니다.");
-        
         //저장후 페이지 이동 
-        gridCommon.onSaveRow((callback)=>{
-            value = value.replace(/-/gi,'');
-            window.location.href="/work/workTableByPersonal/"+value;            
-        });
+        var result = gridCommon.onSaveRow((callback));
+        if(result == false){
+            
+            return false;
+        }
+        value = value.replace(/-/gi,'');
+        window.location.href="/work/workTableByPersonal/"+value;            
     };
 
     const backPage = () => {

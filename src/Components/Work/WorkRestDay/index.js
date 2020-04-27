@@ -47,19 +47,17 @@ const WorkRestDay = () => {
                         console.log(res.data.Data);
                         for(var i=0;i<res.data.Data.length;i++){
                             let user = res.data.Data[i];
-                            console.log(user);
                             workersMap[user.userNo] =user.userName;
                             workersNumber[user.userNo] = user.employeeNumber;
                             workersPosition[user.userNo] = user.position;
                             
                         }
+                        setRowData(res.data.Data);
                     }
                     //연차설정 데이터 저장내용 가져오기
                     try{
                         callApi.getWorkerListByRestDay(params).then(res=>{
                             if(res.data && res.data.Data){
-                                setRowData(res.data.Data);
-                                // setRowData2(res.data.Data);
                         }
                     });
                 }

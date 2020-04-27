@@ -4,7 +4,6 @@ import DataGrid from "../../../Components/DataGrid"
 import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
 import $ from 'jquery';
-
 const WorkTableByGroupPresenter=({rowData,  gridDefs, backPage, nextPage }) => {
 
     const openPopup=() => {
@@ -35,17 +34,15 @@ function saveRow (result) {
       
     });
     if(list == null || list.length < 1){
+        console.log("NocallDB");
         return true;
     }
     let params = {};
     params.groupInfos = list;
     
     async function init(params){
-        console.log("너누구야!!!", params);
         try {
             await callApi.SaveGroupRow(params).then(res => {
-                // console.log('saveGroupRow 저장내용 : ' + params);
-                // console.log('저장'+res);
                 if(res.data.ErrorCode == 0){ 
                     alert("근무조 설정이 완료되었습니다..");
                 }
@@ -56,6 +53,8 @@ function saveRow (result) {
         }catch(error){
             console.log("CATCH !! : " + error);
         }
+        
+        return true;
     };
     init(params);
 }
