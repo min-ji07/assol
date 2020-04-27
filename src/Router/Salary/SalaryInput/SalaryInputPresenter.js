@@ -143,7 +143,8 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                             data-view="months"
                             data-date-format="yyyy-mm"/>
                         </li>
-                        <li>급수차수
+                        <li>
+                            <span>급수차수</span>
                             <select id="payDegree">
                                 <option value='1'>1차</option>
                                 <option value='2'>2차</option>

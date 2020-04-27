@@ -110,7 +110,7 @@ const UserInfo = () => {
                 $(".userImgView").prop("src",url+path);
                 $(".userImgText").addClass("txt_hide");
             } else { // 인사서류
-                addFileList("파일"+i,url);
+                addFileList("파일"+i,url+path,true);
             }
         }
         // othercontent = [
@@ -528,6 +528,20 @@ const UserInfo = () => {
 
         if(addrType == "J"){    // 지번
             address = e.jibunAddress;
+        }
+        switch(checkType){
+            case "tab_01" :
+                $(".div_bottom.tab_01").find("#postNo").val(postNo).attr("readonly",true);
+                $(".div_bottom.tab_01").find("#address").val(address).attr("readonly",true);
+                break;
+            case "tab_02" :
+                $(".div_bottom.tab_02").find("#postNo").val(postNo).attr("readonly",true);
+                $(".div_bottom.tab_02").find("#address").val(address).attr("readonly",true);
+                break;
+            case "tab_03" :
+                $(".div_bottom.tab_03").find("#postNo").val(postNo).attr("readonly",true);
+                $(".div_bottom.tab_03").find("#address").val(address).attr("readonly",true);
+                break;
         }
         $("#daumPostPop").hide();
     }
@@ -968,7 +982,7 @@ const UserInfo = () => {
     }
  
     // 업로드 파일 목록 생성
-    function addFileList(fileName, filePath){
+    function addFileList(fileName, filePath, check){
         var li = $("<li>");
         var a = $("<a style='cursor:pointer'>");
         var img_box = $("<span class='img_box'>");
@@ -977,6 +991,9 @@ const UserInfo = () => {
         var check_box = $("<span class='check_box'>");
         var file_input = $("<input type='file' name='imgFileInput' accept='image/*'/>")
         
+        if(check){
+            a.addClass("check_file");
+        }
         $(".img_file_box").append(file_input);
         img_box.append(img);
         title_box.text(fileName);

@@ -206,9 +206,9 @@ function SalaryInputContainer() {
         const arr = [
             { headerName: "rowId", field: "rowId", hide:true }
             ,{headerName: "성명 ",field:"userNo", width:120, hide:true}
-            ,{headerName: "성명 ",field:"userName", width:120}
-            ,{headerName: "직책", field: "position", width:140}
-            ,{ headerName: "사원번호", field: "employeeNumber", width:120}
+            ,{headerName: "성명 ",field:"userName", width:120, editable:false}
+            ,{headerName: "직책", field: "position", width:140, editable:false}
+            ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
             ,{ headerName: "기본급", field: "baseSalary", width:120
                 ,valueFormatter: function(params) {
                     return utils.regExr.comma(params.value);

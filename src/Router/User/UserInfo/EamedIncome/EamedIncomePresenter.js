@@ -202,8 +202,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             "cuModels" : getCurriculumRow()
         };
 
-        console.log(params);
-        async function saveInit() {
+        async function saveInit(params) {
             try {
                 console.log(JSON.stringify(params));
                 console.log(params);
@@ -221,7 +220,9 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                 alert("관리자에게 문의하세요.",e);
             }
         };
-        saveInit();
+        console.log(params);
+        console.log(JSON.stringify(params));
+        saveInit(params);
     }
 
     const saveImgFile = (userNo,employeeNumber) => {
@@ -498,7 +499,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"40px"}}>
                                         <li>
                                             <span>월급 :</span>
-                                            <input type="text" class="money_input" id="salaryOfMonth" name="salaryOfMonth" />
+                                            <input type="text" class="money_input" id="salaryOfMonth" name="salaryOfMonth" readOnly/>
                                             <span>원</span>
                                             {/* <input type="text" class="money_input" name="salaryOfMonth" id="salaryOfMonth" placeholder="1,700,000" /> */}
                                         </li>
@@ -549,7 +550,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                         </li>
                                         <li class="salary_years" style={{marginRight:"30px"}}>
                                             <span>연봉 :</span>
-                                            <input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears" placeholder="2,100,500"  
+                                            <input type="text" class="money_input" name="salaryOfYears" id="salaryOfYears"
                                             tabindex="-1" style={{fontSize: "20px", border:"none", width: "130px", height:"30px"}} readOnly/>
                                             <span>원</span>
                                         </li>

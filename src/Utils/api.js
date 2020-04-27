@@ -46,7 +46,12 @@ export const callApi = {
         url: noJustin+'/PayRoll/SavePayRoll',
         data: params
     }), // 급여입력 - 지급 항목상세 저장
-    getPayRollListOfBranch:(params) => axios.get(noJustin+'/PayRoll/GetPayRollListOfBranch',{params:params}), // 급여대장 - 조회
+    getPayRollListOfBranch:(params) => axios.get(noJustin+'/PayRoll/GetPayRollListOfBranch',{params:params}), // 급여대장 - 전체 목록조회
+    getSelectPayRoll:(params) => axios({
+        method: 'post',
+        url: noJustin+'/PayRoll/GetSelectPayRoll',
+        data: params
+    }), // 급여대장 - 상세목록 조회
 
     // saveUserInfo:(params) => axios.post('http://82230995.ngrok.io/User/UserRegistration',{params:params}), // 사원등록
     userRegistration:(params) => axios({
