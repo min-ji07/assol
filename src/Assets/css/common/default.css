@@ -70,18 +70,18 @@ select:focus{
 ***********************************************/
 
 /* 근무조 색상표 */
-.bg_c1:not(.ag-cell){background: #FF5050; }
-.bg_c2:not(.ag-cell){background: #FF7F50; }
-.bg_c3:not(.ag-cell){background: #FFB400; }
-.bg_c4:not(.ag-cell){background: #2E8B57; }
-.bg_c5:not(.ag-cell){background: #0064FF; }
-.bg_c6:not(.ag-cell){background: #000069; }
-.bg_c7:not(.ag-cell){background: #8B4513; }
-.bg_c8:not(.ag-cell){background: #A841DB; }
-.bg_c9:not(.ag-cell){background: #6E6EFF; }
-.bg_c11:not(.ag-cell){background: #FFE6E6; }
-.bg_c12:not(.ag-cell){background: #FFEAD0; }
-.bg_c10:not(.ag-cell){background: #282828; }
+.bg_c1:not(.ag-cell){background: #f18aa5; }
+.bg_c2:not(.ag-cell){background: #f8acc8; }
+.bg_c3:not(.ag-cell){background: #d5e6a6; }
+.bg_c4:not(.ag-cell){background: #c1e8f3; }
+.bg_c5:not(.ag-cell){background: #eede76; }
+.bg_c6:not(.ag-cell){background: #bdacd8; }
+.bg_c7:not(.ag-cell){background: #7dced7; }
+.bg_c8:not(.ag-cell){background: #acd8f9; }
+.bg_c9:not(.ag-cell){background: #d7dd20; }
+.bg_c11:not(.ag-cell){background: #ccb08a; }
+.bg_c12:not(.ag-cell){background: #ecbdb2; }
+.bg_c10:not(.ag-cell){background: #f9c28f; }
 .bg_c13:not(.ag-cell){background: #FAFABE; }
 .bg_c14:not(.ag-cell){background: #D2FFD2; }
 .bg_c15:not(.ag-cell){background: #B4E5FF; }

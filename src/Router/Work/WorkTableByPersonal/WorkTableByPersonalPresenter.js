@@ -143,8 +143,8 @@ function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
                             </div>
                         </div>
                         <div className="backnext">
-                            {/* <button type="button" className="back" >이전으로</button> */}
-                            <button type="button" className="next" onClick={()=>{window.location.href='/work/workTableByRestDay'}}>다음으로</button>
+                            <button type="button" className="back" onClick={()=>{window.location.href='/work/workTableByGroup'}}>이전으로</button>
+                            <button type="button" className="next" onClick={()=>{window.location.href='/work/workTableByReplaceUser'}}>다음으로</button>
                         </div>
                     </div>
             </div>

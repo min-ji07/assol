@@ -5,7 +5,7 @@ import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
 import $ from 'jquery';
 
-const WorkTableByGroupPresenter=({rowData,  gridDefs, nextPage }) => {
+const WorkTableByGroupPresenter=({rowData,  gridDefs, backPage, nextPage }) => {
 
     const openPopup=() => {
         $('.modal').show();
@@ -116,7 +116,7 @@ return (
                     <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon}/>
                     </div>
                     <div className="backnext">
-                        <button type="button" className="back" onClick="">이전으로</button>
+                        <button type="button" className="back" onClick={backPage}>이전으로</button>
                         <button type="button" className="next" onClick={() =>nextPage(saveRow)}>다음으로</button>
                     </div>
                 </div>

@@ -106,10 +106,13 @@ function WorkTableByReplaceUserContainer({yearMonth}) {
         initGrid(null); 
      },[]); //init
 
-    // 사원등록 페이지로 이동
-    // const nextPage = () => {
-    //     window.location.href="/user/userInfo/"
-    // };
+     const backPage = () => {
+        window.location.href="/work/workTableByPersonal/202001"
+    }
+        // 대체근무자 페이지로 이동
+    const nextPage = () => {
+        window.location.href="/work/workTableResult"
+    };
 
     return(
         <>
@@ -117,7 +120,8 @@ function WorkTableByReplaceUserContainer({yearMonth}) {
                 <WorkTableByReplaceUserPresenter 
                 rowData={rowData}
                 gridDefs={gridDefs}
-                // nextPage={nextPage}
+                backPage={backPage}
+                nextPage={nextPage}
                 />
              }
         </>

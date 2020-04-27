@@ -7,7 +7,7 @@ import $ from 'jquery';
 
 
 
-function WorkTableByReplaceUserPresenter({rowData ,gridDefs, nextPage}) {
+function WorkTableByReplaceUserPresenter({rowData ,gridDefs,backPage, nextPage}) {
    
    return(
     <>
@@ -33,8 +33,8 @@ function WorkTableByReplaceUserPresenter({rowData ,gridDefs, nextPage}) {
                         <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon}/>
                     </div>
                     <div class="backnext">
-                        <button type="button" class="back" onclick="back();">이전으로</button>
-                        <button type="button" class="next" onclick="next();">다음으로</button>
+                        <button type="button" class="back" onclick="back();" onClick={backPage}>이전으로</button>
+                        <button type="button" class="next" onclick="next();" onClick={nextPage}>다음으로</button>
                     </div>
                 </div>
             </div>

@@ -18,7 +18,7 @@ const WorkMain = () => {
     }
     
     , settingSchedule = () =>{
-        window.open('/work/workTableByGroup');
+        window.location.href=('/work/workTableByGroup');
     }
 
     return(
