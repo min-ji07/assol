@@ -6,9 +6,18 @@ import gridCommon from '../../../../Utils/grid';
 import utils from '../../../../Utils/utils';
 
 const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, militaryDefs, curriculumDefs, rowData2, rowData3, rowData4, rowData5}) => {
+
+    let checkModify = false;
     let params = {};
     let frm = new FormData();
     let checkUserImage = true;
+    let delDataList = {
+        "sfDelRowId": [],
+        "eduDelRowId": [],
+        "exDelRowId": [],
+        "miDelRowId": [],
+        "cuDelRowId": []
+    }
 
     const fnValidation = () => {
         var tabDiv = ".div_bottom.tab_01";
@@ -114,6 +123,11 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
     }
 
     const fnSave = () => {
+        if($("#userNo").val().length > 0){
+            checkModify = true; 
+        } else {
+            checkModify = false;
+        }
 
         if(!fnValidation()){
             return;
@@ -138,6 +152,9 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         params["userInfo"] = tempParams;
         params.userInfo.userType = 0; // 일반소득자
         params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
+        
+        params.userInfo.userNo = $("#userNo").val();
+        params.userInfo.employeeNumber = $("#employeeNumber").val();
 
         i=0;
         tempParams = {
@@ -178,50 +195,72 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         i=0;
         tempParams = {};
         for(i; i<inputListTab2.length; i++){
-            console.log(inputListTab2[i].id);
-            tempParams[inputListTab2[i].id] = inputListTab2[i].value; 
+            if(checkModify){
+                console.log("여기를 타라라!!!!!");
+                params["detailData"][inputListTab2[i].id] = inputListTab2[i].value;
+            } else {
+                tempParams[inputListTab2[i].id] = inputListTab2[i].value; 
+            }
         }
 
         params["insData"] = tempParams;
+        if(checkModify){
+            params["sfData"] = getDependRow();
+            params["eduData"] = getEduRow();
+            params["exData"] = getCarrerRow();
+            params["miData"] = getMilitaryRow();
+            params["cuData"] = getCurriculumRow();
+        } else {
+            params.insData["sfModel"] = getDependRow();
 
-        params.insData["sfModel"] = getDependRow();
-
-        params["eduData"] = {
-            "eduModels" : getEduRow()
-        };
-
-        params["exData"] = {
-            "exModels" : getCarrerRow()
-        };
+            params["eduData"] = {
+                "eduModels" : getEduRow()
+            };
+            params["exData"] = {
+                "exModels" : getCarrerRow()
+            };
+            params["miData"] = {
+                "miModels" : getMilitaryRow()
+            };
+            params["cuData"] = {
+                "cuModels" : getCurriculumRow()
+            };
+        }
         
-        params["miData"] = {
-            "miModels" : getMilitaryRow()
-        };
-
-        params["cuData"] = {
-            "cuModels" : getCurriculumRow()
-        };
 
         async function saveInit(params) {
             try {
                 console.log(JSON.stringify(params));
                 console.log(params);
-                await callApi.userRegistration(params).then(res=> {
-                    if(res.data.ErrorCode == 1){
-                        alert(res.data.Msg);
-                    } else {
-                        alert("저장이 완료되었습니다.");
-                        saveImgFile(res.data.Data, res.data.Id);
-                        // window.location.href = "/user/userManagement";
-                        // location.reload();
-                    }
-                });
+                if(checkModify){
+                    await callApi.updateUserInformation(params).then(res=> {
+                        if(res.data.ErrorCode == 1){
+                            alert(res.data.Msg);
+                        } else {
+                            alert("수정이 완료되었습니다.");
+                            // saveImgFile(res.data.Data, res.data.Id);
+                            // window.location.href = "/user/userManagement";
+                            // location.reload();
+                        }
+                    });
+                } else {
+                    await callApi.userRegistration(params).then(res=> {
+                        if(res.data.ErrorCode == 1){
+                            alert(res.data.Msg);
+                        } else {
+                            alert("저장이 완료되었습니다.");
+                            // saveImgFile(res.data.Data, res.data.Id);
+                            // window.location.href = "/user/userManagement";
+                            // location.reload();
+                        }
+                    });
+                }
             }catch(e){
                 alert("관리자에게 문의하세요.",e);
             }
         };
-        console.log(params);
-        console.log(JSON.stringify(params));
+
+        params["delDataList"] = delDataList;
         saveInit(params);
     }
 
@@ -229,11 +268,11 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         frm = new FormData();
         frm.append("userNo",userNo);
         frm.append("employeeNumber",employeeNumber);
-        checkUserImage = $(".tab_01 #userImage")[0].value == "" ? true : false;
+        checkUserImage = $("#userImage")[0].value == "" ? true : false;
         if(checkUserImage){
             frm.append("imageIsNull","Y");
         } else {
-            frm.append("userImage",$(".tab_01 #userImage")[0].files[0]);
+            frm.append("userImage",$("#userImage")[0].files[0]);
         }
         var imgFileArr = selectFileList();
         var i = 0;
@@ -283,12 +322,35 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
     /* row click event */
     const addRow = (e) => {
         var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
-        console.log(gridApi,"<----일반근로자");
         gridCommon.setGridApi(gridApi);
         gridCommon.onAddRow();
     }
     const removeRow = (e) => {
-        var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
+        var gridBox = $(e.target).siblings("div");
+        var gridApi = gridBox.find(".ag-root")[0]["__agComponent"].gridApi;
+        
+        let selectRow = gridApi.getSelectedRows();
+        selectRow.forEach((data)=>{
+            if(data.rowId != undefined){
+                switch(gridBox.attr("id").replace(/[0-9]/g,"")){
+                    case "dependGrid":
+                        delDataList["sfDelRowId"].push(data.rowId);
+                    break;
+                    case "eduGrid":
+                        delDataList["eduDelRowId"].push(data.rowId);
+                    break;
+                    case "carrerGrid":
+                        delDataList["exDelRowId"].push(data.rowId);
+                    break;
+                    case "militaryGrid":
+                        delDataList["miDelRowId"].push(data.rowId);
+                    break;
+                    case "curriculumGrid":
+                        delDataList["cuDelRowId"].push(data.rowId);
+                    break;
+                }
+            }
+        });
         gridCommon.setGridApi(gridApi);
         gridCommon.onRemoveRow();
     }
@@ -354,7 +416,12 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
     
 
     useEffect(()=>{
+        // checkModify = $(".user_type_label").length == 1 ? false : true;
 
+        checkModify = true;
+
+        console.log($(".user_type_label").length,"length!!!!!!!!!!");
+        console.log(checkModify,"checkModify");
     },[]); //init
 
     return (

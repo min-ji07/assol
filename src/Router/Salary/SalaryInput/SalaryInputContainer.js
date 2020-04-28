@@ -210,28 +210,29 @@ function SalaryInputContainer() {
             ,{headerName: "직책", field: "position", width:140, editable:false}
             ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
             ,{ headerName: "기본급", field: "baseSalary", width:120
-                ,valueFormatter: function(params) {
-                    return utils.regExr.comma(params.value);
+                ,valueGetter: function(params) {
+                    console.log(params);
+                    return utils.regExr.comma(params.data.baseSalary);
                 }
             }
             ,{ headerName: "식비", field: "foodSalary", width:120,
-                valueFormatter: function(params) {
-                    return utils.regExr.comma(params.value);
+                valueGetter: function(params) {
+                    return utils.regExr.comma(params.data.foodSalary);
                 }    
             }
             ,{ headerName: "차량유지비", field: "carSalary", width:120,
-                valueFormatter: function(params) {
-                    return utils.regExr.comma(params.value);
+                valueGetter: function(params) {
+                    return utils.regExr.comma(params.data.carSalary);
                 }    
             }
             ,{ headerName: "성과금", field: "welfareSalary", width:120,
-                valueFormatter: function(params) {
-                    return utils.regExr.comma(params.value);
+                valueGetter: function(params) {
+                    return utils.regExr.comma(params.data.welfareSalary);
                 }    
             }
             ,{ headerName: "직책수당", field: "positionSalary", width:120,
-                valueFormatter: function(params) {
-                    return utils.regExr.comma(params.value);
+                valueGetter: function(params) {
+                    return utils.regExr.comma(params.data.positionSalary);
                 }    
             }
         ]

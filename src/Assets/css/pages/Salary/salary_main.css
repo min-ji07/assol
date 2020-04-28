@@ -23,11 +23,13 @@
     margin-left: 5px;
 }
 .salary_main .sal_date_left select {
-    width: 90px; height: 20px; line-height: 20px;
+    width: 90px; height: 25px; line-height: 25px;
     color:white; font-size: 14px; font-weight: bold;
     background: transparent; border: none; border-bottom: 1px solid white;
     border-radius: 0px;
     /* text-indent: -9999px; */
+    margin-left:5px;
+    background-color:#799093;
 }
 .salary_main .sal_date_left select:focus{
     /* color:red; */

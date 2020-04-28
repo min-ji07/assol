@@ -16,7 +16,6 @@ const UserInfo = () => {
     let imgInputLastIndex = 0;
     let pramsString = window.location.search.replace("?","");
     let checkUserInfo = false;
-    let userInfoData;
     let paramData = {};
 
     console.log(pramsString);
@@ -40,8 +39,9 @@ const UserInfo = () => {
     }
 
     const userInfoEvent = (data,othercontent,imgData) => {
-        console.log(data);
-        console.log(othercontent);
+        console.log(data,"요기당");
+        $("#userNo").val(data.userNo);
+        $("#employeeNumber").val(employeeNumber);
         let userType = data.userType;
         let tab;
         if(userType == "0"){
@@ -84,8 +84,8 @@ const UserInfo = () => {
                 elem.next().hide();
                 elem.parent().next().hide();
             }
-            if(key == "jobReductActive" && val == "1"){
-                $(".job_reduct_li").hide();
+            if(key == "jobReductActive" && val == "0"){
+                $(".job_reduct_li").css("display","inline-block");
             }
 
             // $(".visa_li").show();
@@ -108,18 +108,12 @@ const UserInfo = () => {
             // 유저사진
             if(type == "1"){
                 $(".userImgView").prop("src",url+path);
+                // $(".userImgView").attr("data-row-id",imgData[i].rowId);
                 $(".userImgText").addClass("txt_hide");
             } else { // 인사서류
                 addFileList("파일"+i,url+path,true);
             }
         }
-        // othercontent = [
-        //     {title:"t1",value:"v1"},
-        //     {title:"t2",value:"v2"},
-        //     {title:"t3",value:"v3"},
-        //     {title:"t4",value:"v4"},
-        //     {title:"t5",value:"v5"}
-        // ];
 
         $("input").trigger("keyup");
         $("input").trigger("change");
@@ -131,6 +125,19 @@ const UserInfo = () => {
         // 인사서류 기존 데이터는 upload아님
         // 기존 데이터 삭제시 어떻게 처리?
         
+    }
+
+    const imgDelete = () => {
+        // {
+        //     "rowId": null, -> 삭제할 rowId 배열
+        //     "upLoad": {
+        //         "imageType": 0,
+        //         "userNo": 0,
+        //         "branchNo": 0,
+        //         "employeeNumber": null,
+        //         "imageIsNull": null
+        //     }
+        // }
     }
 
     const addSalaryList = (othercontent) => {
@@ -188,6 +195,7 @@ const UserInfo = () => {
     const [dependDefs, setDependDefs] = useState({});
     const [militaryDefs, setMilitaryDefs] = useState({});
     const [curriculumDefs, setCurriculumDefs] = useState({});
+    
     
 
     
@@ -461,6 +469,13 @@ const UserInfo = () => {
                         } else if(checkVal < 0){
                             return 0;
                         }
+                        if(checkVal>=12){
+                            let year = Math.floor(checkVal/12);
+                            let month = checkVal - 12 * year;
+                            checkVal = year + "년 " + month + "개월";
+                        } else {
+                            checkVal = checkVal + "개월";
+                        }
                         return checkVal;
                     }
                 }
@@ -547,6 +562,17 @@ const UserInfo = () => {
     }
 
     useEffect(()=>{
+        let tesetFn = () => {
+            let test = {
+                qwer:1,
+                test:2,
+                eeee:3
+            }
+
+            return {test};
+        }
+
+        
 
         async function init() {
             try {
@@ -555,109 +581,8 @@ const UserInfo = () => {
                setCarrerDefs(gridAllCarrerSetting());
                setMilitaryDefs(gridMilitarySeitting());
                setCurriculumDefs(gridCurriculumSeitting());
-   
-               let rowData = [
-                   {
-                       "sfName": "김경주",
-                       "sfRelation": 0,
-                       "sfHouseHolder": "김종열",
-                       "sfPersnoalNumber": "95995-38383838",
-                       "sfSeventy": 0,
-                       "sfdisable": 0,
-                       "sfWomenDeduction": 0,
-                       "sfParentDeduction": 0,
-                       "sfTrustRelation": 0
-                   },{
-                       "sfName": "김경주2",
-                       "sfRelation": 0,
-                       "sfHouseHolder": "김종열2",
-                       "sfPersnoalNumber": "95995-38383838",
-                       "sfSeventy": 0,
-                       "sfdisable": 0,
-                       "sfWomenDeduction": 0,
-                       "sfParentDeduction": 0,
-                       "sfTrustRelation": 0
-                   },{
-                       "sfName": "김경주3",
-                       "sfRelation": 0,
-                       "sfHouseHolder": "김종열3",
-                       "sfPersnoalNumber": "95995-38383838",
-                       "sfSeventy": 0,
-                       "sfdisable": 0,
-                       "sfWomenDeduction": 0,
-                       "sfParentDeduction": 0,
-                       "sfTrustRelation": 0
-                   }
-               ];
-               let rowData2 = [
-                   {
-                       "eGrade":0,
-                       "eEnterDate":"2020-05-05",
-                       "eGraduaterDate":"2020-05-05",
-                       "eSchoolName":"에솔초",
-                       "major":"종이접기",
-                       "complete":"종이접기4급"
-                   },
-                   {
-                       "eGrade":1,
-                       "eEnterDate":"2020-05-05",
-                       "eGraduaterDate":"2020-05-05",
-                       "eSchoolName":"에솔중",
-                       "major":"일찐",
-                       "complete":"담배1급"
-                   },
-               ];
-               
-   
-               let rowData3 = [
-                   {
-                       "exCompanyName":"에쏠컴퍼니",
-                       "exEnterDate":"2020-05-05",
-                       "exLeaveDate":"2020-10-05",
-                       "exWorkPeriod":"4개월",
-                       "exLastWorkLevel":"부장",
-                       "exPosition":"퍼블리싱",
-                       "exLeaveReason":"힘들옹 ㅠ"
-                   },{
-                       "exCompanyName":"에이치엘솔루션",
-                       "exEnterDate":"2020-02-05",
-                       "exLeaveDate":"2020-03-05",
-                       "exWorkPeriod":"4개월",
-                       "exLastWorkLevel":"선임",
-                       "exPosition":"백엔드",
-                       "exLeaveReason":"오류가 너무 많이나서..."
-                   },
-               ];
-   
-               let rowData4 = [
-                   {
-                       "militaryContent": 1,
-                       "militaryType": 3,
-                       "militaryDate": "2020-04-05~2020-05-05",
-                       "finalLevel": "병장",
-                       "miltaryClass": "포병",
-                       "unmiltaryReason": ""
-                   }
-               ]
-   
-               let rowData5 = [
-                   {
-                       "curriculum": "리액트 개발",
-                       "classTime": 100,
-                       "teacher": "김민지",
-                       "isStatus": "수료",
-                       "curriculumDate": "2020-05-05~2020-07-06",
-                   }
-               ]
-
                if(checkUserInfo){
                     initUserInfo(paramData);
-               } else {
-                    // setRowData(rowData);
-                    // setRowData2(rowData2);
-                    // setRowData3(rowData3);
-                    // setRowData4(rowData4);
-                    // setRowData5(rowData5);
                }
             }catch(e){
                 alert(e);
@@ -821,7 +746,7 @@ const UserInfo = () => {
         $("#jobReductActive").on("change",function(e){
             var targetVal = e.target.value;
             if(targetVal == "0"){
-                $(".job_reduct_li").show();
+                $(".job_reduct_li").css("display","inline-block");
             } else {
                 $(".job_reduct_li").hide();
             }
@@ -1050,6 +975,9 @@ const UserInfo = () => {
                 <p>사원정보를 등록하는 메뉴입니다. 해당 항목을 입력해주세요.<span>*표시는 필수 입력사항입니다.</span></p>
             </div>
             <div class="user_input_inner">
+                <input id="userNo" type="text" hidden></input>
+                <input id="employeeNumber" type="text" hidden></input>
+
                 <input type="radio" id="tab_01" name="tab1" defaultChecked/>
                 <label class="user_type_label" for="tab_01">일반근로자</label>
                 <input type="radio" id="tab_02" name="tab1" />

@@ -87,7 +87,7 @@ const utils = {
           num = this.numOnly(num);
           var numLen = num.length;
           var returnVal = "";
-
+        console.log('utils', num);
           if(numLen <=4){
               returnVal = num
           } else if(numLen <= 6){
@@ -103,6 +103,22 @@ const utils = {
           }
 
           return returnVal;
+      }
+      ,dateTime : function(num){
+        num = this.numOnly(num);
+        var numLen = num.length;
+        var returnVal = "";
+
+        if(numLen <= 2){
+            returnVal = num
+        }else if(numLen <= 4 ){
+            returnVal = num.substring(0,2) + " : " + num.substring(2,4);
+        }else if(numLen <= 6){
+            returnVal = num.substring(0,2) + " : " + num.substring(2,4) + " ~ " + num.substring(4, 6);
+        }else{
+            returnVal = num.substring(0,2) + " : " + num.substring(2,4) + " ~ " + num.substring(4, 6) + " : " + num.substring(6, 8);
+        }
+        return returnVal;
       }
       ,personalNum : function(num){
           num = this.numOnly(num);

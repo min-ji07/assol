@@ -9,6 +9,13 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
     let params = {};
     let frm = new FormData();
     let checkUserImage = true;
+    let delDataList = {
+        "sfDelRowId": [],
+        "eduDelRowId": [],
+        "exDelRowId": [],
+        "miDelRowId": [],
+        "cuDelRowId": []
+    }
     
     const fnValidation = () => {
         var tabDiv = ".div_bottom.tab_02";
@@ -255,7 +262,31 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
         gridCommon.onAddRow();
     }
     const removeRow = (e) => {
-        var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
+        var gridBox = $(e.target).siblings("div");
+        var gridApi = gridBox.find(".ag-root")[0]["__agComponent"].gridApi;
+        
+        let selectRow = gridApi.getSelectedRows();
+        selectRow.forEach((data)=>{
+            if(data.rowId != undefined){
+                switch(gridBox.attr("id").replace(/[0-9]/g,"")){
+                    case "dependGrid":
+                        delDataList["sfDelRowId"].push(data.rowId);
+                    break;
+                    case "eduGrid":
+                        delDataList["eduDelRowId"].push(data.rowId);
+                    break;
+                    case "carrerGrid":
+                        delDataList["exDelRowId"].push(data.rowId);
+                    break;
+                    case "militaryGrid":
+                        delDataList["miDelRowId"].push(data.rowId);
+                    break;
+                    case "curriculumGrid":
+                        delDataList["cuDelRowId"].push(data.rowId);
+                    break;
+                }
+            }
+        });
         gridCommon.setGridApi(gridApi);
         gridCommon.onRemoveRow();
     }
