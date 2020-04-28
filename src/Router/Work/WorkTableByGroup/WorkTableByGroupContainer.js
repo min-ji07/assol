@@ -85,34 +85,31 @@ function WorkTableByGroupContainer() {
                 //     }
                 //     return utils.regExr.dateTime(num2);
                 // }
-
         }
-        
         ,{ headerName: "휴게시간1", field: "restTime", editable:true, width:200,
-        // cellEditor: picker.getTimePicker()}
-            valueFormatter: function(params){
-                var num = utils.regExr.numOnly(params.data.restTime);
-                var checkVal = utils.regExr.date(num.substring(0,4));
-                var checkVal2 = utils.regExr.date(num.substring(4,8));
-                if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
-                    return "";
-                }
-                return utils.regExr.dateTime(num);
-            }
-        }
+        cellEditor: picker.getTimePickerInput()}
+            // valueFormatter: function(params){
+            //     var num = utils.regExr.numOnly(params.data.restTime);
+            //     var checkVal = utils.regExr.date(num.substring(0,4));
+            //     var checkVal2 = utils.regExr.date(num.substring(4,8));
+            //     if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
+            //         return "";
+            //     }
+            //     return utils.regExr.dateTime(num);
+            // }
+        // }
         ,{ headerName: "휴게시간2", field: "subRestTime", editable:true, width:200
-            // ,cellEditor: picker.getTimePicker()
-            ,valueFormatter: function(params){
-                var num = utils.regExr.numOnly(params.data.subRestTime);
-                var checkVal = utils.regExr.date(num.substring(0,4));
-                var checkVal2 = utils.regExr.date(num.substring(4,8));
-                if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
-                    return "";
-                }
-                return utils.regExr.dateTime(num);
-            }
-        }
-
+            ,cellEditor: picker.getTimePickerInput()}
+        //     ,valueFormatter: function(params){
+        //         var num = utils.regExr.numOnly(params.data.subRestTime);
+        //         var checkVal = utils.regExr.date(num.substring(0,4));
+        //         var checkVal2 = utils.regExr.date(num.substring(4,8));
+        //         if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
+        //             return "";
+        //         }
+        //         return utils.regExr.dateTime(num);
+        //     }
+        // }
         // 여기부터 계산 다시해야됨
         ,{ headerName: "정규근무시간", field: "currentTime", width:120,  editable:false,
          valueGetter:function(params){
@@ -219,13 +216,41 @@ function WorkTableByGroupContainer() {
            } 
         }
         if(e.data && e.data.workTime ) {//&& e.data.workTime!=='~'
-            console.log(e.data); // 내용
+            console.log(e.data);
             let workTimeArr  = e.data.workTime.split("~");
-            // let workTimeArr = [];
-        //    let workTimeArr = e.data.workTime;
-           console.log(workTimeArr, '내용');
-           if(!workTimeArr[0] || !workTimeArr[1]){
+            //console.log('ㅇㅇ',workTimeArr[1].value); // 안나옴
+           if(!workTimeArr == null || !workTimeArr == ""){
+                console.log(workTimeArr,': workTimeArr');
+
+                var replaceTime1 = workTimeArr[0].replace(/\:/g,"");
+                var replaceTime2 = workTimeArr[1].replace(/\:/g,"");
+                console.log('replaceTime',replaceTime1);
+                console.log('replaceTime',replaceTime2);
+
+                var strhour = workTimeArr[0].substring(0,2);
+                var strminu = workTimeArr[0].substring(2,4);
+                var endhour = workTimeArr[1].substring(0,2);
+                var endninu = workTimeArr[1].substring(2,4);
+                console.log('strhour', strhour)
+                console.log('strminu', strminu)
+                console.log('endhour', endhour)
+                console.log('endninu', endninu)
+                if(strhour > 25 || endhour > 25){
+                    alert('시간을 다시 설정해주세요.');
+                    return false;
+                }else if(strminu < 60 || endninu < 60){
+                    alert('시간을 다시 설정해주세요.')
+                    return false;
+                }else{
+                }
+
+           }else if(!workTimeArr[0] || !workTimeArr[1]){
                 alert("근무시간을 입력해주세요.");
+
+                if(workTimeArr[0].value < 60){
+                    console.log('ㅇㅇ',workTimeArr[0]);
+                }
+
                 console.log(!workTimeArr[0]);
                 console.log(!workTimeArr[1]);
 
