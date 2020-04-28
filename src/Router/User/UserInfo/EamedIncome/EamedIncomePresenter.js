@@ -7,421 +7,8 @@ import utils from '../../../../Utils/utils';
 
 const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, militaryDefs, curriculumDefs, rowData2, rowData3, rowData4, rowData5}) => {
 
-    let checkModify = false;
-    let params = {};
-    let frm = new FormData();
-    let checkUserImage = true;
-    let delDataList = {
-        "sfDelRowId": [],
-        "eduDelRowId": [],
-        "exDelRowId": [],
-        "miDelRowId": [],
-        "cuDelRowId": []
-    }
-
-    const fnValidation = () => {
-        var tabDiv = ".div_bottom.tab_01";
-        var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        
-        
-        var personalNumber = $(tabDiv).find("#personalNumber").val();
-        if(!personalValidaition(personalNumber)){
-            alert("주민번호가 올바르지 않습니다.");
-            return false;
-        }
-
-        if(!regEmail.test($(".div_bottom.tab_01 input[type='email']").val())){
-            alert("이메일이 올바르지 않습니다.");
-            return false;
-        }
-
-        var dateInput = $(tabDiv+" input.date_input");
-        var i = 0;
-        for(i; i<dateInput.length; i++){
-            if(dateInput[i].value.length == 0){
-                continue;
-            }
-            if(!dateValidation(dateInput[i].value)){
-                alert("날짜가 올바르지 않습니다.");
-                if(dateInput[i].id == "getOfIns0" || dateInput[i].id == "lostOfIns0"
-                    || dateInput[i].id == "getOfIns1" || dateInput[i].id == "lostOfIns3"
-                    || dateInput[i].id == "getOfIns2" || dateInput[i].id == "lostOfIns2"
-                    || dateInput[i].id == "getOfIns3" || dateInput[i].id == "lostOfIns1"
-                ){
-                    $(tabDiv).find("label[for='tab_002']").click();
-                } else {
-                    $(tabDiv).find("label[for='tab_001']").click();
-                }
-                dateInput[i].select();
-                dateInput[i].focus();
-                return false;
-            }
-        }
-
-        var dateToInput = $(tabDiv+" input.dateto_input");
-        i=0;
-        for(i; i<dateToInput.length; i++){
-            var targetArr = dateToInput[i].value.split("~");
-            var date1 = utils.regExr.numOnly(targetArr[0]);
-            var date2 = utils.regExr.numOnly(targetArr[1]);
-
-            if(!dateValidation(date1) || !dateValidation(date2)){
-                alert("날짜가 올바르지 않습니다.");
-                dateToInput[i].select();
-                dateToInput[i].focus();
-                return false;
-            }
-            if(date1 > date2){
-                alert("기간이 올바르지 않습니다.");
-                dateToInput[i].select();
-                dateToInput[i].focus();
-                return false;
-            }
-        }
-        return true;
-    }
-
-    function personalValidaition(jumin) {
-        jumin = utils.regExr.numOnly(jumin);
-       
-        //주민등록 번호 13자리를 검사한다.
-         var fmt = /^\d{6}[123456]\d{6}$/;  //포멧 설정
-         if (!fmt.test(jumin)) {
-          return false;
-         }
-       
-         // 생년월일 검사
-         var birthYear = (jumin.charAt(6) <= "2") ? "19" : "20";
-         birthYear += jumin.substr(0, 2);
-         var birthMonth = jumin.substr(2, 2) - 1;
-         var birthDate = jumin.substr(4, 2);
-         var birth = new Date(birthYear, birthMonth, birthDate);
-       
-         if ( birth.getYear() % 100 != jumin.substr(0, 2) ||
-              birth.getMonth() != birthMonth ||
-              birth.getDate() != birthDate) {
-            return false;
-         }
-       
-        
-         return true;
-    }
-
-    const dateValidation = (date) =>{
-        var date = utils.regExr.numOnly(date);
-        var month = date.substring(4,6);
-        var day = date.substring(6,8);
-        
-        if(month>12 || month<1){
-            return false;
-        }
-
-        if(day>31 || day<1){
-            return false;
-        }
-        return true;
-    }
-
-    const fnSave = () => {
-        if($("#userNo").val().length > 0){
-            checkModify = true; 
-        } else {
-            checkModify = false;
-        }
-
-        if(!fnValidation()){
-            return;
-        }
-        
-        let i=0;
-        const inputListLeft = $("#userInfoLeft input:not([name=tab]), #userInfoLeft select, #userInfoLeft textarea");
-        const inputListTab1 = $("#userInfoRight input:not([name=tab]), #userInfoRight select");
-        const inputListTab2 = $("#insurnaceTable input");
-        
-        let tempParams = {};
-        let key;
-        let value;
-        for(i; i<inputListLeft.length; i++){
-            key = inputListLeft[i].id;
-            value = inputListLeft[i].value;
-            if(key.indexOf("userImage") != -1){
-                continue;
-            }
-            tempParams[key] = value;
-        }
-        params["userInfo"] = tempParams;
-        params.userInfo.userType = 0; // 일반소득자
-        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
-        
-        params.userInfo.userNo = $("#userNo").val();
-        params.userInfo.employeeNumber = $("#employeeNumber").val();
-
-        i=0;
-        tempParams = {
-            "otherContent" : [
-            ]
-        };
-
-        let tempJson = {};
-        let tempTitle = "";
-        for(i; i<inputListTab1.length; i++){
-            var checkId = inputListTab1[i].id;
-            var checkClass = inputListTab1[i].className;
-            var val = inputListTab1[i].value;
-            // 급여항목 추가리스트
-            if(checkId.indexOf("addSalary") != -1){
-                if(checkId == "addSalaryTitle"){
-                    // tempParams.otherContent += '"'+inputListTab1[i].value+'":';
-                    tempJson.title = val;
-                } else if(checkId == "addSalaryPay"){
-                    // tempParams.otherContent += '"'+inputListTab1[i].value+'"';
-                    tempJson.value = val;
-                    tempParams.otherContent.push(tempJson);
-                    tempJson = {};
-                }
-            } else {
-                if(checkClass.indexOf("money_input") != -1){
-                    val = utils.regExr.numOnly(val);
-                }
-                tempParams[inputListTab1[i].id] = val;
-            }
-        }
-
-        // tempParams.otherContent = JSON.parse("{"+tempParams.otherContent.slice(0,-1)+"}");
-        console.log(tempParams.otherContent);
-
-        params["detailData"] = tempParams;
-
-        i=0;
-        tempParams = {};
-        for(i; i<inputListTab2.length; i++){
-            if(checkModify){
-                console.log("여기를 타라라!!!!!");
-                params["detailData"][inputListTab2[i].id] = inputListTab2[i].value;
-            } else {
-                tempParams[inputListTab2[i].id] = inputListTab2[i].value; 
-            }
-        }
-
-        params["insData"] = tempParams;
-        if(checkModify){
-            params["sfData"] = getDependRow();
-            params["eduData"] = getEduRow();
-            params["exData"] = getCarrerRow();
-            params["miData"] = getMilitaryRow();
-            params["cuData"] = getCurriculumRow();
-        } else {
-            params.insData["sfModel"] = getDependRow();
-
-            params["eduData"] = {
-                "eduModels" : getEduRow()
-            };
-            params["exData"] = {
-                "exModels" : getCarrerRow()
-            };
-            params["miData"] = {
-                "miModels" : getMilitaryRow()
-            };
-            params["cuData"] = {
-                "cuModels" : getCurriculumRow()
-            };
-        }
-        
-
-        async function saveInit(params) {
-            try {
-                console.log(JSON.stringify(params));
-                console.log(params);
-                if(checkModify){
-                    await callApi.updateUserInformation(params).then(res=> {
-                        if(res.data.ErrorCode == 1){
-                            alert(res.data.Msg);
-                        } else {
-                            alert("수정이 완료되었습니다.");
-                            // saveImgFile(res.data.Data, res.data.Id);
-                            // window.location.href = "/user/userManagement";
-                            // location.reload();
-                        }
-                    });
-                } else {
-                    await callApi.userRegistration(params).then(res=> {
-                        if(res.data.ErrorCode == 1){
-                            alert(res.data.Msg);
-                        } else {
-                            alert("저장이 완료되었습니다.");
-                            // saveImgFile(res.data.Data, res.data.Id);
-                            // window.location.href = "/user/userManagement";
-                            // location.reload();
-                        }
-                    });
-                }
-            }catch(e){
-                alert("관리자에게 문의하세요.",e);
-            }
-        };
-
-        params["delDataList"] = delDataList;
-        saveInit(params);
-    }
-
-    const saveImgFile = (userNo,employeeNumber) => {
-        frm = new FormData();
-        frm.append("userNo",userNo);
-        frm.append("employeeNumber",employeeNumber);
-        checkUserImage = $("#userImage")[0].value == "" ? true : false;
-        if(checkUserImage){
-            frm.append("imageIsNull","Y");
-        } else {
-            frm.append("userImage",$("#userImage")[0].files[0]);
-        }
-        var imgFileArr = selectFileList();
-        var i = 0;
-        for(i; i<imgFileArr.length; i++){
-            console.log(imgFileArr[i]);
-            frm.append("insa"+i,imgFileArr[i]);
-        }
-        async function saveImg(){
-            try {
-                await callApi.uploadFileToServer(frm).then(res=> {
-                    console.log(res);
-                    if(res.data.ErrorCode == 1){
-                        // alert(res.data.Msg);
-                    } else {
-                        // alert("저장이 완료되었습니다.");
-                        // window.location.href = "/user/userManagement";
-                        // location.reload();
-                    }
-                    // window.location.href = "/user/userManagement";
-                });
-            } catch (e) {
-                // alert("관리자에게 문의하세요.",e);
-            }
-        }
-        saveImg();
-    }
-
-    // 인사서류 파일 리스트 리턴
-    const selectFileList = () => {
-        let checkList = $("#fileBox li a");
-        var inputList = $("input[name=imgFileInput]");
-        let i = 0;
-        let tempArr = [];
-        for(i; i<checkList.length; i++){
-            if(checkList[i].className == "check_file"){
-                tempArr.push(inputList[i].files[0]);
-            }
-        }
-        return tempArr;
-    }
-
-    // 팝업 띄우기, 닫기
-    const openJoinPop = () => {
-        $(".modal_box").show();
-    }
-
-    /* row click event */
-    const addRow = (e) => {
-        var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        gridCommon.onAddRow();
-    }
-    const removeRow = (e) => {
-        var gridBox = $(e.target).siblings("div");
-        var gridApi = gridBox.find(".ag-root")[0]["__agComponent"].gridApi;
-        
-        let selectRow = gridApi.getSelectedRows();
-        selectRow.forEach((data)=>{
-            if(data.rowId != undefined){
-                switch(gridBox.attr("id").replace(/[0-9]/g,"")){
-                    case "dependGrid":
-                        delDataList["sfDelRowId"].push(data.rowId);
-                    break;
-                    case "eduGrid":
-                        delDataList["eduDelRowId"].push(data.rowId);
-                    break;
-                    case "carrerGrid":
-                        delDataList["exDelRowId"].push(data.rowId);
-                    break;
-                    case "militaryGrid":
-                        delDataList["miDelRowId"].push(data.rowId);
-                    break;
-                    case "curriculumGrid":
-                        delDataList["cuDelRowId"].push(data.rowId);
-                    break;
-                }
-            }
-        });
-        gridCommon.setGridApi(gridApi);
-        gridCommon.onRemoveRow();
-    }
-
-    const getDependRow = () => {
-        var gridApi = $("#dependGrid").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        return gridCommon.getRowData();
-    }
-    const getEduRow = () => {
-        var gridApi = $("#eduGrid").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        return gridCommon.getRowData();
-    }
-    const getCarrerRow = () => {
-        var gridApi = $("#carrerGrid").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        return gridCommon.getRowData();
-    }
-    const getMilitaryRow = () => {
-        var gridApi = $("#militaryGrid").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        return gridCommon.getRowData();
-    }
-    const getCurriculumRow = () => {
-        var gridApi = $("#curriculumGrid").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        return gridCommon.getRowData();
-    }
-    
-
-    const imgUpload = (e) => {
-        const fileInput = e.target;
-        if (fileInput.files && fileInput.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#userImgView').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(fileInput.files[0]);
-        }
-        $("#userImgText").addClass("txt_hide");
-    }
-
-    const openPostPop = (e) => {
-        $("#daumPostPop").show();
-    }
-
-    const addSalary = (e) => {
-        const salaryUl = $("#userInfoRight li.salary > ul:nth-child(2)");
-        const li = $("<li class='li_left add_li'>");
-        const btn = $('<button type="button" tabindex="-1" style="color:#7d7d7d; background-color:transparent;">X</button>').on("click",function(e){
-            $(e.target).parent().remove();  // 삭제이벤트
-        });
-        li.append('<input type="text" id="addSalaryTitle" name="addSalaryTitle" class="address" placeholder="추가수당"/>');
-        li.append(' : <input class="money_input" type="text" name="addSalaryPay" id="addSalaryPay" class="address" placeholder="1,700,000" style="margin-right:5px;"/>');
-        
-        li.append(btn);
-        salaryUl.append(li);
-    }
-    
-
-    
-    
-
     useEffect(()=>{
-        // checkModify = $(".user_type_label").length == 1 ? false : true;
 
-        checkModify = true;
-
-        console.log($(".user_type_label").length,"length!!!!!!!!!!");
-        console.log(checkModify,"checkModify");
     },[]); //init
 
     return (
@@ -429,13 +16,13 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         <form id="test">
             <div class="left_div">
                 {/* 왼쪽기본 내용 */}
-                <div id="userInfoLeft" class="test">
+                <div id="userInfoLeft">
                     <div class="left_div_inner">
                     <div class="imgload">
                         <img id="userImgView" class="userImgView" src='/images/user02.png' alt="유저사진"/>
                         <span id="userImgText" class="userImgText" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"5px"}}>
-                            <label for="userImage" class="userImg">수정</label><input type="file" class="userImage" id="userImage" accept="image/*" onChange={imgUpload}/>
+                            <label for="userImage" class="userImg">수정</label><input type="file" name="userImageInput" class="userImage" id="userImage" accept="image/*"/>
                             <label for="imgDelete">삭제</label><button type="button" id="imgDelete" name="imgDelete"/>
                         </div>
                     </div>
@@ -509,13 +96,13 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             </li>
                             <li style={{position:"relative"}}>
                                 우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호" style={{width:"152px"}} readOnly/>
-                                <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
+                                <button type="button" class="btn_gray postal_code" name="btnPost">우편번호</button>
                             </li>
                             <li>
                                 <input type="text" name="address" id="address" placeholder="주소"   style={{width:"300px"}} readOnly/>
                             </li>
                             <li style={{height:"70px"}}>
-                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소" readOnly></textarea>
+                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"></textarea>
                             </li>
                             <li class="leave_li">  
                                 <span>퇴사여부 :</span>
@@ -549,7 +136,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                     
                     {/* <input type="file" id="upload"/>
                     <label for="upload" class="upload">인사서류 업로드</label> */}
-                    <button type="button" class="upload" onClick={()=>openJoinPop()}>인사서류 업로드</button>
+                    <button type="button" class="upload" name="btnInsaUpload">인사서류 업로드</button>
                 {/* </div> */}
 
                 <div class="div_bottom right"> 
@@ -560,7 +147,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <ul>
                                 <li style={{listStyle:"disc", height:"21px", lineHeight:"21px"}}>
                                     <strong>급여항목</strong>
-                                    <button type="button" class="btn_gray wi64he19" id="addSalary" onClick={addSalary}>추가</button>
+                                    <button type="button" class="btn_gray wi64he19" id="addSalary">추가</button>
                                 </li>
                                 <li id="monthSalary" class="salary" style={{overflowY: "auto", marginTop:"10px"}}>
                                     <ul style={{ borderBottom:"1px dotted #e7e7e7", height:"40px"}}>
@@ -763,9 +350,9 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     </li> */}
                                     <li style={{listStyle:"disc", fontSize:"17px", marginLeft:"7px", marginTop:"45px"}}>
                                         <strong>부양가족</strong>
-                                        <button type="button" class="btn_gray" style={{marginLeft: "5px"}} onClick={(e)=>addRow(e)}>추가</button>
-                                        <button type="button" class="btn_gray" style={{marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
-                                        <div id="dependGrid" class="tab_02_grid grid_scrollX_none">
+                                        <button type="button" class="btn_gray" style={{marginLeft: "5px"}} name="btnAddRow">추가</button>
+                                        <button type="button" class="btn_gray" style={{marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div id="dependGrid" class="tab_02_grid grid_scrollX_none dependGrid">
                                             <DataGrid rowData={rowData} gridDefs={dependDefs}/>
                                         </div>
                                         {/* 부양가족 */}
@@ -781,9 +368,9 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <li>
                                     <strong>학력</strong>
                                     <div class="tab_01_inner">
-                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} onClick={(e)=>addRow(e)}>추가</button>
-                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
-                                        <div id="eduGrid" class="tab_01_grid grid_scrollX_none">
+                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div id="eduGrid" class="tab_01_grid grid_scrollX_none eduGrid">
                                             <DataGrid rowData={rowData2} gridDefs={euduDefs}/>
                                         </div>
                                     </div>
@@ -791,9 +378,9 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <li style={{marginTop:"20px"}}>
                                     <strong>경력</strong>
                                     <div class="tab_02_inner">
-                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
-                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
-                                        <div id="carrerGrid" class="tab_02_grid grid_scrollX_none">
+                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div id="carrerGrid" class="tab_02_grid grid_scrollX_none carrerGrid">
                                             <DataGrid rowData={rowData3} gridDefs={carrerDefs}/>
                                         </div>
                                     </div>
@@ -801,9 +388,9 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <li style={{marginTop:"20px"}}>
                                     <strong>병역</strong>
                                     <div class="tab_02_inner">
-                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
-                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
-                                        <div id="militaryGrid" class="tab_02_grid grid_scrollX_none">
+                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div id="militaryGrid" class="tab_02_grid grid_scrollX_none militaryGrid">
                                             <DataGrid rowData={rowData4} gridDefs={militaryDefs}/>
                                         </div>
                                     </div>
@@ -811,9 +398,9 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 <li style={{marginTop:"20px"}}>
                                     <strong>교육</strong>
                                     <div class="tab_02_inner">
-                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
-                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
-                                        <div id="curriculumGrid" class="tab_02_grid grid_scrollX_none">
+                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div id="curriculumGrid" class="tab_02_grid grid_scrollX_none curriculumGrid">
                                             <DataGrid rowData={rowData5} gridDefs={curriculumDefs}/>
                                         </div>
                                     </div>
@@ -826,7 +413,7 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
 
             </div>
             {/* <button type="button" class="btn_backnext next_position">이전으로</button> */}
-            <button type="button" class="btn_backnext save_position" onClick={fnSave}>저장하기</button>
+            <button type="button" class="btn_backnext save_position" name="btnSave">저장하기</button>
         </form>
     </div>
     

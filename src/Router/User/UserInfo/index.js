@@ -9,14 +9,36 @@ import { callApi } from '../../../Utils/api';
 import $ from 'jquery';
 import utils from '../../../Utils/utils';
 import gridCommon from '../../../Utils/grid';
+import { _ } from 'ag-grid-community';
 
 
 
 const UserInfo = () => {
     let imgInputLastIndex = 0;
     let pramsString = window.location.search.replace("?","");
-    let checkUserInfo = false;
+    let checkUserModify = false;
     let paramData = {};
+    let deleteImgList = {
+        rowId : [],
+        upLoad : {
+            "imageType": "",
+            "userNo": "",
+            "branchNo": "",
+            "employeeNumber": "",
+            "imageIsNull": "Y"
+        }
+    };
+
+    let params = {};
+    let frm = new FormData();
+    let checkUserImage = true;
+    let delDataList = {
+        "sfDelRowId": [],
+        "eduDelRowId": [],
+        "exDelRowId": [],
+        "miDelRowId": [],
+        "cuDelRowId": []
+    }
 
     console.log(pramsString);
     if(pramsString.length != 0){
@@ -30,7 +52,7 @@ const UserInfo = () => {
             paramData[tempArr[0]] = tempArr[1];
         };
         
-        checkUserInfo = true;
+        checkUserModify = true;
         // let paramsData = {
         //     "branchNo": ,
         //     "employeeNumber": ,
@@ -39,9 +61,14 @@ const UserInfo = () => {
     }
 
     const userInfoEvent = (data,othercontent,imgData) => {
-        console.log(data,"요기당");
         $("#userNo").val(data.userNo);
-        $("#employeeNumber").val(employeeNumber);
+        $("#employeeNumber").val(data.employeeNumber);
+
+        deleteImgList.upLoad["branchNo"] = data.branchNo;
+        deleteImgList.upLoad["userNo"] = data.userNo;
+        deleteImgList.upLoad["employeeNumber"] = data.employeeNumber;
+
+
         let userType = data.userType;
         let tab;
         if(userType == "0"){
@@ -80,12 +107,21 @@ const UserInfo = () => {
             if(key == "national" && val == "외국인"){
                 $(".visa_li").show();
             }
+            // 퇴사여부
             if(key == "isActive" && val == "0"){
                 elem.next().hide();
                 elem.parent().next().hide();
             }
+            // 수습기간
             if(key == "jobReductActive" && val == "0"){
                 $(".job_reduct_li").css("display","inline-block");
+            }
+
+            if(key == "businessNo"){
+                const businessArr = val.split("-");
+                $("#businessNo1").val(businessArr[0]);
+                $("#businessNo2").val(businessArr[1]);
+                $("#businessNo3").val(businessArr[2]);
             }
 
             // $(".visa_li").show();
@@ -102,16 +138,18 @@ const UserInfo = () => {
         for(i in imgData){
             // "D:\AdminSite\Save\c249bf54-c7e1-4bea-bd5c-eb7ab87aa13f_2004221.jpg"
             let path = imgData[i].fileName.match(/(\\)(Save)(\\)(.*)/g)[0];
+            path = path.replace(/\\/g,"/");
             let type = imgData[i].imageType;
-            let url = "http://211.251.238.215:5302/";
+            let url = "http://211.251.238.215:5302";
 
             // 유저사진
             if(type == "1"){
                 $(".userImgView").prop("src",url+path);
-                // $(".userImgView").attr("data-row-id",imgData[i].rowId);
+                $("#userImgModify").attr("data-row-id",imgData[i].rowId == undefined ? "" : imgData[i].rowId);
                 $(".userImgText").addClass("txt_hide");
+                deleteImgList.upLoad.imageIsNull = "";
             } else { // 인사서류
-                addFileList("파일"+i,url+path,true);
+                addFileList("파일"+i,url+path,true,imgData[i].rowId);
             }
         }
 
@@ -119,25 +157,6 @@ const UserInfo = () => {
         $("input").trigger("change");
         
         addSalaryList(othercontent);
-    }
-
-    const insaImgInit = (data) => {
-        // 인사서류 기존 데이터는 upload아님
-        // 기존 데이터 삭제시 어떻게 처리?
-        
-    }
-
-    const imgDelete = () => {
-        // {
-        //     "rowId": null, -> 삭제할 rowId 배열
-        //     "upLoad": {
-        //         "imageType": 0,
-        //         "userNo": 0,
-        //         "branchNo": 0,
-        //         "employeeNumber": null,
-        //         "imageIsNull": null
-        //     }
-        // }
     }
 
     const addSalaryList = (othercontent) => {
@@ -352,13 +371,15 @@ const UserInfo = () => {
                     return utils.regExr.koreanOnly(params.data.sfName);
                 }
             }
-            ,{ headerName: '주민(외국인)번호', field: "sfPersnoalNumber", editable:true, width:160
-                ,valueGetter: function(params){
-                    if(!personalValidaition(params.data.sfPersnoalNumber)){
-                        return "";
-                    }
-                    return utils.regExr.personalNum(params.data.sfPersnoalNumber);
-            }}
+            ,{ headerName: '주민(외국인)번호', field: "sfPersnoalNumber", editable:true, width:160,
+                cellEditor : $("<input id='test'>")
+                // ,valueGetter: function(params){
+                //     if(!personalValidaition(params.data.sfPersnoalNumber)){
+                //         return "";
+                //     }
+                //     return utils.regExr.personalNum(params.data.sfPersnoalNumber);
+                // }
+            }
             ,{ headerName: "연말정산관계", field: "sfRelation", width:120,
                 cellEditor : "select", 
                 cellEditorParams: { values : gridCommon.extractValues(regtaxAdjustmentMappings)},refData: regtaxAdjustmentMappings}
@@ -514,21 +535,6 @@ const UserInfo = () => {
         
          return true;
     }
-
-    const dateValidation = (date) =>{
-        var date = utils.regExr.numOnly(date);
-        var month = date.substring(4,6);
-        var day = date.substring(6,8);
-        
-        if(month>12 || month<1){
-            return false;
-        }
-
-        if(day>31 || day<1){
-            return false;
-        }
-        return true;
-    }
     
     const closePostPop = (e) => {
         $("#daumPostPop").hide();
@@ -562,34 +568,74 @@ const UserInfo = () => {
     }
 
     useEffect(()=>{
-        let tesetFn = () => {
-            let test = {
-                qwer:1,
-                test:2,
-                eeee:3
-            }
 
-            return {test};
-        }
-
-        
+        setDependDefs(gridDependSeitting());
+        setEduDefs(gridEducationSetting());
+        setCarrerDefs(gridAllCarrerSetting());
+        setMilitaryDefs(gridMilitarySeitting());
+        setCurriculumDefs(gridCurriculumSeitting());
 
         async function init() {
             try {
-               setDependDefs(gridDependSeitting());
-               setEduDefs(gridEducationSetting());
-               setCarrerDefs(gridAllCarrerSetting());
-               setMilitaryDefs(gridMilitarySeitting());
-               setCurriculumDefs(gridCurriculumSeitting());
-               if(checkUserInfo){
+               if(checkUserModify){
                     initUserInfo(paramData);
                }
             }catch(e){
                 alert(e);
             }
         };
-           init();
+        init();
+        fileDropDown();
+        bindEvent();
+    },[]); //init
 
+    const bindEvent = () => {
+        // 급여항목 추가
+        $("#addSalary").on("click",(e)=>{
+            addSalary(e);
+        });
+
+        // 유저 사진 변경
+        $("input[name=userImageInput]").on("change",(e)=>{
+            userImgChange(e);
+        });
+
+        // 우편 팝업 oepn
+        $("button[name=btnPost]").on("click",(e)=>{
+            openPostPop();
+        });
+
+        // 인사서류 업로드
+        $("button[name=btnInsaUpload]").on("click",(e)=>{
+           $(".modal_box.imgupload").show(); 
+        });
+
+        // 로우추가
+        $("button[name=btnAddRow]").on("click",(e)=>{
+            addRow(e);
+        });
+
+        // 로우제거
+        $("button[name=btnRemoveRow]").on("click",(e)=>{
+            removeRow(e);
+        });
+
+        // 저장버튼
+        $("button[name=btnSave]").on("click",function(e){
+            var checkTab = $("[name=tab1]:checked")[0].id;
+
+            switch(checkTab){
+                case "tab_01":
+                    fnSave();
+                    break;
+                case "tab_02":
+                    fnSave2();
+                    break;
+                case "tab_03":
+                    fnSave3();
+                    break;
+            }
+        });
 
         $(document).on("keyup","input.money_input",function(e){
             var targetVal = e.target.value;
@@ -752,19 +798,24 @@ const UserInfo = () => {
             }
         });
 
+        // 유저 이미지 삭제
         $("button[name=imgDelete]").on("click",function(e){
             let img = $(e.target).parent().siblings(".userImgView");
             let text = $(e.target).parent().siblings(".userImgText");
+            let checkModifiy = $("#userImgModify").attr("data-row-id");
+            checkModifiy = checkModifiy == undefined ? "" : checkModifiy;
 
             img.attr("src","/images/user02.png");
             text.removeClass("txt_hide");
             $(e.target).siblings(".userImage").val("");
+
+            if(checkModifiy.length != 0 ){
+                deleteImgList.rowId.push(checkModifiy);
+                deleteImgList.upLoad.imageIsNull = "Y";
+                $("#userImgModify").attr("data-row-id","");
+            }
         });
-        
-
-        fileDropDown();
-    },[]); //init
-
+    }
 
     const monthSalaryEvent = () =>{
         var inputList = $("#monthSalary input");
@@ -907,7 +958,7 @@ const UserInfo = () => {
     }
  
     // 업로드 파일 목록 생성
-    function addFileList(fileName, filePath, check){
+    function addFileList(fileName, filePath, check, rowId){
         var li = $("<li>");
         var a = $("<a style='cursor:pointer'>");
         var img_box = $("<span class='img_box'>");
@@ -918,6 +969,7 @@ const UserInfo = () => {
         
         if(check){
             a.addClass("check_file");
+            a.attr("data-row-id",rowId);
         }
         $(".img_file_box").append(file_input);
         img_box.append(img);
@@ -937,9 +989,10 @@ const UserInfo = () => {
             if(checkList[i].className == "check_file"){
                 checkList[i].parentElement.remove();
                 checkInputList[i].remove();
+                if(checkList[i].dataset.rowId != undefined){
+                    // deleteImgList
+                }
                 // tempArr.push(imgFileList[i]);
-            } else if(checkList[i].className != "btn_img_add"){
-                // checkList[i].parentElement.remove();
             }
         }
     }
@@ -947,24 +1000,617 @@ const UserInfo = () => {
     const hideFileList = () => {
         $(".modal_box.imgupload").hide();
     }
-    
-    // 업로드 파일 삭제
-    function deleteFile(fIndex){
-        // 전체 파일 사이즈 수정
-        totalFileSize -= fileSizeList[fIndex];
+
+    /****************************************************
+     * 합치자!!!!
+     * 전체 공통부분
+     ****************************************************/
+    const addRow = (e) => {
+        var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        gridCommon.onAddRow();
+    }
+
+    const removeRow = (e) => {
+        var gridBox = $(e.target).siblings("div");
+        var gridApi = gridBox.find(".ag-root")[0]["__agComponent"].gridApi;
         
-        // 파일 배열에서 삭제
-        delete fileList[fIndex];
+        let selectRow = gridApi.getSelectedRows();
+        selectRow.forEach((data)=>{
+            if(data.rowId != undefined){
+                switch(gridBox.attr("id").replace(/[0-9]/g,"")){
+                    case "dependGrid":
+                        delDataList["sfDelRowId"].push(data.rowId);
+                    break;
+                    case "eduGrid":
+                        delDataList["eduDelRowId"].push(data.rowId);
+                    break;
+                    case "carrerGrid":
+                        delDataList["exDelRowId"].push(data.rowId);
+                    break;
+                    case "militaryGrid":
+                        delDataList["miDelRowId"].push(data.rowId);
+                    break;
+                    case "curriculumGrid":
+                        delDataList["cuDelRowId"].push(data.rowId);
+                    break;
+                }
+            }
+        });
+        gridCommon.setGridApi(gridApi);
+        gridCommon.onRemoveRow();
+    }
+
+    const getDependRow = () => {
+        var checkTab = "."+document.querySelector("[name=tab1]:checked").id;
+        var gridApi = $(checkTab+" .dependGrid").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        return gridCommon.getRowData();
+    }
+    const getEduRow = () => {
+        var checkTab = "."+document.querySelector("[name=tab1]:checked").id;
+        var gridApi = $(checkTab+" .eduGrid").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        return gridCommon.getRowData();
+    }
+    const getCarrerRow = () => {
+        var checkTab = "."+document.querySelector("[name=tab1]:checked").id;
+        var gridApi = $(checkTab+" .carrerGrid").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        return gridCommon.getRowData();
+    }
+    const getMilitaryRow = () => {
+        var checkTab = "."+document.querySelector("[name=tab1]:checked").id;
+        var gridApi = $(checkTab+" .militaryGrid").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        return gridCommon.getRowData();
+    }
+    const getCurriculumRow = () => {
+        var checkTab = "."+document.querySelector("[name=tab1]:checked").id;
+        var gridApi = $(checkTab+" .curriculumGrid").find(".ag-root")[0]["__agComponent"].gridApi;
+        gridCommon.setGridApi(gridApi);
+        return gridCommon.getRowData();
+    }
+
+    const openPostPop = (e) => {
+        // $("name=btnPost")
+        $("#daumPostPop").show();
+    }
+
+    const userImgChange = (e) => {
+        let checkTab = "."+document.querySelector("[name=tab1]:checked").id;
+        // $("name=userImageInput") 
+        const fileInput = e.target;
+        if (fileInput.files && fileInput.files[0]) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                $(checkTab+' .userImgView').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(fileInput.files[0]);
+            $(checkTab+" .userImgText").addClass("txt_hide");
+            deleteImgList.upLoad.imageIsNull = "";
+        }
+    }
+
+    // 인사서류 파일 리스트 리턴
+    const selectFileList = () => {
+        let checkList = $("#fileBox li a");
+        let inputList = $("input[name=imgFileInput]");
+        let i = 0;
+        let tempArr = [];
+        for(i; i<checkList.length; i++){
+            if(checkList[i].className == "check_file"){
+                tempArr.push(inputList[i].files[0]);
+            }
+        }
+        return tempArr;
+    }
+
+    const fnValidation = () => {
+        let checkTab = "."+document.querySelector("[name=tab1]:checked").id;
+        let tabDiv = ".div_bottom"+checkTab;
+        const regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
         
-        // 파일 사이즈 배열 삭제
-        delete fileSizeList[fIndex];
         
-        // 업로드 파일 테이블 목록에서 삭제
-        $("#fileTr_" + fIndex).remove();
+        let personalNumber = $(tabDiv).find("#personalNumber").val();
+        if(!personalValidaition(personalNumber)){
+            alert("주민번호가 올바르지 않습니다.");
+            return false;
+        }
+
+        if(!regEmail.test($(".div_bottom.tab_01 input[type='email']").val())){
+            alert("이메일이 올바르지 않습니다.");
+            return false;
+        }
+
+        var dateInput = $(tabDiv+" input.date_input");
+        var i = 0;
+        for(i; i<dateInput.length; i++){
+            if(dateInput[i].value.length == 0){
+                continue;
+            }
+            if(!dateValidation(dateInput[i].value)){
+                alert("날짜가 올바르지 않습니다.");
+                if(dateInput[i].id == "getOfIns0" || dateInput[i].id == "lostOfIns0"
+                    || dateInput[i].id == "getOfIns1" || dateInput[i].id == "lostOfIns3"
+                    || dateInput[i].id == "getOfIns2" || dateInput[i].id == "lostOfIns2"
+                    || dateInput[i].id == "getOfIns3" || dateInput[i].id == "lostOfIns1"
+                ){
+                    $(tabDiv).find("label[for='tab_002']").click();
+                } else {
+                    $(tabDiv).find("label[for='tab_001']").click();
+                }
+                dateInput[i].select();
+                dateInput[i].focus();
+                return false;
+            }
+        }
+
+        var dateToInput = $(tabDiv+" input.dateto_input");
+        i=0;
+        for(i; i<dateToInput.length; i++){
+            var targetArr = dateToInput[i].value.split("~");
+            var date1 = utils.regExr.numOnly(targetArr[0]);
+            var date2 = utils.regExr.numOnly(targetArr[1]);
+
+            if(!dateValidation(date1) || !dateValidation(date2)){
+                alert("날짜가 올바르지 않습니다.");
+                dateToInput[i].select();
+                dateToInput[i].focus();
+                return false;
+            }
+            if(date1 > date2){
+                alert("기간이 올바르지 않습니다.");
+                dateToInput[i].select();
+                dateToInput[i].focus();
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    const dateValidation = (date) =>{
+        var date = utils.regExr.numOnly(date);
+        var month = date.substring(4,6);
+        var day = date.substring(6,8);
+        
+        if(month>12 || month<1){
+            return false;
+        }
+
+        if(day>31 || day<1){
+            return false;
+        }
+        return true;
+    }
+
+
+    function personalValidaition(jumin) {
+        jumin = utils.regExr.numOnly(jumin);
+       
+        //주민등록 번호 13자리를 검사한다.
+         var fmt = /^\d{6}[123456]\d{6}$/;  //포멧 설정
+         if (!fmt.test(jumin)) {
+          return false;
+         }
+       
+         // 생년월일 검사
+         var birthYear = (jumin.charAt(6) <= "2") ? "19" : "20";
+         birthYear += jumin.substr(0, 2);
+         var birthMonth = jumin.substr(2, 2) - 1;
+         var birthDate = jumin.substr(4, 2);
+         var birth = new Date(birthYear, birthMonth, birthDate);
+       
+         if ( birth.getYear() % 100 != jumin.substr(0, 2) ||
+              birth.getMonth() != birthMonth ||
+              birth.getDate() != birthDate) {
+            return false;
+         }
+       
+        
+         return true;
+    }
+
+
+    const saveImgFile = (userNo,employeeNumber) => {
+        const checkTab = $("[name=tab1]:checked")[0].id;
+        const checkModify = $("#userImgModify").attr("data-row-id");
+        frm = new FormData();
+        frm.append("userNo",userNo);
+        frm.append("employeeNumber",employeeNumber);
+        checkUserImage = $("."+checkTab+" input[name=userImageInput]")[0].value == "" ? true : false;
+        if(checkUserImage && deleteImgList.upLoad.imageIsNull == "Y"){
+            frm.append("imageIsNull","Y");
+        } else if(checkModify.length == 0){ 
+            frm.append("userImage",$("."+checkTab+" input[name=userImageInput]")[0].files[0]);
+        }
+        var imgFileArr = selectFileList();
+        var i = 0;
+        for(i; i<imgFileArr.length; i++){
+            console.log(imgFileArr[i]);
+            frm.append("insa"+i,imgFileArr[i]);
+            // 요기
+        }
+        async function saveImg(){
+            try {
+                await callApi.uploadFileToServer(frm).then(res=> {
+                    if(res.data.ErrorCode == 1){
+                        // alert(res.data.Msg);
+                    } else {
+                        // alert("저장이 완료되었습니다.");
+                        // window.location.href = "/user/userManagement";
+                        // location.reload();
+                    }
+                    // window.location.href = "/user/userManagement";
+                });
+            } catch (e) {
+                // alert("관리자에게 문의하세요.",e);
+            }
+        }
+        saveImg();
+
+        async function deleteImg(deleteImgList){
+            try {
+                await callApi.UpdateFileToServer(deleteImgList).then(res=> {
+                    if(res.data.ErrorCode == 1){
+                        // alert(res.data.Msg);
+                    } else {
+                        // alert("저장이 완료되었습니다.");
+                        // window.location.href = "/user/userManagement";
+                        // location.reload();
+                    }
+                    // window.location.href = "/user/userManagement";
+                });
+            } catch (e) {
+                // alert("관리자에게 문의하세요.",e);
+            }
+        }
+        if(deleteImgList.rowId.length != 0){
+            deleteImg(deleteImgList);
+
+        }
+    }
+
+
+    /***********************************
+     * 그외 
+     */
+    const addSalary = (e) => {
+        // $("#addSalary").on("click",function(){});
+        const salaryUl = $("#userInfoRight li.salary > ul:nth-child(2)");
+        const li = $("<li class='li_left add_li'>");
+        const btn = $('<button type="button" tabindex="-1" style="color:#7d7d7d; background-color:transparent;">X</button>').on("click",function(e){
+            $(e.target).parent().remove();  // 삭제이벤트
+        });
+        li.append('<input type="text" id="addSalaryTitle" name="addSalaryTitle" class="address" placeholder="추가수당"/>');
+        li.append(' : <input class="money_input" type="text" name="addSalaryPay" id="addSalaryPay" class="address" placeholder="1,700,000" style="margin-right:5px;"/>');
+        
+        li.append(btn);
+        salaryUl.append(li);
     }
     
-    const closePopup = () => {
-        $(".modal_box.imgupload").hide();
+    
+
+     /****************************************************
+     * 합치자!!!!
+     * 각 save부분
+     ****************************************************/
+
+    const fnSave = () => {
+        // if($("#userNo").val().length > 0){
+        //     checkModify = true; 
+        // } else {
+        //     checkModify = false;
+        // }
+
+        if(!fnValidation()){
+            return;
+        }
+        
+        let i=0;
+        const inputListLeft = $("#userInfoLeft input:not([name=tab]), #userInfoLeft select, #userInfoLeft textarea");
+        const inputListTab1 = $("#userInfoRight input:not([name=tab]), #userInfoRight select");
+        const inputListTab2 = $("#insurnaceTable input");
+        
+        let tempParams = {};
+        let key;
+        let value;
+        for(i; i<inputListLeft.length; i++){
+            key = inputListLeft[i].id;
+            value = inputListLeft[i].value;
+            if(key.indexOf("userImage") != -1){
+                continue;
+            }
+            tempParams[key] = value;
+        }
+        params["userInfo"] = tempParams;
+        params.userInfo.userType = 0; // 일반소득자
+        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
+        
+        params.userInfo.userNo = $("#userNo").val();
+        params.userInfo.employeeNumber = $("#employeeNumber").val();
+
+        i=0;
+        tempParams = {
+            "otherContent" : [
+            ]
+        };
+
+        let tempJson = {};
+        let tempTitle = "";
+        for(i; i<inputListTab1.length; i++){
+            var checkId = inputListTab1[i].id;
+            var checkClass = inputListTab1[i].className;
+            var val = inputListTab1[i].value;
+            // 급여항목 추가리스트
+            if(checkId.indexOf("addSalary") != -1){
+                if(checkId == "addSalaryTitle"){
+                    // tempParams.otherContent += '"'+inputListTab1[i].value+'":';
+                    tempJson.title = val;
+                } else if(checkId == "addSalaryPay"){
+                    // tempParams.otherContent += '"'+inputListTab1[i].value+'"';
+                    tempJson.value = val;
+                    tempParams.otherContent.push(tempJson);
+                    tempJson = {};
+                }
+            } else {
+                if(checkClass.indexOf("money_input") != -1){
+                    val = utils.regExr.numOnly(val);
+                }
+                tempParams[inputListTab1[i].id] = val;
+            }
+        }
+
+        // tempParams.otherContent = JSON.parse("{"+tempParams.otherContent.slice(0,-1)+"}");
+        console.log(tempParams.otherContent);
+
+        params["detailData"] = tempParams;
+
+        i=0;
+        tempParams = {};
+        for(i; i<inputListTab2.length; i++){
+            if(checkUserModify){
+                params["detailData"][inputListTab2[i].id] = inputListTab2[i].value;
+            } else {
+                tempParams[inputListTab2[i].id] = inputListTab2[i].value; 
+            }
+        }
+
+        params["insData"] = tempParams;
+        if(checkUserModify){
+            params["sfData"] = getDependRow();
+            params["eduData"] = getEduRow();
+            params["exData"] = getCarrerRow();
+            params["miData"] = getMilitaryRow();
+            params["cuData"] = getCurriculumRow();
+        } else {
+            params.insData["sfModel"] = getDependRow();
+            
+            params["eduData"] = {
+                "eduModels" : getEduRow()
+            };
+            params["exData"] = {
+                "exModels" : getCarrerRow()
+            };
+            params["miData"] = {
+                "miModels" : getMilitaryRow()
+            };
+            params["cuData"] = {
+                "cuModels" : getCurriculumRow()
+            };
+        }
+        
+
+        async function saveInit(params) {
+            try {
+                console.log(JSON.stringify(params));
+                console.log(params);
+                if(checkModify){
+                    await callApi.updateUserInformation(params).then(res=> {
+                        if(res.data.ErrorCode == 1){
+                            alert(res.data.Msg);
+                        } else {
+                            alert("수정이 완료되었습니다.");
+                            saveImgFile(res.data.Data, res.data.Id);
+                            // window.location.href = "/user/userManagement";
+                            // location.reload();
+                        }
+                    });
+                } else {
+                    await callApi.userRegistration(params).then(res=> {
+                        if(res.data.ErrorCode == 1){
+                            alert(res.data.Msg);
+                        } else {
+                            alert("저장이 완료되었습니다.");
+                            saveImgFile(res.data.Data, res.data.Id);
+                            // window.location.href = "/user/userManagement";
+                            // location.reload();
+                        }
+                    });
+                }
+            }catch(e){
+                alert("관리자에게 문의하세요.",e);
+            }
+        };
+
+        params["delDataList"] = delDataList;
+        console.log(params);
+        console.log(JSON.stringify(params));
+        // saveInit(params);
+    }
+
+
+    const fnSave2 = () => {
+
+        if(!fnValidation()){
+            return;
+        }
+        
+        let i=0;
+        const inputListLeft = $("#userInfoLeft2 input:not([name=tab]), #userInfoLeft2 select, #userInfoLeft2 textarea");
+        const inputListTab1 = $("#userInfoRight2 input:not([name=tab]), #userInfoRight2 select");
+
+        // const inputListTab2 = $("#insurnaceTable input");
+        
+        let tempParams = {};
+        var key;
+        var value;
+        for(i; i<inputListLeft.length; i++){
+            key = inputListLeft[i].id;
+            value = inputListLeft[i].value;
+            if(key.indexOf("userImage") != -1){
+                continue;
+            }
+            tempParams[key] = value; 
+        }
+        params["userInfo"] = tempParams;
+        params.userInfo.userType = 1; // 사업소득자
+        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
+
+        i=0;
+        tempParams = {};
+        for(i; i<inputListTab1.length; i++){
+            var checkId = inputListTab1[i].id;
+            var checkVal = inputListTab1[i].value;
+            var checkClass = inputListTab1[i].className;
+            
+            if(checkId.indexOf("businessNo") != -1){
+                if(checkId == "businessNo1"){
+                    tempParams["businessNo"] = checkVal;
+                } else {
+                    tempParams["businessNo"] += "-" + checkVal;
+                }
+                continue;
+            }
+
+            if(checkClass.indexOf("money_input") != -1){
+                checkVal = utils.regExr.numOnly(checkVal);
+            }
+            tempParams[checkId] = checkVal; 
+        }
+
+        params["detailData"] = tempParams;
+
+        params["eduData"] = {
+            "eduModels" : getEduRow()
+        };
+
+        params["exData"] = {
+            "exModels" : getCarrerRow()
+        };
+
+        params["miData"] = {
+            "miModels" : getMilitaryRow()
+        };
+
+        params["cuData"] = {
+            "cuModels" : getCurriculumRow()
+        };
+
+        async function saveInit() {
+            try {
+                console.log(JSON.stringify(params));
+                console.log(params);
+                await callApi.businessUserRegistration(params).then(res=> {
+                    if(res.data.ErrorCode == 1){
+                        alert(res.data.Msg);
+                    } else {
+                        alert("저장이 완료되었습니다.");
+                        saveImgFile(res.data.Data, res.data.Id);
+                        // window.location.href = "/user/userManagement";
+                        // location.reload();
+                    }
+                });
+
+            }catch(e){
+                // alert("관리자에게 문의하세요.",e);
+            }
+        };
+        params["delDataList"] = delDataList;
+        saveInit();
+    }
+
+
+    const fnSave3 = () => {
+
+        if(!fnValidation()){
+            return;
+        }
+
+        let i=0;
+        const inputListLeft = $("#userInfoLeft3 input:not([name=tab]), #userInfoLeft3 select, #userInfoLeft3 textarea");
+        const inputListTab1 = $("#userInfoRight3 input:not([name=tab]):not(#predictionMonth), #userInfoRight3 select");
+        const inputListTab2 = $("#insurnaceTable2 input");
+        
+        let tempParams = {};
+        var key;
+        var value;
+        for(i; i<inputListLeft.length; i++){
+            key = inputListLeft[i].id;
+            value = inputListLeft[i].value;
+            if(key.indexOf("userImage") != -1){
+                continue;
+            }
+            tempParams[key] = value; 
+        }
+        i=0;
+        for(i; i<inputListTab1.length; i++){
+            var checkId = inputListTab1[i].id;
+            var checkVal = inputListTab1[i].value;
+            var checkClass = inputListTab1[i].className;
+            if(checkClass.indexOf("money_input") != -1){
+                checkVal = utils.regExr.numOnly(checkVal);
+            }
+            console.log(checkId,checkVal);
+            tempParams[checkId] = checkVal;
+        }
+        i=0;
+        for(i; i<inputListTab2.length; i++){
+            tempParams[inputListTab2[i].id] = inputListTab2[i].value; 
+        }
+
+        params["userInfo"] = tempParams;
+        params.userInfo.userType = 2; // 일용직근로자
+        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
+
+        params.userInfo["sfData"] = getDependRow();
+
+        params["eduData"] = {
+            "eduModels" : getEduRow()
+        };
+
+        params["exData"] = {
+            "exModels" : getCarrerRow()
+        };
+
+        params["miData"] = {
+            "miModels" : getMilitaryRow()
+        };
+
+        params["cuData"] = {
+            "cuModels" : getCurriculumRow()
+        };
+        
+        async function saveInit() {
+            try {
+                await callApi.dayilyUserRegistration(params).then(res=> {
+                    if(res.data.ErrorCode == 1){
+                        alert(res.data.Msg);
+                    } else {
+                        alert("저장이 완료되었습니다.");
+                        saveImgFile(res.data.Data, res.data.Id);
+                        // window.location.href = "/user/userManagement";
+                    }
+                });
+
+            }catch(e){
+                alert(e);
+            }
+        };
+        console.log(params);
+        console.log(JSON.stringify(params));
+        saveInit();
     }
 
     return(
@@ -977,7 +1623,8 @@ const UserInfo = () => {
             <div class="user_input_inner">
                 <input id="userNo" type="text" hidden></input>
                 <input id="employeeNumber" type="text" hidden></input>
-
+                <input id="userImgModify" type="text" data-row-id="" hidden></input>
+                
                 <input type="radio" id="tab_01" name="tab1" defaultChecked/>
                 <label class="user_type_label" for="tab_01">일반근로자</label>
                 <input type="radio" id="tab_02" name="tab1" />
@@ -1003,7 +1650,7 @@ const UserInfo = () => {
             {/* <div className=""> */}
             {/* html 추가 */}
             <div class="file_upload">
-                <img class="btn_close" src="/images/esc.png" alt="닫기" onClick={()=>closePopup()} />
+                <img class="btn_close" src="/images/esc.png" alt="닫기" onClick={()=>hideFileList()} />
                 <div class="file_upload_board">
                     <div class="file_upload_inner">
                         {/* 파일등록 전 */}

@@ -6,316 +6,6 @@ import { callApi } from '../../../../Utils/api';
 import utils from '../../../../Utils/utils';
 
 const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, militaryDefs, curriculumDefs, rowData2, rowData3, rowData4, rowData5}) => {
-    let params = {};
-    let frm = new FormData();
-    let checkUserImage = true;
-    let delDataList = {
-        "sfDelRowId": [],
-        "eduDelRowId": [],
-        "exDelRowId": [],
-        "miDelRowId": [],
-        "cuDelRowId": []
-    }
-    
-    const fnValidation = () => {
-        var tabDiv = ".div_bottom.tab_02";
-        var regEmail = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-        
-        
-        var personalNumber = $(tabDiv).find("#personalNumber").val();
-        if(!personalValidaition(personalNumber)){
-            alert("주민번호가 올바르지 않습니다.");
-            return false;
-        }
-
-        if(!regEmail.test($(tabDiv+" input[type='email']").val())){
-            alert("이메일이 올바르지 않습니다.");
-            return false;
-        }
-
-        var dateInput = $(tabDiv+" input.date_input");
-        var i = 0;
-        for(i; i<dateInput.length; i++){
-            if(dateInput[i].value.length == 0){
-                continue;
-            }
-            if(!dateValidation(dateInput[i].value)){
-                alert("날짜가 올바르지 않습니다.");
-                dateInput[i].select();
-                dateInput[i].focus();
-                return false;
-            }
-        }
-
-        var dateToInput = $(tabDiv+" input.dateto_input");
-        i=0;
-        for(i; i<dateToInput.length; i++){
-            var targetArr = dateToInput[i].value.split("~");
-            var date1 = utils.regExr.numOnly(targetArr[0]);
-            var date2 = utils.regExr.numOnly(targetArr[1]);
-
-            if(!dateValidation(date1) || !dateValidation(date2)){
-                alert("날짜가 올바르지 않습니다.");
-                dateToInput[i].select();
-                dateToInput[i].focus();
-                return false;
-            }
-            if(date1 > date2){
-                alert("기간이 올바르지 않습니다.");
-                dateToInput[i].select();
-                dateToInput[i].focus();
-                return false;
-            }
-        }
-        return true;
-    }
-
-    function personalValidaition(jumin) {
-        jumin = utils.regExr.numOnly(jumin);
-       
-        //주민등록 번호 13자리를 검사한다.
-         var fmt = /^\d{6}[123456]\d{6}$/;  //포멧 설정
-         if (!fmt.test(jumin)) {
-          return false;
-         }
-       
-         // 생년월일 검사
-         var birthYear = (jumin.charAt(6) <= "2") ? "19" : "20";
-         birthYear += jumin.substr(0, 2);
-         var birthMonth = jumin.substr(2, 2) - 1;
-         var birthDate = jumin.substr(4, 2);
-         var birth = new Date(birthYear, birthMonth, birthDate);
-       
-         if ( birth.getYear() % 100 != jumin.substr(0, 2) ||
-              birth.getMonth() != birthMonth ||
-              birth.getDate() != birthDate) {
-            return false;
-         }
-       
-        
-         return true;
-       }
-
-    const dateValidation = (date) =>{
-        var date = utils.regExr.numOnly(date);
-        var month = date.substring(4,6);
-        var day = date.substring(6,8);
-        console.log(month);
-        console.log(day);
-        
-        if(month>12 || month<1){
-            return false;
-        }
-
-        if(day>31 || day<1){
-            return false;
-        }
-        return true;
-    }
-
-    const imgUpload2 = (e) => {
-        console.log(e);
-        const fileInput = e.target;
-        if (fileInput.files && fileInput.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#userImgView2').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(fileInput.files[0]);
-        }
-        $("#userImgText2").addClass("txt_hide");
-    }
-
-    const fnSave2 = () => {
-
-        if(!fnValidation()){
-            return;
-        }
-        
-        let i=0;
-        const inputListLeft = $("#userInfoLeft2 input:not([name=tab]), #userInfoLeft2 select, #userInfoLeft2 textarea");
-        const inputListTab1 = $("#userInfoRight2 input:not([name=tab]), #userInfoRight2 select");
-
-        // const inputListTab2 = $("#insurnaceTable input");
-        
-        let tempParams = {};
-        var key;
-        var value;
-        for(i; i<inputListLeft.length; i++){
-            key = inputListLeft[i].id;
-            value = inputListLeft[i].value;
-            if(key.indexOf("userImage") != -1){
-                continue;
-            }
-            tempParams[key] = value; 
-        }
-        params["userInfo"] = tempParams;
-        params.userInfo.userType = 1; // 사업소득자
-        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
-
-        i=0;
-        tempParams = {};
-        for(i; i<inputListTab1.length; i++){
-            var checkId = inputListTab1[i].id;
-            var checkVal = inputListTab1[i].value;
-            var checkClass = inputListTab1[i].className;
-            
-            if(checkId.indexOf("businessNo") != -1){
-                if(checkId == "businessNo1"){
-                    tempParams["businessNo"] = checkVal;
-                } else {
-                    tempParams["businessNo"] += "-" + checkVal;
-                }
-                continue;
-            }
-
-            if(checkClass.indexOf("money_input") != -1){
-                checkVal = utils.regExr.numOnly(checkVal);
-            }
-            tempParams[checkId] = checkVal; 
-        }
-
-        params["detailData"] = tempParams;
-
-        params["eduData"] = {
-            "eduModels" : getEduRow()
-        };
-
-        params["exData"] = {
-            "exModels" : getCarrerRow()
-        };
-
-        params["miData"] = {
-            "miModels" : getMilitaryRow()
-        };
-
-        params["cuData"] = {
-            "cuModels" : getCurriculumRow()
-        };
-
-        async function saveInit() {
-            try {
-                console.log(JSON.stringify(params));
-                console.log(params);
-                await callApi.businessUserRegistration(params).then(res=> {
-                    if(res.data.ErrorCode == 1){
-                        alert(res.data.Msg);
-                    } else {
-                        alert("저장이 완료되었습니다.");
-                        saveImgFile(res.data.Data, res.data.Id);
-                        // window.location.href = "/user/userManagement";
-                        // location.reload();
-                    }
-                });
-
-            }catch(e){
-                // alert("관리자에게 문의하세요.",e);
-            }
-        };
-        saveInit();
-    }
-
-    const saveImgFile = (userNo,employeeNumber) => {
-        frm = new FormData();
-        frm.append("userNo",userNo);
-        frm.append("employeeNumber",employeeNumber);
-        checkUserImage = $("#userImage2")[0].value == "" ? true : false;
-        if(checkUserImage){
-            frm.append("imageIsNull","Y");
-        } else {
-            frm.append("userImage",$("#userImage2")[0].files[0]);
-        }
-        var imgFileArr = selectFileList();
-        var i = 0;
-        for(i; i<imgFileArr.length; i++){
-            console.log(imgFileArr[i]);
-            frm.append("insa"+i,imgFileArr[i]);
-        }
-        async function saveImg(){
-            try {
-                await callApi.uploadFileToServer(frm).then(res=> {
-                    console.log(res);
-                    if(res.data.ErrorCode == 1){
-                        // alert(res.data.Msg);
-                    } else {
-                        // alert("저장이 완료되었습니다.");
-                        // window.location.href = "/user/userManagement";
-                        // location.reload();
-                    }
-                    window.location.href = "/user/userManagement";
-                });
-            } catch (e) {
-                alert("관리자에게 문의하세요.",e);
-            }
-        }
-        saveImg();
-    }
-
-    const openPostPop = (e) => {
-        $("#daumPostPop").show();
-    }
-
-   /* row click event */
-   const addRow = (e) => {
-        var gridApi = $(e.target).siblings("div").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        gridCommon.onAddRow();
-    }
-    const removeRow = (e) => {
-        var gridBox = $(e.target).siblings("div");
-        var gridApi = gridBox.find(".ag-root")[0]["__agComponent"].gridApi;
-        
-        let selectRow = gridApi.getSelectedRows();
-        selectRow.forEach((data)=>{
-            if(data.rowId != undefined){
-                switch(gridBox.attr("id").replace(/[0-9]/g,"")){
-                    case "dependGrid":
-                        delDataList["sfDelRowId"].push(data.rowId);
-                    break;
-                    case "eduGrid":
-                        delDataList["eduDelRowId"].push(data.rowId);
-                    break;
-                    case "carrerGrid":
-                        delDataList["exDelRowId"].push(data.rowId);
-                    break;
-                    case "militaryGrid":
-                        delDataList["miDelRowId"].push(data.rowId);
-                    break;
-                    case "curriculumGrid":
-                        delDataList["cuDelRowId"].push(data.rowId);
-                    break;
-                }
-            }
-        });
-        gridCommon.setGridApi(gridApi);
-        gridCommon.onRemoveRow();
-    }
-
-    const getEduRow = () => {
-        var gridApi = $("#eduGrid2").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        return gridCommon.getRowData();
-    }
-    const getCarrerRow = () => {
-        var gridApi = $("#carrerGrid2").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        return gridCommon.getRowData();
-    }
-    const getMilitaryRow = () => {
-        var gridApi = $("#militaryGrid2").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        return gridCommon.getRowData();
-    }
-    const getCurriculumRow = () => {
-        var gridApi = $("#curriculumGrid2").find(".ag-root")[0]["__agComponent"].gridApi;
-        gridCommon.setGridApi(gridApi);
-        return gridCommon.getRowData();
-    }
-
-    // 팝업 띄우기, 닫기
-    const openJoinPop = () => {
-        $(".modal_box").show();
-    };
     
     return (
     <div class="div_bottom tab_02">
@@ -327,7 +17,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                         <img id="userImgView2" class="userImgView" src='/images/user02.png' alt="유저사진"/>
                         <span id="userImgText2" class="userImgText" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"5px"}}>
-                            <label for="userImage2" class="userImg">수정</label><input type="file" id="userImage2" class="userImage" accept="image/*" onChange={imgUpload2}/>
+                            <label for="userImage2" class="userImg">수정</label><input type="file" id="userImage2" class="userImageInput" name="userImageInput" accept="image/*"/>
                             <label for="imgDelete2">삭제</label><button type="button" id="imgDelete2" name="imgDelete"/>
                         </div>
                     </div>
@@ -381,13 +71,13 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                             </li>
                             <li style={{position:"relative"}}>
                                 우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호"  style={{width:"152px"}} readOnly/>
-                                <button type="button" class="btn_gray postal_code" onClick={openPostPop}>우편번호</button>
+                                <button type="button" class="btn_gray postal_code" name="btnPost">우편번호</button>
                             </li>
                             <li>
                                 <input type="text" name="address" id="address" placeholder="주소" readOnly style={{width:"300px"}}/>
                             </li>
                             <li style={{height:"70px"}}>
-                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소" readOnly></textarea>
+                                <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"></textarea>
                             </li>
                             <li class="leave_li">  
                                 <span>퇴사여부 :</span>
@@ -414,7 +104,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                 <label for="tab_004">상세설정</label>
                 <input type="radio" id="tab_005" name="tab02" />
                 <label for="tab_005">학력/교육</label>
-                <button type="button" class="upload" onClick={openJoinPop}>인사서류 업로드</button>
+                <button type="button" class="upload" name="btnInsaUpload">인사서류 업로드</button>
                 {/* <input type="file" id="upload"/>
                 <label for="upload" class="upload">인사서류 업로드</label> */}
                 {/* </div> */}
@@ -537,36 +227,36 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                             <ul>
                                 <li>학력
                                     <div class="tab_01_inner">
-                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} onClick={(e)=>addRow(e)}>추가</button>
-                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
-                                        <div id="eduGrid2" class="tab_01_grid grid_scrollX_none">
+                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div class="tab_01_grid grid_scrollX_none eduGrid">
                                             <DataGrid rowData={rowData2} gridDefs={euduDefs}/>
                                         </div>
                                     </div>
                                 </li>
                                 <li style={{marginTop:"20px"}}>경력
                                     <div class="tab_02_inner">
-                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
-                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
-                                        <div id="carrerGrid2" class="tab_02_grid grid_scrollX_none">
+                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div class="tab_02_grid grid_scrollX_none carrerGrid">
                                             <DataGrid rowData={rowData3} gridDefs={carrerDefs}/>
                                         </div>
                                     </div>
                                 </li>
                                 <li style={{marginTop:"20px"}}>병역
                                     <div class="tab_02_inner">
-                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
-                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
-                                        <div id="militaryGrid2" class="tab_02_grid grid_scrollX_none">
+                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div class="tab_02_grid grid_scrollX_none militaryGrid">
                                             <DataGrid rowData={rowData4} gridDefs={militaryDefs}/>
                                         </div>
                                     </div>
                                 </li>
                                 <li style={{marginTop:"20px"}}>교육
                                     <div class="tab_02_inner">
-                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} onClick={(e)=>addRow(e)}>추가</button>
-                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} onClick={(e)=>removeRow(e)}>삭제</button>
-                                        <div id="curriculumGrid2" class="tab_02_grid grid_scrollX_none">
+                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div class="tab_02_grid grid_scrollX_none curriculumGrid">
                                             <DataGrid rowData={rowData5} gridDefs={curriculumDefs}/>
                                         </div>
                                     </div>
@@ -578,7 +268,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                 </div>
             </div>
             <button type="button" class="btn_backnext next_position">이전으로</button>
-            <button type="button" class="btn_backnext save_position" onClick={fnSave2}>저장하기</button>
+            <button type="button" class="btn_backnext save_position" name="btnSave">저장하기</button>
         </form>
     </div>
     )

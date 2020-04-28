@@ -225,7 +225,7 @@ function SalaryInputContainer() {
                     return utils.regExr.comma(params.data.carSalary);
                 }    
             }
-            ,{ headerName: "성과금", field: "welfareSalary", width:120,
+            ,{ headerName: "복리후생", field: "welfareSalary", width:120,
                 valueGetter: function(params) {
                     return utils.regExr.comma(params.data.welfareSalary);
                 }    
