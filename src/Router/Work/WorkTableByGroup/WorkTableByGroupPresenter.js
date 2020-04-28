@@ -14,7 +14,6 @@ const WorkTableByGroupPresenter=({rowData,  gridDefs, backPage, nextPage }) => {
 
 function saveRow (result) {
     var list = [];
-    console.log(result);
     result.forEach(element => {
         if(element.processType){
             if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
@@ -34,7 +33,6 @@ function saveRow (result) {
       
     });
     if(list == null || list.length < 1){
-        console.log("NocallDB");
         return true;
     }
     let params = {};
@@ -53,7 +51,6 @@ function saveRow (result) {
         }catch(error){
             console.log("CATCH !! : " + error);
         }
-        
         return true;
     };
     init(params);
