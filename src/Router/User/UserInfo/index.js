@@ -41,7 +41,6 @@ const UserInfo = () => {
         "cuDelRowId": []
     }
 
-    console.log(pramsString);
     if(pramsString.length != 0){
         let paramArr = pramsString.split("&");
         let paramArrLen = paramArr.length;
@@ -62,14 +61,6 @@ const UserInfo = () => {
     }
 
     const userInfoEvent = (data,othercontent,imgData) => {
-        $("#userNo").val(data.userNo);
-        $("#employeeNumber").val(data.employeeNumber);
-
-        deleteImgList.upLoad["branchNo"] = data.branchNo;
-        deleteImgList.upLoad["userNo"] = data.userNo;
-        deleteImgList.upLoad["employeeNumber"] = data.employeeNumber;
-
-
         let userType = data.userType;
         let tab;
         if(userType == "0"){
@@ -79,6 +70,18 @@ const UserInfo = () => {
         } else if(userType == "2"){
             tab = "tab_03";
         }
+
+
+        if(userType == "2"){
+            $("#userNo").val(data.dailyUserNo);
+        } else {
+            $("#userNo").val(data.userNo);
+        }
+        $("#employeeNumber").val(data.employeeNumber);
+        deleteImgList.upLoad["branchNo"] = data.branchNo;
+        deleteImgList.upLoad["userNo"] = data.userNo;
+        deleteImgList.upLoad["employeeNumber"] = data.employeeNumber;
+        
         $("#"+tab).click();
         $(".user_type_label[for="+tab+"]").css("width","150px");
         $("input[name=tab1]:not(#"+tab+")").remove();
@@ -98,6 +101,9 @@ const UserInfo = () => {
             //     val = utils.regExr.comma(val);
             // }
             if(elem.length != 0){
+                if(elem[0].className.indexOf("money_input") != -1){
+                    val = utils.regExr.comma(val);
+                }
                 elem.val(val);
             }
             // 수습기간 on
@@ -156,7 +162,6 @@ const UserInfo = () => {
 
         $("input").trigger("keyup");
         $("input").trigger("change");
-        
         addSalaryList(othercontent);
     }
 
@@ -372,15 +377,7 @@ const UserInfo = () => {
                     return utils.regExr.koreanOnly(params.data.sfName);
                 }
             }
-            ,{ headerName: '주민(외국인)번호', field: "sfPersnoalNumber", editable:true, width:160,
-                cellEditor : $("<input id='test'>")
-                // ,valueGetter: function(params){
-                //     if(!personalValidaition(params.data.sfPersnoalNumber)){
-                //         return "";
-                //     }
-                //     return utils.regExr.personalNum(params.data.sfPersnoalNumber);
-                // }
-            }
+            ,{ headerName: '주민(외국인)번호', field: "sfPersnoalNumber", editable:true, width:160}
             ,{ headerName: "연말정산관계", field: "sfRelation", width:120,
                 cellEditor : "select", 
                 cellEditorParams: { values : gridCommon.extractValues(regtaxAdjustmentMappings)},refData: regtaxAdjustmentMappings}
@@ -1402,7 +1399,7 @@ const UserInfo = () => {
             try {
                 console.log(JSON.stringify(params));
                 console.log(params);
-                if(checkModify){
+                if(checkUserModify){
                     await callApi.updateUserInformation(params).then(res=> {
                         if(res.data.ErrorCode == 1){
                             alert(res.data.Msg);
@@ -1429,6 +1426,7 @@ const UserInfo = () => {
                 alert("관리자에게 문의하세요.",e);
             }
         };
+
         if(checkUserModify){
             params["delDataList"] = delDataList;
         }
@@ -1488,6 +1486,8 @@ const UserInfo = () => {
         }
 
         if(checkUserModify){
+            params.userInfo.userNo = $("#userNo").val();
+            params.userInfo.employeeNumber = $("#employeeNumber").val();
             params["businessdetail"] = tempParams;
             params["eduData"] = getEduRow();
             params["exData"] = getCarrerRow();
@@ -1513,19 +1513,31 @@ const UserInfo = () => {
             try {
                 console.log(JSON.stringify(params));
                 console.log(params);
-                await callApi.businessUserRegistration(params).then(res=> {
-                    if(res.data.ErrorCode == 1){
-                        alert(res.data.Msg);
-                    } else {
-                        alert("저장이 완료되었습니다.");
-                        saveImgFile(res.data.Data, res.data.Id);
-                        // window.location.href = "/user/userManagement";
-                        // location.reload();
-                    }
-                });
-
+                if(checkUserModify){
+                    await callApi.updateUserInformation(params).then(res=> {
+                        if(res.data.ErrorCode == 1){
+                            alert(res.data.Msg);
+                        } else {
+                            alert("수정이 완료되었습니다.");
+                            saveImgFile(res.data.Data, res.data.Id);
+                            // window.location.href = "/user/userManagement";
+                            // location.reload();
+                        }
+                    });
+                } else {
+                    await callApi.userRegistration(params).then(res=> {
+                        if(res.data.ErrorCode == 1){
+                            alert(res.data.Msg);
+                        } else {
+                            alert("저장이 완료되었습니다.");
+                            saveImgFile(res.data.Data, res.data.Id);
+                            // window.location.href = "/user/userManagement";
+                            // location.reload();
+                        }
+                    });
+                }
             }catch(e){
-                // alert("관리자에게 문의하세요.",e);
+                alert("관리자에게 문의하세요.",e);
             }
         };
         if(checkUserModify){
@@ -1533,7 +1545,7 @@ const UserInfo = () => {
         }
         console.log(params);
         console.log(JSON.stringify(params));
-        // saveInit(params);
+        saveInit(params);
     }
 
 
@@ -1585,6 +1597,9 @@ const UserInfo = () => {
         params[checkName].branchNo = branchNo;
 
         if(checkUserModify){
+            params[checkName].userNo = $("#userNo").val();
+            params[checkName].employeeNumber = $("#employeeNumber").val();
+
             params["sfData"] = getDependRow();
             params["eduData"] = getEduRow();
             params["exData"] = getCarrerRow();
@@ -1605,31 +1620,48 @@ const UserInfo = () => {
                 "cuModels" : getCurriculumRow()
             };
         }
-        
-        
-        
-        async function saveInit() {
-            try {
-                await callApi.dayilyUserRegistration(params).then(res=> {
-                    if(res.data.ErrorCode == 1){
-                        alert(res.data.Msg);
-                    } else {
-                        alert("저장이 완료되었습니다.");
-                        saveImgFile(res.data.Data, res.data.Id);
-                        // window.location.href = "/user/userManagement";
-                    }
-                });
 
+        async function saveInit(params) {
+            try {
+                console.log(JSON.stringify(params));
+                console.log(params);
+                if(checkUserModify){
+                    await callApi.updateUserInformation(params).then(res=> {
+                        if(res.data.ErrorCode == 1){
+                            alert(res.data.Msg);
+                        } else {
+                            alert("수정이 완료되었습니다.");
+                            saveImgFile(res.data.Data, res.data.Id);
+                            // window.location.href = "/user/userManagement";
+                            // location.reload();
+                        }
+                    });
+                } else {
+                    await callApi.dayilyUserRegistration(params).then(res=> {
+                        if(res.data.ErrorCode == 1){
+                            alert(res.data.Msg);
+                        } else {
+                            alert("저장이 완료되었습니다.");
+                            saveImgFile(res.data.Data, res.data.Id);
+                            // window.location.href = "/user/userManagement";
+                            // location.reload();
+                        }
+                    });
+                }
             }catch(e){
-                alert(e);
+                alert("관리자에게 문의하세요.",e);
             }
         };
+
+
+
+
         if(checkUserModify){
             params["delDataList"] = delDataList;
         }
         console.log(params);
         console.log(JSON.stringify(params));
-        saveInit();
+        saveInit(params);
     }
 
     return(

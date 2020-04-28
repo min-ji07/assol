@@ -87,7 +87,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                                 </select>
                                 <span>
                                     <span style={{marginLeft:"5px"}}>퇴사일자 :</span>
-                                    <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04" style={{width:"110px"}}/>
+                                    <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04" style={{width:"100px"}}/>
                                 </span>
                             </li>
                             <li class="leave_li">
