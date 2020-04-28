@@ -16,7 +16,7 @@ const picker = {
   
   getTimePicker :  function(check) {
   function TimePicker() {}
-
+  console.log(check,'check');
   TimePicker.prototype.init = function(params) {
     var strTime='';
     var endTime='';
@@ -213,66 +213,79 @@ const picker = {
 getTimePickerInput :  function(check) {
   function TimePickerInput() {}
 
-  
   TimePickerInput.prototype.init = function(params) {
-    var strTime=''; 
-    var endTime='';
-    console.log(params, 'params');
-    if(params && params.value){
-      var initArr = params.data.split("~");
-      strTime = initArr[0];
-      endTime = initArr[1];
-    }
-    console.log(params.data); 
+      console.log(params, 'params');
 
-    this.ui = document.createElement("div");
-    this.ui.innerHTML=`<div>
-                        <input type="text" style="width:45%; text-align:center"
-                         class="strTime" value="${strTime}"/>
-                         ~ 
-                        <input type="text" style="width:45%; text-align:center"
-                         class="endTime" value="${endTime}"/>
-                       </div>`;
-    this.sInput = this.ui.querySelector(".strTime")
-    this.eInput = this.ui.querySelector(".endTime")
+      var strTime='';
+      var endTime='';
 
-       
-  };
+      console.log('params',params)
+      if(params && params.value){
+        var initArr = params.value.split("~");
+        strTime = initArr[0];
+        endTime = initArr[1];
+      }
+
+      const keyupEvent = () => {
+        console.log("테스트!!!");
+      }
+      this.ui = document.createElement("div");
+      this.ui.innerHTML=`<div>
+                          <input type="text" style="width:45%; text-align:center"
+                          class="strTime" maxLength="5" value="${strTime}"/>
+                          ~ 
+                          <input type="text" style="width:45%; text-align:center"
+                          class="endTime" maxLength="5" value="${endTime}"/>
+                        </div>`;
+      this.sInput = this.ui.querySelector(".strTime")
+      this.eInput = this.ui.querySelector(".endTime")
+
+      // console.log(this.sInput);
+      this.sInput.addEventListener("keyup",function(e){
+        let returnVal = e.target.value;
+        returnVal = returnVal.replace(/[^0-9]/g,"");
+        
+        // console.log('returnVal: ', returnVal);
+        if(returnVal.length > 2){
+          returnVal = returnVal.substring(0,2)+":"+returnVal.substring(2,4);
+        }
+        // console.log('returnVal : ',returnVal);
+        e.target.value = returnVal;
+      });
+      this.eInput.addEventListener("keyup",function(e){
+        let returnVal = e.target.value;
+        returnVal = returnVal.replace(/[^0-9]/g,"");
+
+        if(returnVal.length > 2){
+          returnVal = returnVal.substring(0,2)+":"+returnVal.substring(2,4);
+        }
+        // console.log('end내용:', returnVal);
+        e.target.value = returnVal;
+        // console.log(e);
+      });
+    };
+
     TimePickerInput.prototype.getGui = function() {
       return this.ui;
     };
-    TimePickerInput.prototype.afterGuiAttached = function() {      
 
+    TimePickerInput.prototype.afterGuiAttached = function() {      
     };
+
     TimePickerInput.prototype.getValue = function() {
-      
       console.log(this.sInput.value, '보낼 값', this.eInput.value);
       return this.sInput.value+"~"+this.eInput.value;
     };
-    
-
-    // TimePickerInput.prototype.destroy = function() {};
-    // TimePickerInput.prototype.isPopup = function() {
-    //   return false;
-    // };
+     
+    TimePickerInput.prototype.destroy = function() {};
+    TimePickerInput.prototype.isPopup = function() {
+      return false;
+    };
     return TimePickerInput;
   }
     
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
 
-export default picker
+export default picker;
