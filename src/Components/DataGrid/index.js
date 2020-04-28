@@ -21,6 +21,8 @@ function DataGrid({rowData:rowData,gridDefs}){
                 onCellEditingStarted={(e) =>gridCommon.onCellEditingStarted(e,gridDefs.onCellEditingStarted)}
                 onCellClicked={(e)=>gridCommon.onCellClicked(e,gridDefs.onCellClicked)}
                 onRowDoubleClicked={(e)=>gridCommon.onRowDoubleClicked(e,gridDefs.onRowDoubleClicked)}
+                overlayLoadingTemplate={'<span class="ag-overlay-loading-center">로딩중 입니다.</span>'}
+                overlayNoRowsTemplate={'<span class="ag-overlay-loading-center">데이터가 없습니다.</span>'}
                 rowSelection="multiple"
                 // suppressRowClickSelection={true} // rowsapn시 필요, 공통속성으론 쓰면 안될듯
                 suppressRowTransform={true}

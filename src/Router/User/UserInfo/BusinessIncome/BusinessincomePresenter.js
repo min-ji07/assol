@@ -267,7 +267,7 @@ const BusinessincomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, mil
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn_backnext next_position">이전으로</button>
+            {/* <button type="button" class="btn_backnext next_position">이전으로</button> */}
             <button type="button" class="btn_backnext save_position" name="btnSave">저장하기</button>
         </form>
     </div>

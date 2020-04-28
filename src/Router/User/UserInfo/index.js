@@ -95,7 +95,7 @@ const UserInfo = () => {
 
         // $(".user_type_label:not([for="+tab+"])").remove();
 
-        
+        $(".leave_li").show();
         for(var key in data){
             let elem = $("#"+key);
             let val = data[key] == null ? "" : data[key];
@@ -148,11 +148,10 @@ const UserInfo = () => {
         let i = 0;
         for(i in imgData){
             // "D:\AdminSite\Save\c249bf54-c7e1-4bea-bd5c-eb7ab87aa13f_2004221.jpg"
-            let path = imgData[i].fileName.match(/(\\)(Save)(\\)(.*)/g)[0];
-            path = path.replace(/\\/g,"/");
+            let path = imgData[i].fileName;
             let type = imgData[i].imageType;
-            let url = "http://211.251.238.215:5302";
-
+            let url = "http://211.251.238.215:5302/Save/";
+            
             // 유저사진
             if(type == "1"){
                 $(".userImgView").prop("src",url+path);
@@ -166,7 +165,9 @@ const UserInfo = () => {
 
         $("input").trigger("keyup");
         $("input").trigger("change");
-        addSalaryList(othercontent);
+        if(!othercontent){
+            addSalaryList(othercontent);
+        }
     }
 
     const addSalaryList = (othercontent) => {

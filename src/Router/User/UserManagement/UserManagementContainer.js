@@ -48,7 +48,7 @@ function UserManagementContainer() {
             ,{ headerName: "userId", field: "id", hide :true}
             ,{ headerName: "processType", field: "processType", hide:true}
             ,{ headerName: "branchNo", field: "branchNo", hide:true }
-            ,{ headerName: "성명", field: "userName", editable: false, width:100}
+            ,{ headerName: "성명", field: "userName", editable: false, width:100, filter:"text"}
             ,{ headerName: '입사일', field: "joinDate", cellEditor : "richSelect", width:150}
             ,{ headerName: '주민번호', field: "personalNumber", cellEditor : "richSelect", width:170}
             ,{ headerName: '직책', field: "position", width:100 }
