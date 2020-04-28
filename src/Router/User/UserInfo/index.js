@@ -14,6 +14,7 @@ import { _ } from 'ag-grid-community';
 
 
 const UserInfo = () => {
+    let branchNo = 29;
     let imgInputLastIndex = 0;
     let pramsString = window.location.search.replace("?","");
     let checkUserModify = false;
@@ -623,7 +624,9 @@ const UserInfo = () => {
         // 저장버튼
         $("button[name=btnSave]").on("click",function(e){
             var checkTab = $("[name=tab1]:checked")[0].id;
-
+            
+            console.log(checkTab);
+            
             switch(checkTab){
                 case "tab_01":
                     fnSave();
@@ -1118,7 +1121,7 @@ const UserInfo = () => {
             return false;
         }
 
-        if(!regEmail.test($(".div_bottom.tab_01 input[type='email']").val())){
+        if(!regEmail.test($(tabDiv+" input[type='email']").val())){
             alert("이메일이 올바르지 않습니다.");
             return false;
         }
@@ -1154,10 +1157,12 @@ const UserInfo = () => {
             var date2 = utils.regExr.numOnly(targetArr[1]);
 
             if(!dateValidation(date1) || !dateValidation(date2)){
-                alert("날짜가 올바르지 않습니다.");
-                dateToInput[i].select();
-                dateToInput[i].focus();
-                return false;
+                if(date1.length != 0 && date2.length != 0){
+                    alert("날짜가 올바르지 않습니다.");
+                    dateToInput[i].select();
+                    dateToInput[i].focus();
+                    return false;
+                }
             }
             if(date1 > date2){
                 alert("기간이 올바르지 않습니다.");
@@ -1298,11 +1303,6 @@ const UserInfo = () => {
      ****************************************************/
 
     const fnSave = () => {
-        // if($("#userNo").val().length > 0){
-        //     checkModify = true; 
-        // } else {
-        //     checkModify = false;
-        // }
 
         if(!fnValidation()){
             return;
@@ -1326,7 +1326,7 @@ const UserInfo = () => {
         }
         params["userInfo"] = tempParams;
         params.userInfo.userType = 0; // 일반소득자
-        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
+        params.userInfo.branchNo = branchNo;
         
         params.userInfo.userNo = $("#userNo").val();
         params.userInfo.employeeNumber = $("#employeeNumber").val();
@@ -1338,7 +1338,6 @@ const UserInfo = () => {
         };
 
         let tempJson = {};
-        let tempTitle = "";
         for(i; i<inputListTab1.length; i++){
             var checkId = inputListTab1[i].id;
             var checkClass = inputListTab1[i].className;
@@ -1361,9 +1360,6 @@ const UserInfo = () => {
                 tempParams[inputListTab1[i].id] = val;
             }
         }
-
-        // tempParams.otherContent = JSON.parse("{"+tempParams.otherContent.slice(0,-1)+"}");
-        console.log(tempParams.otherContent);
 
         params["detailData"] = tempParams;
 
@@ -1433,8 +1429,9 @@ const UserInfo = () => {
                 alert("관리자에게 문의하세요.",e);
             }
         };
-
-        params["delDataList"] = delDataList;
+        if(checkUserModify){
+            params["delDataList"] = delDataList;
+        }
         console.log(params);
         console.log(JSON.stringify(params));
         // saveInit(params);
@@ -1466,7 +1463,7 @@ const UserInfo = () => {
         }
         params["userInfo"] = tempParams;
         params.userInfo.userType = 1; // 사업소득자
-        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
+        params.userInfo.branchNo = branchNo;
 
         i=0;
         tempParams = {};
@@ -1490,25 +1487,29 @@ const UserInfo = () => {
             tempParams[checkId] = checkVal; 
         }
 
-        params["detailData"] = tempParams;
+        if(checkUserModify){
+            params["businessdetail"] = tempParams;
+            params["eduData"] = getEduRow();
+            params["exData"] = getCarrerRow();
+            params["miData"] = getMilitaryRow();
+            params["cuData"] = getCurriculumRow();
+        } else {
+            params["detailData"] = tempParams;
+            params["eduData"] = {
+                "eduModels" : getEduRow()
+            };
+            params["exData"] = {
+                "exModels" : getCarrerRow()
+            };
+            params["miData"] = {
+                "miModels" : getMilitaryRow()
+            };
+            params["cuData"] = {
+                "cuModels" : getCurriculumRow()
+            };
+        }
 
-        params["eduData"] = {
-            "eduModels" : getEduRow()
-        };
-
-        params["exData"] = {
-            "exModels" : getCarrerRow()
-        };
-
-        params["miData"] = {
-            "miModels" : getMilitaryRow()
-        };
-
-        params["cuData"] = {
-            "cuModels" : getCurriculumRow()
-        };
-
-        async function saveInit() {
+        async function saveInit(params) {
             try {
                 console.log(JSON.stringify(params));
                 console.log(params);
@@ -1527,8 +1528,12 @@ const UserInfo = () => {
                 // alert("관리자에게 문의하세요.",e);
             }
         };
-        params["delDataList"] = delDataList;
-        saveInit();
+        if(checkUserModify){
+            params["delDataList"] = delDataList;
+        }
+        console.log(params);
+        console.log(JSON.stringify(params));
+        // saveInit(params);
     }
 
 
@@ -1569,28 +1574,39 @@ const UserInfo = () => {
         for(i; i<inputListTab2.length; i++){
             tempParams[inputListTab2[i].id] = inputListTab2[i].value; 
         }
+        
+        let checkName = "userInfo";
+        if(checkUserModify){
+            checkName = "dailyuserInfo"; 
+        }
+        
+        params[checkName] = tempParams;
+        params[checkName].userType = 2; // 일용직근로자
+        params[checkName].branchNo = branchNo;
 
-        params["userInfo"] = tempParams;
-        params.userInfo.userType = 2; // 일용직근로자
-        params.userInfo.branchNo = 29; // 임시 나중에 수정해야함
-
-        params.userInfo["sfData"] = getDependRow();
-
-        params["eduData"] = {
-            "eduModels" : getEduRow()
-        };
-
-        params["exData"] = {
-            "exModels" : getCarrerRow()
-        };
-
-        params["miData"] = {
-            "miModels" : getMilitaryRow()
-        };
-
-        params["cuData"] = {
-            "cuModels" : getCurriculumRow()
-        };
+        if(checkUserModify){
+            params["sfData"] = getDependRow();
+            params["eduData"] = getEduRow();
+            params["exData"] = getCarrerRow();
+            params["miData"] = getMilitaryRow();
+            params["cuData"] = getCurriculumRow();
+        } else {
+            params.userInfo["sfData"] = getDependRow();
+            params["eduData"] = {
+                "eduModels" : getEduRow()
+            };
+            params["exData"] = {
+                "exModels" : getCarrerRow()
+            };
+            params["miData"] = {
+                "miModels" : getMilitaryRow()
+            };
+            params["cuData"] = {
+                "cuModels" : getCurriculumRow()
+            };
+        }
+        
+        
         
         async function saveInit() {
             try {
@@ -1608,6 +1624,9 @@ const UserInfo = () => {
                 alert(e);
             }
         };
+        if(checkUserModify){
+            params["delDataList"] = delDataList;
+        }
         console.log(params);
         console.log(JSON.stringify(params));
         saveInit();

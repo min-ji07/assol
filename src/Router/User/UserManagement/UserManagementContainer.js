@@ -55,8 +55,9 @@ function UserManagementContainer() {
             ,{ headerName: "직위", field: "workLevel", width:100 }
             ,{ headerName: "사원번호", field: "employeeNumber", cellEditor : "richSelect" , width:100}
             ,{ headerName: "고용형태", field: "regularEmployee",  width:130,
-                cellEditor : "richSelect", 
-                cellEditorParams: { values : gridCommon.extractValues(regEmployeeMappings)},refData: regEmployeeMappings}
+                // cellEditor : "richSelect", 
+                // cellEditorParams: { values : gridCommon.extractValues(regEmployeeMappings)},refData: regEmployeeMappings
+            }
             ,{ headerName: '전화번호', field: "mobile", cellEditor : "richSelect", width:150}
             ,{ headerName: '이메일', field: "email", cellEditor : "richSelect", width:180}
             ,{ headerName: '주소', field: "address", cellEditor : "richSelect", width:180}

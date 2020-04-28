@@ -13,16 +13,6 @@ input:-webkit-autofill:active {
  -webkit-transition: background-color 9999s ease-out;
  -webkit-box-shadow: 0 0 0px 1000px white inset !important;
 }
-/* 직위 css 준거 삭제해도됨*/
-/* 
-.user_input .left_div .left_div_inner select {
-    border-radius: 0px;
-    border: none;
-    margin-left: 20px;
-    width: 172px;
-    margin-top: 1px;
-} */
-
 .user_input .left_div select {
     border-radius: 0px;
     border: none;

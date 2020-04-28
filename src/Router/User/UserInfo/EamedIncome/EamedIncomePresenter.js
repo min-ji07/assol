@@ -68,10 +68,10 @@ const EamedIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <li style={{display:"inline-block" , width:"155px", marginLeft:"5px" }}>
                                 <span>고용형태 : </span>
                                 <select name="regularEmployee" id="regularEmployee">
-                                    <option value="0">정규직</option>
-                                    <option value="1">계약직</option>
-                                    <option value="2">파견직</option>
-                                    <option value="3">위촉직</option>                   
+                                    <option value="정규직">정규직</option>
+                                    <option value="계약직">계약직</option>
+                                    <option value="파견직">파견직</option>
+                                    <option value="위촉직">위촉직</option>                   
                                 </select>
                             </li>
                             <li>  

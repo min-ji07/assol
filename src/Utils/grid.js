@@ -144,6 +144,9 @@ var gridCommon = function() {
         ,redrawAllRows: () =>{
           gridApi.api.redrawAllRows();   
         }
+        ,getSelectedRows: () => {
+            return gridApi.api.getSelectedRows();
+        }
     }
 }();
 

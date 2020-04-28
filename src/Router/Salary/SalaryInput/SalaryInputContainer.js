@@ -15,14 +15,9 @@ function SalaryInputContainer() {
     const [rowData2, setRowData2] = useState([]); //그리드 데이터 
     const [gridDefs2, setGridDefs2] = useState({}); //그리드 정의
 
+    let doubleCheck;
+
     const branchNo = 29;
-
-    const selectInit = () => {
-        
-    }
-
-    
-
     let addRowJson = {};
 
     // const regEmployeeMappings = {
@@ -37,6 +32,7 @@ function SalaryInputContainer() {
     //     ,"8" : "촉탁의" 
     //     ,"9" : "대표" 
     // }
+    
 
     
     
@@ -81,12 +77,6 @@ function SalaryInputContainer() {
        bindEvent();
     },[]); //init
 
-    const bindEvent = () => {
-        // $("#btnAddRow").on("click",function(){
-            
-        // });
-    }
-
     const gridSetting =()=>{
         //컬럼 정의
            const columnDefs= [  
@@ -122,10 +112,15 @@ function SalaryInputContainer() {
                     "yearMonthDate" : utils.regExr.numOnly(yearMonthDate),
                     "payDegree" : payDegree,
                     "branchNo": branchNo,
-                    "userType": userType,
-                    "userNo" : userNo
-                 }
-                console.log(params);
+                    "targetPeople" : [
+                        {
+                            "userType": userType,
+                            "userNo" : userNo,
+                            "employeeNumber" : employeeNumber
+                        }
+                    ]
+                }
+                    
                 userSelect(params);
             }
             
@@ -135,9 +130,8 @@ function SalaryInputContainer() {
     const userSelect = (params) => {
         async function init(params) {
             try {
-                await callApi.selectTargetUser(params).then(res=> {   
+                await callApi.selectTargetUser(params).then(res=> {
                     console.log(res,"타겟유저");
-
                     if(res.data.ErrorCode == 1){
                         alert(res.data.Msg);
                     } else {
@@ -146,8 +140,13 @@ function SalaryInputContainer() {
                         } else{
                             // setRowData(res.data.Data);
                         }
-                        // setOtherColumn(res.data.Data[0],res.data.OtherData);
-                        setAddRow(res.data.Data[0],res.data.OtherData);
+                        let baseData = res.data.Data;
+                        let otherData = res.data.OtherData;
+                        baseData.forEach((data)=>{
+                            
+                        });
+
+                        setAddRow(res.data.Data,res.data.OtherData);
                     }
                 });
             }catch{
@@ -155,6 +154,35 @@ function SalaryInputContainer() {
             }
        }
        init(params);
+    }
+
+    const bindEvent = () => {
+        $("#btnMultiTarget").on("click",()=>{
+            const gridApi = $("#userAllGrid").find(".ag-root")[0]["__agComponent"].gridApi;
+            const rowArr = gridApi.getSelectedRows();
+            let payDegree = $("#payDegree").val();
+            let yearMonthDate = $("#month-picker").val();
+            let params = {
+                "yearMonthDate" : utils.regExr.numOnly(yearMonthDate),
+                "payDegree" : payDegree,
+                "branchNo": branchNo,
+                "targetPeople" : []
+            }
+
+            rowArr.forEach((data)=>{
+                params.targetPeople.push(data);
+            });
+
+            userSelect(params);
+            // let employeeNumber = e.data.employeeNumber;
+            // let userNo = e.data.userNo;
+            // let userType = e.data.userType;
+            // {
+            //     "userType": userType,
+            //     "userNo" : userNo,
+            //     "employeeNumber" : employeeNumber
+            // }
+        });
     }
 
     const gridSetting2 =()=>{
@@ -179,12 +207,15 @@ function SalaryInputContainer() {
     }
 
     const setAddRow = (baseData,otherData) => {
-        addRowJson = baseData;
-        var i = 0;
-        for(i in otherData){
-            addRowJson["addColumnSalary"+otherData[i].title] = utils.regExr.numOnly(otherData[i].value);
-        }
-        gridCommon.onAddRow("",addRowJson);
+        baseData.forEach((json,index)=>{
+            addRowJson = json;
+            // console.log(e);
+            // console.log(i);
+            otherData[index].forEach((json2,index2)=>{
+                addRowJson["addColumnSalary"+json2.title] = utils.regExr.numOnly(json2.value);
+            });
+            gridCommon.onAddRow("",addRowJson);
+        });
     }
 
     const setOtherColumn = (otherData) => {
@@ -211,7 +242,6 @@ function SalaryInputContainer() {
             ,{ headerName: "사원번호", field: "employeeNumber", width:120, editable:false}
             ,{ headerName: "기본급", field: "baseSalary", width:120
                 ,valueGetter: function(params) {
-                    console.log(params);
                     return utils.regExr.comma(params.data.baseSalary);
                 }
             }

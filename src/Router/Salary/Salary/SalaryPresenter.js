@@ -6,8 +6,8 @@ import DataGrid from "../../../Components/DataGrid"
 import $ from 'jquery';
 
 const SalaryPresenter=({rowData,  gridDefs, leftGridInit}) => {
-    useEffect(()=>{
 
+    useEffect(()=>{
 
     },[]);
 
@@ -42,7 +42,6 @@ const SalaryPresenter=({rowData,  gridDefs, leftGridInit}) => {
                                         <button class="btn_gray">급여대장 PDF / 출력</button>
                                     </div>
                                 </div>
-
                                 <div class="div_grid">
                                     <DataGrid rowData={rowData} gridDefs={gridDefs}/>
                                 </div>

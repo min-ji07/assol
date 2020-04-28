@@ -170,7 +170,7 @@ function SalaryContainer() {
             rightColumnList.push("addSalary"+index.title);
         });
     }
-
+    
     const setOtherContent = (otherData) => {
         otherData.forEach((json)=>{
             const userNo = json.userNo;
