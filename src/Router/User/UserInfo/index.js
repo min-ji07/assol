@@ -58,6 +58,10 @@ const UserInfo = () => {
         //     "employeeNumber": ,
         //     "userType":
         // };
+        $(".user_input > .title").hide();
+        $("#userInfoTitle").show();
+    } else {
+        $("#userInfoTitle").hide();
     }
 
     const userInfoEvent = (data,othercontent,imgData) => {
@@ -91,7 +95,7 @@ const UserInfo = () => {
 
         // $(".user_type_label:not([for="+tab+"])").remove();
 
-        $(".leave_li").show();
+        
         for(var key in data){
             let elem = $("#"+key);
             let val = data[key] == null ? "" : data[key];
@@ -1670,6 +1674,10 @@ const UserInfo = () => {
             <div class="title">
                 <h1>사원등록</h1>
                 <p>사원정보를 등록하는 메뉴입니다. 해당 항목을 입력해주세요.<span>*표시는 필수 입력사항입니다.</span></p>
+            </div>
+            <div id="userInfoTitle" class="title">
+                <h1>사원 정보관리</h1>
+                <p>설정하신 데이터기반으로 근무현황을 확인 할 수 있습니다.</p>
             </div>
             <div class="user_input_inner">
                 <input id="userNo" type="text" hidden></input>
