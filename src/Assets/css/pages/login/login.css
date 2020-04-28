@@ -169,6 +169,12 @@ body{
     color:white;
     margin-top:15px;
 }
+.login .mb2 input[type="text"]::placeholder,
+.login .mb2 input[type="password"]::placeholder
+{
+    font-size: 14px;
+}
+
 .login .mb2 p{
     text-align:left;
     margin-bottom:20px;

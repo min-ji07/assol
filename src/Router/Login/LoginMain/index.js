@@ -238,18 +238,16 @@ function LoginMain(){
 
 
 
+
     function CheckEmail(str) {      
         var reg_email = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
         if(!reg_email.test(str)) {             
             return false;         
         }      
-        else {                       
-
+        else {   
             return true;     
         }                            
-
-    };          
-    
+    };      
 
     // 모두 동의
     $(document).ready(function(){
@@ -364,10 +362,7 @@ function LoginMain(){
            };
            init();
     }
-
     
-
-
 
 return(
     <div className="login" style={{width:"100%",height:"100%"}}>
@@ -418,7 +413,7 @@ return(
 
                         <label className="title_label" htmlFor="agreement2">개인정보 수집 · 이용에 대한 안내</label>
                         <textarea id="agreement2" readOnly>
-                            1. 수집하는 개인정보항목
+                            수집하는 개인정보항목
                             에이쏠 (이하 ‘회사’라고 함)은 서비스 이용 시 이용자로부터 아래와 같은 개인정보를 수집하고 있습니다.
                             이용자는 본 개인정보 수집활용 동의서에 따른 동의 시, ‘필요한 최소한의 정보 외의 개인정보’ 수집 – 이용에 동의하지 아니할 권리가 있습니다.
 
@@ -430,11 +425,11 @@ return(
                             - 당사와의 거래 종료 시까지
                             - 개인정보 주체자의 삭제 요청 시 즉시 삭제
                             다만, 회사는 관련 법령의 규정에 의하여 개인정보를 보유할 필요가 있는 경우, 해당 법령에서 정한 바에 의하여 아래와 같이 개인정보를 보유할 수 있습니다.
-                            ① 계약 또는 청약철회 등에 관련 기록(5년)
-                            ② 대금결제 및 재화 등의 공급에 관한 기록(5년)
-                            ③ 소비자의 불만 또는 분쟁처리에 관한 기록(3년)
-                            ④ 신용정보의 수집/처리 및 이용 등에 관한 기록(3년)
-                            ⑤ 표시/광고에 관한 기록(6개월)
+                            계약 또는 청약철회 등에 관련 기록(5년)
+                            대금결제 및 재화 등의 공급에 관한 기록(5년)
+                            소비자의 불만 또는 분쟁처리에 관한 기록(3년)
+                            신용정보의 수집/처리 및 이용 등에 관한 기록(3년)
+                            표시/광고에 관한 기록(6개월)
                             - 법적근거 : 전자상거래 등에서의 소비자보호에 관한 법률, 신용정보의 이용 및 보호에 관한 법률
 
                             4. 기본 개인정보 수집 • 활용
@@ -451,12 +446,15 @@ return(
                             세무신고 및 정책지원금 활용
                             ③ 제공되는 개인정보 항목 : 성명, 주민등록번호, 계좌번호, 직업, 전화번호, 경력
                             ④ 개인정보를 제공받는 자의 개인정보 보유 및 이용기간 : 5년
-                            ⑥  개인정보 제공 동의 거부 권리 및 동의 거부 따른 불이익 내용 또는 제한사항 : 귀하는 개인정보 제공 동의를 거부할 권리가 있으며 동의 거부에 따른 불이익은 없음, 다만, 성명, 주민번호, 계좌번호가 없을 시 급여 및 수당 지급 등이 불편할 수 있음.
+                            개인정보 제공 동의 거부 권리 및 동의 거부 따른 불이익 내용 또는 제한사항 : 귀하는 개인정보 제공 동의를 거부할 권리가 있으며 동의 거부에 따른 불이익은 없음, 다만, 성명, 주민번호, 계좌번호가 없을 시 급여 및 수당 지급 등이 불편할 수 있음.
+                            7. [선택] 정보 수신 동의
+                            ①에이쏠이 제공하는 다양한 정책 및 행사에 대한 정보를 전화, SMS, E-mail, 서면을 통해 받아볼 수 있음
+                            단, 업무 수행에 관련한 정보 및 결과, 에이쏠 정책 변경에 관련된 내용은 수신동의 여부와 관계없이 발송됨.
+                            선택 약관에 동의하지 않아도 계약은 가능하며, 수신여부는 언제든 변경가능 함.
 
                             ※ 개인정보 제공자가 동의한 내용 외의 다른 목적으로 활용하지 않으며, 제공된 개인정보의 이용을 거부 하고자 할 때에는 개인정보보호책임자를 통해 열람, 정정, 삭제를 요구할 수 있음
 
                             「개인정보보호법」등 관련 법규에 의거하여 상기 본인은 위와 같이 개인정보 수집 및 활용에 동의함.
-
                         </textarea>
                         <p className="radio_box">
                             <input type="radio" id="confirm2_y" name="confirm2"/>
@@ -548,7 +546,7 @@ return(
         {/* --기관종류선택 */}
 
         {/* 회원가입 */}
-        <div className="modal_box mb2" > 
+        <div className="modal_box mb2" style={{display:"block"}} > 
             <div className="modal_top">
                 <div className="modal_title">회원가입</div>
                 <div className="modal_close"><a href="#" onClick={()=>closePopup()}></a></div>
@@ -560,7 +558,7 @@ return(
                     <p className="title_label">기관정보 입력</p>
                             <p>
                                 <label className="required">요양 기관명</label>
-                                <input type="text" id ="companyName" maxLength="15" placeholder="기관명을 입력해주세요." />
+                                <input type="text" id ="companyName" maxLength="13" placeholder="기관명을 입력해주세요." />
                             </p>
                             <p style={{display:"inline-block", float:"left"}}>
                                 <label>기관기호</label>
@@ -568,17 +566,22 @@ return(
                             </p>
                             <p style={{display:"inline-block", marginLeft:"-335px"}}>
                                 <label htmlFor="businessNum" className="required">사업자번호</label>
-                                <input id="businessNum" type="text" placeholder="000" maxLength="3" style={{width:"33px"}} /> - 
-                                <input id="businessNum2" type="text" placeholder="00" maxLength="2" style={{width:"25px"}} /> - 
-                                <input id="businessNum3" type="text" placeholder="00000" maxLength="5" style={{width:"50px"}}/>
+                                <input id="businessNum" type="text" placeholder="000" maxLength="3" style={{width:"30px"}} /> - 
+                                <input id="businessNum2" type="text" placeholder="00" maxLength="2" style={{width:"20px"}} /> - 
+                                <input id="businessNum3" type="text" placeholder="00000" maxLength="5" style={{width:"40px"}}/>
                             </p>
                             <p>
-                                <label for="">대표전화번호</label>
-                                <input type="text" id="mainNumber" maxLength="13" placeholder="02-000-0000"/>
+                                <label for="mainNumber">대표전화번호</label>
+                                <select id="mainNumber">
+                                    <option>02</option>
+                                    <option>031</option>
+                                    <option>032</option>
+                                </select>
+                                <input type="text" id="mainNumber" maxLength="9" class="tell_input" placeholder="000-0000" style={{marginLeft:"5px", width:"119px"}}/>
                             </p>
                             <p>
                                 <label for="">휴대전화</label>
-                                <select id ="firstNumber" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
+                                <select id ="firstNumber" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8"}}>
                                     <option value="010">010</option>
                                     <option value="011">011</option>
                                     <option value="016">016</option>
@@ -602,7 +605,14 @@ return(
                                     <option value="1">익월</option>
                                     <option value="2">당월</option>
                                 </select>
-                                <input type="text" id="payDay" maxLength="2" placeholder="01"/>
+                                <select id="payDay">
+                                    <option value="5일">5일</option>
+                                    <option value="10일">10일</option>
+                                    <option value="15일">15일</option>
+                                    <option value="25일">25일</option>
+                                    <option value="말일">말일</option>
+                                </select>
+                                {/* <input type="text" id="payDay" maxLength="2" placeholder="01"/> */}
                             </p>
 
                             <p>
@@ -620,7 +630,7 @@ return(
                             </p>
                             <p>
                                 <label className="">이메일주소</label>
-                                <input type="text" id="idEmail" maxLength="20" />@
+                                <input type="text" id="idEmail" maxLength="20" placeholder="이메일을 입력해주세요."/>@
                                 <select id ="domain" style={{borderRadius:"0px", width:"100px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
                                     <option value="naver.com">naver.com</option>
                                     <option value="etc">직접입력</option>
