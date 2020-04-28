@@ -46,7 +46,12 @@ export const callApi = {
         url: noJustin+'/PayRoll/SavePayRoll',
         data: params
     }), // 급여입력 - 지급 항목상세 저장
-    getPayRollListOfBranch:(params) => axios.get(noJustin+'/PayRoll/GetPayRollListOfBranch',{params:params}), // 급여대장 - 조회
+    getPayRollListOfBranch:(params) => axios.get(noJustin+'/PayRoll/GetPayRollListOfBranch',{params:params}), // 급여대장 - 전체 목록조회
+    getSelectPayRoll:(params) => axios({
+        method: 'post',
+        url: noJustin+'/PayRoll/GetSelectPayRoll',
+        data: params
+    }), // 급여대장 - 상세목록 조회
 
     // saveUserInfo:(params) => axios.post('http://82230995.ngrok.io/User/UserRegistration',{params:params}), // 사원등록
     userRegistration:(params) => axios({
@@ -64,11 +69,6 @@ export const callApi = {
         url: noJustin+'/User/DailyUserRegistration',
         data: params
     }), // 사원등록 - 일용직근로자
-    getUserInformation:(params) => axios({
-        method: 'post',
-        url: noJustin+'/user/GetUserInformation',
-        data: params
-    }), // 사원상세 조회
     uploadFileToServer:(params) => axios({
         method: 'post',
         url: noJustin+'/Save/UploadFileToServer',
@@ -77,6 +77,24 @@ export const callApi = {
             'Content-Type': 'multipart/form-data'
         }
     }), // 사원등록 - 이미지파일 업로드
+    getUserInformation:(params) => axios({
+        method: 'post',
+        url: noJustin+'/user/GetUserInformation',
+        data: params
+    }), // 사원상세 조회
+    updateUserInformation:(params) => axios({
+        method: 'post',
+        url: noJustin+'/Usermanagement/UpdateUserInformation',
+        data: params
+    }), // 사원상세 - 수정
+    UpdateFileToServer:(params) => axios({
+        method: 'post',
+        url: noJustin+'/Save/UpdateFileToServer',
+        data: params
+    }), // 사원상세 - 이미지파일 삭제
+
+
+    
     // 대체근무자 설정 할 근무자 조회
     getSetSceduleInfo:(params) => axios.get(localTest+'/Worker/AlReadySetWorker',{params:params}), // 급여대장 - 조회
     

@@ -143,7 +143,8 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                             data-view="months"
                             data-date-format="yyyy-mm"/>
                         </li>
-                        <li>급수차수
+                        <li>
+                            <span>급수차수</span>
                             <select id="payDegree">
                                 <option value='1'>1차</option>
                                 <option value='2'>2차</option>
@@ -174,7 +175,7 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                         <div className="right_div_inner">
                             <div className="right_div_inner_inner">
                                 <div className="div_top02">지급 항목상세
-                                    <button className="plus" id="btnAddRow">추가</button>
+                                    {/* <button className="plus" id="btnAddRow">추가</button> */}
                                     <button className="delete" onClick={gridCommon.onRemoveRow}>삭제</button>
                                 </div>
                                 <div className="div_bottom header_radius_none view_border_none">

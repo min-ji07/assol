@@ -919,6 +919,6 @@ input:-webkit-autofill:active {
 .img_file_box{
     display:none;
 }
-.job_reduct_li{
+.user_input .ul_li_left .job_reduct_li{
     display:none;
 }

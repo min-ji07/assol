@@ -4,7 +4,6 @@ import DataGrid from "../../../Components/DataGrid"
 import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
 import $ from 'jquery';
-
 const WorkTableByGroupPresenter=({rowData,  gridDefs, backPage, nextPage }) => {
 
     const openPopup=() => {
@@ -36,6 +35,7 @@ function saveRow (result) {
       
     });
     if(list == null || list.length < 1){
+        console.log("NocallDB");
         return true;
     }
     let params = {};
@@ -56,6 +56,8 @@ function saveRow (result) {
         }catch(error){
             console.log("CATCH !! : " + error);
         }
+        
+        return true;
     };
     init(params);
 }

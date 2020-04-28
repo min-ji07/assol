@@ -11,6 +11,10 @@
     background: #799093; border-radius: 10px;
     width: 466px; height: 38px; line-height:38px; float: left;  
 }
+.salary_main .sal_date_left span,
+.salary_main .sal_date_left input{
+    vertical-align: middle;
+}
 .salary_main .sal_date_left input {
     width: 90px; height: 20px; line-height: 20px;
     color: white; font-size: 14px; font-weight: bold;
@@ -19,10 +23,16 @@
     margin-left: 5px;
 }
 .salary_main .sal_date_left select {
-    width: 90px; height: 20px; line-height: 20px;
-    color: white; font-size: 14px; font-weight: bold;
+    width: 90px; height: 25px; line-height: 25px;
+    color:white; font-size: 14px; font-weight: bold;
     background: transparent; border: none; border-bottom: 1px solid white;
     border-radius: 0px;
+    /* text-indent: -9999px; */
+    margin-left:5px;
+    background-color:#799093;
+}
+.salary_main .sal_date_left select:focus{
+    /* color:red; */
 }
 .salary_main .sal_date_left ul li { 
     float: left; text-align: center; color: white; font-size: 15px; 

@@ -45,7 +45,6 @@ var gridCommon = function() {
                 removeData.push({...selectedRow,processType:3})
                 }
             });
-            console.log(removeData)
             var res = gridApi.api.updateRowData({ remove: selectedData });
         }
         ,onSaveRow : (callback)=>{ //저장 
@@ -77,6 +76,10 @@ var gridCommon = function() {
             }
             gridApi.api.updateRowData({update: [e.data]});
             //콜백이 있을경우 전달
+            if(func && func instanceof Function) func(e);
+        }
+        ,onCellEditingStarted : (e,func) =>{
+            if( !e.data ) return;
             if(func && func instanceof Function) func(e);
         }
         ,onCellClicked : (e,func) => {
@@ -122,6 +125,17 @@ var gridCommon = function() {
         }
         ,setRowData : (rowArr) => {
             gridApi.setRowData(rowArr);
+        }
+        ,setFocusedCell : (row,colid) => {
+            gridApi.api.setFocusedCell(row,colid);
+        }
+        ,startEditingCell : (params) => {
+            gridApi.api.startEditingCell(params);
+
+        }
+        ,stopEditing : () => {
+            gridApi.api.stopEditing(true);
+
         }
     }
 }();

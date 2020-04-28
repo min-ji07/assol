@@ -184,7 +184,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
         };
         console.log(params);
         console.log(JSON.stringify(params));
-        // saveInit();
+        saveInit();
     }
 
     const saveImgFile = (userNo,employeeNumber) => {
