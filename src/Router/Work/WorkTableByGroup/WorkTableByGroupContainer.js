@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import picker from '../../../Utils/datepicker'
 import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
+import utils from '../../../Utils/utils';
 import WorkTableByGroupPresenter from './WorkTableByGroupPresenter'
 /* 근무조 설정 */ 
 
@@ -22,6 +23,24 @@ function WorkTableByGroupContainer() {
     }
     let check = true;
     //컬럼 정의
+
+    // 시간설정
+    const dateValidation = (date) =>{
+        var date = utils.regExr.numOnly(date);
+        // var month = date.substring(4,6);
+        var time = date.substring(0,2);
+        var minute = date.substring(2,4);
+        
+        if(time > 24 || time < 0){
+            return false;
+        }
+
+        if(minute > 60 || minute < 0){
+            return false;
+        }
+        return true;
+    }
+
     const columnDefs= [  
         { headerName: "rowId", field: "rowId", hide:true }
         ,{ headerName: "processType", field: "processType", hide:true}
@@ -54,19 +73,55 @@ function WorkTableByGroupContainer() {
                     return list;
                 }()
              }, valueFormatter:function(params) { return (!params.value)?'':params.value+'명'}} 
-        ,{ headerName: "정규근무시간",field:"workTime", editable:true
-            ,cellEditor: picker.getTimePicker(), width:200}
+        ,{ headerName: "정규근무시간",field:"workTime", editable:true, width: 200
+            //  ,cellEditor: picker.getTimePicker(), width:200}
+
+            ,valueGetter: function(params){
+                // console.log('params' ,params); 
+                var num = utils.regExr.numOnly(params.data.workTime);
+                var checkVal = utils.regExr.date(num.substring(0,4));
+                var checkVal2 = utils.regExr.date(num.substring(4,8));
+                // console.log('workTime 입력값:',params.data.workTime);
+                var num2 = params.data.workTime;
+                // console.log('num2 : ',num2);
+                if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
+                    return "";
+                }
+                return utils.regExr.dateTime(num2);
+            }
+        }
         
-        ,{ headerName: "휴게시간1", field: "restTime", editable:true
-            ,cellEditor: picker.getTimePicker(), width:200}
-        ,{ headerName: "휴게시간2", field: "subRestTime", editable:true
-            ,cellEditor: picker.getTimePicker(), width:200}
+        ,{ headerName: "휴게시간1", field: "restTime", editable:true, width:200,
+        // cellEditor: picker.getTimePicker()}
+            valueFormatter: function(params){
+                var num = utils.regExr.numOnly(params.data.restTime);
+                var checkVal = utils.regExr.date(num.substring(0,4));
+                var checkVal2 = utils.regExr.date(num.substring(4,8));
+                if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
+                    return "";
+                }
+                return utils.regExr.dateTime(num);
+            }
+        }
+        ,{ headerName: "휴게시간2", field: "subRestTime", editable:true, width:200
+            // ,cellEditor: picker.getTimePicker()
+            ,valueFormatter: function(params){
+                var num = utils.regExr.numOnly(params.data.subRestTime);
+                var checkVal = utils.regExr.date(num.substring(0,4));
+                var checkVal2 = utils.regExr.date(num.substring(4,8));
+                if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
+                    return "";
+                }
+                return utils.regExr.dateTime(num);
+            }
+        }
         ,{ headerName: "정규근무시간", field: "currentTime", width:120,  editable:false,
          valueGetter:function(params){
             if(!params.data.currentTime){
                 return "";
             }
             let current = params.data.currentTime;
+            // console.log(current); // 시간
             var hour = current/60;
             var resultHour = Math.floor(hour);
             var min = current - (resultHour * 60);
@@ -371,11 +426,9 @@ function WorkTableByGroupContainer() {
                 "yearsMonthDate" : target.val().replace("-","")
             }
             try{
-                console.log('dddd');
-                
                 console.log(params);
                 await callApi.getGridData(params).then(res=>{
-                    console.log(res.data.Data);
+                    console.log('사원조회',res.data.Data); // workTime 왜 자꾸 사라지는겨
                     if(res.data && res.data.Data){
                           //공통 그리드 데이터 셋팅
                         setRowData(res.data.Data);

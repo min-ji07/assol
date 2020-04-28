@@ -17,10 +17,11 @@ function saveRow (result) {
     var list = [];
     console.log(result);
     result.forEach(element => {
-        if(element.processType){
-            if(element.processType == 2 ||  element.processType == 3 || element.processType == 1){
+        if(element.processType){ // 조회빼고 다
+            if(element.processType == 2 ||  element.processType == 1 || element.processType == 3){
                 if(element.workTime == null ||element.workTime == "")
                 {
+                    console.log('근무시간', workTime);
                     alert("근무시간을 입력 하세요");
                     return false;
                 }
@@ -39,13 +40,12 @@ function saveRow (result) {
     }
     let params = {};
     params.groupInfos = list;
+    console.log('저장버튼 클릭시 넘어오는 workTime:',params);
     
     async function init(params){
-        console.log("너누구야!!!", params);
         try {
             await callApi.SaveGroupRow(params).then(res => {
-                // console.log('saveGroupRow 저장내용 : ' + params);
-                // console.log('저장'+res);
+                console.log('저장',res);
                 if(res.data.ErrorCode == 0){ 
                     alert("근무조 설정이 완료되었습니다..");
                 }
@@ -87,7 +87,7 @@ return (
                                 data-view="months"
                                 data-date-format="yyyy-mm"/>
                             근무일 설정
-                            <input type="radio" id="select_01" value = "1" name="select" />
+                            <input type="radio" id="select_01" value = "1" name="select" defaultChecked/>
                             <label for="select_01">월 ~ 금</label>
                             <input type="radio" id="select_02" value = "2" name="select" />
                             <label for="select_02">월 ~ 토</label>
