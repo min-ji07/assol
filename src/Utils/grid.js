@@ -120,8 +120,12 @@ var gridCommon = function() {
         ,getGridAllColumns : () => {
             return gridApi.columnApi.getAllGridColumns();
         }
-        ,refreshCells : (params) => {
-            gridApi.refreshCells(params);
+        ,refreshCells : (e) => {
+            if(!e.data) return null;
+            for(var i = 0 ; i < e.data.length; ++i){
+                i.processType = 4;
+                gridApi.api.updateRowData({update: [e.data]});
+            } 
         }
         ,setRowData : (rowArr) => {
             gridApi.setRowData(rowArr);
@@ -136,6 +140,9 @@ var gridCommon = function() {
         ,stopEditing : () => {
             gridApi.api.stopEditing(true);
 
+        }
+        ,redrawAllRows: () =>{
+          gridApi.api.redrawAllRows();   
         }
     }
 }();
