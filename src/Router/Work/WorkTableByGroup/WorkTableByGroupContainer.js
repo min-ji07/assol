@@ -48,7 +48,7 @@ function WorkTableByGroupContainer() {
         { headerName: "rowId", field: "rowId", hide:true }
         ,{ headerName: "processType", field: "processType", hide:true}
         ,{ headerName: "branchNo", field: "branchNo", hide:true }
-        ,{ headerName: "", field: "", width:50 ,  align:'center', resizable:false,editable : false
+        ,{ headerName: "", field: "", width:35 ,  align:'center', resizable:false,editable : false
             ,checkboxSelection:true,headerCheckboxSelection: true,
          }
         ,{ headerName: "근무팀명", field: "groupName" , width:150, editable : true
@@ -70,23 +70,22 @@ function WorkTableByGroupContainer() {
                     }
                     return list;
                 }()
-             }, valueFormatter:function(params) { return (!params.value)?'':params.value+'명'}} 
-        ,{ headerName: "정규근무시간",field:"workTime", editable:true, width: 200
-            //  ,cellEditor: picker.getTimePicker(), width:200}
+             }, valueFormatter:function(params) { return (!params.value)?'':params.value+'명'}}
 
-            ,valueGetter: function(params){
-                // console.log('params' ,params); 
-                var num = utils.regExr.numOnly(params.data.workTime);
-                var checkVal = utils.regExr.date(num.substring(0,4));
-                var checkVal2 = utils.regExr.date(num.substring(4,8));
-                // console.log('workTime 입력값:',params.data.workTime);
-                var num2 = params.data.workTime;
-                // console.log('num2 : ',num2);
-                if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
-                    return "";
-                }
-                return utils.regExr.dateTime(num2);
-            }
+        ,{ headerName: "정규근무시간",field:"workTime", editable:true, width: 200
+             ,cellEditor: picker.getTimePickerInput()
+                // ,valueGetter: function(params){
+                //     var num = utils.regExr.numOnly(params.data.workTime);
+                //     var checkVal = utils.regExr.date(num.substring(0,4));
+                //     var checkVal2 = utils.regExr.date(num.substring(4,8));
+                //     var num2 = params.data.workTime;
+                //     // console.log('num2 : ',num2);
+                //     if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
+                //         return "";
+                //     }
+                //     return utils.regExr.dateTime(num2);
+                // }
+
         }
         
         ,{ headerName: "휴게시간1", field: "restTime", editable:true, width:200,
@@ -113,17 +112,27 @@ function WorkTableByGroupContainer() {
                 return utils.regExr.dateTime(num);
             }
         }
+
+        // 여기부터 계산 다시해야됨
         ,{ headerName: "정규근무시간", field: "currentTime", width:120,  editable:false,
          valueGetter:function(params){
+            //  console.log('current값 확인 ', params);
             if(!params.data.currentTime){
                 return "";
             }
+            // 여기 계산이 어떡함..
             let current = params.data.currentTime;
             // console.log(current); // 시간
             var hour = current/60;
+            // var hour = current/120;
             var resultHour = Math.floor(hour);
             var min = current - (resultHour * 60);
+            // var min = current - (resultHour * 120);
             return resultHour+"시간"+min+"분";
+
+            // console.log('먼시간이여',hour, resultHour, min);
+            // hour, resultHour = 960
+            
         }
          }
          ,{ headerName: "야간근무시간", field: "nightTime", width: 120, cellStyle: {color: '#D96D6D'}, editable : false
@@ -133,8 +142,10 @@ function WorkTableByGroupContainer() {
                 }
                 let current = params.data.nightTime;
                 var hour = current/60;
+                // var hour = current/120;
                 var resultHour = Math.floor(hour);
                 var min = current - (resultHour * 60);
+                // var min = current - (resultHour * 120);
                 return resultHour+"시간"+min+"분";
             }
         }
@@ -145,8 +156,10 @@ function WorkTableByGroupContainer() {
                     }
                     let current = params.data.overTime;
                     var hour = current/60;
+                    // var hour = current/120;
                     var resultHour = Math.floor(hour);
                     var min = current - (resultHour * 60);
+                    // var min = current - (resultHour * 120);
                     return resultHour+"시간"+min+"분";
                 }
          }
@@ -156,7 +169,7 @@ function WorkTableByGroupContainer() {
                 params.data.recommTime = '8시간' 
                 return '8시간'
             } }
-        ,{ headerName: "검토", field: "passYn", width:80, editable:false,
+        ,{ headerName: "검토", field: "passYn", width:90, editable:false,
             valueGetter:function(params){
                 return params.data.currentTime == 8 * 60 ? "O" : "X";
             }
@@ -176,11 +189,13 @@ function WorkTableByGroupContainer() {
     const onCellEditingStarted = function(e){
         if(e.data){
             if(e.data.groupName)
-            console.log(e.data.groupName)
+            console.log('그룹명 :',e.data.groupName)
             preGroupName = e.data.groupName;
             return true;
         }
     }
+
+
     //현 페이지에서 정의된 함수 호출
     const onRowEditingStopped = function(e) {
         if(e.data){
@@ -204,11 +219,18 @@ function WorkTableByGroupContainer() {
            } 
         }
         if(e.data && e.data.workTime ) {//&& e.data.workTime!=='~'
-           let workTimeArr  = e.data.workTime.split("~");
+            console.log(e.data); // 내용
+            let workTimeArr  = e.data.workTime.split("~");
+            // let workTimeArr = [];
+        //    let workTimeArr = e.data.workTime;
+           console.log(workTimeArr, '내용');
            if(!workTimeArr[0] || !workTimeArr[1]){
-            alert("근무시간을 입력해주세요.");
-            check = false;
-            return false;    
+                alert("근무시간을 입력해주세요.");
+                console.log(!workTimeArr[0]);
+                console.log(!workTimeArr[1]);
+
+                check = false;
+                return false;    
             }
            //근무시간
            const strTime = new Date(0,0,0,workTimeArr[0].split(":")[0],workTimeArr[0].split(":")[1],0);
@@ -432,6 +454,8 @@ function WorkTableByGroupContainer() {
      
     }
     
+
+
     const [gridDefs, setGridDefs] = useState({}); //그리드 정의
     const [rowData, setRowData] = useState([]);
     
@@ -442,7 +466,8 @@ function WorkTableByGroupContainer() {
             const target = $('#month-picker');
             params = {
                 "branchNo" : 29,
-                "yearsMonthDate" : target.val().replace("-","")
+                "yearsMonthDate" : target.val()
+                // .replace("-","")
             }
             try{
                 console.log(params);

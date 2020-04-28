@@ -13,8 +13,10 @@ const picker = {
       dateFormat: 'mm/dd/yyyy'
     };
   },
+  
   getTimePicker :  function(check) {
   function TimePicker() {}
+
   TimePicker.prototype.init = function(params) {
     var strTime='';
     var endTime='';
@@ -28,10 +30,10 @@ const picker = {
 
     this.ui = document.createElement("div");
     this.ui.innerHTML=`<div>
-                        <input type="text" style="width:35%; text-align:center" readOnly
+                        <input type="text" style="width:45%; text-align:center" readOnly
                          class="strTime" value="${strTime}"/>
                          ~ 
-                        <input type="text" style="width:35%; text-align:center" readOnly
+                        <input type="text" style="width:45%; text-align:center" readOnly
                          class="endTime" value="${endTime}"/>
                        </div>`;
     this.sInput = this.ui.querySelector(".strTime")
@@ -78,7 +80,8 @@ const picker = {
       return false;
     };
     return TimePicker;
-  }
+  } //TimePicker
+
   ,setBreakTimePicker :  function() {
       function BreakTimePicker() {}
       BreakTimePicker.prototype.init = function(params) {
@@ -114,7 +117,7 @@ const picker = {
         return false;
       };
       return BreakTimePicker;
-  }
+  } // setBreakTimePicker
   ,setRestTimePicker :  function() {
     function DatePicker() {}
     DatePicker.prototype.init = function(params) {
@@ -147,6 +150,8 @@ const picker = {
        })
       
     };
+    //setRestTimePicker
+
     DatePicker.prototype.getGui = function() {
       return this.ui;
     };
@@ -162,7 +167,8 @@ const picker = {
       return false;
     };
     return DatePicker;
-  } 
+  } //DatePicker
+
  ,setMonthPicker:function (target,callback){
 
     picker.settingLanguage();
@@ -178,7 +184,7 @@ const picker = {
     }).data('datepicker');
     //디폴트
     monthDp.selectDate(new Date());
- }
+ } //setMonthPicker 
  ,setPersonalRestInfo:function (target,eventDates,callback){
   picker.settingLanguage();
   var eventDates = eventDates;
@@ -201,8 +207,69 @@ const picker = {
         }
     }
   }).data('datepicker');
+  //setPersonalRestInfo
+} ,
+// 추가
+getTimePickerInput :  function(check) {
+  function TimePickerInput() {}
+
   
-}
+  TimePickerInput.prototype.init = function(params) {
+    var strTime=''; 
+    var endTime='';
+    console.log(params, 'params');
+    if(params && params.value){
+      var initArr = params.data.split("~");
+      strTime = initArr[0];
+      endTime = initArr[1];
+    }
+    console.log(params.data); 
+
+    this.ui = document.createElement("div");
+    this.ui.innerHTML=`<div>
+                        <input type="text" style="width:45%; text-align:center"
+                         class="strTime" value="${strTime}"/>
+                         ~ 
+                        <input type="text" style="width:45%; text-align:center"
+                         class="endTime" value="${endTime}"/>
+                       </div>`;
+    this.sInput = this.ui.querySelector(".strTime")
+    this.eInput = this.ui.querySelector(".endTime")
+
+       
+  };
+    TimePickerInput.prototype.getGui = function() {
+      return this.ui;
+    };
+    TimePickerInput.prototype.afterGuiAttached = function() {      
+
+    };
+    TimePickerInput.prototype.getValue = function() {
+      
+      console.log(this.sInput.value, '보낼 값', this.eInput.value);
+      return this.sInput.value+"~"+this.eInput.value;
+    };
+    
+
+    // TimePickerInput.prototype.destroy = function() {};
+    // TimePickerInput.prototype.isPopup = function() {
+    //   return false;
+    // };
+    return TimePickerInput;
+  }
+    
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
