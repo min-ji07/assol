@@ -12,7 +12,21 @@ import $ from 'jquery';
 function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
 
     function saveRow (params) {
-        console.log(params);
+        params.forEach(element => {
+            if(!element.refGroupId || element.refGroupId=="")
+            {
+                alert("그룹명을 입력해주세요");
+                return false;
+            }
+            if(!element.userNo || element.userNo ==""){
+                alert("새로고침 해주세요");
+                return false;
+            }
+            if(!{yearMonth}){
+                alert("근무년도 해주세요");
+                return false;
+            }
+        });
         let param = {
             "workerScheduleInfos" : params 
         }

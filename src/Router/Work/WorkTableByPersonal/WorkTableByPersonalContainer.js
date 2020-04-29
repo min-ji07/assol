@@ -49,13 +49,14 @@ function WorkTableByPersonalContainer({yearMonth}) {
 
 
     useEffect(()=>{
-       async function initGrid(params) {
+       async function initGrid() {
         try {
-            const target = document.querySelector('#month-picker')
-            params = {
+            
+            let params = {
                 "branchNo" : 29,
-                "yearsMonthDate": target.value.replace("-","")
+                "yearsMonthDate": "202004"
             }
+            
             await callApi.getWorkerInfos(params).then(res => {
                     for(var i=0;i<res.data.Data.length;i++){
                         let user = res.data.Data[i];
@@ -84,16 +85,11 @@ function WorkTableByPersonalContainer({yearMonth}) {
                     }
                 })
             });
-
-            
-          
         }catch{
 
         }
        };
-       picker.setMonthPicker(('#month-picker'),function(value){
-            initGrid(value); 
-        });
+       initGrid();
     },[]); //init
 
 
@@ -124,12 +120,6 @@ function WorkTableByPersonalContainer({yearMonth}) {
                     return state.branchNo
                 }
             }
-           
-            ,{ headerName: "성명 ",field:"userNo", editable:true, width:155,
-                cellEditor: "select",
-                cellEditorParams: { values: gridCommon.extractValues(workersMap) },
-                refData: workersMap
-            }
             ,{ headerName: "성명 ",field:"userNo", editable:true, width:155,
                 cellEditor: "select",
                 cellEditorParams: { values: gridCommon.extractValues(workersMap) },
@@ -151,9 +141,7 @@ function WorkTableByPersonalContainer({yearMonth}) {
                 ,refData : groupInfoMap
             } //api 전달받아야함
             ,{ headerName: "휴무일1", field: "firstRestDay", editable:function(params){
-                console.log(params.data.refGroupId);
                 if(params.data.refGroupId){
-                    console.log(groupWorkType[params.data.refGroupId]);
                     if(groupWorkType[params.data.refGroupId] == 1){
                         return false;
                     }
@@ -173,7 +161,6 @@ function WorkTableByPersonalContainer({yearMonth}) {
             }
             ,{ headerName: "휴무일2", field: "twoRestDay", editable:function(params){
                 if(params.data.refGroupId){
-                    console.log(groupWorkType[params.data.refGroupId]);
                     if(groupWorkType[params.data.refGroupId] != 3){
                         return false;
                     }
@@ -190,15 +177,6 @@ function WorkTableByPersonalContainer({yearMonth}) {
                     return params.data.twoRestDay
                 }
             }
-            
-            // }
-            // ,{ headerName: "근무형태", field: "workType", hide = true, editable:false, width:190,
-            //     cellEditor: "select",
-            //     cellEditorParams: { values: gridCommon.extractValues(workType) },
-            //     refData: dayMap,
-            // }
-            
-          
         ]
 
         const onRowEditingStopped = function(e) {
@@ -233,7 +211,6 @@ function WorkTableByPersonalContainer({yearMonth}) {
                     subWorker={subWorker} // 대체 근무
                     gridDefs={gridDefs}  
                     gridCommon={gridCommon}
-
                 />
              }
         </>
