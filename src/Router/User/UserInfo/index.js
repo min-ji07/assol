@@ -20,15 +20,30 @@ const UserInfo = () => {
     let checkUserModify = false;
     let paramData = {};
     let deleteImgList = {
-        rowId : [],
+        delData : [],
         upLoad : {
-            "imageType": "",
             "userNo": "",
             "branchNo": "",
             "employeeNumber": "",
             "imageIsNull": "Y"
         }
     };
+
+    // {
+    //     "delData": [
+    //         {
+    //             "rowId": 0,
+    //             "imagePath": null
+    //         }
+    //     ],
+    //     "upLoad": {
+    //         "imageType": 0,
+    //         "userNo": 0,
+    //         "branchNo": 0,
+    //         "employeeNumber": null,
+    //         "imageIsNull": null
+    //     }
+    // }
 
     let params = {};
     let frm = new FormData();
@@ -151,15 +166,17 @@ const UserInfo = () => {
             let path = imgData[i].fileName;
             let type = imgData[i].imageType;
             let url = "http://211.251.238.215:5302/Save/";
+            let rowId = imgData[i].rowId;
             
             // 유저사진
             if(type == "1"){
                 $(".userImgView").prop("src",url+path);
-                $("#userImgModify").attr("data-row-id",imgData[i].rowId == undefined ? "" : imgData[i].rowId);
+                $("#userImgModify").attr("data-row-id", rowId == undefined ? "" : rowId);
+                $("#userImgModify").attr("data-image-path",path);
                 $(".userImgText").addClass("txt_hide");
                 deleteImgList.upLoad.imageIsNull = "";
             } else { // 인사서류
-                addFileList("파일"+i,url+path,true,imgData[i].rowId);
+                addFileList("파일"+i,url+path,true,rowId,path);
             }
         }
 
@@ -663,8 +680,15 @@ const UserInfo = () => {
             e.target.value = Utils.regExr.dateToDate(targetVal);
         });
         $("input.date_input").on("keyup",function(e){
+            let selectionPosition = e.target.selectionStart;
             var targetVal = e.target.value;
             e.target.value = Utils.regExr.date(targetVal);
+
+            // if(targetVal.length < e.target.value.length){
+            //     selectionPosition += 1;
+            // }
+            // e.target.selectionStart = selectionPosition;
+            // e.target.selectionEnd = selectionPosition;
         });
         $("input.personal_input").on("keyup",function(e){
             var targetVal = e.target.value;
@@ -807,15 +831,22 @@ const UserInfo = () => {
         $("button[name=imgDelete]").on("click",function(e){
             let img = $(e.target).parent().siblings(".userImgView");
             let text = $(e.target).parent().siblings(".userImgText");
-            let checkModifiy = $("#userImgModify").attr("data-row-id");
-            checkModifiy = checkModifiy == undefined ? "" : checkModifiy;
+            let rowId = $("#userImgModify").attr("data-row-id");
+            let imagePath = $("#userImgModify").attr("data-image-path");
+            rowId = rowId == undefined ? "" : rowId;
+            imagePath = imagePath == undefined ? "" : imagePath;
 
             img.attr("src","/images/user02.png");
             text.removeClass("txt_hide");
             $(e.target).siblings(".userImage").val("");
 
-            if(checkModifiy.length != 0 ){
-                deleteImgList.rowId.push(checkModifiy);
+            console.log(rowId);
+            if(rowId.length != 0 ){
+                const paramas = {
+                    rowId : rowId,
+                    imagePath : imagePath
+                }
+                deleteImgList.delData.push(paramas);
                 deleteImgList.upLoad.imageIsNull = "Y";
                 $("#userImgModify").attr("data-row-id","");
             }
@@ -963,7 +994,7 @@ const UserInfo = () => {
     }
  
     // 업로드 파일 목록 생성
-    function addFileList(fileName, filePath, check, rowId){
+    function addFileList(fileName, filePath, check, rowId, imagePath){
         var li = $("<li>");
         var a = $("<a style='cursor:pointer'>");
         var img_box = $("<span class='img_box'>");
@@ -975,6 +1006,7 @@ const UserInfo = () => {
         if(check){
             a.addClass("check_file");
             a.attr("data-row-id",rowId);
+            a.attr("data-image-path",imagePath);
         }
         $(".img_file_box").append(file_input);
         img_box.append(img);
@@ -1104,7 +1136,7 @@ const UserInfo = () => {
         let i = 0;
         let tempArr = [];
         for(i; i<checkList.length; i++){
-            if(checkList[i].className == "check_file"){
+            if(checkList[i].className == "check_file" && checkList[i].dataset.imagePath.length == 0){
                 tempArr.push(inputList[i].files[0]);
             }
         }
@@ -1223,14 +1255,17 @@ const UserInfo = () => {
     const saveImgFile = (userNo,employeeNumber) => {
         const checkTab = $("[name=tab1]:checked")[0].id;
         const checkModify = $("#userImgModify").attr("data-row-id");
+        const checkFile = $("."+checkTab+" input[name=userImageInput]")[0].files[0];
         frm = new FormData();
         frm.append("userNo",userNo);
         frm.append("employeeNumber",employeeNumber);
         checkUserImage = $("."+checkTab+" input[name=userImageInput]")[0].value == "" ? true : false;
         if(checkUserImage && deleteImgList.upLoad.imageIsNull == "Y"){
             frm.append("imageIsNull","Y");
-        } else if(checkModify.length == 0){ 
-            frm.append("userImage",$("."+checkTab+" input[name=userImageInput]")[0].files[0]);
+        } else if(checkModify.length == 0){
+            if(checkFile != undefined){
+                frm.append("userImage",checkFile);
+            }
         }
         var imgFileArr = selectFileList();
         var i = 0;
@@ -1242,6 +1277,7 @@ const UserInfo = () => {
         async function saveImg(){
             try {
                 await callApi.uploadFileToServer(frm).then(res=> {
+                    console.log(res,"이미지 저장");
                     if(res.data.ErrorCode == 1){
                         // alert(res.data.Msg);
                     } else {
@@ -1255,11 +1291,14 @@ const UserInfo = () => {
                 // alert("관리자에게 문의하세요.",e);
             }
         }
-        saveImg();
-
+        if(imgFileArr.length > 0 && checkFile != undefined){
+            saveImg();
+        }
+        
         async function deleteImg(deleteImgList){
             try {
                 await callApi.UpdateFileToServer(deleteImgList).then(res=> {
+                    console.log(res,"이미지 삭제");
                     if(res.data.ErrorCode == 1){
                         // alert(res.data.Msg);
                     } else {
@@ -1273,9 +1312,8 @@ const UserInfo = () => {
                 // alert("관리자에게 문의하세요.",e);
             }
         }
-        if(deleteImgList.rowId.length != 0){
+        if(deleteImgList.delData.length != 0){
             deleteImg(deleteImgList);
-
         }
     }
 
@@ -1402,21 +1440,23 @@ const UserInfo = () => {
 
         async function saveInit(params) {
             try {
-                console.log(JSON.stringify(params));
-                console.log(params);
                 if(checkUserModify){
                     await callApi.updateUserInformation(params).then(res=> {
+                        console.log(res,"사원정보 수정");
                         if(res.data.ErrorCode == 1){
                             alert(res.data.Msg);
                         } else {
                             alert("수정이 완료되었습니다.");
-                            saveImgFile(res.data.Data, res.data.Id);
+                            const userNo = $("#userNo").val();
+                            const employeeNumber = $("#employeeNumber").val();
+                            saveImgFile(userNo, employeeNumber);
                             // window.location.href = "/user/userManagement";
                             // location.reload();
                         }
                     });
                 } else {
                     await callApi.userRegistration(params).then(res=> {
+                        console.log(res,"사원정보 등록");
                         if(res.data.ErrorCode == 1){
                             alert(res.data.Msg);
                         } else {
@@ -1428,6 +1468,7 @@ const UserInfo = () => {
                     });
                 }
             }catch(e){
+                console.log(e);
                 alert("관리자에게 문의하세요.",e);
             }
         };
@@ -1437,7 +1478,9 @@ const UserInfo = () => {
         }
         console.log(params);
         console.log(JSON.stringify(params));
-        // saveInit(params);
+        console.log(deleteImgList,"삭제사진 리스트");
+        console.log(JSON.stringify(deleteImgList));
+        saveInit(params);
     }
 
 
@@ -1683,7 +1726,7 @@ const UserInfo = () => {
             <div class="user_input_inner">
                 <input id="userNo" type="text" hidden></input>
                 <input id="employeeNumber" type="text" hidden></input>
-                <input id="userImgModify" type="text" data-row-id="" hidden></input>
+                <input id="userImgModify" type="text" data-row-id="" data-image-path="" hidden></input>
                 
                 <input type="radio" id="tab_01" name="tab1" defaultChecked/>
                 <label class="user_type_label" for="tab_01">일반근로자</label>

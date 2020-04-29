@@ -4,9 +4,24 @@ import useHook from '../../GlobalState/Hooks/useHook';
 
 function HeaderPresenter() {
     const { state } = useHook();
+
     useEffect(()=>{
        console.log(state,'test');
     },[]);
+
+    const menuSlide = () => {
+        $(".submenu, .sub_bg").stop();
+        if($(".submenu").is(":visible")){
+            $(".submenu, .sub_bg").slideUp();
+        } else {
+            $(".submenu, .sub_bg").slideDown();
+        }
+    }
+
+    const closeMenu = () => {
+        $(".submenu, .sub_bg").stop();
+        $(".submenu, .sub_bg").slideUp();
+    }
 
     return(
         <header>
@@ -39,32 +54,29 @@ function HeaderPresenter() {
             </div>
             <div className="headermenu">
                 <div className="menu_inner" >
-                    <a href="#" className="menu" ><img src="/images/menu.png" alt="메뉴" /></a>
+                    <a href="#" className="menu" onClick={menuSlide}><img src="/images/menu.png" alt="메뉴" /></a>
                     <ul className="gnb">
                         <li>   
                             <a href="/user/userManagement" className="answer01" >사원관리</a> 
                             <ul className="submenu">
-                                <li><a href="#">사원등록</a></li>
-                                <li><a href="#">시간제사원등록</a></li>
-                                <li><a href="#">사업소득자등록</a></li>
-                                <li><a href="#">인사관리등록</a></li>
-                                <li><a href="#">입퇴사자현황</a></li>
+                                <li><a href="/user/userInfo">사원등록</a></li>
+                                <li><a href="/user/userManagement">사원현황</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="/work/workTableMain" className="answer02">근태관리</a>
                             <ul className="submenu">
-                                <li><a href="workTeam.html">근무조설정</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
-                                <li><a href="#">서브메뉴2</a></li>
+                                <li><a href="/work/workTableByGroup">근무조 설정</a></li>
+                                <li><a href="/work/workTableByPersonal">근무자 설정</a></li>
+                                <li><a href="/work/workTableByReplaceUser">대체근무자 설정</a></li>
+                                <li><a href="/work/workTableResult">근무표</a></li>
                             </ul>
                         </li>
                         <li>
                             <a href="/salary/salary" className="answer03">급여대장</a>
                             <ul className="submenu">
-                                <li><a href="#">급여자료입력</a></li>
-                                <li><a href="sal.html">급여대장</a></li>
+                                <li><a href="/salary/salaryInput">급여자료입력</a></li>
+                                <li><a href="/salary/salary">급여대장</a></li>
                                 <li><a href="#">서브메뉴3</a></li>
                                 <li><a href="#">서브메뉴3</a></li>
                                 <li><a href="#">근로소득지급명세서</a></li>

@@ -50,7 +50,7 @@ const Routes = () => {
             <Route path="/user/userManagement" component={UserManagement} />
             <Route path="/work/workTableMain" component={WorkMain} />
             <Route path="/work/workTableByGroup" component={WorkTableByGroup} />
-            <Route path="/work/workTableByPersonal/:yearMonth" component={WorkTableByPersonal} />
+            <Route path="/work/workTableByPersonal" component={WorkTableByPersonal} />
             <Route path="/work/workTableByRestDay" component={WorkTableByRestDay} />
             <Route path="/work/workTableByRestDayView" component={WorkTableByRestDayView} />
             <Route path="/work/WorkTableResult" component={WorkTableResult} />

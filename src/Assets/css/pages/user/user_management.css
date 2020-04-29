@@ -17,8 +17,8 @@
 .user_management .user_plus {
     float: right;
     position: absolute; text-align: left;
-    width: 95px; top: 16px; right: 23px; color: white;
-    background: url('/images/icon_plus.png') no-repeat transparent 66px center; 
+    width: 88px; top: 16px; right: 28px; color: white;
+    background: url('/images/icon_plus.png') no-repeat transparent right center; 
     font-size: 17px;
 }
 
@@ -43,7 +43,7 @@
     width: 209px; height: 90px;
     border-radius: 20px;
     text-align: center;
-
+    cursor:pointer;
 }
 .user_management .status_green {
     float: left;
@@ -54,6 +54,7 @@
 .user_management .status_green .status_green_inner{
     float:left;
     width:25%;
+    cursor:pointer;
 }
 .user_management .status_green .status_green_inner div {
     width:80%;
@@ -74,14 +75,29 @@
     font-size: 17px; text-indent: 8px; 
     border-bottom: 2px solid white;
     margin-left: 26px;
+    color:white;
+    background-color:#d1d1d1;
+}
+.status_table .div_top .user_search_box{
+    display: inline-block;
+    position: relative;
 }
 .status_table .div_top .user_search {
-    background: url('/images/search1.png') no-repeat transparent 227px 4px;
+    background-color:transparent;
     display: inline-block; margin-top: 1px;
     width: 250px; border-radius: 0px; margin-left: 14px;
     border: none; text-indent: 5px;
     border-bottom: 2px solid white;
     font-size: 17px; color: white;
+}
+.status_table .div_top .btn_search {
+    background:url('/images/search1.png') no-repeat center;
+    display:block;
+    width:30px;
+    height:30px;
+    position:absolute;
+    top:calc(50% - (30px / 2) );
+    right:0px;
 }
 .user_search::placeholder { color: white;}
 

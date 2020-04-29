@@ -248,7 +248,7 @@
     /* border:1px solid #ccc; */
     box-sizing: border-box;
 }
-.date_box{
+.work_setting_04 .date_box{
     width:100%;
     height:35px;
     line-height:35px;
@@ -266,11 +266,11 @@
     box-sizing: border-box;
     position:relative;
 }
-.date_box label {
+.work_setting_04 .date_box label {
     font-size:14px;
     margin-right:5px;
 }
-.date_box label:before{
+.work_setting_04 .date_box label:before{
     display:inline-block;
     content: "";
     width:5px;
@@ -280,7 +280,7 @@
     border-radius: 50%;
     margin-right:4px;
 }
-.date_box select {
+.work_setting_04 .date_box select {
     border:0 none;
     border-bottom: 1px solid #9c9c9c;
     color: #7a7a7a;
@@ -289,14 +289,14 @@
     margin-right:20px;
     padding-right:5px;
 }
-.search_box{
+.work_setting_04 .search_box{
     position: relative;
     display:inline-block;
     overflow:hidden;
     vertical-align: middle;
     margin-right:30px;
 }
-.search_box input{
+.work_setting_04 .search_box input{
     width: 160px;
     height: 25px;
     border:0 none;
@@ -310,11 +310,11 @@
     color:#7a7a7a;
     vertical-align: bottom;
 }
-.search_box input::placeholder{
+.work_setting_04 .search_box input::placeholder{
     font-size:18px;
     color:#7a7a7a;
 }
-.search_box button{
+.work_setting_04 .search_box button{
     width:20px;
     height:20px;
     background:url("/images/btn_search.png") no-repeat center;

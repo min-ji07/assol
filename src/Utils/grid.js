@@ -114,6 +114,9 @@ var gridCommon = function() {
                 columnApi : targetApi.columnController.columnApi
             };
         }
+        ,getGridApi : () => {
+            return gridApi;
+        }
         ,setColumnDefs : (columnDefs) => {
             gridApi.api.setColumnDefs(columnDefs);
         }
