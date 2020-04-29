@@ -22,9 +22,8 @@ function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
                 alert("새로고침 해주세요");
                 return false;
             }
-           
+            element.yearsDate = "202004";
         });
-        params.yearsDate = "202004";
         let param = {
             "workerScheduleInfos" : params 
         }

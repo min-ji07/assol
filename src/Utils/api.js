@@ -114,7 +114,7 @@ export const callApi = {
     // 근무자 설정 저장 
     setWorkerList:(params) => axios({ 
         method: 'post',
-        url: noJustin+'/Worker/SetWorkerTable',
+        url: localTest+'/Worker/SetWorkerTable',
         data: params
         }), 
 

@@ -89,7 +89,9 @@ function WorkTableByPersonalContainer({yearMonth}) {
 
         }
        };
-       initGrid();
+       picker.setMonthPicker(('#month-picker'),function(value){
+        initGrid(value); 
+        });
     },[]); //init
 
 
