@@ -546,7 +546,7 @@ return(
         {/* --기관종류선택 */}
 
         {/* 회원가입 */}
-        <div className="modal_box mb2" style={{display:"block"}} > 
+        <div className="modal_box mb2"> 
             <div className="modal_top">
                 <div className="modal_title">회원가입</div>
                 <div className="modal_close"><a href="#" onClick={()=>closePopup()}></a></div>
