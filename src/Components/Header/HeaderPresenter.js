@@ -67,7 +67,10 @@ function HeaderPresenter() {
                             <a href="/work/workTableMain" className="answer02">근태관리</a>
                             <ul className="submenu">
                                 <li><a href="/work/workTableByGroup">근무조 설정</a></li>
-                                <li><a href="/work/workTableByPersonal">근무자 설정</a></li>
+
+                                {/* <li><a href="/work/workTableByPersonal">근무자 설정</a></li>
+                                <Route path="/work/workTableByPersonal/:yearMonth" component={WorkTableByPersonal} /> */}
+
                                 <li><a href="/work/workTableByReplaceUser">대체근무자 설정</a></li>
                                 <li><a href="/work/workTableResult">근무표</a></li>
                             </ul>
