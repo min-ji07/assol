@@ -41,7 +41,6 @@ function saveRow (result) {
     let params = {};
     params.groupInfos = list;
     console.log('저장버튼 클릭시 넘어오는 workTime:',params);
-    이건아니었음
     
     async function init(params){
         try {
@@ -90,11 +89,11 @@ return (
                                 data-date-format="yyyy"/>
                             근무일 설정
                             <input type="radio" id="select_01" value = "1" name="select" defaultChecked/>
-                            <label for="select_01">월 ~ 금</label>
+                            <label htmlFor="select_01">월 ~ 금</label>
                             <input type="radio" id="select_02" value = "2" name="select" />
-                            <label for="select_02">월 ~ 토</label>
+                            <label htmlFor="select_02">월 ~ 토</label>
                             <input type="radio" id="select_03" value = "3" name="select" />
-                            <label for="select_03">월 ~ 일</label>
+                            <label htmlFor="select_03">월 ~ 일</label>
                         </p>
 
 

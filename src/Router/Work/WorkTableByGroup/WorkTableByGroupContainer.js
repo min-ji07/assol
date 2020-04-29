@@ -167,7 +167,8 @@ function WorkTableByGroupContainer() {
                 return '8시간'
             } }
         ,{ headerName: "검토", field: "passYn", width:90, editable:false,
-            valueGetter:function(params){
+        valueGetter:function(params){
+
                 return params.data.currentTime == 8 * 60 ? "O" : "X";
             }
         }
@@ -221,20 +222,14 @@ function WorkTableByGroupContainer() {
             //console.log('ㅇㅇ',workTimeArr[1].value); // 안나옴
            if(!workTimeArr == null || !workTimeArr == ""){
                 console.log(workTimeArr,': workTimeArr');
-
-                var replaceTime1 = workTimeArr[0].replace(/\:/g,"");
-                var replaceTime2 = workTimeArr[1].replace(/\:/g,"");
-                console.log('replaceTime',replaceTime1);
-                console.log('replaceTime',replaceTime2);
-
+                // var replaceTime1 = workTimeArr[0].replace(/\:/g,"");
+                // var replaceTime2 = workTimeArr[1].replace(/\:/g,"");
+                // console.log('근무시작',replaceTime1);
+                // console.log('근무종료',replaceTime2);
                 var strhour = workTimeArr[0].substring(0,2);
                 var strminu = workTimeArr[0].substring(2,4);
                 var endhour = workTimeArr[1].substring(0,2);
                 var endninu = workTimeArr[1].substring(2,4);
-                console.log('strhour', strhour)
-                console.log('strminu', strminu)
-                console.log('endhour', endhour)
-                console.log('endninu', endninu)
                 if(strhour > 25 || endhour > 25){
                     alert('시간을 다시 설정해주세요.');
                     return false;
@@ -242,13 +237,13 @@ function WorkTableByGroupContainer() {
                     alert('시간을 다시 설정해주세요.')
                     return false;
                 }else{
-                }
 
+                }
            }else if(!workTimeArr[0] || !workTimeArr[1]){
                 alert("근무시간을 입력해주세요.");
 
                 if(workTimeArr[0].value < 60){
-                    console.log('ㅇㅇ',workTimeArr[0]);
+                    console.log(workTimeArr[0]);
                 }
 
                 console.log(!workTimeArr[0]);
@@ -288,7 +283,6 @@ function WorkTableByGroupContainer() {
                     
                 }
                 else{
-                 
                     if(allEndTimeMin >=0 && allEndTimeMin <= nightLastLimit){
                         allWorkTime = nightStartLimit - allStrTimeMin;
                         nightTime = ((24* 60) - nightStartLimit)  + allEndTimeMin;
@@ -298,9 +292,7 @@ function WorkTableByGroupContainer() {
                         allWorkTime = (nightStartLimit - allStrTimeMin) + (allEndTimeMin - nightLastLimit);
                         nightTime = ((24* 60) - nightStartLimit)  + nightLastLimit;
                     }
-                    
                 }
-            
            }
            else if(allStrTimeMin < allEndTimeMin){
                 if(allStrTimeMin >= 0 && allStrTimeMin <= nightLastLimit){
@@ -343,19 +335,40 @@ function WorkTableByGroupContainer() {
                 nightTime = 8 * 60;
                 allWorkTime = allTimeMin - nightTime;
            }
-           if(e.data.restTime)
-           {
+
+           if(e.data && e.data.restTime){
             let restTimeArr  = e.data.restTime.split("~");
-            if(!restTimeArr[0] || !restTimeArr[1]){
-             alert("근무시간을 입력해주세요.");
-             check = false;
-             return false;    
-             }
-             const strRestTime = new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0);
+            // if(!restTimeArr[0] || !restTimeArr[1]){
+            if(!restTimeArr == null || !restTimeArr == ""){
+                // 휴게시간
+                var strhour = restTimeArr[0].substring(0,2);
+                var strminu = restTimeArr[0].substring(2,4);
+                var endhour = restTimeArr[1].substring(0,2);
+                var endninu = restTimeArr[1].substring(2,4);
+                // 근무시간
+                var strhourW = workTimeArr[0].substring(0,2);
+                var strminuW = workTimeArr[0].substring(2,4);
+                var endhourW = workTimeArr[1].substring(0,2);
+                var endninuW = workTimeArr[1].substring(2,4);
+
+                if(strhourW < strhour && endhourW < endhour){ 
+                    alert('rest.');
+                }
+                // }else if(strminuW < strminu || endninuW < endninu){
+                //     if(strminuW < strminu || endninuW < endninu){
+                //         alert('근무시간 이후의 분은 입력할 수 없습니다.');
+                //     }   
+                // }else{ 
+
+                // }
+            }
+             console.log(restTimeArr,'restTimeArr');
+             const strRestTime = new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0); // 시간
              const endRestTime = new Date(0,0,0,restTimeArr[1].split(":")[0],restTimeArr[1].split(":")[1],0);
-             var allStrRestMin = (strRestTime.getHours() * 60) + strRestTime.getMinutes();
+             var allStrRestMin = (strRestTime.getHours() * 60) + strRestTime.getMinutes();  // 20시 20
              var allEndRestMin = (endRestTime.getHours() * 60) + endRestTime.getMinutes();
              var restMin = 0;
+             console.log('restMin',restMin);// 이건뭔데..?
 
              if(allStrRestMin > allEndRestMin)
              {
@@ -397,38 +410,59 @@ function WorkTableByGroupContainer() {
                     }
                 }
                 allWorkTime -= restMin;
-             }
+            }
              
            }
-           if(e.data.subRestTime)
-           {
+           //if(e.data.subRestTime){
+           if(e.data && e.data.subRestTime){
                 if(!e.data.restTime){
                     alert ("휴게시간1을 먼저 입력해주세요");
                     return false;
-                }
-                else{
-                   let restTimeArr  = e.data.subRestTime.split("~");
-                   if(!restTimeArr[0] || !restTimeArr[1]){
-                   alert("근무시간을 입력해주세요.");
-                      check = false;
-                      return false;    
-                   }
-                   const strRestTime = new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0);
-                   const endRestTime = new Date(0,0,0,restTimeArr[1].split(":")[0],restTimeArr[1].split(":")[1],0);
-                   var allStrRestMin = (strRestTime.getHours() * 60) + strRestTime.getMinutes();
-                   var allEndRestMin = (endRestTime.getHours() * 60) + endRestTime.getMinutes();
+                }else{
+                    let subRestTimeArr  = e.data.subRestTime.split("~");
+                    console.log(subRestTimeArr, 'subRestTimeArr');
+                    // if(!restTimeArr[0] || !restTimeArr[1]){
+                    if(!subRestTimeArr == null || !subRestTimeArr == "" ){
+                        // 휴게시간2
+                        var strhour = subRestTimeArr[0].substring(0,2);
+                        var strminu = subRestTimeArr[0].substring(2,4);
+                        var endhour = subRestTimeArr[1].substring(0,2);
+                        var endninu = subRestTimeArr[1].substring(2,4);
+                        // 근무시간
+                        var strhourW = workTimeArr[0].substring(0,2);
+                        var strminuW = workTimeArr[0].substring(2,4);
+                        var endhourW = workTimeArr[1].substring(0,2);
+                        var endninuW = workTimeArr[1].substring(2,4);
+
+                        if(strhourW < strhour || endhourW < endhour){
+                            alert('근무시간 이후의 시간은 입력할 수 없습니다.');
+                        }else if(strminuW < strminu || endninuW < endninu){
+                            alert('근무시간 이후의 시간은 입력할 수 없습니다.');
+                        }else{
+
+                        }
+                    
+                    // alert("근무시간을 입력해주세요.");
+                    //     check = false;
+                    //     return false;    
+                    }
+
+                   const strsubRestTime = new Date(0,0,0,subRestTimeArr[0].split(":")[0],subRestTimeArr[0].split(":")[1],0);
+                   const endsubRestTime = new Date(0,0,0,subRestTimeArr[1].split(":")[0],subRestTimeArr[1].split(":")[1],0);
+                   var allStrsubMin = (strsubRestTime.getHours() * 60) + strsubRestTime.getMinutes();
+                   var allEndsubMin = (endsubRestTime.getHours() * 60) + endsubRestTime.getMinutes();
                    var restMin = 0;
                    
-                   if(allStrRestMin > allEndRestMin)
+                   if(allStrsubMin > allEndsubMin)
                    {
-                      restMin = (24 * 60) - (allStrRestMin - allEndRestMin);
+                      restMin = (24 * 60) - (allStrsubMin - allEndsubMin);
                    }
                    else {
-                      if(allStrRestMin == allEndRestMin){
+                      if(allStrsubMin == allEndsubMin){
                           alert("쉬는시간 범위를 다시 지정해 주세요");
                           return false;
                       }
-                      restMin = allEndRestMin - allStrRestMin;
+                      restMin = allEndsubMin - allStrsubMin;
                    }
                    if(nightTime > 0){
                       var result = nightTime - restMin;
@@ -461,9 +495,16 @@ function WorkTableByGroupContainer() {
                     }
               }
             }
-           
 
+
+
+           
+            // 검토
            overTime = (allWorkTime + nightTime) - (8 * 60);
+           console.log(overTime,'overTime');
+           console.log(allWorkTime,'allWorkTime');
+           console.log(nightTime,'nightTime');
+
            let pass = overTime != 0 ? "N" : "Y";
            if(overTime < 0 ){
                overTime = 0;
@@ -472,7 +513,6 @@ function WorkTableByGroupContainer() {
            e.node.setDataValue('currentTime',allWorkTime)
            e.node.setDataValue('overTime',overTime);
            
-          
            e.node.setDataValue('passYn',pass)
            isEdit  = true;
        }

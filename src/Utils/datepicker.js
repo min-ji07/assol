@@ -226,19 +226,32 @@ getTimePickerInput :  function(check) {
         endTime = initArr[1];
       }
 
-      const keyupEvent = () => {
-        console.log("테스트!!!");
+      const tabfocus = () => {
+        if(event.keyCode == 13 && event.keyCode == 9){
+          var test = event.keyCode;
+          console.log(test,'str tab 눌림');
+          $('div .strTime').focus(); 
+        }
       }
       this.ui = document.createElement("div");
       this.ui.innerHTML=`<div>
                           <input type="text" style="width:45%; text-align:center"
-                          class="strTime" maxLength="5" value="${strTime}"/>
+                          class="strTime" id="strTime" maxLength="5" onkeydown="${tabfocus}" value="${strTime}"/>
                           ~ 
                           <input type="text" style="width:45%; text-align:center"
-                          class="endTime" maxLength="5" value="${endTime}"/>
+                          class="endTime" maxLength="5" onkeydown="${tabfocus}" value="${endTime}"/>
                         </div>`;
       this.sInput = this.ui.querySelector(".strTime")
       this.eInput = this.ui.querySelector(".endTime")
+
+      // this.sInput.addEventListener("keydown",function(e){
+      //   console.log(e.keyCode);
+      //     if(e.keyCode == 13 && e.keyCode == 9){
+      //       var test = e.keyCode;
+      //       console.log(test,'str tab 눌림');
+      //       $('div .strTime').focus(); 
+      //     }
+      // });
 
       // console.log(this.sInput);
       this.sInput.addEventListener("keyup",function(e){
