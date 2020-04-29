@@ -12,72 +12,26 @@ import $ from 'jquery';
 function WorkTableByPersonalPresenter({rowData, minCount,subWorker,gridDefs}) {
 
     function saveRow (params) {
-
-        params.forEach(element => {
-            //branchNo, employeeNumber, firstRestDay, groupName, position, processType, twoRestDay, userName, userNo,yearsMonthDate 가져옴
-            if(element.processType){
-                if(element.processType == 1 || element.processType == 2){ // 1. insert 2. update
-                        if(element.userName == null || element.userName == ""){
-                            alert('사원을 선택해주세요.');
-                            return false;
-                        }
-                        if(element.groupName == null ||element.groupName == ""){
-                        // if(element.Object.keys(groupInfoMap) == null || element.Object.keys(groupInfoMap) == ""){
-                            alert("근무조를 선택해주세요.");
-                            return false;
-                        }
-                        if(element.firstRestDay == null || element.firstRestDay == "") {
-                            alert("휴무일을 선택해주세요.");
-                            return false;
-                        }
-                        // if(element.firstRestDay == null || element.firstRestDay =="") {
-                        //     alert("휴무일을 선택해주세요.");
-                        //     return false;
-                        // }
-                        element.yearsMonthDate = $('#month-picker').val().replace("-","");
-                        element.branchNo = 29;
-                        // list.push(element);
-          
-                    }
-                }
-            // }
-        });
-
-        var i = 0;
-        for(i; i<params.length; i++){
-            params[i].branchNo = 29;
-        }
-
-
         console.log(params);
-
-        let params2 = {
-            "workerScheduleInfos":params
-        };
-        console.log("params2",params2);
-        // ["workerScheduleInfos"]
-
-        if(params2 == null || params2.length < 1){
-            alert('저장할 근무자가 없습니다.');
-            return true;
+        let param = {
+            "workerScheduleInfos" : params 
         }
-
-        async function init(params2){
+        async function init(param){
             try {
-                await callApi.setWorkerList(params2).then(res => {
-                    console.log(res);
+                await callApi.setWorkerList(param).then(res => {
                     if(res.data.ErrorCode == 0){ 
-                        alert("근무자 설정이 완료되었습니다!");
+                        alert("근무자 설정이 완료되었습니다..");
                     }
                     else{
-                        alert("안~~~돼~~");
+                        alert("일부의 근무자  빼고 설정 실패하였습니다.");
                     }
                 })
             }catch(error){
                 console.log("CATCH !! : " + error);
             }
+            return true;
         };
-        init(params2);
+        init(param);
     }
     
    
