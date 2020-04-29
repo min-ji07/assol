@@ -98,7 +98,7 @@ function UserManagementPresenter({rowData, gridDefs,countData}) {
                 <div className="status_table">
                     <div className="div_top">
                         <select id="userTypeSelect">
-                            <option>전체</option>
+                            <option value="전체">전체</option>
                             <option value="0">일반소득자</option>
                             <option value="1">사업소득자</option>
                             <option value="2">일용직근로자</option>

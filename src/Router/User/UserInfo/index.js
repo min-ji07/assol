@@ -607,7 +607,12 @@ const UserInfo = () => {
         init();
         fileDropDown();
         bindEvent();
+        setInputAutocompleteOff();
     },[]); //init
+
+    const setInputAutocompleteOff = () => {
+        $("input").attr("autocomplete","off");
+    }
 
     const bindEvent = () => {
         // 급여항목 추가
@@ -643,9 +648,7 @@ const UserInfo = () => {
         // 저장버튼
         $("button[name=btnSave]").on("click",function(e){
             var checkTab = $("[name=tab1]:checked")[0].id;
-            
-            console.log(checkTab);
-            
+
             switch(checkTab){
                 case "tab_01":
                     fnSave();
@@ -1294,7 +1297,7 @@ const UserInfo = () => {
         if(imgFileArr.length > 0 && checkFile != undefined){
             saveImg();
         }
-        
+
         async function deleteImg(deleteImgList){
             try {
                 await callApi.UpdateFileToServer(deleteImgList).then(res=> {
@@ -1328,8 +1331,8 @@ const UserInfo = () => {
         const btn = $('<button type="button" tabindex="-1" style="color:#7d7d7d; background-color:transparent;">X</button>').on("click",function(e){
             $(e.target).parent().remove();  // 삭제이벤트
         });
-        li.append('<input type="text" id="addSalaryTitle" name="addSalaryTitle" class="address" placeholder="추가수당"/>');
-        li.append(' : <input class="money_input" type="text" name="addSalaryPay" id="addSalaryPay" class="address" placeholder="1,700,000" style="margin-right:5px;"/>');
+        li.append('<input type="text" id="addSalaryTitle" name="addSalaryTitle" className="address" placeholder="추가수당"/>');
+        li.append(' : <input class="money_input" type="text" name="addSalaryPay" id="addSalaryPay" className="address" placeholder="1,700,000" style="margin-right:5px;"/>');
         
         li.append(btn);
         salaryUl.append(li);
@@ -1476,10 +1479,6 @@ const UserInfo = () => {
         if(checkUserModify){
             params["delDataList"] = delDataList;
         }
-        console.log(params);
-        console.log(JSON.stringify(params));
-        console.log(deleteImgList,"삭제사진 리스트");
-        console.log(JSON.stringify(deleteImgList));
         saveInit(params);
     }
 
@@ -1557,42 +1556,9 @@ const UserInfo = () => {
             };
         }
 
-        async function saveInit(params) {
-            try {
-                console.log(JSON.stringify(params));
-                console.log(params);
-                if(checkUserModify){
-                    await callApi.updateUserInformation(params).then(res=> {
-                        if(res.data.ErrorCode == 1){
-                            alert(res.data.Msg);
-                        } else {
-                            alert("수정이 완료되었습니다.");
-                            saveImgFile(res.data.Data, res.data.Id);
-                            // window.location.href = "/user/userManagement";
-                            // location.reload();
-                        }
-                    });
-                } else {
-                    await callApi.userRegistration(params).then(res=> {
-                        if(res.data.ErrorCode == 1){
-                            alert(res.data.Msg);
-                        } else {
-                            alert("저장이 완료되었습니다.");
-                            saveImgFile(res.data.Data, res.data.Id);
-                            // window.location.href = "/user/userManagement";
-                            // location.reload();
-                        }
-                    });
-                }
-            }catch(e){
-                alert("관리자에게 문의하세요.",e);
-            }
-        };
         if(checkUserModify){
             params["delDataList"] = delDataList;
         }
-        console.log(params);
-        console.log(JSON.stringify(params));
         saveInit(params);
     }
 
@@ -1668,73 +1634,74 @@ const UserInfo = () => {
                 "cuModels" : getCurriculumRow()
             };
         }
-
-        async function saveInit(params) {
-            try {
-                console.log(JSON.stringify(params));
-                console.log(params);
-                if(checkUserModify){
-                    await callApi.updateUserInformation(params).then(res=> {
-                        if(res.data.ErrorCode == 1){
-                            alert(res.data.Msg);
-                        } else {
-                            alert("수정이 완료되었습니다.");
-                            saveImgFile(res.data.Data, res.data.Id);
-                            // window.location.href = "/user/userManagement";
-                            // location.reload();
-                        }
-                    });
-                } else {
-                    await callApi.dayilyUserRegistration(params).then(res=> {
-                        if(res.data.ErrorCode == 1){
-                            alert(res.data.Msg);
-                        } else {
-                            alert("저장이 완료되었습니다.");
-                            saveImgFile(res.data.Data, res.data.Id);
-                            // window.location.href = "/user/userManagement";
-                            // location.reload();
-                        }
-                    });
-                }
-            }catch(e){
-                alert("관리자에게 문의하세요.",e);
-            }
-        };
-
-
-
-
         if(checkUserModify){
             params["delDataList"] = delDataList;
         }
-        console.log(params);
-        console.log(JSON.stringify(params));
         saveInit(params);
     }
 
+
+
+    async function saveInit(params) {
+        try {
+            console.log(params);
+            console.log(JSON.stringify(params));
+            console.log(deleteImgList,"삭제사진 리스트");
+            console.log(JSON.stringify(deleteImgList));
+            if(checkUserModify){
+                await callApi.updateUserInformation(params).then(res=> {
+                    if(res.data.ErrorCode == 1){
+                        alert(res.data.Msg);
+                    } else {
+                        alert("수정이 완료되었습니다.");
+                        const userNo = $("#userNo").val();
+                        const employeeNumber = $("#employeeNumber").val();
+                        saveImgFile(userNo, employeeNumber);
+                        // window.location.href = "/user/userManagement";
+                        // location.reload();
+                    }
+                });
+            } else {
+                await callApi.userRegistration(params).then(res=> {
+                    if(res.data.ErrorCode == 1){
+                        alert(res.data.Msg);
+                    } else {
+                        alert("저장이 완료되었습니다.");
+                        saveImgFile(res.data.Data, res.data.Id);
+                        // window.location.href = "/user/userManagement";
+                        // location.reload();
+                    }
+                });
+            }
+        }catch(e){
+            alert("관리자에게 문의하세요.",e);
+        }
+    };
+
     return(
-    <div class="wrapper">
-        <div class="user_input">
-            <div class="title">
+
+    <div className="wrapper">
+        <div className="user_input">
+            <div className="title">
                 <h1>사원등록</h1>
                 <p>사원정보를 등록하는 메뉴입니다. 해당 항목을 입력해주세요.<span>*표시는 필수 입력사항입니다.</span></p>
             </div>
-            <div id="userInfoTitle" class="title">
+            <div id="userInfoTitle" className="title">
                 <h1>사원 정보관리</h1>
                 <p>설정하신 데이터기반으로 근무현황을 확인 할 수 있습니다.</p>
             </div>
-            <div class="user_input_inner">
+            <div className="user_input_inner">
                 <input id="userNo" type="text" hidden></input>
                 <input id="employeeNumber" type="text" hidden></input>
                 <input id="userImgModify" type="text" data-row-id="" data-image-path="" hidden></input>
                 
                 <input type="radio" id="tab_01" name="tab1" defaultChecked/>
-                <label class="user_type_label" for="tab_01">일반근로자</label>
+                <label className="user_type_label" for="tab_01">일반근로자</label>
                 <input type="radio" id="tab_02" name="tab1" />
-                <label class="user_type_label" for="tab_02">사업소득자</label>
+                <label className="user_type_label" for="tab_02">사업소득자</label>
                 <input type="radio" id="tab_03" name="tab1" />
-                <label class="user_type_label" for="tab_03">일용직근로자</label>
-                <div class="white_board">
+                <label className="user_type_label" for="tab_03">일용직근로자</label>
+                <div className="white_board">
                     <EamedIncomeContainer rowData={rowData} euduDefs ={euduDefs} carrerDefs= {carrerDefs} dependDefs={dependDefs} militaryDefs={militaryDefs} curriculumDefs={curriculumDefs} rowData2={rowData2} rowData3={rowData3} rowData4={rowData4} rowData5={rowData5}/>
                     <BusinessIncomeContainer rowData={rowData} euduDefs ={euduDefs} carrerDefs= {carrerDefs} dependDefs={dependDefs} militaryDefs={militaryDefs} curriculumDefs={curriculumDefs} rowData2={rowData2} rowData3={rowData3} rowData4={rowData4} rowData5={rowData5}/>
                     <DailyIncomeContainer  rowData={rowData} euduDefs ={euduDefs} carrerDefs= {carrerDefs} dependDefs={dependDefs} militaryDefs={militaryDefs} curriculumDefs={curriculumDefs} rowData2={rowData2} rowData3={rowData3} rowData4={rowData4} rowData5={rowData5}/>
@@ -1742,8 +1709,8 @@ const UserInfo = () => {
             </div>
         </div>
         {/* 우편번호 api*/}
-        <div id="daumPostPop" class="post_wrapper">
-            <button class="post_close" onClick={closePostPop}></button>
+        <div id="daumPostPop" className="post_wrapper">
+            <button className="post_close" onClick={closePostPop}></button>
             <DaumPostcode
                 onComplete={daumPostComplete}
             />
@@ -1752,28 +1719,28 @@ const UserInfo = () => {
         <div className="modal_box imgupload" style={{display:"none"}}>
             {/* <div className=""> */}
             {/* html 추가 */}
-            <div class="file_upload">
-                <img class="btn_close" src="/images/esc.png" alt="닫기" onClick={()=>hideFileList()} />
-                <div class="file_upload_board">
-                    <div class="file_upload_inner">
+            <div className="file_upload">
+                <img className="btn_close" src="/images/esc.png" alt="닫기" onClick={()=>hideFileList()} />
+                <div className="file_upload_board">
+                    <div className="file_upload_inner">
                         {/* 파일등록 전 */}
-                        {/* <div class="drag_box">
+                        {/* <div className="drag_box">
                             <img src="/images/user_info_file_upload.png" style={{width:"53px", height:"47px", marginTop:"23%"}} />
                             <p style={{color:"#a4a4a4", fontSize:"25px", fontWeight:"500"}}>[파일등록]</p>
                             <p style={{color:"#a4a4a4", fontSize:"18px", fontWeight:"400"}}>업로드 할 파일을 드래그 해주세요.</p>
                         </div> */}
                         
                         {/* 파일등록 후 */}
-                        <ul id="fileBox" class="file_list">
-                            <li class="img_add_li">
-                                <a id="addFile" class="btn_img_add" href="#">
-                                    <span class="img_box add"></span>
-                                    <span class="title_box"></span>
-                                    <span class="check_box"></span>
+                        <ul id="fileBox" className="file_list">
+                            <li className="img_add_li">
+                                <a id="addFile" className="btn_img_add" href="#">
+                                    <span className="img_box add"></span>
+                                    <span className="title_box"></span>
+                                    <span className="check_box"></span>
                                 </a>
                             </li>
                         </ul>
-                        <div class="img_file_box">
+                        <div className="img_file_box">
                             <input name="imgFileInput" type="file" accept="image/*"/>
                         </div>
                     </div>

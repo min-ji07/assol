@@ -46,6 +46,7 @@ function UserManagementContainer() {
             ,{ headerName: "userId", field: "id", hide :true}
             ,{ headerName: "processType", field: "processType", hide:true}
             ,{ headerName: "branchNo", field: "branchNo", hide:true }
+            ,{ headerName: "userType", field: "userType", hide:true }
             ,{ headerName: "성명", field: "userName", editable: false, width:100, agTextColumnFilter:"text"}
             ,{ headerName: '입사일', field: "joinDate", cellEditor : "richSelect", width:150}
             ,{ headerName: '주민번호', field: "personalNumber", cellEditor : "richSelect", width:170}
@@ -90,6 +91,10 @@ function UserManagementContainer() {
     const [rowData, setRowData] = useState([]);
     const [countData, setCountData] = useState({});
 
+    const setInputAutocompleteOff = () => {
+        $("input").attr("autocomplete","off");
+    }
+
     const onRowDoubleClicked = (e)=> {
         let employeeNumber = e.data.employeeNumber;
         let userType = e.data.userType;
@@ -99,19 +104,31 @@ function UserManagementContainer() {
 
     const setFilter = (column,text) => {
         const gridApi = gridCommon.getGridApi().api;
-        const countryFilterComponent = gridApi.getFilterInstance(column);
+        const filterInstance = gridApi.getFilterInstance(column);
         // countryFilterComponent.onBtReset();
         if(text.length != 0){
-            countryFilterComponent.onBtClear();
-            countryFilterComponent.setValueFromFloatingFilter(text);
+            filterInstance.onBtClear();
+            filterInstance.setValueFromFloatingFilter(text);
         } else {
             gridApi.setFilterModel(null);
         }
         gridApi.onFilterChanged();
     }
 
-    const searchUser = (type,text) => {
+    const searchUser = (userType,userName) => {
+        const gridApi = gridCommon.getGridApi().api;
+        const userTypefilter = gridApi.getFilterInstance("userType");
+        const userNamefilter = gridApi.getFilterInstance("userName");
+        
+        userTypefilter.onBtClear();
+        userNamefilter.onBtClear();
 
+        if(userType != "전체"){
+            userTypefilter.setValueFromFloatingFilter(userType);
+        }
+        userNamefilter.setValueFromFloatingFilter(userName);
+
+        gridApi.onFilterChanged();
     }
 
     // ,{ headerName: "정규직", field: "fullTimeEmp", hide :true}
@@ -145,11 +162,17 @@ function UserManagementContainer() {
             const userName = $("#userNameInput").val();
             const userType = $("#userTypeSelect").val();
 
-            searchUser(userName,userType);
+            searchUser(userType,userName);
+        });
+        $("#userNameInput").on("keyup",(e)=>{
+            if(e.keyCode == 13){
+                $("#btnUserSearch").trigger("click");
+            }
         });
     }
 
     useEffect(()=>{
+        setInputAutocompleteOff();
         bindEvent();
        async function initGrid(params) {
            console.log(params);

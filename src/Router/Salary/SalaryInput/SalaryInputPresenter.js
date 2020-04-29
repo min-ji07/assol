@@ -164,13 +164,13 @@ const SalaryInputPresenter=({rowData,  gridDefs, rowData2,  gridDefs2}) => {
                             <div className="left_div_inner_inner">
                                 <div className="div_top01">
                                     <span>사원 전체명부</span>
-                                    <button id="btnMultiTarget" type="button">선택조회</button>
+                                    <button id="btnMultiTarget" type="button">선택입력</button>
                                 </div>
                                 <div id="userAllGrid" className="div_bottom header_radius_none view_border_none">
                                     <DataGrid rowData={rowData} gridDefs={gridDefs}/>
                                 </div>
                             </div>
-                            {/* <div class="multi_btn_box"></div> */}
+                            {/* <div className="multi_btn_box"></div> */}
                         </div>
                         <div className="right_div_inner">
                             <div className="right_div_inner_inner">

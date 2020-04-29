@@ -15,7 +15,9 @@ function SalaryInputContainer() {
     const [rowData2, setRowData2] = useState([]); //그리드 데이터 
     const [gridDefs2, setGridDefs2] = useState({}); //그리드 정의
 
-    let doubleCheck;
+    let doubleUserCheck = {
+
+    };
 
     const branchNo = 29;
     let addRowJson = {};
@@ -120,7 +122,6 @@ function SalaryInputContainer() {
                         }
                     ]
                 }
-                    
                 userSelect(params);
             }
             
@@ -140,12 +141,6 @@ function SalaryInputContainer() {
                         } else{
                             // setRowData(res.data.Data);
                         }
-                        let baseData = res.data.Data;
-                        let otherData = res.data.OtherData;
-                        baseData.forEach((data)=>{
-                            
-                        });
-
                         setAddRow(res.data.Data,res.data.OtherData);
                     }
                 });
@@ -207,15 +202,21 @@ function SalaryInputContainer() {
     }
 
     const setAddRow = (baseData,otherData) => {
-        baseData.forEach((json,index)=>{
-            addRowJson = json;
+        let i = 0;
+        for(i; i<baseData.length; i++){
+            const userNo = baseData[i].userNo;
+            if(doubleUserCheck[userNo] != undefined){
+                continue;
+            }
+            addRowJson = baseData[i];
+            doubleUserCheck[userNo] = userNo;
             // console.log(e);
             // console.log(i);
-            otherData[index].forEach((json2,index2)=>{
-                addRowJson["addColumnSalary"+json2.title] = utils.regExr.numOnly(json2.value);
+            otherData[i].forEach((json)=>{
+                addRowJson["addColumnSalary"+json.title] = utils.regExr.numOnly(json.value);
             });
             gridCommon.onAddRow("",addRowJson);
-        });
+        }
     }
 
     const setOtherColumn = (otherData) => {

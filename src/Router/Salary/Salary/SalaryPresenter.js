@@ -12,13 +12,13 @@ const SalaryPresenter=({rowData,  gridDefs, leftGridInit}) => {
     },[]);
 
     return(
-        <div class="wrapper">
-            <div class="salary">
-                <div class="title">
+        <div className="wrapper">
+            <div className="salary">
+                <div className="title">
                     <h1>급여대장</h1>
                 </div>
-                <div class="salary_inner">
-                    <div class="sal_date_left">
+                <div className="salary_inner">
+                    <div className="sal_date_left">
                         <ul>
                             <li>
                             <span>귀속연월</span>
@@ -31,40 +31,40 @@ const SalaryPresenter=({rowData,  gridDefs, leftGridInit}) => {
                                 data-view="months"
                                 data-date-format="yyyy-mm"/>
                             </li>
-                            <button class="btn_gray btn01" onClick={leftGridInit}>조회</button> 
+                            <button className="btn_gray btn01" onClick={leftGridInit}>조회</button> 
                         </ul>
                     </div>
-                    <div class="white_board">
-                        <div class="left_div">
-                            <div class="left_div_inner">
-                                <div class="div_top01">급여대장 조회내역
-                                    <div class="button_set">
-                                        <button class="btn_gray">급여대장 PDF / 출력</button>
+                    <div className="white_board">
+                        <div className="left_div">
+                            <div className="left_div_inner">
+                                <div className="div_top01">급여대장 조회내역
+                                    <div className="button_set">
+                                        <button className="btn_gray">급여대장 PDF / 출력</button>
                                     </div>
                                 </div>
-                                <div class="div_grid">
+                                <div className="div_grid">
                                     <DataGrid rowData={rowData} gridDefs={gridDefs}/>
                                 </div>
                             </div>
                         </div>
-                        <div class="right_div">
-                            <div class="right_div_inner">
-                                <div class="div_top02">급여 1차수 급여대장 상세
-                                    <div class="button_set">
-                                        <button class="btn_gray">급여명세서 PDF / 출력</button>
-                                        <button class="btn_gray btn02">SNS 발송</button>
+                        <div className="right_div">
+                            <div className="right_div_inner">
+                                <div className="div_top02">급여 1차수 급여대장 상세
+                                    <div className="button_set">
+                                        <button className="btn_gray">급여명세서 PDF / 출력</button>
+                                        <button className="btn_gray btn02">SNS 발송</button>
                                     </div>
                                 </div>
-                                <div class="div_grid">
-                                    <span id="rightGridText" class="txt_nodata">조회가 필요합니다.</span>
-                                    <div id="rightGridBox" class="table_left_box">
-                                        <div class="table_left_header_overflow">
-                                            <div class="table_left_header">
-                                                <div class="table_left_header_group">
-                                                    <div class="table_left_header_rowspan">
+                                <div className="div_grid">
+                                    <span id="rightGridText" className="txt_nodata">조회가 필요합니다.</span>
+                                    <div id="rightGridBox" className="table_left_box">
+                                        <div className="table_left_header_overflow">
+                                            <div className="table_left_header">
+                                                <div className="table_left_header_group">
+                                                    <div className="table_left_header_rowspan">
                                                         <span>구분</span>
                                                     </div>
-                                                    <ul class="table_left_header_title">
+                                                    <ul className="table_left_header_title">
                                                         <li>
                                                             <span>직책</span>
                                                         </li>
@@ -82,11 +82,11 @@ const SalaryPresenter=({rowData,  gridDefs, leftGridInit}) => {
                                                         </li>
                                                     </ul>
                                                 </div>
-                                                <div class="table_left_header_group">
-                                                    <div class="table_left_header_rowspan">
+                                                <div className="table_left_header_group">
+                                                    <div className="table_left_header_rowspan">
                                                         <span>지급</span>
                                                     </div>
-                                                    <ul id="otherTitle" class="table_left_header_title">
+                                                    <ul id="otherTitle" className="table_left_header_title">
                                                         <li>
                                                             <span>기본급</span>
                                                         </li>
@@ -106,8 +106,8 @@ const SalaryPresenter=({rowData,  gridDefs, leftGridInit}) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="table_left_wrap scroll_box">
-                                            <ul id="salaryDesc" class="table_left_content">
+                                        <div className="table_left_wrap scroll_box">
+                                            <ul id="salaryDesc" className="table_left_content">
                                                 <li>
                                                     <ul>
                                                         <li col-id="position">

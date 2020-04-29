@@ -67,12 +67,11 @@
     position: absolute;
     top: 205px;
 }
-
 .user_management .div_top select {
     background: transparent;
-    width: 115px; 
+    width: 135px; 
     border: none; border-radius: 0px;
-    font-size: 17px; text-indent: 8px; 
+    font-size: 17px;
     border-bottom: 2px solid white;
     margin-left: 26px;
     color:white;
@@ -86,7 +85,7 @@
     background-color:transparent;
     display: inline-block; margin-top: 1px;
     width: 250px; border-radius: 0px; margin-left: 14px;
-    border: none; text-indent: 5px;
+    border: none;
     border-bottom: 2px solid white;
     font-size: 17px; color: white;
 }

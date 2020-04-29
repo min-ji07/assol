@@ -7,35 +7,35 @@ import utils from '../../../../Utils/utils';
 const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, militaryDefs, curriculumDefs, rowData2, rowData3, rowData4, rowData5}) => {
 
     return (
-    <div class="div_bottom tab_03">
+    <div className="div_bottom tab_03">
         <form> 
-            <div class="left_div">
+            <div className="left_div">
                 <div id="userInfoLeft3">
-                    <div class="left_div_inner">
-                    <div class="imgload">
-                        <img id="userImgView3" class="userImgView" src='/images/user02.png' alt="유저사진"/>
-                        <span id="userImgText3" class="userImgText" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
+                    <div className="left_div_inner">
+                    <div className="imgload">
+                        <img id="userImgView3" className="userImgView" src='/images/user02.png' alt="유저사진"/>
+                        <span id="userImgText3" className="userImgText" style={{display:"block"}}>사원 사진을 등록해주세요.</span>
                         <div style={{marginTop:"5px"}}>
-                            <label for="userImage3" class="userImg">수정</label>
-                            <input type="file" class="userImage" id="userImage3" accept="image/*" name="userImageInput"/>
+                            <label for="userImage3" className="userImg">수정</label>
+                            <input type="file" className="userImage" id="userImage3" accept="image/*" name="userImageInput"/>
                             <label for="imgDelete3">삭제</label>
                             <button type="button" id="imgDelete3" name="imgDelete"/>
                         </div>
                     </div>
-                    <ul class="userinfo_left_box">
+                    <ul className="userinfo_left_box">
                         <li>
                             <span>성명 :</span>
                             <input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요." />
                         </li>
                             <li>
                                 <span>주민번호 :</span>
-                                <input type="text" class="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  />
+                                <input type="text" className="personal_input" name="personalNumber" id="personalNumber" placeholder="123456-1234567"  />
                                 <select name="national" id="national">
                                     <option value="내국인" selected>내국인</option>
                                     <option value="외국인">외국인</option>                                                
                                 </select>
                             </li>
-                            <li class="visa_li">
+                            <li className="visa_li">
                                 <span>
                                     비자타입 :
                                 </span>
@@ -43,7 +43,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             </li>
                             <li>
                                 <span>등록일 :</span>
-                                <input type="text" class="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." />
+                                <input type="text" className="date_input join_date" name="joinDate" id="joinDate" placeholder="입사일을 입력해주세요." />
                             </li>
                             <li>
                                 <span>업무 :</span>
@@ -56,17 +56,17 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             </li>
                         </ul>
                     </div>
-                    <div class="right_div_inner">
+                    <div className="right_div_inner">
                         <ul>
-                            <li>전화번호 :<input type="text" class="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" /></li>
-                            <li>휴대폰 :<input type="text" maxLenght="13" class="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" /></li>
+                            <li>전화번호 :<input type="text" className="tell_input" name="tellNo" id="tellNo" placeholder="02-000-0000" /></li>
+                            <li>휴대폰 :<input type="text" maxLenght="13" className="phone_input" name="mobile" id="mobile" placeholder="010-0000-0000" /></li>
                             <li>
                                 <span>이메일 :</span>
                                 <input type="email" name="email" id="email" placeholder="이메일을 입력해주세요." />
                             </li>
                             <li style={{position:"relative"}}>
-                                우편번호 :<input type="text" name="postNo" id="postNo" class="address" placeholder="우편번호"  style={{width:"152px"}} readOnly/>
-                                <button type="button" class="btn_gray postal_code" name="btnPost">우편번호</button>
+                                우편번호 :<input type="text" name="postNo" id="postNo" className="address" placeholder="우편번호"  style={{width:"152px"}} readOnly/>
+                                <button type="button" className="btn_gray postal_code" name="btnPost">우편번호</button>
                             </li>
                             <li>
                                 <input type="text" name="address" id="address" placeholder="주소"   style={{width:"300px"}} readOnly/>
@@ -74,7 +74,7 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                             <li style={{height:"70px"}}>
                                 <textarea name="addressDetail" id="addressDetail" placeholder="상세주소"></textarea>
                             </li>
-                            <li class="leave_li">  
+                            <li className="leave_li">  
                                 <span>퇴사여부 :</span>
                                 <select name="isActive" id="isActive" style={{width:"50px"}}>
                                     <option value="1">여</option>
@@ -82,10 +82,10 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                 </select>
                                 <span>
                                     <span style={{marginLeft:"5px"}}>퇴사일자 :</span>
-                                    <input type="text" name="leaveDate" id="leaveDate" class="date_input" placeholder="2020-04-04" style={{width:"100px"}}/>
+                                    <input type="text" name="leaveDate" id="leaveDate" className="date_input" placeholder="2020-04-04" style={{width:"100px"}}/>
                                 </span>
                             </li>
-                            <li class="leave_li">
+                            <li className="leave_li">
                                 <span>퇴사사유 :</span>
                                 <input type="text" name="leaveReason" id="leaveReason" placeholder="개인사유"/>
                             </li>
@@ -94,42 +94,42 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                 </div>    
             </div>
 
-            <div class="right_div tab_03">
-                {/* <div class="div_top wid843"> */}
+            <div className="right_div tab_03">
+                {/* <div className="div_top wid843"> */}
                 <input type="radio" id="tab_006" name="tab02" defaultChecked/>
                 <label for="tab_006">급여상세</label>
                 <input type="radio" id="tab_007" name="tab02" />
                 <label for="tab_007">4대보험/부양가족</label>
                 <input type="radio" id="tab_008" name="tab02" />
                 <label for="tab_008">학력/교육</label>
-                <button type="button" class="upload" name="btnInsaUpload">인사서류 업로드</button>
+                <button type="button" className="upload" name="btnInsaUpload">인사서류 업로드</button>
                 {/* <input type="file" id="upload"/>
-                <label for="upload" class="upload">인사서류 업로드</label> */}
+                <label for="upload" className="upload">인사서류 업로드</label> */}
                 {/* </div> */}
-                <div class="div_bottom right">
-                    <div class="sal_inner">
+                <div className="div_bottom right">
+                    <div className="sal_inner">
 
                         {/* 급여상세 */}
-                        <div id="userInfoRight3" class="input_content tab_006">
+                        <div id="userInfoRight3" className="input_content tab_006">
                             <ul>
                                 <li style={{listStyle:"disc", height:"21px", lineHeight:"21px"}}>
                                     <strong>급여항목</strong>
                                 </li>
-                                <li class="salary" style={{marginTop:"10px", listStyle:"none", height:"70px"}}>
+                                <li className="salary" style={{marginTop:"10px", listStyle:"none", height:"70px"}}>
                                     <ul>
-                                        <li class="li_left" style={{width:"200px"}}>
-                                            소정근로시간 :<input type="text" class="num_input" name="workTime" id="workTime" placeholder="1,700,000" maxLength="3" />
+                                        <li className="li_left" style={{width:"200px"}}>
+                                            소정근로시간 :<input type="text" className="num_input" name="workTime" id="workTime" placeholder="1,700,000" maxLength="3" />
                                         </li>
                                         <li style={{display:"inline-block"}}>
-                                            시급 : <input type="text" class="money_input" name="payOfHour" id="payOfHour" maxLength="10"/>원
+                                            시급 : <input type="text" className="money_input" name="payOfHour" id="payOfHour" maxLength="10"/>원
                                         </li>
-                                        <li class="li_right">
-                                            총예상월수령금액 :<input type="text" class="money_input" name="predictionMonth" id="predictionMonth" placeholder="2,100,500"  
+                                        <li className="li_right">
+                                            총예상월수령금액 :<input type="text" className="money_input" name="predictionMonth" id="predictionMonth" placeholder="2,100,500"  
                                             tabindex="-1" style={{fontSize: "20px", border:"none", width: "130px", height:"30px", marginBottom:"4px"}} readOnly/>원
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="clear">
+                                <li className="clear">
                                     <strong style={{display:"block", marginTop:"20px"}}>관리사항</strong>
                                     <ul>
                                         <li style={{marginLeft:"0px"}}>
@@ -198,43 +198,43 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         {/* 급여상세 */}
 
                         {/* 4대보험 / 부양가족 */}
-                        <div class="input_content tab_007" style={{height: "455px"}}>
-                            <div class="tab_01_inner">
+                        <div className="input_content tab_007" style={{height: "455px"}}>
+                            <div className="tab_01_inner">
                                 <ul>
                                     <li style={{listStyle:"disc", fontSize:"16px"}}>
                                     <strong>4대보험</strong>
-                                    <button type="button" class="btn_gray" style={{marginLeft: "5px", marginTop: "-5px", marginLeft:"7px"}}>신청하기</button>
-                                        <div class="tab_01_grid">
+                                    <button type="button" className="btn_gray" style={{marginLeft: "5px", marginTop: "-5px", marginLeft:"7px"}}>신청하기</button>
+                                        <div className="tab_01_grid">
                                             <ul id="insurnaceTable2">
                                                 <li>
                                                     <div>구분</div>
                                                     <div>기호번호</div>
                                                     <div>취득일</div>
-                                                    <div class="right_border">상실일</div>
+                                                    <div className="right_border">상실일</div>
                                                 </li>
                                                 <li>
                                                     <div>국민연금</div>
                                                     <div><input type="text" id="fourIns0"  maxLength="10"/></div>
-                                                    <div><input type="text" class="date_input " id="getOfIns0"   /></div>
-                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns0" /></div>
+                                                    <div><input type="text" className="date_input " id="getOfIns0"   /></div>
+                                                    <div className="right_border"><input type="text" className="date_input " id="lostOfIns0" /></div>
                                                 </li>
                                                 <li>
                                                     <div>건강보험</div>
                                                     <div><input type="text" id="fourIns1"   maxLength="10"/></div>
-                                                    <div><input type="text" class="date_input " id="getOfIns1"  /></div>
-                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns1"  /></div>
+                                                    <div><input type="text" className="date_input " id="getOfIns1"  /></div>
+                                                    <div className="right_border"><input type="text" className="date_input " id="lostOfIns1"  /></div>
                                                 </li>
                                                 <li>
                                                     <div>고용보험</div>
                                                     <div><input type="text" id="fourIns2"  maxLength="10"/></div>
-                                                    <div><input type="text" class="date_input " id="getOfIns2" /></div>
-                                                    <div class="right_border"><input type="text" class="date_input " id="lostOfIns2" /></div>
+                                                    <div><input type="text" className="date_input " id="getOfIns2" /></div>
+                                                    <div className="right_border"><input type="text" className="date_input " id="lostOfIns2" /></div>
                                                 </li>
                                                 <li>
-                                                    <div class="bottom_border">산재보험</div>
-                                                    <div class="bottom_border"><input type="text" id="fourIns3"  maxLength="10"/></div>
-                                                    <div class="bottom_border"><input type="text" class="date_input " id="getOfIns3"  /></div>
-                                                    <div class="bottom_border right_border"><input type="text" class="date_input " id="lostOfIns3"  /></div>
+                                                    <div className="bottom_border">산재보험</div>
+                                                    <div className="bottom_border"><input type="text" id="fourIns3"  maxLength="10"/></div>
+                                                    <div className="bottom_border"><input type="text" className="date_input " id="getOfIns3"  /></div>
+                                                    <div className="bottom_border right_border"><input type="text" className="date_input " id="lostOfIns3"  /></div>
                                                 </li>
                                             </ul>
                                             {/* <DataGrid rowData={rowData} gridDefs={insDefs} gridCommon={gridCommon}/> */}
@@ -254,10 +254,10 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                             <input type="text" id="fourIns0" />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="getOfIns0"  />
+                                                            <input type="text" className="date_input " id="getOfIns0"  />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="lostOfIns0" />
+                                                            <input type="text" className="date_input " id="lostOfIns0" />
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -266,10 +266,10 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                             <input type="text" id="fourIns1"  />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="getOfIns1"  />
+                                                            <input type="text" className="date_input " id="getOfIns1"  />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="lostOfIns1"  />
+                                                            <input type="text" className="date_input " id="lostOfIns1"  />
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -278,10 +278,10 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                             <input type="text" id="fourIns2"   />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="getOfIns2" />
+                                                            <input type="text" className="date_input " id="getOfIns2" />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="lostOfIns2" />
+                                                            <input type="text" className="date_input " id="lostOfIns2" />
                                                         </td>
                                                     </tr>
                                                     <tr>
@@ -290,10 +290,10 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                                             <input type="text" id="fourIns3" />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="getOfIns3"  />
+                                                            <input type="text" className="date_input " id="getOfIns3"  />
                                                         </td>
                                                         <td>
-                                                            <input type="text" class="date_input " id="lostOfIns3"  />
+                                                            <input type="text" className="date_input " id="lostOfIns3"  />
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -304,9 +304,9 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                                     </li> */}
                                     <li style={{listStyle:"disc", fontSize:"17px", marginLeft:"7px", marginTop:"45px"}}>
                                         <strong>부양가족</strong>
-                                        <button type="button" class="btn_gray" style={{marginLeft: "5px"}} name="btnAddRow">추가</button>
-                                        <button type="button" class="btn_gray" style={{marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
-                                        <div class="tab_02_grid grid_scrollX_none dependGrid">
+                                        <button type="button" className="btn_gray" style={{marginLeft: "5px"}} name="btnAddRow">추가</button>
+                                        <button type="button" className="btn_gray" style={{marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div className="tab_02_grid grid_scrollX_none dependGrid">
                                             <DataGrid rowData={rowData} gridDefs={dependDefs}/>
                                         </div>
                                         {/* 부양가족 */}
@@ -317,45 +317,45 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
                         {/* --4대보험 / 부양가족 */}
 
                         {/* 학력교육 */}
-                        <div class="input_content tab_008">
+                        <div className="input_content tab_008">
                             <ul>
                                 <li>
                                     <strong>학력</strong>
-                                    <div class="tab_01_inner">
-                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} name="btnAddRow">추가</button>
-                                        <button type="button" class="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                    <div className="tab_01_inner">
+                                        <button type="button" className="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" className="btn_gray" style={{position: "absolute;", marginTop: "-90px", marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
 
-                                        <div class="tab_01_grid grid_scrollX_none eduGrid">
+                                        <div className="tab_01_grid grid_scrollX_none eduGrid">
                                             <DataGrid rowData={rowData2} gridDefs={euduDefs}/>
                                         </div>
                                     </div>
                                 </li>
                                 <li  style={{marginTop:"20px"}}>
                                     <strong>경력</strong>
-                                    <div class="tab_02_inner">
-                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
-                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
-                                        <div class="tab_02_grid grid_scrollX_none carrerGrid" style={{marginTop:"-42px"}}>
+                                    <div className="tab_02_inner">
+                                        <button type="button" className="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" className="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div className="tab_02_grid grid_scrollX_none carrerGrid" style={{marginTop:"-42px"}}>
                                             <DataGrid rowData={rowData3} gridDefs={carrerDefs}/>
                                         </div>
                                     </div>
                                 </li>
                                 <li  style={{marginTop:"20px"}}>
                                     <strong>병역</strong>
-                                    <div class="tab_02_inner">
-                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
-                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
-                                        <div class="tab_02_grid grid_scrollX_none militaryGrid">
+                                    <div className="tab_02_inner">
+                                        <button type="button" className="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" className="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div className="tab_02_grid grid_scrollX_none militaryGrid">
                                             <DataGrid rowData={rowData4} gridDefs={militaryDefs}/>
                                         </div>
                                     </div>
                                 </li>
                                 <li  style={{marginTop:"20px"}}>
                                     <strong>교육</strong>
-                                    <div class="tab_02_inner">
-                                        <button type="button" class="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
-                                        <button type="button" class="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
-                                        <div class="tab_02_grid grid_scrollX_none curriculumGrid">
+                                    <div className="tab_02_inner">
+                                        <button type="button" className="btn_gray" style={{marginTop:"-88px", marginLeft:"36px"}} name="btnAddRow">추가</button>
+                                        <button type="button" className="btn_gray" style={{marginTop: "-88px",marginLeft: "5px"}} name="btnRemoveRow">삭제</button>
+                                        <div className="tab_02_grid grid_scrollX_none curriculumGrid">
                                             <DataGrid rowData={rowData5} gridDefs={curriculumDefs}/>
                                         </div>
                                     </div>
@@ -368,8 +368,8 @@ const DailyIncomePresenter = ({rowData, euduDefs, carrerDefs, dependDefs, milita
             </div>
             {/* 상세 */}
 
-            {/* <button type="button" class="btn_backnext next_position">이전으로</button> */}
-            <button type="button" class="btn_backnext save_position" name="btnSave">저장하기</button>
+            {/* <button type="button" className="btn_backnext next_position">이전으로</button> */}
+            <button type="button" className="btn_backnext save_position" name="btnSave">저장하기</button>
         </form>
     </div>
     )
