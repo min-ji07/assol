@@ -109,7 +109,7 @@ export const callApi = {
         /work/workTableByPersonal/202001 
         근무자 설정 페이지 
     */
-    getSearchList:(params) => axios.get(noJustin+'/Worker/SerchWorker',{params:params}), // 근무자 저장 불러오기
+    getSearchList:(params) => axios.get(noJustin+'/Worker/SearchWorker',{params:params}), // 근무자 저장 불러오기
 
     // 근무자 설정 저장 
     setWorkerList:(params) => axios({ 
