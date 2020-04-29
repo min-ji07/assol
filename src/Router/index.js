@@ -64,6 +64,7 @@ const Routes = () => {
             <Route path="/work/workTableByReplaceUser" component={WorkTableByReplaceUser} />
             <Route path="/employment/employmentApply" component={EmploymentApply} />
             <Route path="/employment/employmentHistory" component={EmploymentHistory} />
+            <Route path="/work/workTableByRestDay" component={WorkTableByRestDay} />
           </Switch>
         }
       </BrowserRouter>
