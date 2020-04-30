@@ -1,15 +1,15 @@
 import React from 'react';
 import '../../../Assets/css/pages/work/work_setting_03.css';
+import $ from 'jquery';
 import gridCommon from '../../../Utils/grid';
 import { callApi } from '../../../Utils/api';
+import utils from '../../../Utils/utils';
+import DataGrid from '../../../Components/DataGrid';
+
 // import WorkRestDay from '../../../Components/Work/WorkRestDay';
-// import DataGrid from '../../../Components/DataGrid';
-// import $ from 'jquery';
-// import utils from '../../../Utils/utils';
 
 
 function WorkTableByRestDayPresenter ({rowData, gridDefs}){
-
     // const WorkTableByRestDay=()=>{
     /* 개인연차설정 */
     // , rowData2,  gridDefs2
@@ -53,16 +53,17 @@ function WorkTableByRestDayPresenter ({rowData, gridDefs}){
         };
         
     }
-    // }
-    
 
     return (
+        <>
         <div class="wrapper">
             <div class="work_setting_03">
                 <div class="title">
                     <h1>개인연차설정</h1>
                     <p>사원의 연차를 설정할 수 있습니다.</p>
                 </div>
+
+                
                 <div class="emTable">
                     <div class="leftDiv"> 
                     {/* 전체div */}
@@ -77,6 +78,8 @@ function WorkTableByRestDayPresenter ({rowData, gridDefs}){
                                     <div className="div_top01">사원 전체명부</div>
                                     <div className="div_bottom">
                                         {/* <DataGrid rowData={rowData2} gridDefs={gridDefs2} /> */}
+                                        {/* <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon} /> */}
+
                                     </div>
                                 </div>
                             </div>
@@ -86,11 +89,15 @@ function WorkTableByRestDayPresenter ({rowData, gridDefs}){
                                 <button type="button" className="delete1" onClick={gridCommon.onRemoveRow}>삭제</button>
                                 <button type="button" className="save"    onClick={() => gridCommon.onSaveRow(saveRow)}>저장</button>
                             </div>
+
+                            
                             <div className="right_div_inner">
                                 <div className="right_div_inner_inner">
                                     <div className="div_top02">개인연차 추가</div>
                                     <div class="table">
-                                        <WorkRestDay />
+                                        {/* <WorkRestDay /> */}
+                                        <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon} />
+
                                     </div>
                                 </div>
                             </div>
@@ -104,8 +111,8 @@ function WorkTableByRestDayPresenter ({rowData, gridDefs}){
                 </div>
             </div>
         </div> 
-        )
-
+        </>
+    )
 };
 
 

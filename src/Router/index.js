@@ -9,7 +9,7 @@ import WorkTableByGroup from "./Work/WorkTableByGroup";
 import WorkTableByPersonal from "./Work/WorkTableByPersonal";
 import WorkTableByRestDay from "./Work/WorkTableByRestDay";
 import WorkTableByRestDayView from "./Work/WorkTableByRestDayView";
-import WorkTableResult from "./Work/WorkTableResult";
+// import WorkTableResult from "./Work/WorkTableResult";
 import WorkMain from "./Work/WorkMain";
 import EmploymentMain from "./Employment/EmploymentMain";
 import TestWithholdingTax from "./TestWithholding/TestWithholdingTax";
@@ -51,9 +51,8 @@ const Routes = () => {
             <Route path="/work/workTableMain" component={WorkMain} />
             <Route path="/work/workTableByGroup" component={WorkTableByGroup} />
             <Route path="/work/workTableByPersonal/:yearMonth" component={WorkTableByPersonal} />
-            <Route path="/work/workTableByRestDay" component={WorkTableByRestDay} />
+            <Route path="/work/workTableByRestDay" component={WorkTableByRestDay}/>
             <Route path="/work/workTableByRestDayView" component={WorkTableByRestDayView} />
-            <Route path="/work/WorkTableResult" component={WorkTableResult} />
             <Route path="/employment/employmentMain" component={EmploymentMain} />
             <Route path="/testwithholding/testwithholdingTax" component={TestWithholdingTax} />
             <Route path="/withholding/withholdingTax" component={WithholdingTax} />
@@ -64,7 +63,6 @@ const Routes = () => {
             <Route path="/work/workTableByReplaceUser" component={WorkTableByReplaceUser} />
             <Route path="/employment/employmentApply" component={EmploymentApply} />
             <Route path="/employment/employmentHistory" component={EmploymentHistory} />
-            <Route path="/work/workTableByRestDay" component={WorkTableByRestDay} />
           </Switch>
         }
       </BrowserRouter>

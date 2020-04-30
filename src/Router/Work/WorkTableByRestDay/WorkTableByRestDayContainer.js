@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { callApi } from '../../../Utils/api';
 import gridCommon from '../../../Utils/grid';
 import picker from '../../../Utils/datepicker';
-import DataGrid from '../../DataGrid';
+// import DataGrid from '../../DataGrid';
 import useHook from '../../../GlobalState/Hooks/useHook';
 import WorkTableByRestDayPresenter from './WorkTableByRestDayPresenter'
 /* 연차 설정 */
 
 
-function WorkTableByRestDayPresenter(){
+function WorkTableByRestDayContainer(){
 
     // const WorkRestDay = () => {
     const { state } = useHook();
@@ -104,7 +104,7 @@ function WorkTableByRestDayPresenter(){
         const columnDefs= [  
             { headerName: "rowId", field: "rowId", hide:true }
             ,{ headerName: "processType", field: "processType", hide:true}
-            ,{ headerName: "", field: "branchNo", width:50 ,resizable:false,editable : false
+            ,{ headerName: "", field: "branchNo", width:40 ,resizable:false,editable : false
                 ,checkboxSelection:true,headerCheckboxSelection: true,
                     valueFormatter:function(params){ 
                     params.data.branchNo = state.branchNo
@@ -232,8 +232,8 @@ function WorkTableByRestDayPresenter(){
     }
 
     return (
-        <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon} 
-        // rowData={rowData2} gridDefs={gridDefs2}
+        <WorkTableByRestDayPresenter rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon} 
+        //  DataGrid rowData={rowData2} gridDefs={gridDefs2}
         />
         
         
@@ -242,4 +242,4 @@ function WorkTableByRestDayPresenter(){
 }
 
 
-export default WorkTableByRestDayPresenter;
+export default WorkTableByRestDayContainer;
