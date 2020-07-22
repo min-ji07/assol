@@ -9,7 +9,7 @@ import DataGrid from '../../../Components/DataGrid';
 // import WorkRestDay from '../../../Components/Work/WorkRestDay';
 
 
-function WorkTableByRestDayPresenter ({rowData, gridDefs}){
+function WorkTableByRestDayPresenter ({rowData, gridDefs, rowData2, gridDefs2}){
     // const WorkTableByRestDay=()=>{
     /* 개인연차설정 */
     // , rowData2,  gridDefs2
@@ -77,36 +77,30 @@ function WorkTableByRestDayPresenter ({rowData, gridDefs}){
                                 <div className="left_div_inner_inner">
                                     <div className="div_top01">사원 전체명부</div>
                                     <div className="div_bottom">
-                                        {/* <DataGrid rowData={rowData2} gridDefs={gridDefs2} /> */}
-                                        {/* <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon} /> */}
-
+                                        <DataGrid rowData={rowData} gridDefs={gridDefs} />
                                     </div>
                                 </div>
                             </div>
-
                             <div class="buttonset">
                                 <button type="button" className="insert"  onClick={gridCommon.onAddRow}>추가</button>
                                 <button type="button" className="delete1" onClick={gridCommon.onRemoveRow}>삭제</button>
                                 <button type="button" className="save"    onClick={() => gridCommon.onSaveRow(saveRow)}>저장</button>
                             </div>
-
-                            
                             <div className="right_div_inner">
                                 <div className="right_div_inner_inner">
                                     <div className="div_top02">개인연차 추가</div>
                                     <div class="table">
                                         {/* <WorkRestDay /> */}
-                                        <DataGrid rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon} />
-
+                                        <DataGrid rowData={rowData2} gridDefs={gridDefs2} gridCommon={gridCommon} />
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* <div class="backnext">
-                            <button type="button" class="back" onclick="back();">이전으로</button>
-                            <button type="button" class="next" onclick="next();">다음으로</button>
-                        </div> */}
+                        <div class="backnext">
+                            {/* <button type="button" class="back" onclick="back();">이전으로</button> */}
+                            <button type="button" class="next" onclick="next();">저장하기</button>
+                        </div>
                     </div>
                 </div>
             </div>

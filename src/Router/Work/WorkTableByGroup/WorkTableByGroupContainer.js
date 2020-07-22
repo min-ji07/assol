@@ -73,18 +73,17 @@ function WorkTableByGroupContainer() {
              }, valueFormatter:function(params) { return (!params.value)?'':params.value+'명'}}
 
         ,{ headerName: "정규근무시간",field:"workTime", editable:true, width: 200
-             ,cellEditor: picker.getTimePickerInput()
-                // ,valueGetter: function(params){
-                //     var num = utils.regExr.numOnly(params.data.workTime);
-                //     var checkVal = utils.regExr.date(num.substring(0,4));
-                //     var checkVal2 = utils.regExr.date(num.substring(4,8));
-                //     var num2 = params.data.workTime;
-                //     // console.log('num2 : ',num2);
-                //     if(!dateValidation(checkVal) || !dateValidation(checkVal2) || checkVal > checkVal2){
-                //         return "";
-                //     }
-                //     return utils.regExr.dateTime(num2);
-                // }
+            ,cellEditor: picker.getTimePickerInput() 
+
+            // ,valueFormatter: function(params){
+            //     var num2 = "" + params.data.workTime;
+            //     console.log(num2);
+            //     var strhour = num2.substr(0,2);
+            //     var strminu = num2.substring(3,5);
+            //     var endhour = num2.substring(6,8);
+            //     var endninu = num2.substring(9,11);
+            //     console.log(strhour, strminu, endhour, endninu);
+            // }
         }
         ,{ headerName: "휴게시간1", field: "restTime", editable:true, width:200,
         cellEditor: picker.getTimePickerInput()}
@@ -110,26 +109,16 @@ function WorkTableByGroupContainer() {
         //         return utils.regExr.dateTime(num);
         //     }
         // }
-        // 여기부터 계산 다시해야됨
         ,{ headerName: "정규근무시간", field: "currentTime", width:120,  editable:false,
          valueGetter:function(params){
-            //  console.log('current값 확인 ', params);
             if(!params.data.currentTime){
                 return "";
             }
-            // 여기 계산이 어떡함..
             let current = params.data.currentTime;
-            // console.log(current); // 시간
             var hour = current/60;
-            // var hour = current/120;
             var resultHour = Math.floor(hour);
             var min = current - (resultHour * 60);
-            // var min = current - (resultHour * 120);
             return resultHour+"시간"+min+"분";
-
-            // console.log('먼시간이여',hour, resultHour, min);
-            // hour, resultHour = 960
-            
         }
          }
          ,{ headerName: "야간근무시간", field: "nightTime", width: 120, cellStyle: {color: '#D96D6D'}, editable : false
@@ -139,10 +128,8 @@ function WorkTableByGroupContainer() {
                 }
                 let current = params.data.nightTime;
                 var hour = current/60;
-                // var hour = current/120;
                 var resultHour = Math.floor(hour);
                 var min = current - (resultHour * 60);
-                // var min = current - (resultHour * 120);
                 return resultHour+"시간"+min+"분";
             }
         }
@@ -153,10 +140,8 @@ function WorkTableByGroupContainer() {
                     }
                     let current = params.data.overTime;
                     var hour = current/60;
-                    // var hour = current/120;
                     var resultHour = Math.floor(hour);
                     var min = current - (resultHour * 60);
-                    // var min = current - (resultHour * 120);
                     return resultHour+"시간"+min+"분";
                 }
          }
@@ -222,20 +207,21 @@ function WorkTableByGroupContainer() {
             //console.log('ㅇㅇ',workTimeArr[1].value); // 안나옴
            if(!workTimeArr == null || !workTimeArr == ""){
                 console.log(workTimeArr,': workTimeArr');
-                // var replaceTime1 = workTimeArr[0].replace(/\:/g,"");
-                // var replaceTime2 = workTimeArr[1].replace(/\:/g,"");
-                // console.log('근무시작',replaceTime1);
-                // console.log('근무종료',replaceTime2);
                 var strhour = workTimeArr[0].substring(0,2);
-                var strminu = workTimeArr[0].substring(2,4);
+                var strminu = workTimeArr[0].substring(3,5);
                 var endhour = workTimeArr[1].substring(0,2);
-                var endninu = workTimeArr[1].substring(2,4);
-                if(strhour > 25 || endhour > 25){
-                    alert('시간을 다시 설정해주세요.');
+                var endminu = workTimeArr[1].substring(3,5);
+                console.log(strhour,endhour,"시간",strminu,endminu,"분" )
+                if(strhour >= 25 || endhour >= 25){
+                    alert('근무시간을 다시 설정해주세요.');
                     return false;
-                }else if(strminu < 60 || endninu < 60){
-                    alert('시간을 다시 설정해주세요.')
+                }else if(strminu > 60 || endminu > 60){
+                    alert('시간이 올바르지 않습니다.')
                     return false;
+                }else if(strhour == 24 || endhour == 24){
+                    if(strminu >= 1 || endminu >= 1){
+                        alert('시간을 확인해주세요.');
+                    }
                 }else{
 
                 }
@@ -340,27 +326,20 @@ function WorkTableByGroupContainer() {
             let restTimeArr  = e.data.restTime.split("~");
             // if(!restTimeArr[0] || !restTimeArr[1]){
             if(!restTimeArr == null || !restTimeArr == ""){
-                // 휴게시간
-                var strhour = restTimeArr[0].substring(0,2);
-                var strminu = restTimeArr[0].substring(2,4);
-                var endhour = restTimeArr[1].substring(0,2);
-                var endninu = restTimeArr[1].substring(2,4);
                 // 근무시간
-                var strhourW = workTimeArr[0].substring(0,2);
-                var strminuW = workTimeArr[0].substring(2,4);
-                var endhourW = workTimeArr[1].substring(0,2);
+                var workstrhour = workTimeArr[0].substring(0,2);
+                var workstrminu = workTimeArr[0].substring(2,4);
+                var workendhour = workTimeArr[1].substring(0,2);
                 var endninuW = workTimeArr[1].substring(2,4);
+                // 휴게시간
+                var reststrhour = restTimeArr[0].substring(0,2);
+                var strminu = restTimeArr[0].substring(2,4);
+                var restendhour = restTimeArr[1].substring(0,2);
+                var endninu = restTimeArr[1].substring(2,4);
 
-                if(strhourW < strhour && endhourW < endhour){ 
+                if(workstrhour < reststrhour && workendhour < restendhour){ 
                     alert('rest.');
                 }
-                // }else if(strminuW < strminu || endninuW < endninu){
-                //     if(strminuW < strminu || endninuW < endninu){
-                //         alert('근무시간 이후의 분은 입력할 수 없습니다.');
-                //     }   
-                // }else{ 
-
-                // }
             }
              console.log(restTimeArr,'restTimeArr');
              const strRestTime = new Date(0,0,0,restTimeArr[0].split(":")[0],restTimeArr[0].split(":")[1],0); // 시간
@@ -368,7 +347,7 @@ function WorkTableByGroupContainer() {
              var allStrRestMin = (strRestTime.getHours() * 60) + strRestTime.getMinutes();  // 20시 20
              var allEndRestMin = (endRestTime.getHours() * 60) + endRestTime.getMinutes();
              var restMin = 0;
-             console.log('restMin',restMin);// 이건뭔데..?
+             console.log('restMin',restMin);
 
              if(allStrRestMin > allEndRestMin)
              {
@@ -501,9 +480,9 @@ function WorkTableByGroupContainer() {
            
             // 검토
            overTime = (allWorkTime + nightTime) - (8 * 60);
-           console.log(overTime,'overTime');
-           console.log(allWorkTime,'allWorkTime');
-           console.log(nightTime,'nightTime');
+        //    console.log(overTime,'overTime');
+        //    console.log(allWorkTime,'allWorkTime');
+        //    console.log(nightTime,'nightTime');
 
            let pass = overTime != 0 ? "N" : "Y";
            if(overTime < 0 ){

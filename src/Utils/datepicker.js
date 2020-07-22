@@ -214,7 +214,6 @@ getTimePickerInput :  function(check) {
   function TimePickerInput() {}
 
   TimePickerInput.prototype.init = function(params) {
-      console.log(params, 'params');
 
       var strTime='';
       var endTime='';
@@ -226,32 +225,36 @@ getTimePickerInput :  function(check) {
         endTime = initArr[1];
       }
 
-      const tabfocus = () => {
-        if(event.keyCode == 13 && event.keyCode == 9){
-          var test = event.keyCode;
-          console.log(test,'str tab 눌림');
-          $('div .strTime').focus(); 
-        }
-      }
       this.ui = document.createElement("div");
       this.ui.innerHTML=`<div>
                           <input type="text" style="width:45%; text-align:center"
-                          class="strTime" id="strTime" maxLength="5" onkeydown="${tabfocus}" value="${strTime}"/>
+                          class="strTime" id="strTime" maxLength="5" value="${strTime}"/>
                           ~ 
                           <input type="text" style="width:45%; text-align:center"
-                          class="endTime" maxLength="5" onkeydown="${tabfocus}" value="${endTime}"/>
+                          class="endTime" id="endTime" maxLength="5" value="${endTime}"/>
                         </div>`;
       this.sInput = this.ui.querySelector(".strTime")
       this.eInput = this.ui.querySelector(".endTime")
 
-      // this.sInput.addEventListener("keydown",function(e){
-      //   console.log(e.keyCode);
-      //     if(e.keyCode == 13 && e.keyCode == 9){
-      //       var test = e.keyCode;
-      //       console.log(test,'str tab 눌림');
-      //       $('div .strTime').focus(); 
-      //     }
-      // });
+      
+        // $(document).on("keyup",function(e){
+        //   if(e.keyPress == 13 && e.keyPress == 9){
+        //     var key = e.keyCode;
+        //     console.log("key값", key);
+        //     $('div .strTime').focus;
+        //   }
+        // });
+      // function tabfocus(){
+        $(document).on("keyup", "#strTime", function(e){
+          if(e.keyCode == 9 && e.keyCode == 13){
+            var test = e.keyCode;
+            console.log(test, "눌림");
+            $('div .strTime').focus;
+          }
+        })
+      // }
+
+      
 
       // console.log(this.sInput);
       this.sInput.addEventListener("keyup",function(e){

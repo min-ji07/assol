@@ -6,12 +6,14 @@ import picker from '../../../Utils/datepicker';
 import useHook from '../../../GlobalState/Hooks/useHook';
 import WorkTableByRestDayPresenter from './WorkTableByRestDayPresenter'
 /* 연차 설정 */
-
-
 function WorkTableByRestDayContainer(){
-
-    // const WorkRestDay = () => {
     const { state } = useHook();
+
+    const [rowData, setRowData] = useState([]); //그리드 데이터 
+    const [gridDefs, setGridDefs] = useState({}); //그리드 정의
+
+    const [rowData2, setRowData2] = useState([]); //그리드 데이터 
+    const [gridDefs2, setGridDefs2] = useState({}); //그리드 정의
 
     const workersMap = {}, workersNumber={}, workersPosition={}; //사원맵핑
     const annalMaps = {
@@ -24,19 +26,11 @@ function WorkTableByRestDayContainer(){
         "2":"오후"
     }; //상세구분 맵핑
 
-    const [rowData, setRowData] = useState([]); //그리드 데이터 
-    const [gridDefs, setGridDefs] = useState({}); //그리드 정의
-
-
-    // 전체사원 그리드 데이터, 정의
-    // const [rowData2, setRowData2] = useState([]);
-    // const [gridDefs2, setGridDefs2] = useState({}); 
-
-
     // 사원정보 불러오기
     useEffect(()=>{
-        setGridDefs(gridSetting());
-        // setGridDefs2(gridSetting2());
+        setGridDefs(gridSetting());     // 사원전체
+        setGridDefs2(gridSetting2());   // 연차추가
+
         async function init() {
             try {
                 let params = {
@@ -57,6 +51,8 @@ function WorkTableByRestDayContainer(){
                             
                         }
                         setRowData(res.data.Data);
+                        setRowData2(res.data.Data);
+
                     }
                     //연차설정 데이터 저장내용 가져오기
                     try{
@@ -79,27 +75,30 @@ function WorkTableByRestDayContainer(){
 
     
     // 사원 전체명부 그리드 설정
-    // const gridsetting2 = () => {
-    //     const components = {  };
+    const gridSetting = () => {
 
-    //     const columnDefs= [  
-    //         { headerName: "rowId", field: "rowId", hide:true }
-    //         ,{headerName: "유저타입", field: "userType", hide:true }
-    //         ,{headerName: "성명 ",field:"userName", width:95}
-    //         ,{headerName: "직책", field: "position", width:117}
-    //         ,{ headerName: "사원번호", field: "employeeNumber", width:101}
-    //     ]
-    //     const defaultColDef ={
-    //         editable : true
-    //         ,cellStyle: {textAlign: 'center'}
-    //         ,resizable : true
-    //     } 
-    //     //컴포넌트 세팅 
-    //     return {columnDefs, defaultColDef, components};
-    // }
+        const columnDefs= [  
+            { headerName: "rowId", field: "rowId", hide:true }
+            ,{headerName: "유저타입", field: "userType", hide:true }
+            ,{headerName: "성명 ",field:"userName", width:95}
+            ,{headerName: "직책", field: "position", width:117}
+            ,{ headerName: "사원번호", field: "employeeNumber", width:101}
+        ]
+        const defaultColDef ={
+            editable : false
+            ,cellStyle: {textAlign: 'center'}
+            ,resizable : true
+        } 
+        //컴포넌트 세팅 
+        const components = {  };
+
+
+        return {columnDefs, defaultColDef, components};
+    }
+
 
     // 개인연차추가 그리드 설정 
-    const gridSetting = () => {
+    const gridSetting2 = () => {
         //컬럼 정의
         const columnDefs= [  
             { headerName: "rowId", field: "rowId", hide:true }
@@ -182,7 +181,7 @@ function WorkTableByRestDayContainer(){
                     }
                 }
 
-            ,{ headerName: "사용일수", field: "employeeNumber", width:120 
+            ,{ headerName: "사용일수", field: "employeeNumber", width:98
                     , editable:false
                     , valueGetter:function(params){
                         var endDate = new Date(params.data.endDate);
@@ -232,13 +231,10 @@ function WorkTableByRestDayContainer(){
     }
 
     return (
-        <WorkTableByRestDayPresenter rowData={rowData} gridDefs={gridDefs} gridCommon={gridCommon} 
-        //  DataGrid rowData={rowData2} gridDefs={gridDefs2}
+        <WorkTableByRestDayPresenter rowData={rowData} gridDefs={gridDefs} 
+        rowData2={rowData2} gridDefs2={gridDefs2} 
         />
-        
-        
     )
-    // }
 }
 
 

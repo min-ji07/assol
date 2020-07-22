@@ -236,7 +236,12 @@ function LoginMain(){
         init(params);
     }
 
+    $(document).on("keyup", ".phoneNumber", function() { 
+        $(this).val($(this).val().replace(/[^0-9]/g, "").replace(/([0-9]+)?([0-9]{4})/,"$1-$2").replace("--", "-") ); 
+        console.log($(this).val());
+        console.log($(this).val($(this).val()),"this.val");
 
+    });
 
 
     function CheckEmail(str) {      
@@ -276,6 +281,27 @@ function LoginMain(){
             }
         });
     });
+    // 대표전화번호
+    // $(document).ready(function(tell) {
+    //     $(".tell_input").keyup(function(
+    //         ){
+    //             $(this).val($(this).val().replace(/[^0-9]/g,""));
+    //         var tellNum = $(this).val();
+
+    //         if(tellNum.length < 3){
+    //             console.log(tellNum);
+    //         }else if(tellNum.length < 4){
+    //             var tell = tellNum.substr(0,3) + "-" + tellNum.substr(3,6);
+    //             console.log(tell);
+    //         }else if(tellNum.length < 8){
+    //             var tell = tellNum.substr(0,3) + "-" + tellNum.substr(3,8);
+    //             console.log(tell);
+    //         }
+    //         return tell;
+    //     } 
+    // );
+    // });
+
 
     // 아이디 중복체크
     const duplicateCheckId = () => {
@@ -307,7 +333,6 @@ function LoginMain(){
 
     // 이메일 인증번호 보내기
     const CheckCertification = () => {
-
         var idEmail = $('#idEmail').val();
         var idDomain = $('#domain option:selected').val();
         var EmailAddress = idEmail + '@' + idDomain;
@@ -359,10 +384,9 @@ function LoginMain(){
             }catch(error){
                 console.log("CATCH !! : " + error);
             }        
-           };
-           init();
+        };
+        init();
     }
-    
 
 return(
     <div className="login" style={{width:"100%",height:"100%"}}>
@@ -486,7 +510,7 @@ return(
                         </p>
                         <p className="agreement_all">
                             <input type="radio" id="check_all"/>
-                            <label for="check_all">
+                            <label htmlFor="check_all">
                                 회원 약관, 개인정보 수집 및 이용, 서비스 이용약관에 <span className="txt_point">모두 동의</span> 합니다.
                             </label>
                         </p>
@@ -516,19 +540,19 @@ return(
                         <ul>
                             <li>
                                 <input type="checkbox" id="num00" name="check_type" value="1"/>
-                                <label for="num00" class="choose num00 mg_le_0"></label>
+                                <label htmlFor="num00" className="choose num00 mg_le_0"></label>
                             </li>
                             <li>
                                 <input type="checkbox" id="num01" name="check_type" value="2"/>
-                                <label for="num01" class="choose num01"></label>
+                                <label htmlFor="num01" className="choose num01"></label>
                             </li>
                             <li>
                                 <input type="checkbox" id="num02" name="check_type" value="3"/>
-                                <label for="num02" class="choose num02"></label>
+                                <label htmlFor="num02" className="choose num02"></label>
                             </li>
                             <li>
                                 <input type="checkbox" id="num03" name="check_type" value="4"/>
-                                <label for="num03" class="choose num03"></label>
+                                <label htmlFor="num03" className="choose num03"></label>
                             </li>
                         </ul>
                     </div>
@@ -546,7 +570,7 @@ return(
         {/* --기관종류선택 */}
 
         {/* 회원가입 */}
-        <div className="modal_box mb2"> 
+        <div className="modal_box mb2" style={{display:"block"}}> 
             <div className="modal_top">
                 <div className="modal_title">회원가입</div>
                 <div className="modal_close"><a href="#" onClick={()=>closePopup()}></a></div>
@@ -577,14 +601,14 @@ return(
                                     <option>031</option>
                                     <option>032</option>
                                 </select>
-                                <input type="text" id="mainNumber" maxLength="9" class="tell_input" placeholder="000-0000" style={{marginLeft:"5px", width:"119px"}}/>
+                                <input type="text" id="mainNumber" maxLength="9" class="phoneNumber" placeholder="000-0000" style={{marginLeft:"5px", width:"119px"}}/>
                             </p>
                             <p>
                                 <label for="">휴대전화</label>
                                 <select id ="firstNumber" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8"}}>
-                                    <option value="010">010</option>
-                                    <option value="011">011</option>
-                                    <option value="016">016</option>
+                                    <option defaultValue="010">010</option>
+                                    <option defaultValue="011">011</option>
+                                    <option defaultValue="016">016</option>
                                 </select>-
                                 <input type="text" id ="middleNumber" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}}/>-
                                 <input type="text" id ="lastNumber" maxLength="4" style={{borderRadius:"0px", width:"47px", border:"1px solid #c8c8c8", marginLeft:"5px"}} />
@@ -602,15 +626,15 @@ return(
                             <p>
                                 <label className="required">기관 급여일</label>
                                 <select id="payDayMonth">
-                                    <option value="1">익월</option>
-                                    <option value="2">당월</option>
+                                    <option defaultValue="1">익월</option>
+                                    <option defaultValue="2">당월</option>
                                 </select>
                                 <select id="payDay">
-                                    <option value="5일">5일</option>
-                                    <option value="10일">10일</option>
-                                    <option value="15일">15일</option>
-                                    <option value="25일">25일</option>
-                                    <option value="말일">말일</option>
+                                    <option defaultValue="5일">5일</option>
+                                    <option defaultValue="10일">10일</option>
+                                    <option defaultValue="15일">15일</option>
+                                    <option defaultValue="25일">25일</option>
+                                    <option defaultValue="말일">말일</option>
                                 </select>
                                 {/* <input type="text" id="payDay" maxLength="2" placeholder="01"/> */}
                             </p>
@@ -632,11 +656,11 @@ return(
                                 <label className="">이메일주소</label>
                                 <input type="text" id="idEmail" maxLength="20" placeholder="이메일을 입력해주세요."/>@
                                 <select id ="domain" style={{borderRadius:"0px", width:"100px", border:"1px solid #c8c8c8", marginLeft:"5px"}}>
-                                    <option value="naver.com">naver.com</option>
-                                    <option value="etc">직접입력</option>
-                                    <option value="nate.com">nate.com</option>
-                                    <option value="hanmail.net">hanmail.net</option>
-                                    <option value="gmail.com">gmail.com</option>
+                                    <option defaultValue="naver.com">naver.com</option>
+                                    <option defaultValue="etc">직접입력</option>
+                                    <option defaultValue="nate.com">nate.com</option>
+                                    <option defaultValue="hanmail.net">hanmail.net</option>
+                                    <option defaultValue="gmail.com">gmail.com</option>
                                 </select>
                                 <button type="button" className="btn_addr" onClick={CheckCertification}>인증</button>
                             </p>
@@ -647,16 +671,16 @@ return(
                             </p>
                             <p style={{display:"inline-block", float:"left"}}>
                                 <span>이메일수신</span>
-                                <input type="radio" id="email_y" name="email" value ="1" defaultChecked/>
+                                <input type="radio" id="email_y" name="email" defaultValue ="1" defaultChecked/>
                                 <label htmlFor="email_y">동의</label>
-                                <input type="radio" id="email_n" value ="0" name="email"/>
+                                <input type="radio" id="email_n" defaultValue ="0" name="email"/>
                                 <label htmlFor="email_n">동의하지않음</label>
                             </p>
                             <p style={{display:"inline-block", marginLeft:"-335px"}}>
                                 <span>SMS문자수신</span>
-                                <input type="radio" id="sms_y" value ="1" name="sms" defaultChecked/>
+                                <input type="radio" id="sms_y" defaultValue ="1" name="sms" defaultChecked/>
                                 <label htmlFor="sms_y">동의</label>
-                                <input type="radio" id="sms_n" value ="0" name="sms"/>
+                                <input type="radio" id="sms_n" defaultValue ="0" name="sms"/>
                                 <label htmlFor="sms_n">동의하지않음</label>
                             </p>
                             <p>
